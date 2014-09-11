@@ -47,7 +47,14 @@ public class SpaceTrader extends Application {
             @Override
             public void handle(ActionEvent event) {
                 //Handle new game start here
-                root.getChildren().clear();
+                configScreen(root);
+            }
+        });
+    }
+
+    public void configScreen(VBox currentScreen) {
+        
+                currentScreen.getChildren().clear();
                 TextField name = new TextField();
                 name.setText("Type in Your Name.");
                 Label difficulty = new Label();
@@ -60,18 +67,13 @@ public class SpaceTrader extends Application {
                 hard.setText("Hard Mode");
                 Button ultra = new Button();
                 ultra.setText("Ultra Mode");
-                root.getChildren().add(name);
-                root.getChildren().add(difficulty);
-                root.getChildren().add(easy);
-                root.getChildren().add(medium);
-                root.getChildren().add(hard);
-                root.getChildren().add(ultra);
-                
-            }
-        });
-                
+                currentScreen.getChildren().add(name);
+                currentScreen.getChildren().add(difficulty);
+                currentScreen.getChildren().add(easy);
+                currentScreen.getChildren().add(medium);
+                currentScreen.getChildren().add(hard);
+                currentScreen.getChildren().add(ultra);
     }
-
     /**
      * @param args the command line arguments
      */
