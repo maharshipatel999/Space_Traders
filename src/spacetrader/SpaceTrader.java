@@ -9,9 +9,11 @@ package spacetrader;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -22,22 +24,27 @@ public class SpaceTrader extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        Button newGame = new Button();
+        newGame.setText("Start a new game!");
+        Button reload = new Button();
+        reload.setText("Reload a previous game!");
+        newGame.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+                //Handle new game start here
             }
         });
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        VBox root = new VBox();
+        root.setPadding(new Insets(10));
+        root.setSpacing(8);
+        root.getChildren().add(newGame);
+        root.getChildren().add(reload);
         
         Scene scene = new Scene(root, 300, 250);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Space Traders!");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
