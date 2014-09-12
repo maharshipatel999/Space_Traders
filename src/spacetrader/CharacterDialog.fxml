@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import org.controlsfx.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.CharacterDialogController">
+   <center>
+      <GridPane hgap="20.0" prefHeight="255.0" prefWidth="328.0" vgap="5.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="10.0" prefWidth="126.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="5.0" prefWidth="61.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="10.0" prefWidth="82.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="57.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="75.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="88.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="77.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="77.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pilot" textAlignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fighter" textAlignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Trader" textAlignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Engineer" textAlignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Investor" textAlignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Text>
+            <Group GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="pilotUpButton" alignment="CENTER" graphicTextGap="0.0" layoutX="40.0" mnemonicParsing="false" onAction="#increasePilot" prefHeight="20.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="pilotDownButton" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreasePilot" prefHeight="20.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Group>
+            <Text fx:id="pilotSkillText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Batang" size="32.0" />
+               </font>
+            </Text>
+            <Text fx:id="fighterSkillText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Batang" size="32.0" />
+               </font>
+            </Text>
+            <Group layoutX="185.0" layoutY="33.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="pilotUpButton1" alignment="CENTER" graphicTextGap="0.0" layoutX="40.0" mnemonicParsing="false" onAction="#increaseFighter" prefHeight="0.0" prefWidth="0.0">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="pilotDownButton1" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreaseFighter" prefHeight="21.0" prefWidth="31.0">
+                     <graphic>
+                        <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Group>
+            <Group layoutX="185.0" layoutY="33.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <children>
+                  <Button fx:id="pilotUpButton2" alignment="CENTER" graphicTextGap="0.0" layoutX="40.0" mnemonicParsing="false" onAction="#increaseTrader" prefHeight="20.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="pilotDownButton2" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreaseTrader" prefHeight="20.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Group>
+            <Group layoutX="185.0" layoutY="33.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <children>
+                  <Button fx:id="pilotUpButton3" alignment="CENTER" graphicTextGap="0.0" layoutX="40.0" mnemonicParsing="false" onAction="#increaseEngineer" prefHeight="20.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="pilotDownButton3" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreaseEngineer" prefHeight="20.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Group>
+            <Group layoutX="185.0" layoutY="33.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <children>
+                  <Button fx:id="pilotUpButton4" alignment="CENTER" graphicTextGap="0.0" layoutX="40.0" mnemonicParsing="false" onAction="#increaseInvestor" prefHeight="20.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="pilotDownButton4" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreaseInvestor" prefHeight="20.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Group>
+            <Text fx:id="traderSkillText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Batang" size="32.0" />
+               </font>
+            </Text>
+            <Text fx:id="engineerSkillText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Batang" size="32.0" />
+               </font>
+            </Text>
+            <Text fx:id="investorSkillText" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Batang" size="32.0" />
+               </font>
+            </Text>
+            <HBox prefHeight="34.0" prefWidth="316.0" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="6">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  Skill Points Remaining:" textAlignment="CENTER">
+                     <font>
+                        <Font name="Estrangelo Edessa" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+                  <Text fx:id="skillPointsRemaining" strokeType="OUTSIDE" strokeWidth="0.0" text="15" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Estrangelo Edessa" size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets left="55.0" right="40.0" top="2.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="3">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Allocate Skill Points!" textAlignment="CENTER">
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="23.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="25.0" right="25.0" top="10.0" />
+         </padding>
+      </GridPane>
+   </center>
+   <top>
+      <VBox prefHeight="59.0" prefWidth="366.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="0.0" prefWidth="0.0">
+               <children>
+                  <Label prefHeight="54.0" prefWidth="86.0" text="Name:" wrapText="true">
+                     <font>
+                        <Font name="Blackadder ITC" size="32.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField prefHeight="33.0" prefWidth="245.0" promptText="Your Name">
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Separator>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <VBox prefHeight="0.0" prefWidth="0.0" spacing="7.0" BorderPane.alignment="CENTER">
+         <children>
+            <Separator prefWidth="200.0" />
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="36.0" prefWidth="366.0" spacing="10.0">
+               <children>
+                  <Button defaultButton="true" minWidth="75.0" mnemonicParsing="false" text="OK">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="BOTTOM_RIGHT" cancelButton="true" minWidth="75.0" mnemonicParsing="false" text="Cancel">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="7.0" right="7.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>
