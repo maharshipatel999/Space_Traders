@@ -6,8 +6,14 @@
 
 package spacetrader;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.text.Text;
 
 /**
@@ -15,7 +21,7 @@ import javafx.scene.text.Text;
  *
  * @author Caleb Stokols
  */
-public class CharacterDialogController {
+public class CharacterDialogController implements Initializable {
 
    //These instance variables will eventually go in a Player Class.
     private int pilotSkill;
@@ -30,7 +36,15 @@ public class CharacterDialogController {
     @FXML private Text engineerSkillText;
     @FXML private Text investorSkillText;
     @FXML private Text skillPointsRemaining;
+    @FXML private ChoiceBox difficultyChoiceBox;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        difficultyChoiceBox.setItems(
+                FXCollections.observableArrayList("Easy", "Medium", "Hard", "Ultra"));
+        difficultyChoiceBox.setValue("Medium");
+    }
+    
     /**
      * Determines if there are still points left to allocate.
      * 
