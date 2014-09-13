@@ -12,7 +12,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.CharacterDialogController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.CharacterDialogController">
    <center>
       <GridPane hgap="20.0" prefHeight="255.0" prefWidth="328.0" vgap="5.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -22,54 +22,14 @@
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="57.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="75.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="88.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="80.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="77.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="75.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="75.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="75.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="75.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="77.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pilot" textAlignment="CENTER" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Copperplate Gothic Light" size="20.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fighter" textAlignment="CENTER" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Copperplate Gothic Light" size="20.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Trader" textAlignment="CENTER" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Copperplate Gothic Light" size="20.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Engineer" textAlignment="CENTER" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Copperplate Gothic Light" size="20.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Investor" textAlignment="CENTER" GridPane.rowIndex="5">
-               <font>
-                  <Font name="Copperplate Gothic Light" size="20.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Text>
             <Group GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
                   <Button fx:id="pilotUpButton" alignment="CENTER" graphicTextGap="0.0" layoutX="40.0" mnemonicParsing="false" onAction="#increasePilot" prefHeight="20.0" prefWidth="30.0">
@@ -243,10 +203,68 @@
                   </Text>
                </children>
             </HBox>
+            <Label text="Pilot" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+               <tooltip>
+                  <Tooltip text="Determines how well you pilot your ship.&#10;A good pilot can easily flee, dodge attacks,&#10;and stay on the tail of fleeing ships." />
+               </tooltip>
+            </Label>
+            <Label text="Fighter" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+               <tooltip>
+                  <Tooltip text="Determines how well you handle your weapons.&#10;A good fighter is great at hitting other ships." />
+               </tooltip>
+            </Label>
+            <Label text="Trader" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+               <tooltip>
+                  <Tooltip text=" Determines what prices you must pay for trade goods, ships and equipment.&#10;A good trader can reduce prices up to 10%." />
+               </tooltip>
+            </Label>
+            <Label text="Engineer" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+               <tooltip>
+                  <Tooltip text="Determines how well you keep your ship in shape.&#10;A good engineer protects the hull and shields in a fight,&#10;repairs them quicker during travel, and may even enhance his ship's weaponry." />
+               </tooltip>
+            </Label>
+            <Label text="Investor" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+               <tooltip>
+                  <Tooltip text="Determines how well you do in investing in the galactic markets.&#10;Since stock prices and interest rates are volatile, &#10;an investor could make a killing or lose his savings. Be wary." />
+               </tooltip>
+            </Label>
          </children>
          <padding>
             <Insets left="25.0" right="25.0" top="10.0" />
          </padding>
+         <effect>
+            <Blend />
+         </effect>
       </GridPane>
    </center>
    <top>
@@ -277,7 +295,28 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Separator>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="41.0" prefWidth="100.0" text="Difficulty:" wrapText="true">
+                     <font>
+                        <Font name="Blackadder ITC" size="24.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="difficultyChoiceBox" prefHeight="25.0" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="45.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
    </top>
    <bottom>
