@@ -6,15 +6,23 @@
 
 package spacetrader;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -192,6 +200,23 @@ public class CharacterDialogController implements Initializable {
             investorSkillText.setText("" + investorSkill);
         }
         adjustPointsRemainingText();
+    }
+ 
+    Stage prevStage;
+
+    public void setPrevStage(Stage stage){
+         this.prevStage = stage;
+    }
+    
+    @FXML protected void cancelDialogScreen(ActionEvent event) {
+         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+         try {
+            Pane pane = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
+            stage.setScene(new Scene(pane));
+            stage.show();
+        } catch (IOException e) {
+            Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
     
 }
