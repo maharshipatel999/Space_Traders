@@ -333,7 +333,7 @@
                         <Font name="Copperplate Gothic Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button alignment="BOTTOM_RIGHT" cancelButton="true" minWidth="75.0" mnemonicParsing="false" text="Cancel">
+                  <Button fx:id="cancelDialog" alignment="BOTTOM_RIGHT" cancelButton="true" minWidth="75.0" mnemonicParsing="false" onAction="#cancelDialogScreen" text="Cancel">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
