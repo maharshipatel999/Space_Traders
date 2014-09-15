@@ -280,7 +280,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField prefHeight="33.0" prefWidth="245.0" promptText="Your Name">
+                  <TextField fx:id="nameText" prefHeight="33.0" prefWidth="245.0" promptText="Your Name">
                      <HBox.margin>
                         <Insets top="15.0" />
                      </HBox.margin>
@@ -325,7 +325,12 @@
             <Separator prefWidth="200.0" />
             <HBox alignment="BOTTOM_RIGHT" prefHeight="36.0" prefWidth="366.0" spacing="10.0">
                <children>
-                  <Button defaultButton="true" minWidth="75.0" mnemonicParsing="false" text="OK">
+                  <Text fx:id="confirmMessage" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome!">
+                     <HBox.margin>
+                        <Insets bottom="3.0" right="20.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Button defaultButton="true" minWidth="75.0" mnemonicParsing="false" onAction="#okDialogScreen" text="OK">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

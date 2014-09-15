@@ -20,7 +20,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -38,19 +40,23 @@ public class CharacterDialogController implements Initializable {
     private int engineerSkill;
     private int investorSkill;
     
+    @FXML private TextField nameText;
     @FXML private Text pilotSkillText;
     @FXML private Text fighterSkillText;
     @FXML private Text traderSkillText;
     @FXML private Text engineerSkillText;
     @FXML private Text investorSkillText;
     @FXML private Text skillPointsRemaining;
+    @FXML private Text confirmMessage;
     @FXML private ChoiceBox difficultyChoiceBox;
+    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         difficultyChoiceBox.setItems(
                 FXCollections.observableArrayList("Easy", "Medium", "Hard", "Ultra"));
         difficultyChoiceBox.setValue("Medium");
+        confirmMessage.setFill(Color.TRANSPARENT);
     }
     
     /**
@@ -217,6 +223,24 @@ public class CharacterDialogController implements Initializable {
         } catch (IOException e) {
             Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+    
+    @FXML protected void okDialogScreen(ActionEvent event) {
+        String name = nameText.getCharacters().toString();
+        if (name.equals("")) {
+            confirmMessage.setText("Please enter your name!");
+            confirmMessage.setFill(Color.RED);
+        } else if(skillPointsRemaining()) {
+            confirmMessage.setText("Please allocate all skill points!");
+            confirmMessage.setFill(Color.RED);
+        } else {
+            
+            Player player = new Player(name, pilotSkill, fighterSkill,
+                                       traderSkill, engineerSkill, investorSkill);
+            System.out.println("player: " + name);
+            confirmMessage.setText("Greetings Space Trader!");
+            confirmMessage.setFill(Color.GREEN);
+        } 
     }
     
 }
