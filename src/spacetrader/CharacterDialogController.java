@@ -237,6 +237,11 @@ public class CharacterDialogController implements Initializable {
             
             Player player = new Player(name, pilotSkill, fighterSkill,
                                        traderSkill, engineerSkill, investorSkill);
+            //Create the Universe
+            Universe.initialize();
+            System.out.println(Universe.SolarSystems);
+            //
+            
             System.out.println("player: " + name);
             confirmMessage.setText("Greetings Space Trader!");
             confirmMessage.setFill(Color.GREEN);
