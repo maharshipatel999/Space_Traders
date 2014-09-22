@@ -29,4 +29,8 @@ public class Player {
         this.investorSkill = investorSkill;
     }
     
+    public String getName() {
+        return name;
+    }
+    
 }

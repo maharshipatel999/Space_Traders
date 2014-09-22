@@ -13,8 +13,9 @@ import java.util.ArrayList;
  * @author maharshipatel999
  */
 public class Universe {
-    public static ArrayList<SolarSystem> SolarSystems;
-    private static final String[] SOLARSYSTEMNAMES =
+    
+    private ArrayList<SolarSystem> solarSystems;
+    private static final String[] SOLAR_SYSTEM_NAMES =
     {
         "Acamar",
         "Adahn",		// The alternate personality for The Nameless One in "Planescape: Torment"
@@ -138,16 +139,16 @@ public class Universe {
         "Zuul"			// From the first Ghostbusters movie
     };
     
-//    Universe() {
-//    
-//    }
-    
-    public static void initialize() {
-        SolarSystems = new ArrayList<SolarSystem>(SOLARSYSTEMNAMES.length);
-        for (String name : SOLARSYSTEMNAMES) {
+    public Universe() {
+        solarSystems = new ArrayList<>(SOLAR_SYSTEM_NAMES.length);
+        for (String name : SOLAR_SYSTEM_NAMES) {
             SolarSystem temp = new SolarSystem(name);
-            SolarSystems.add(temp);
+            solarSystems.add(temp);
         }
+    }
+    
+    public ArrayList<SolarSystem> getSolarSystems() {
+        return solarSystems;
     }
     
 

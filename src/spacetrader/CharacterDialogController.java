@@ -234,15 +234,24 @@ public class CharacterDialogController implements Initializable {
             confirmMessage.setText("Please allocate all skill points!");
             confirmMessage.setFill(Color.RED);
         } else {
+            //change scene to First Scene
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FirstScreen.fxml"));
+            try {
+                stage.setScene(new Scene(loader.load()));
+            } catch (IOException e) {
+                Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
+            }
+            FirstScreenController controller = loader.getController();
+            stage.show();
             
+            //Create the Universe and Player
+            Universe universe = new Universe();
             Player player = new Player(name, pilotSkill, fighterSkill,
                                        traderSkill, engineerSkill, investorSkill);
-            //Create the Universe
-            Universe.initialize();
-            System.out.println(Universe.SolarSystems);
-            //
             
-            System.out.println("player: " + name);
+            controller.setUniverse(universe, player);
+            
             confirmMessage.setText("Greetings Space Trader!");
             confirmMessage.setFill(Color.GREEN);
         } 
