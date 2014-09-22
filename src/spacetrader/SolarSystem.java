@@ -87,7 +87,7 @@ public class SolarSystem {
     public String toString() {
         StringBuilder finStr = new StringBuilder();
         finStr.append(name + "\n");
-        finStr.append("Location: " + location.toString() + "\n");
+        finStr.append("Location: (" +  location.getX() + ", " + location.getY() + ")\n");
         finStr.append("Tech Level: " + level + "\n");
         finStr.append("Resource: " + resource + "\n");
         finStr.append("Political System: " + politSys + "\n");

@@ -40,8 +40,8 @@ public class FirstScreenController implements Initializable {
     
     private void displayUniverse() {
         for (SolarSystem system : universe.getSolarSystems()) {
-            spaceInformation.appendText("\n" + system);
+            spaceInformation.appendText(system + "\n");
         }
-        spaceInformation.appendText("\nPlayer: " + player.getName());
+        spaceInformation.appendText("Player: " + player.getName() + "\n");
     }
 }
