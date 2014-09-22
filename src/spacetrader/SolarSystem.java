@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
+ * Represents a Solar System the player can visit.
+ * 
  * @author maharshipatel999
  */
 public class SolarSystem {
@@ -21,24 +22,32 @@ public class SolarSystem {
     private final int level;
     private final int resource;
     private final int polSys;
-    private static ArrayList<Point> solSysLocations = new ArrayList<>(100);
-    private static Random rand = new Random();
+    private final static ArrayList<Point> solSysLocations = new ArrayList<>(100);
+    private final static Random rand = new Random();
     
-    SolarSystem(String name) {
-        Point tempPoint = getPoint();
-        while (solSysLocations.contains(tempPoint)) {
-            tempPoint = getPoint();
-        }
-        this.location = tempPoint;
+    public SolarSystem(String name) {
+        Point myLocation;
+        do {
+            myLocation = randomPoint();
+        } while (solSysLocations.contains(myLocation));
+        solSysLocations.add(myLocation);
+        
+        this.location = myLocation;
         this.level = rand.nextInt(8);
         this.resource = rand.nextInt(13);
         this.polSys = rand.nextInt(5);
         this.name = name;
     }
 
-    private Point getPoint() {
-        int x = rand.nextInt(490) + 10;
-        int y = rand.nextInt(490) + 10;
+    /**
+     * Creates a new random point between MAX_LOC (exclusive) and MIN_LOC (inclusive).
+     * @return a new random point. 
+     */
+    private Point randomPoint() {
+        final int MAX_LOC = 500;
+        final int MIN_LOC = 10;
+        int x = rand.nextInt(MAX_LOC - MIN_LOC) + MIN_LOC;
+        int y = rand.nextInt(MAX_LOC - MIN_LOC) + MIN_LOC;
         Point tempPoint = new Point(x, y);
         return tempPoint;
     }
@@ -63,6 +72,7 @@ public class SolarSystem {
         return this.polSys;
     }
 
+    @Override
     public String toString() {
         StringBuilder finStr = new StringBuilder();
         finStr.append(name + "\n");
