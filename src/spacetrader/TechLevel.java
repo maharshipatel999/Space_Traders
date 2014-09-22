@@ -8,8 +8,14 @@ package spacetrader;
 
 /**
  *
- * @author maharshipatel999
+ * @author Caleb Stokols
  */
-class TechLevel {
-    
+public enum TechLevel {
+    PRE_AGRICULTURE(),
+    AGRICULTURE(),
+    MEDIEVAL(),
+    RENAISSANCE(),
+    EARLY_INDUSTRIAL(),
+    POST_INDUSTRIAL(),
+    HI_TECH();
 }

@@ -20,24 +20,34 @@ public class SolarSystem {
     
     private final String name;
     private final Point location;
-    private final int level;
-    private final int resource;
-    private final int polSys;
+    private final TechLevel level;
+    private final Resource resource;
+    private final PoliticalSystem politSys;
+    
     private final static Set<Point> solSysLocations = new HashSet<>(100);
     private final static Random rand = new Random();
     
     public SolarSystem(String name) {
+        this.name = name;
+        
         Point myLocation;
         do {
             myLocation = randomPoint();
         } while (solSysLocations.contains(myLocation));
         solSysLocations.add(myLocation);
-        
         this.location = myLocation;
-        this.level = rand.nextInt(8);
-        this.resource = rand.nextInt(13);
-        this.polSys = rand.nextInt(5);
-        this.name = name;
+        
+        //picks a random TechLevel
+        TechLevel[] levels = TechLevel.values();
+        this.level = levels[rand.nextInt(levels.length)];
+        
+        //picks a random Resource
+        Resource[] resources = Resource.values();
+        this.resource = Resource.values()[rand.nextInt(resources.length)];
+        
+        //picks a random Political System
+        PoliticalSystem[] systems = PoliticalSystem.values();
+        this.politSys = systems[rand.nextInt(systems.length)];
     }
 
     /**
@@ -61,16 +71,16 @@ public class SolarSystem {
         return this.location;
     }
 
-    public int getLevel() {
+    public TechLevel getLevel() {
         return this.level;
     }
 
-    public int getResource() {
+    public Resource getResource() {
         return this.resource;
     }
 
-    public int getPoliticalSystem() {
-        return this.polSys;
+    public PoliticalSystem getPoliticalSystem() {
+        return this.politSys;
     }
 
     @Override
@@ -80,7 +90,7 @@ public class SolarSystem {
         finStr.append("Location: " + location.toString() + "\n");
         finStr.append("Tech Level: " + level + "\n");
         finStr.append("Resource: " + resource + "\n");
-        finStr.append("Political System: " + polSys + "\n");
+        finStr.append("Political System: " + politSys + "\n");
         return finStr.toString();
     }
 

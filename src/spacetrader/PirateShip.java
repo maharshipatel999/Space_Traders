@@ -2,43 +2,47 @@ package spacetrader;
 
 import java.util.*;
 
+//This should extends Spaceship
 public class PirateShip {
-	int reputation, attack, health;
-	ArrayList<String> pirateCargo;
-	String shipType;
+	private int reputation;
+        private int attack;
+        private int health;
+	private ArrayList<String> pirateCargo;
+	private String shipType;
+        
 	public PirateShip(int reputation, int attack, int health, ArrayList<String> pirateCargo) {
-		this.reputation = reputation;
-		this.attack = attack;
-		this.health = health;
-		this.pirateCargo = pirateCargo;
+            this.reputation = reputation;
+            this.attack = attack;
+            this.health = health;
+            this.pirateCargo = pirateCargo;
 		
 	}
 	
 	public int getReputation() {
-		return reputation;
+            return reputation;
 	}
 	
 	public int getAttack() {
-		return attack;
+            return attack;
 	}
 	
 	public int getHealth() {
-		return health;
+            return health;
 	}
 	
 	public ArrayList<String> getPirateCargo() {
-		return pirateCargo;
+            return pirateCargo;
 	}
 	
 	public void loseHealth(int hitpoints) {
-		health -= hitpoints;
+            health -= hitpoints;
 	}
 	
-	public boolean fightOrRun(PirateShip s){
-		if(s.reputation > reputation) {
-			return true;
-		}
-		return false;
+	public boolean fightOrRun(PirateShip ship){
+            if (ship.reputation > this.reputation) {
+                    return true;
+            }
+            return false;
 	}
 	
 }

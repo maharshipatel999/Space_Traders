@@ -8,8 +8,22 @@ package spacetrader;
 
 /**
  *
- * @author maharshipatel999
+ * @author Caleb Stokols, Seth Davis
  */
-class Resource {
-    
+public enum Resource {
+    NO_SPECIAL_RESOURCES(),
+    MINERAL_RICH(),
+    MINERAL_POOR(),
+    DESERT(),
+    LOTS_OF_WATER(),
+    RICH_SOIL(),
+    POOR_SOIL(),
+    RICH_FAUNA(),
+    LIFELESS(),
+    WEIRD_MUSHROOM(),
+    LOTS_OF_HERBS(),
+    ARTISTIC(),
+    WARLIKE();
 }
+
+
