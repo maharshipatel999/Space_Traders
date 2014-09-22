@@ -7,8 +7,9 @@
 package spacetrader;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Represents a Solar System the player can visit.
@@ -22,7 +23,7 @@ public class SolarSystem {
     private final int level;
     private final int resource;
     private final int polSys;
-    private final static ArrayList<Point> solSysLocations = new ArrayList<>(100);
+    private final static Set<Point> solSysLocations = new HashSet<>(100);
     private final static Random rand = new Random();
     
     public SolarSystem(String name) {
