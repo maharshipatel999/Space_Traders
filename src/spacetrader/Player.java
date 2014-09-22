@@ -19,18 +19,37 @@ public class Player {
     private int engineerSkill;
     private int investorSkill;
     
-    public Player(String name, int pilotSkill, int fighterSkill,
-                  int traderSkill , int engineerSkill, int investorSkill) {
+    public Player(String name, int pilot, int fighter, int trader, int engineer, int investor) {
         this.name = name;
-        this.pilotSkill = pilotSkill;
-        this.fighterSkill = fighterSkill;
-        this.traderSkill = traderSkill;
-        this.engineerSkill = engineerSkill;
-        this.investorSkill = investorSkill;
+        this.pilotSkill = pilot;
+        this.fighterSkill = fighter;
+        this.traderSkill = trader;
+        this.engineerSkill = engineer;
+        this.investorSkill = investor;
     }
     
     public String getName() {
         return name;
+    }
+    
+    public int getPilotSkill() {
+        return pilotSkill;
+    }
+
+    public int getFighterSkill() {
+        return fighterSkill;
+    }
+
+    public int getTraderSkill() {
+        return traderSkill;
+    }
+
+    public int getEngineerSkill() {
+        return engineerSkill;
+    }
+
+    public int getInvestorSkill() {
+        return investorSkill;
     }
     
 }
