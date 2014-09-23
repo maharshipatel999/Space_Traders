@@ -25,6 +25,10 @@ public class MainController {
     SpaceTrader game;
     Stage stage;
     
+    /**
+     * Creates the MainController.
+     * MainController has a reference to the main class and stage. 
+     */
     public MainController(SpaceTrader game, Stage stage) {
         this.game = game;
         this.stage = stage;
@@ -42,15 +46,6 @@ public class MainController {
     }
     
     /**
-     * Sets the main player of this game.
-     * 
-     * @param player this game's player, cannot be null
-     */
-    public void setPlayer(Player player) {
-        
-    }
-    
-    /**
      * Transitions the game screen to the Welcome Screen.
      */
     public void goToWelcomeScreen() {
@@ -65,9 +60,7 @@ public class MainController {
      */
     public void goToPlayerConfigScreen() {
         CharacterDialogController control;
-        
-        control = (CharacterDialogController) changeScene("/spacetrader/CharacterDialog.fxml");//C:\\Users\\Caleb\\Documents\\NetBeansProjects\\CS-2340-Fall-2014\\src\\spacetrader\\CharacterDialog.fxml");
-        
+        control = (CharacterDialogController) changeScene("/spacetrader/CharacterDialog.fxml");
         control.setMainControl(this);
     }
     /**
