@@ -16,7 +16,9 @@ import java.util.Set;
  * 
  * @author maharshipatel999
  */
-public class SolarSystem {
+public class Planet {
+    
+    private final Random rand = new Random();
     
     private final String name;
     private final Point location;
@@ -24,18 +26,9 @@ public class SolarSystem {
     private final Resource resource;
     private final PoliticalSystem politSys;
     
-    private final static Set<Point> solSysLocations = new HashSet<>(100);
-    private final static Random rand = new Random();
-    
-    public SolarSystem(String name) {
+    public Planet(String name, Point location) {
         this.name = name;
-        
-        Point myLocation;
-        do {
-            myLocation = randomPoint();
-        } while (solSysLocations.contains(myLocation));
-        solSysLocations.add(myLocation);
-        this.location = myLocation;
+        this.location = location;
         
         //picks a random TechLevel
         TechLevel[] levels = TechLevel.values();
@@ -48,19 +41,6 @@ public class SolarSystem {
         //picks a random Political System
         PoliticalSystem[] systems = PoliticalSystem.values();
         this.politSys = systems[rand.nextInt(systems.length)];
-    }
-
-    /**
-     * Creates a new random point between MAX_LOC (exclusive) and MIN_LOC (inclusive).
-     * @return a new random point. 
-     */
-    private Point randomPoint() {
-        final int MAX_LOC = 500;
-        final int MIN_LOC = 10;
-        int x = rand.nextInt(MAX_LOC - MIN_LOC) + MIN_LOC;
-        int y = rand.nextInt(MAX_LOC - MIN_LOC) + MIN_LOC;
-        Point tempPoint = new Point(x, y);
-        return tempPoint;
     }
 
     public String getName() {

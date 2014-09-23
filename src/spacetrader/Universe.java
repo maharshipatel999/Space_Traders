@@ -6,150 +6,172 @@
 
 package spacetrader;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 /**
  *
- * @author maharshipatel999
+ * @author maharshipatel999, Caleb Stokols
  */
 public class Universe {
     
-    private ArrayList<SolarSystem> solarSystems;
-    private static final String[] SOLAR_SYSTEM_NAMES =
-    {
-        "Acamar",
-        "Adahn",		// The alternate personality for The Nameless One in "Planescape: Torment"
-        "Aldea",
-        "Andevian",
-        "Antedi",
-        "Balosnee",
-        "Baratas",
-        "Brax",			// One of the heroes in Master of Magic
-        "Bretel",		// This is a Dutch device for keeping your pants up.
-        "Calondia",
-        "Campor",
-        "Capelle",		// The city I lived in while programming this game
-        "Carzon",
-        "Castor",		// A Greek demi-god
-        "Cestus",
-        "Cheron",		
-        "Courteney",	// After Courteney Cox…
-        "Daled",
-        "Damast",
-        "Davlos",
-        "Deneb",
-        "Deneva",
-        "Devidia",
-        "Draylon",
-        "Drema",
-        "Endor",
-        "Esmee",		// One of the witches in Pratchett's Discworld
-        "Exo",
-        "Ferris",		// Iron
-        "Festen",		// A great Scandinavian movie
-        "Fourmi",		// An ant, in French
-        "Frolix",		// A solar system in one of Philip K. Dick's novels
-        "Gemulon",
-        "Guinifer",		// One way of writing the name of king Arthur's wife
-        "Hades",		// The underworld
-        "Hamlet",		// From Shakespeare
-        "Helena",		// Of Troy
-        "Hulst",		// A Dutch plant
-        "Iodine",		// An element
-        "Iralius",
-        "Janus",		// A seldom encountered Dutch boy's name
-        "Japori",
-        "Jarada",
-        "Jason",		// A Greek hero
-        "Kaylon",
-        "Khefka",
-        "Kira",			// My dog's name
-        "Klaatu",		// From a classic SF movie
-        "Klaestron",
-        "Korma",		// An Indian sauce
-        "Kravat",		// Interesting spelling of the French word for "tie"
-        "Krios",
-        "Laertes",		// A king in a Greek tragedy
-        "Largo",
-        "Lave",			// The starting system in Elite
-        "Ligon",
-        "Lowry",		// The name of the "hero" in Terry Gilliam's "Brazil"
-        "Magrat",		// The second of the witches in Pratchett's Discworld
-        "Malcoria",
-        "Melina",
-        "Mentar",		// The Psilon home system in Master of Orion
-        "Merik",
-        "Mintaka",
-        "Montor",		// A city in Ultima III and Ultima VII part 2
-        "Mordan",
-        "Myrthe",		// The name of my daughter
-        "Nelvana",
-        "Nix",			// An interesting spelling of a word meaning "nothing" in Dutch
-        "Nyle",			// An interesting spelling of the great river
-        "Odet",
-        "Og",			// The last of the witches in Pratchett's Discworld
-        "Omega",		// The end of it all
-        "Omphalos",		// Greek for navel
-        "Orias",
-        "Othello",		// From Shakespeare
-        "Parade",		// This word means the same in Dutch and in English
-        "Penthara",
-        "Picard",		// The enigmatic captain from ST:TNG
-        "Pollux",		// Brother of Castor
-        "Quator",
-        "Rakhar",
-        "Ran",			// A film by Akira Kurosawa
-        "Regulas",
-        "Relva",
-        "Rhymus",
-        "Rochani",
-        "Rubicum",		// The river Ceasar crossed to get into Rome
-        "Rutia",
-        "Sarpeidon",
-        "Sefalla",
-        "Seltrice",
-        "Sigma",
-        "Sol",			// That's our own solar system
-        "Somari",
-        "Stakoron",
-        "Styris",
-        "Talani",
-        "Tamus",
-        "Tantalos",		// A king from a Greek tragedy
-        "Tanuga",
-        "Tarchannen",
-        "Terosa",
-        "Thera",		// A seldom encountered Dutch girl's name
-        "Titan",		// The largest moon of Jupiter
-        "Torin",		// A hero from Master of Magic
-        "Triacus",
-        "Turkana",
-        "Tyrus",
-        "Umberlee",		// A god from AD&D, which has a prominent role in Baldur's Gate
-        "Utopia",		// The ultimate goal
-        "Vadera",
-        "Vagra",
-        "Vandor",
-        "Ventax",
-        "Xenon",
-        "Xerxes",		// A Greek hero
-        "Yew",			// A city which is in almost all of the Ultima games
-        "Yojimbo",		// A film by Akira Kurosawa
-        "Zalkon",
-        "Zuul"			// From the first Ghostbusters movie
-    };
+    private final Random rand = new Random();
     
+    private final int PLANET_MAX_AMOUNT = 120;
+    private final int PLANET_MIN_AMOUNT = 100;
+    private final int WIDTH = 150;
+    private final int HEIGHT = 100;
+    
+    private ArrayList<Planet> planets;
+    private Set<String> planetNames = new HashSet<>();
+    private Set<Point> planetLocations = new HashSet<>(100);
+    
+    /**
+     * Creates the Universe with a semi-randomly chosen amount of Planets.
+     * Each planet has a randomly chosen name and randomly chosen location.
+     */
     public Universe() {
-        solarSystems = new ArrayList<>(SOLAR_SYSTEM_NAMES.length);
-        for (String name : SOLAR_SYSTEM_NAMES) {
-            SolarSystem temp = new SolarSystem(name);
-            solarSystems.add(temp);
+        int planetAmount = rand.nextInt(PLANET_MAX_AMOUNT - PLANET_MIN_AMOUNT) + PLANET_MIN_AMOUNT;
+        planets = new ArrayList<>(planetAmount);
+        
+        //Create all the planets!
+        for (int i = 0; i < planetAmount; i++) {
+            String name; //pick random name
+            do {
+                name = generateRandomName();
+            } while (planetNames.contains(name));
+            planetNames.add(name);
+            
+            Point location; //pick random location
+            do {
+                location = generateRandomLocation();
+            } while (planetLocations.contains(location));
+            planetLocations.add(location);
+            
+            Planet planet = new Planet(name, location); //create planet
+            planets.add(planet);
         }
     }
     
-    public ArrayList<SolarSystem> getSolarSystems() {
-        return solarSystems;
+    /**
+     * Gets a list of all the planets in the universe.
+     * @return list of all planets in universe
+     */
+    public ArrayList<Planet> getPlanets() {
+        return planets;
     }
     
+    /**
+     * Creates a new random point between MAX_LOC (exclusive) and MIN_LOC (inclusive).
+     * @return a new random point. 
+     */
+    private Point generateRandomLocation() {
+        int x = rand.nextInt(WIDTH);
+        int y = rand.nextInt(HEIGHT);
+        return new Point(x, y);
+    }
+    
+    /**
+     * Creates a random name for a planet. Names can start with a Greek letter
+     * and/or end with a single-digit number.
+     */
+    private String generateRandomName() {
+        final String[] greekLetters = {
+            "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta",
+            "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Xi",
+            "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi",
+            "Psi", "Omega"
+        };
+        final char[] preFixLetters = {
+            'b', 'c', 'd', 'f', 'g', 'h', 'k', 'l', 'm', 'n', 'p', 'r', 's',
+            't', 'v', 'w', 'x', 'y', 'z'
+        };
+        final char[] letters = {
+            'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r',
+            's', 't', 'v', 'w', 'x', 'y', 'z'
+        };
+        final String[] vowels = {
+            "a", "e", "i", "o", "u", "ou", "ee", "ow", "aw", "oy", "ea", 
+            "eye", "eu", "oa", "ai", "ie", "aye", "oo", "ii", "io", "ia", "uo",
+            "oe", "eo", "y"};
+        final String[] jprefix = { "j", "sj", "jr", "jw" };
+        
+        //if (rand.nextInt(100) < 30) {
+        //        name += "s";
+        //}
+        
+        final int NUMBER_SUFFIX_PROBABILITY = 50;
+        final int GREEK_SUFFIX_PROBABILITY = 45;
+        
+        final int CLUSTER_MAX_1 = 2; //the max and min length for each consonant cluster
+        final int CLUSTER_MIN_1 = 0;
+        
+        final int CLUSTER_MAX_2 = 2;
+        final int CLUSTER_MIN_2 = 1;
+        
+        final int CLUSTER_MAX_3 = 2;
+        final int CLUSTER_MIN_3 = 0;
+        
+        final int J_PREFIX_PROBABILITY = 5; //probability that prefix will have a j in it
+        final int SECOND_SYLLABLE_PROBABILITY = 80;
+        final int THIRD_SYLLABLE_PROBABILITY = 3;
+        
+        String name = "";
+        
+        //First Consonant Cluster
+        int clusterLength = rand.nextInt(CLUSTER_MAX_1 - CLUSTER_MIN_1) + CLUSTER_MIN_1;
+        if (clusterLength > 0) {
+            if (rand.nextInt(100) < J_PREFIX_PROBABILITY) {
+                name += jprefix[rand.nextInt(jprefix.length)];
+            } else {
+                for (int i = 0; i < clusterLength; i++) {
+                    int ltrIndex = rand.nextInt(preFixLetters.length);
+                    name += preFixLetters[ltrIndex];
+                }
+            }
+        }
+        //First Vowel Cluster
+        name += vowels[rand.nextInt(vowels.length)];
+        
+        //Second Consonant Cluster
+        clusterLength = rand.nextInt(CLUSTER_MAX_2 - CLUSTER_MIN_2) + CLUSTER_MIN_2;
+        for (int i = 0; i < clusterLength; i++) {
+            int ltrIndex = rand.nextInt(letters.length);
+            name += letters[ltrIndex];
+        }
+        
+        //Second Syllable
+        if (rand.nextInt(100) < SECOND_SYLLABLE_PROBABILITY) {
+            clusterLength = rand.nextInt(CLUSTER_MAX_3 - CLUSTER_MIN_3) + CLUSTER_MIN_3;
+            if (clusterLength > 0) {
+                //Second Vowel Cluster
+                name += vowels[rand.nextInt(vowels.length)];
+                //Second Consonant Cluster
+                for (int i = 0; i < clusterLength; i++) {
+                    int ltrIndex = rand.nextInt(letters.length);
+                    name += letters[ltrIndex];
+                }
+            }
+            //Third Vowel Cluster
+            if (rand.nextInt(100) < THIRD_SYLLABLE_PROBABILITY) {
+                name += vowels[rand.nextInt(vowels.length)];
+            }
+        }
+        
+        //extra single digit number
+        if (rand.nextInt(100) < NUMBER_SUFFIX_PROBABILITY) {
+                name += " " + (rand.nextInt(8) + 1);
+        }
 
+        //uppercase the first letter of name
+        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+
+        if (rand.nextInt(100) < GREEK_SUFFIX_PROBABILITY) {
+            name = greekLetters[rand.nextInt(greekLetters.length)] + "-" + name;
+        }
+        return name;
+    }
 }
