@@ -4,27 +4,20 @@
  * and open the template in the editor.
  */
 
-package spacetrader;
+package spacetrader.system;
 
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import spacetrader.Player;
 
 /**
  * FXML Controller class
@@ -39,6 +32,7 @@ public class CharacterDialogController implements Initializable {
     private int traderSkill;
     private int engineerSkill;
     private int investorSkill;
+    private MainController mainControl;
     
     @FXML private TextField nameText;
     @FXML private Text pilotSkillText;
@@ -50,13 +44,20 @@ public class CharacterDialogController implements Initializable {
     @FXML private Text confirmMessage;
     @FXML private ChoiceBox difficultyChoiceBox;
     
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         difficultyChoiceBox.setItems(
-                FXCollections.observableArrayList("Easy", "Medium", "Hard", "Ultra"));
+            FXCollections.observableArrayList("Easy", "Medium", "Hard", "Ultra"));
         difficultyChoiceBox.setValue("Medium");
         confirmMessage.setFill(Color.TRANSPARENT);
+    }
+
+    /**
+     * Gives this controller a reference to the MainController.
+     * @param mainControl the Main Controller of SpaceTrader
+     */
+    public void setMainControl(MainController mainControl) {
+        this.mainControl = mainControl;
     }
     
     /**
@@ -207,22 +208,9 @@ public class CharacterDialogController implements Initializable {
         }
         adjustPointsRemainingText();
     }
- 
-    Stage prevStage;
 
-    public void setPrevStage(Stage stage){
-         this.prevStage = stage;
-    }
-    
     @FXML protected void cancelDialogScreen(ActionEvent event) {
-         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-         try {
-            Pane pane = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
-            stage.setScene(new Scene(pane));
-            stage.show();
-        } catch (IOException e) {
-            Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
-        }
+        mainControl.goToWelcomeScreen();
     }
     
     @FXML protected void okDialogScreen(ActionEvent event) {
@@ -234,23 +222,9 @@ public class CharacterDialogController implements Initializable {
             confirmMessage.setText("Please allocate all skill points!");
             confirmMessage.setFill(Color.RED);
         } else {
-            //change scene to First Scene
-            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FirstScreen.fxml"));
-            try {
-                stage.setScene(new Scene(loader.load()));
-            } catch (IOException e) {
-                Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
-            }
-            FirstScreenController controller = loader.getController();
-            stage.show();
-            
-            //Create the Universe and Player
-            Universe universe = new Universe();
             Player player = new Player(name, pilotSkill, fighterSkill,
-                                       traderSkill, engineerSkill, investorSkill);
-            
-            controller.setUniverse(universe, player);
+                                    traderSkill, engineerSkill, investorSkill);
+            mainControl.setUpGame(player);
             
             confirmMessage.setText("Greetings Space Trader!");
             confirmMessage.setFill(Color.GREEN);

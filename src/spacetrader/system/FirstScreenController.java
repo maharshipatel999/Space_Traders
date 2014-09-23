@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 
-package spacetrader;
+package spacetrader.system;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import spacetrader.Planet;
+import spacetrader.Universe;
 
 /**
  * FXML Controller class
@@ -19,29 +21,35 @@ import javafx.scene.control.TextArea;
  */
 public class FirstScreenController implements Initializable {
 
-    private Universe universe;
-    private Player player;
+    private MainController mainControl;
     
     @FXML private TextArea spaceInformation;
+    
+    /**
+     * Gives this controller a reference to the MainController.
+     * @param mainControl the Main Controller of SpaceTrader
+     */
+    public void setMainControl(MainController mainControl) {
+        this.mainControl = mainControl;
+    }
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //TODO
     }
     
-    public void setUniverse(Universe universe, Player player) {
-        this.universe = universe;
-        this.player = player;
-        displayUniverse();
-    }
-    
-    private void displayUniverse() {
+    /**
+     * Displays every Planet in the TextArea
+     * @param universe the universe who's planets should be displayed
+     * @param playerName the name of the game's player
+     */
+    public void displayUniverse(Universe universe, String playerName) {
         for (Planet system : universe.getPlanets()) {
             spaceInformation.appendText(system + "\n");
         }
-        spaceInformation.appendText("Player: " + player.getName() + "\n");
+        spaceInformation.appendText("Player: " + playerName + "\n");
     }
 }
