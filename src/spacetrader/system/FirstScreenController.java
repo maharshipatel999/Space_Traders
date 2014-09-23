@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 
-package spacetrader;
+package spacetrader.system;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import spacetrader.Planet;
+import spacetrader.Universe;
 
 /**
  * FXML Controller class

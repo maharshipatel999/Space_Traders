@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 
-package spacetrader;
+package spacetrader.system;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import spacetrader.Player;
+import spacetrader.Universe;
 
 /**
  * This class keeps references to the game's Universe and Player,

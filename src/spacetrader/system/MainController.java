@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package spacetrader;
+package spacetrader.system;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -13,6 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import spacetrader.Player;
+import spacetrader.Universe;
 
 /**
  *
@@ -54,7 +56,7 @@ public class MainController {
     public void goToWelcomeScreen() {
         stage.setTitle("Space Traders!");
         WelcomeScreenController control;
-        control = (WelcomeScreenController) changeScene("WelcomeScreen.fxml");
+        control = (WelcomeScreenController) changeScene("/spacetrader/WelcomeScreen.fxml");
         control.setMainControl(this);
     }
     
@@ -63,16 +65,17 @@ public class MainController {
      */
     public void goToPlayerConfigScreen() {
         CharacterDialogController control;
-        control = (CharacterDialogController) changeScene("CharacterDialog.fxml");
+        
+        control = (CharacterDialogController) changeScene("/spacetrader/CharacterDialog.fxml");//C:\\Users\\Caleb\\Documents\\NetBeansProjects\\CS-2340-Fall-2014\\src\\spacetrader\\CharacterDialog.fxml");
+        
         control.setMainControl(this);
     }
-    
     /**
      * Transitions the game screen to the First Screen.
      */
     public void goToFirstScreen() {
         FirstScreenController control;
-        control = (FirstScreenController) changeScene("FirstScreen.fxml");
+        control = (FirstScreenController) changeScene("/spacetrader/FirstScreen.fxml");
         control.setMainControl(this);
         control.displayUniverse(game.getUniverse(), game.getPlayer().getName());
     }
