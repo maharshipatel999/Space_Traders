@@ -6,37 +6,40 @@
 
 package spacetrader;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import javafx.fxml.Initializable;
 
 /**
  * FXML Controller class
  *
  * @author Caleb
  */
-public class WelcomeScreenController {
+public class WelcomeScreenController implements Initializable {
+    
+    private MainController mainControl;
+    
+    /**
+     * Gives this controller a reference to the MainController.
+     * @param mainControl the Main Controller of SpaceTrader
+     */
+    public void setMainControl(MainController mainControl) {
+        this.mainControl = mainControl;
+    }
     
     @FXML protected void startNewGame(ActionEvent event) {
-         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-         try {
-            Pane pane = FXMLLoader.load(getClass().getResource("CharacterDialog.fxml"));
-            stage.setScene(new Scene(pane));
-            stage.show();
-        } catch (IOException e) {
-            Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
-        }
+         mainControl.goToPlayerConfigScreen();
     }
          
     @FXML protected void reloadGame(ActionEvent event) {
          //TODO
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //Nothing
     }
     
     

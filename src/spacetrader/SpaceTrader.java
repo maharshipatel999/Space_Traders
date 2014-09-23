@@ -6,38 +6,69 @@
 
 package spacetrader;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- *
- * @author nkaru_000
+ * This class keeps references to the game's Universe and Player,
+ * as well as the Main Controller.
+ * 
+ * @author nkaru_000, Caleb Stokols
  */
 public class SpaceTrader extends Application {
     
-    Stage stage;
+    private Universe universe;
+    private Player player;
+    private MainController mainControl;
     
     @Override
     public void start(Stage primaryStage) {
-        //Set up stage
-        stage = primaryStage;
-        primaryStage.setTitle("Space Traders!");
-        //Set scene to the welcome screen.
-        try {
-            Pane pane = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
-            stage.setScene(new Scene(pane));
-            primaryStage.show();
-        } catch (IOException e) {
-            Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
-        }
+        mainControl = new MainController(this, primaryStage);
+        mainControl.goToWelcomeScreen();
     }
 
+    /**
+     * Gets the universe for this game.
+     * 
+     * @return this game's universe
+     */
+    public Universe getUniverse() {
+        return universe;
+    }
+
+    /**
+     * Sets the universe for this game.
+     * 
+     * @param universe this game's universe, cannot be null
+     */
+    public void setUniverse(Universe universe) {
+        if (universe == null) {
+            throw new IllegalArgumentException("Universe cannot be null.");
+        }
+        this.universe = universe;
+    }
+
+    /**
+     * Gets the main player of this game.
+     * 
+     * @return this game's player
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * Sets the main player of this game.
+     * 
+     * @param player this game's player, cannot be null
+     */
+    public void setPlayer(Player player) {
+        if (player == null) {
+            throw new IllegalArgumentException("Player cannot be null.");
+        }
+        this.player = player;
+    }
+    
     /**
      * @param args the command line arguments
      */
