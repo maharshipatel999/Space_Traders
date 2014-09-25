@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="spacetrader.system.MarketPlaceController">
+   <children>
+      <SplitPane dividerPositions="0.5" prefHeight="400.0" prefWidth="600.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button layoutX="14.0" layoutY="359.0" mnemonicParsing="false" text="Buy" />
+                  <CheckBox layoutX="6.0" layoutY="20.0" mnemonicParsing="false" text="CheckBox" />
+                  <CheckBox layoutX="6.0" layoutY="54.0" mnemonicParsing="false" text="CheckBox" />
+                  <CheckBox layoutX="6.0" layoutY="86.0" mnemonicParsing="false" text="CheckBox" />
+                  <Label layoutX="18.0" layoutY="310.0" text="Net balance: " />
+                  <Label layoutX="88.0" layoutY="310.0" text="&lt;&lt;Total goes in this label&gt;&gt;" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="135.0" prefWidth="89.0">
+               <children>
+                  <Button layoutX="14.0" layoutY="359.0" mnemonicParsing="false" text="Sell" />
+                  <CheckBox layoutX="13.0" layoutY="86.0" mnemonicParsing="false" text="CheckBox" />
+                  <CheckBox layoutX="13.0" layoutY="54.0" mnemonicParsing="false" text="CheckBox" />
+                  <CheckBox layoutX="13.0" layoutY="20.0" mnemonicParsing="false" text="CheckBox" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
