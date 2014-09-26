@@ -10,22 +10,51 @@ import spacetrader.TechLevel;
 
 /**
  *
- * @author nkaru_000
+ * @author Caleb
  */
-public enum Shield {
-
-    ENERGY        (TechLevel.EARLY_INDUSTRIAL, 50, 25, "Energy Shield"),
-    REFLECTIVE    (TechLevel.POST_INDUSTRIAL, 100, 150, "Reflective Shield");
+public abstract class Shield {
     
-    private TechLevel minTechLevel;
+    private String name;
     private int price;
     private int defense;
-    private String name;
+    private TechLevel minTechLevel;
     
-    private Shield(TechLevel minTechLevel, int price, int defense, String name) {
-        this.minTechLevel = minTechLevel;
+    public Shield(String name, int price, int defense, TechLevel minTechLevel) {
+        this.name = name;
         this.price = price;
         this.defense = defense;
-        this.name = name;
+        this.minTechLevel = minTechLevel;
+    }
+
+    /**
+     * Gets the name of this shield.
+     * @return the shield's name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the base price for this shield.
+     * @return the base price
+     */
+    public int getPrice() {
+        return price;
+    }
+
+    /**
+     * Gets the defense of this shield.
+     * @return the shield's defense
+     */
+    public int getDefense() {
+        return defense;
+    }
+
+    /**
+     * Gets the minumum tech level this item can be sold at.
+     * @return the minimum tech level
+     */
+    public TechLevel getMinTechLevel() {
+        return minTechLevel;
     }
 }
