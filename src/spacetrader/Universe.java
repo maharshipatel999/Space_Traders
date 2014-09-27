@@ -40,19 +40,22 @@ public class Universe {
         
         //Create all the planets!
         for (int i = 0; i < planetAmount; i++) {
-            String name; //pick random name
+            //pick random name
+            String name;
             do {
                 name = generateRandomName();
             } while (planetNames.contains(name));
             planetNames.add(name);
             
-            Point location; //pick random location
+            //pick random location
+            Point location; 
             do {
                 location = generateRandomLocation();
             } while (planetLocations.contains(location));
             planetLocations.add(location);
             
-            Planet planet = new Planet(name, location); //create planet
+            //create planet
+            Planet planet = new Planet(name, location);
             planets.add(planet);
         }
     }    
