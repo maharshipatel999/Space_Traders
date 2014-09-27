@@ -7,12 +7,14 @@
 package spacetrader.system;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import spacetrader.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
 
@@ -71,6 +73,17 @@ public class MainController {
         control = (FirstScreenController) changeScene("/spacetrader/FirstScreen.fxml");
         control.setMainControl(this);
         control.displayUniverse(game.getUniverse(), game.getPlayer().getName());
+    }
+    /**
+     * Transitions the game screen to the First Screen.
+     */
+    public void goToMarketPlace() {
+        MarketPlaceController control;
+        control = (MarketPlaceController) changeScene("/spacetrader/Commerce/MarketPlace.fxml");
+        control.setMainControl(this);
+        //Pick a random planet to start off game
+        ArrayList<Planet> planets = game.getUniverse().getPlanets();
+        control.setModel(planets.get(0) , game.getPlayer());
     }
     
     /**
