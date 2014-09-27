@@ -17,11 +17,12 @@ import spacetrader.commerce.Weapon;
  */
 public abstract class SpaceShip {
     
+    private ShipType type;
     private Cargo cargo;
     private EquipmentSlots<Weapon> weapons;
     private EquipmentSlots<Shield> shields;
     private EquipmentSlots<Gadget> gadgets;
-    private ShipType type;
+    private FuelTank tank;
     
     public SpaceShip(ShipType type) {
         this.type = type;
@@ -29,6 +30,7 @@ public abstract class SpaceShip {
         weapons = new EquipmentSlots<>(type.numWeaponSlots());
         shields = new EquipmentSlots<>(type.numShieldSlots());
         gadgets = new EquipmentSlots<>(type.numGadgetSlots());
+        tank = new FuelTank(type.fuel());
 
     }
 }
