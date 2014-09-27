@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="631.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.FirstScreenController">
+<AnchorPane id="AnchorPane" prefHeight="672.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.FirstScreenController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="46.0" layoutX="23.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="672.0" />
       <Text layoutX="220.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Greetings Space Traveler!">
@@ -17,5 +17,6 @@
          </font>
       </Text>
       <TextArea fx:id="spaceInformation" editable="false" layoutX="23.0" layoutY="76.0" prefHeight="542.0" prefWidth="672.0" wrapText="true" />
+      <Button layoutX="549.0" layoutY="627.0" mnemonicParsing="false" onAction="#goToMarket" text="Go To MarketPlace" />
    </children>
 </AnchorPane>

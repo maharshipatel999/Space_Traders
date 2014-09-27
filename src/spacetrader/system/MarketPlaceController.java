@@ -13,7 +13,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
+import spacetrader.Planet;
 import spacetrader.Player;
+import spacetrader.Player;
+import spacetrader.system.MainController;
 
 /**
  * FXML Controller class
@@ -49,14 +52,15 @@ public class MarketPlaceController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
          netBalanceText.setText("0 credits");
     }
+    
     public void setModel(Planet planet, Player player) {
          this.player = player;
          this.planet = planet;
      }
+    
      public void setMainControl(MainController mainControl) {
         this.mainControl = mainControl;
     }
- 
     
     @FXML protected void increaseBuyQuantity1(ActionEvent event) {
         buyQuantity1++;

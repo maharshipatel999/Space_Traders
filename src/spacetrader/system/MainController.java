@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import spacetrader.Planet;
@@ -80,11 +79,11 @@ public class MainController {
      */
    public void goToMarketPlace() {
         MarketPlaceController control;
-        control = (MarketPlaceController) changeScene("/spacetrader/Commerce/MarketPlace.fxml");
+        control = (MarketPlaceController) changeScene("/spacetrader/MarketPlace.fxml");
         control.setMainControl(this);
         //Pick a random planet to start off game
         ArrayList<Planet> planets = game.getUniverse().getPlanets();
-        control.setModel(planets.get(0) , game.getPlayer());
+        control.setModel(planets.get(0), game.getPlayer());
     }
     
     /**
@@ -95,7 +94,7 @@ public class MainController {
     private Initializable changeScene(String fxmlScene) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlScene));
         try {
-            stage.setScene(new Scene((Parent) loader.load()));
+            stage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
         }
