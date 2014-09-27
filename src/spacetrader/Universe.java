@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import spacetrader.commerce.PriceIncreaseEvent;
 
 /**
  *
@@ -54,8 +55,11 @@ public class Universe {
             Planet planet = new Planet(name, location); //create planet
             planets.add(planet);
         }
+    }    
+    public void updatePriceEvent(Planet p) {
+        PriceIncreaseEvent[] priceIncEvents = PriceIncreaseEvent.values();
+         p.setPriceIncEvent(priceIncEvents[rand.nextInt(priceIncEvents.length)]);
     }
-    
     /**
      * Gets a list of all the planets in the universe.
      * @return list of all planets in universe

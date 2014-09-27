@@ -9,9 +9,11 @@ package spacetrader.system;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
+import spacetrader.Planet;
+import spacetrader.Player;
 
 /**
  * FXML Controller class
@@ -32,8 +34,11 @@ public class MarketPlaceController implements Initializable {
     private int sellQuantityPrice2= 100;
     private int sellQuantityPrice3 = 350;
     private int netBalance = 0;
-    
+    private Player player;
+    private Planet planet;
+    private MainController mainControl;
     @FXML private Text netBalanceText;
+ 
     
             
 
@@ -42,8 +47,17 @@ public class MarketPlaceController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }   
+         netBalanceText.setText("0 credits");
+    }
+    public void setModel(Planet planet, Player player) {
+         this.player = player;
+         this.planet = planet;
+     }
+     public void setMainControl(MainController mainControl) {
+        this.mainControl = mainControl;
+    }
+ 
+    
     @FXML protected void increaseBuyQuantity1(ActionEvent event) {
         buyQuantity1++;
         buyQuantity1Price *= buyQuantity1;
