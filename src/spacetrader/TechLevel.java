@@ -16,6 +16,7 @@ public enum TechLevel {
     MEDIEVAL(),
     RENAISSANCE(),
     EARLY_INDUSTRIAL(),
+    INDUSTRIAL(),
     POST_INDUSTRIAL(),
     HI_TECH();
 }

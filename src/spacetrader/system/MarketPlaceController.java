@@ -13,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
-import spacetrader.Planet;
 import spacetrader.Player;
-import spacetrader.Player;
-import spacetrader.system.MainController;
 
 /**
  * FXML Controller class
@@ -40,17 +37,17 @@ public class MarketPlaceController implements Initializable {
     private Player player;
     private Planet planet;
     private MainController mainControl;
-    @FXML private Text netBalanceText;
- 
     
-            
+    @FXML private Text netBalanceText;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         netBalanceText.setText("0 credits");
+        netBalanceText.setText("0 credits");
+        //for every item in the planet's market's stock, there should be 
+        //one corresponding line in the marketplace view.
     }
     
     public void setModel(Planet planet, Player player) {
@@ -58,8 +55,12 @@ public class MarketPlaceController implements Initializable {
          this.planet = planet;
      }
     
-     public void setMainControl(MainController mainControl) {
+    public void setMainControl(MainController mainControl) {
         this.mainControl = mainControl;
+    }
+    
+    private void updateNetBalance() {
+        
     }
     
     @FXML protected void increaseBuyQuantity1(ActionEvent event) {
@@ -69,7 +70,7 @@ public class MarketPlaceController implements Initializable {
         buyQuantity3Price) + (sellQuantityPrice1 - 
         sellQuantityPrice2 - sellQuantityPrice3);
         netBalanceText.setText(netBalance + " credits");
-        }
+    }
     @FXML protected void decreaseBuyQuantity1(ActionEvent event) {
         if(buyQuantity1 > 0) {
             buyQuantity1--;
@@ -79,7 +80,7 @@ public class MarketPlaceController implements Initializable {
             sellQuantityPrice2 - sellQuantityPrice3);
             netBalanceText.setText(netBalance + " credits");
         }
-        }
+    }
     @FXML protected void increaseBuyQuantity2(ActionEvent event) {
         buyQuantity2++;
         buyQuantity2Price *= buyQuantity2;
@@ -87,7 +88,7 @@ public class MarketPlaceController implements Initializable {
         buyQuantity3Price) + (sellQuantityPrice1 - 
         sellQuantityPrice2 - sellQuantityPrice3);
         netBalanceText.setText(netBalance + " credits");
-        }
+    }
     @FXML protected void decreaseBuyQuantity2(ActionEvent event) {
         if(buyQuantity2 > 0) {
             buyQuantity2--;
@@ -97,7 +98,7 @@ public class MarketPlaceController implements Initializable {
             sellQuantityPrice2 - sellQuantityPrice3);
             netBalanceText.setText(netBalance + " credits");
         }
-        }
+    }
     @FXML protected void increaseBuyQuantity3(ActionEvent event) {
         buyQuantity3++;
         buyQuantity3Price *= buyQuantity3;
@@ -105,7 +106,7 @@ public class MarketPlaceController implements Initializable {
         buyQuantity3Price) + (sellQuantityPrice1 - 
         sellQuantityPrice2 - sellQuantityPrice3);
         netBalanceText.setText(netBalance + " credits");
-        }
+    }
     @FXML protected void decreaseBuyQuantity(ActionEvent event) {
         if(buyQuantity3 > 0) {
             buyQuantity3--;
@@ -115,7 +116,7 @@ public class MarketPlaceController implements Initializable {
             sellQuantityPrice2 - sellQuantityPrice3);
             netBalanceText.setText(netBalance + " credits");
         }
-        }
+    }
     @FXML protected void increaseSellQuantity1(ActionEvent event) {
         sellQuantity1++;
         sellQuantityPrice1 *= sellQuantity1;
@@ -123,17 +124,17 @@ public class MarketPlaceController implements Initializable {
         buyQuantity3Price) + (sellQuantityPrice1 - 
         sellQuantityPrice2 - sellQuantityPrice3);
         netBalanceText.setText(netBalance + " credits");
-        }
+    }
     @FXML protected void decreaseSellQuantity1(ActionEvent event) {
         if (sellQuantity1 > 0) {
             sellQuantity1--;    
-        sellQuantityPrice1 *= sellQuantity1;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
+            sellQuantityPrice1 *= sellQuantity1;
+            netBalance = (buyQuantity1Price + buyQuantity2Price + 
                 buyQuantity3Price) + (sellQuantityPrice1 - 
                 sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText("" + netBalance);
+            netBalanceText.setText("" + netBalance);
         }
-        }
+    }
     @FXML protected void increaseSellQuantity2(ActionEvent event) {
         sellQuantity1++;
         sellQuantityPrice2 *= sellQuantity2;
@@ -145,13 +146,13 @@ public class MarketPlaceController implements Initializable {
     @FXML protected void decreaseSellQuantity2(ActionEvent event) {
         if (sellQuantity2 > 0) {
             sellQuantity2--;    
-        sellQuantityPrice2 *= sellQuantity2;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
+            sellQuantityPrice2 *= sellQuantity2;
+            netBalance = (buyQuantity1Price + buyQuantity2Price + 
                 buyQuantity3Price) + (sellQuantityPrice1 - 
                 sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText("" + netBalance);
+            netBalanceText.setText("" + netBalance);
         }
-        }
+    }
     @FXML protected void increaseSellQuantity3(ActionEvent event) {
         sellQuantity3++;
         sellQuantityPrice3 *= sellQuantity3;
@@ -159,22 +160,22 @@ public class MarketPlaceController implements Initializable {
                 buyQuantity3Price) + (sellQuantityPrice1 - 
                 sellQuantityPrice2 - sellQuantityPrice3);
         netBalanceText.setText("" + netBalance);
-        }
+    }
     @FXML protected void decreaseSellQuantity3(ActionEvent event) {
         if (sellQuantity3 > 0) {
             sellQuantity3--;    
-        sellQuantityPrice3 *= sellQuantity3;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
+            sellQuantityPrice3 *= sellQuantity3;
+            netBalance = (buyQuantity1Price + buyQuantity2Price + 
                 buyQuantity3Price) + (sellQuantityPrice1 - 
                 sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText("" + netBalance);
+            netBalanceText.setText("" + netBalance);
         }
-        }
+    }
+        
     @FXML protected void buyButtonPressed(ActionEvent event) {
         // buy the specified items
     }
-    }
-
+}
     
 
     

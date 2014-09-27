@@ -5,12 +5,12 @@ package spacetrader.commerce;
 + * @author Seth
 + */
 public enum PriceIncreaseEvent {
-    NORMAL(),
     DROUGHT(),
     COLD(),
-    CROPFAIL(),
+    CROP_FAIL(),
     WAR(),
     BOREDOM(),
-    PLEAGUE(),
-    LACKOFWORKERS(),
+    PLAGUE(),
+    LACK_OF_WORKERS(),
+    NONE();
 }

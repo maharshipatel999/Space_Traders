@@ -7,6 +7,7 @@
 package spacetrader.commerce;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import spacetrader.exceptions.CargoIsFullException;
 
@@ -18,7 +19,7 @@ import spacetrader.exceptions.CargoIsFullException;
  */
 public class Cargo {
     
-    private final HashMap<TradeGood, Integer> tradeGoods;
+    private final Map<TradeGood, Integer> tradeGoods;
     private int numSlots;
     private int count;
     

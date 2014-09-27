@@ -8,6 +8,7 @@ package spacetrader;
 
 import java.awt.Point;
 import java.util.Random;
+import spacetrader.commerce.Market;
 import spacetrader.commerce.PriceIncreaseEvent;
 /**
  * Represents a Solar System the player can visit.
@@ -24,6 +25,7 @@ public class Planet {
     private final Resource resource;
     private final PoliticalSystem politSys;
     private PriceIncreaseEvent priceIncEvent;
+    private Market market;
     
     public Planet(String name, Point location) {
         this.name = name;
@@ -61,8 +63,13 @@ public class Planet {
     public PoliticalSystem getPoliticalSystem() {
         return this.politSys;
     }
-     public void setPriceIncEvent(PriceIncreaseEvent priceIncEvent) {
+    
+    public void setPriceIncEvent(PriceIncreaseEvent priceIncEvent) {
         this.priceIncEvent = priceIncEvent;
+    }
+     
+    public Market getMarket() {
+        return market;
     }
 
     @Override

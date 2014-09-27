@@ -11,7 +11,7 @@ package spacetrader;
  * @author Caleb Stokols, Seth Davis
  */
 public enum Resource {
-    NO_SPECIAL_RESOURCES(),
+    NONE(),
     MINERAL_RICH(),
     MINERAL_POOR(),
     DESERT(),
@@ -20,7 +20,7 @@ public enum Resource {
     POOR_SOIL(),
     RICH_FAUNA(),
     LIFELESS(),
-    WEIRD_MUSHROOM(),
+    WEIRD_MUSHROOMS(),
     LOTS_OF_HERBS(),
     ARTISTIC(),
     WARLIKE();
