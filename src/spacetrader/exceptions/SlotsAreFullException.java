@@ -1,3 +1,4 @@
+        
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,8 +9,24 @@ package spacetrader.exceptions;
 
 /**
  *
- * @author Caleb
+ * @author Seth
  */
 public class SlotsAreFullException extends RuntimeException {
-    
+
+    /**
+     * Creates a new instance of <code>InsufficientFundsException</code> without
+     * detail message.
+     */
+    public SlotsAreFullException() {
+    }
+
+    /**
+     * Constructs an instance of <code>InsufficientFundsException</code> with
+     * the specified detail message.
+     *
+     * @param msg the detail message.
+     */
+    public SlotsAreFullException(String msg) {
+        super("Ship slots are full.");
+    }
 }
