@@ -6,17 +6,18 @@
 
 package spacetrader;
 
+import spacetrader.commerce.Cargo;
 import spacetrader.commerce.Gadget;
 import spacetrader.commerce.Shield;
 import spacetrader.commerce.Weapon;
 
 /**
  *
- * @author Caleb
+ * @author Caleb Stokols
  */
 public abstract class SpaceShip {
     
-    //private Cargo cargo;
+    private Cargo cargo;
     private EquipmentSlots<Weapon> weapons;
     private EquipmentSlots<Shield> shields;
     private EquipmentSlots<Gadget> gadgets;
@@ -24,10 +25,10 @@ public abstract class SpaceShip {
     
     public SpaceShip(ShipType type) {
         this.type = type;
+        Cargo cargo = new Cargo(type.numCargoSlots());
         weapons = new EquipmentSlots<>(type.numWeaponSlots());
         shields = new EquipmentSlots<>(type.numShieldSlots());
         gadgets = new EquipmentSlots<>(type.numGadgetSlots());
-        
-        //cargo = new Cargo();
+
     }
 }

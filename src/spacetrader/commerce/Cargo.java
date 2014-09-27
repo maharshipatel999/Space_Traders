@@ -8,7 +8,7 @@ package spacetrader.commerce;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
-import spacetrader.ShipType;
+import spacetrader.exceptions.CargoIsFullException;
 
 /**
  * This is the Cargo class that holds TradeGoods
@@ -19,12 +19,12 @@ import spacetrader.ShipType;
 public class Cargo {
     
     private final HashMap<TradeGood, Integer> tradeGoods;
-    private ShipType shipType;
+    private int numSlots;
     private int count;
     
-    public Cargo(ShipType shipType) {
+    public Cargo(int numSlots) {
+        this.numSlots = numSlots;
         this.tradeGoods = new HashMap<>();
-        this.shipType = shipType;
         //add enum items to the map
     }
     
@@ -35,7 +35,7 @@ public class Cargo {
      */
     public void addItem(TradeGood tradeGood, int quantity) {
         if (isFull()) {
-            //TODO
+            throw new CargoIsFullException();
         }
         int currentQuantity = getQuantityOfGood(tradeGood);
         int newQuantity = currentQuantity + quantity;
@@ -49,7 +49,7 @@ public class Cargo {
      */
     public void addMultipleItems(HashMap<TradeGood, Integer> newGoods) {
         if (isFull()) {
-            //TODO
+            throw new CargoIsFullException();
         }
         for (Entry<TradeGood, Integer> item : newGoods.entrySet()) {
             addItem(item.getKey(), item.getValue());
@@ -82,19 +82,24 @@ public class Cargo {
     }
     
     /**
+     * Increases the number of available slots.
+     */
+    public void addSlot() {
+        numSlots++;
+    }
+    
+    /**
+     * Decreases the number of available slots
+     */
+    public void removeSlot() {
+        numSlots--;
+    }
+    /**
      * Checks if there are any empty cargo slots left based on ship's capacity
      * @return true if cargo is full
      */
     public boolean isFull() {
-        return (count == this.shipType.numCargoSlots());
-    }
-    
-    /**
-     * Sets type of ship which determines cargo capacity
-     * @param shipType type of ship player has
-     */
-    public void setShipType(ShipType shipType) {
-        this.shipType = shipType;
+        return (count >= numSlots);
     }
     
     /**
