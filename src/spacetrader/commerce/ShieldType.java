@@ -12,21 +12,20 @@ import spacetrader.TechLevel;
  *
  * @author nkaru_000
  */
-public enum Gadget {
-    
-    EXTRA_CARGO        (TechLevel.MEDIEVAL, 200, "5 Extra Cargo Bays"),
-    NAVIGATION         (TechLevel.POST_INDUSTRIAL, 1000, "Navigating System"),
-    AUTO_REPAIR        (TechLevel.RENAISSANCE, 750, "Auto-Repair System"),
-    TARGETING          (TechLevel.POST_INDUSTRIAL, 9000, "Targeting System"),
-    CLOAK              (TechLevel.HI_TECH, 20000, "Cloaking Device");
+public enum ShieldType {
+
+    ENERGY        (TechLevel.EARLY_INDUSTRIAL, 50, 25, "Energy Shield"),
+    REFLECTIVE    (TechLevel.POST_INDUSTRIAL, 100, 150, "Reflective Shield");
     
     private TechLevel minTechLevel;
     private int price;
+    private int defense;
     private String name;
     
-    private Gadget(TechLevel minTechLevel, int price, String name) {
+    private ShieldType(TechLevel minTechLevel, int price, int defense, String name) {
         this.minTechLevel = minTechLevel;
         this.price = price;
+        this.defense = defense;
         this.name = name;
     }
 }

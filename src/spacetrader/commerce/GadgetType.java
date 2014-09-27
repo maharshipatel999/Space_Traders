@@ -12,7 +12,7 @@ import spacetrader.TechLevel;
  *
  * @author nkaru_000
  */
-public enum Gadget {
+public enum GadgetType {
     
     EXTRA_CARGO        (TechLevel.MEDIEVAL, 200, "5 Extra Cargo Bays"),
     NAVIGATION         (TechLevel.POST_INDUSTRIAL, 1000, "Navigating System"),
@@ -24,7 +24,7 @@ public enum Gadget {
     private int price;
     private String name;
     
-    private Gadget(TechLevel minTechLevel, int price, String name) {
+    private GadgetType(TechLevel minTechLevel, int price, String name) {
         this.minTechLevel = minTechLevel;
         this.price = price;
         this.name = name;
