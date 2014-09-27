@@ -55,5 +55,6 @@
             <Font name="Segoe Script" size="23.0" />
          </font>
       </Text>
+      <Button fx:id="easterEgg" layoutX="610.0" layoutY="73.0" mnemonicParsing="false" onAction="#layEggs" prefHeight="14.0" prefWidth="2.0" text="Invisible" />
    </children>
 </AnchorPane>

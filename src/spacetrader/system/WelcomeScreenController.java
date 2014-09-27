@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import spacetrader.Player;
 
 /**
  * FXML Controller class
@@ -18,6 +20,8 @@ import javafx.fxml.Initializable;
  * @author Caleb
  */
 public class WelcomeScreenController implements Initializable {
+    
+    @FXML private Button easterEgg;
     
     private MainController mainControl;
     
@@ -39,8 +43,13 @@ public class WelcomeScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Nothing
+        easterEgg.setOpacity(0);
     }
     
-    
+    //This is for testing purposes only. Allows tester to jump ahead
+    //to FirstScreen with default character configuration.
+    @FXML protected void layEggs(ActionEvent event) {
+        Player player = new Player("LubMaster", 3, 3, 3, 3, 3);
+        mainControl.setUpGame(player);
+    }
 }
