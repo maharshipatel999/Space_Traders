@@ -103,7 +103,7 @@ public class Universe {
         final String[] vowels = {
             "a", "e", "i", "o", "u", "ou", "ee", "ow", "aw", "oy", "ea", 
             "eye", "eu", "oa", "ai", "ie", "aye", "oo", "ii", "io", "ia", "uo",
-            "oe", "eo", "y"};
+            "oe", "eo"};
         final String[] jprefix = { "j", "sj", "jr", "jw" };
         
         //if (rand.nextInt(100) < 30) {
@@ -124,7 +124,7 @@ public class Universe {
         
         final int J_PREFIX_PROBABILITY = 5; //probability that prefix will have a j in it
         final int SECOND_SYLLABLE_PROBABILITY = 80;
-        final int THIRD_SYLLABLE_PROBABILITY = 3;
+        final int THIRD_SYLLABLE_PROBABILITY = 6;
         
         String name = "";
         
@@ -179,6 +179,10 @@ public class Universe {
         if (rand.nextInt(100) < GREEK_SUFFIX_PROBABILITY) {
             name = greekLetters[rand.nextInt(greekLetters.length)] + "-" + name;
         }
+        if (rand.nextInt(400) < 1) {
+            name = "Lubstown,USA";
+        }
+        
         return name;
     }
 }
