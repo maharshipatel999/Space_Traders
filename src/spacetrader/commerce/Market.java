@@ -24,13 +24,7 @@ public class Market {
         this.planet = planet;
         
         setAllPrices();
-        
-        Map<TradeGood, Integer> prices = planet.getMarket().getPrices();
-        for (TradeGood good : TradeGood.values()) {
-            if (prices.get(good) > 0) {
-                 
-            }
-        }
+        setMarketStock();
     }
     
     /**
