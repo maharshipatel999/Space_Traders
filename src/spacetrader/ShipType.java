@@ -48,6 +48,10 @@ public enum ShipType {
     public int numShieldSlots() {
             return shieldSlots;
     }
+    
+    public int numCargoSlots() {
+            return cargoBay;
+    }
 
     public int parsecsPerTank() {
             return parsecsPerTank;
