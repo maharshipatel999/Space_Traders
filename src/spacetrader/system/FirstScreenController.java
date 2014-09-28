@@ -43,7 +43,7 @@ public class FirstScreenController implements Initializable {
     }
     
     @FXML protected void goToMarket(ActionEvent event) {
-        mainControl.goToMarketPlace();
+        mainControl.goToMarketScreen();
     }
     
     /**

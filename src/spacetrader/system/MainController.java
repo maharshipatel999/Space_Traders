@@ -77,10 +77,10 @@ public class MainController {
       /**
      * Transitions the game screen to the First Screen.
      */
-   public void goToMarketPlace() {
+   public void goToMarketScreen() {
         stage.setTitle("Welcome to the Market!");        
-        MarketPlaceController control;
-        control = (MarketPlaceController) changeScene("/spacetrader/MarketPlace.fxml");
+        MarketScreenController control;
+        control = (MarketScreenController) changeScene("/spacetrader/MarketScreen.fxml");
         control.setMainControl(this);
         //Pick a random planet to start off game
         ArrayList<Planet> planets = game.getUniverse().getPlanets();

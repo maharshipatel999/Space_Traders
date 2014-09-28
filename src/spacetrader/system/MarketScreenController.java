@@ -20,7 +20,7 @@ import spacetrader.Player;
  *
  * @author nkaru_000
  */
-public class MarketPlaceController implements Initializable {
+public class MarketScreenController implements Initializable {
     private int buyQuantity1;
     private int buyQuantity2;
     private int buyQuantity3;
@@ -48,7 +48,7 @@ public class MarketPlaceController implements Initializable {
         netBalanceText = new Text();
         netBalanceText.setText("0 Credits");
         //for every item in the planet's market's stock, there should be 
-        //one corresponding line in the marketplace view.
+        //one corresponding line in the marketscreen view.
     }
     
     @FXML protected void goToFirstScreen(ActionEvent event) {
