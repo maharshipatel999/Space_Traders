@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
 import spacetrader.Player;
@@ -38,6 +39,16 @@ public class MarketScreenController implements Initializable {
     private Planet planet;
     private MainController mainControl;
     
+    @FXML private TextField priceWaterBuy;
+    @FXML private TextField priceFursBuy;
+    @FXML private TextField priceFoodBuy;
+    @FXML private TextField priceOreBuy;
+    @FXML private TextField priceGamesBuy;
+    @FXML private TextField priceFirearmsBuy;
+    @FXML private TextField priceMedicineBuy;
+    @FXML private TextField priceMachinesBuy;
+    @FXML private TextField priceNarcoticsBuy;
+    @FXML private TextField priceRobotsBuy;
     @FXML private Text netBalanceText;
 
     /**
@@ -62,6 +73,14 @@ public class MarketScreenController implements Initializable {
     
     public void setMainControl(MainController mainControl) {
         this.mainControl = mainControl;
+    }
+    
+    @FXML protected void setSellPrices() {
+        
+    }
+    
+    @FXML protected void setBuyPrices() {
+        
     }
     
     private void updateNetBalance() {

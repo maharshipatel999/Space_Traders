@@ -8,6 +8,7 @@ package spacetrader.commerce;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import spacetrader.Planet;
 
 /**
@@ -45,6 +46,46 @@ public class Market {
      * @return the price of the TradeGood or 0 if it is not sold on this planet
      */
     private int calculatePrice(TradeGood good) {
+        int price;
+        int variance;
+        Random varianceGenerator = new Random();
+        switch (good) {
+            case WATER:
+                variance = varianceGenerator.nextInt(4);
+                price = (int) ( 30 + (3 * (planet.getLevel().getLevelNumber() - 0)) + variance );
+                break;
+            case FURS:
+                variance = varianceGenerator.nextInt(100);
+                price = (int) ( 250 + (10 * (planet.getLevel().getLevelNumber() - 0)) + variance );
+                break;
+            case FOOD:
+                variance = varianceGenerator.nextInt(5);
+                price = (int) ( 100 + (5 * (planet.getLevel().getLevelNumber() - 1)) + variance );
+                break;
+            case ORE:
+                if (planet.getLevel().getLevelNumber() >= 2) {
+                    variance = varianceGenerator.nextInt(10);
+                    price = (int) ( 350 + (20 * (planet.getLevel().getLevelNumber() - 2)) + variance );
+                } else {
+                    //sets price to -1 if the good cannot be bought or sold at that planet
+                    //The MarketPlaceController will check if the price is less than 0, and if it is,
+                    //it won't let the user change the quanitity of good from 0
+                    price = -1;
+                }
+                break;
+            case GAMES:
+                break;
+            case FIREARMS:
+                break;
+            case MEDICINE:
+                break;
+            case MACHINES:
+                break;
+            case NARCOTICS:
+                break;      
+            case ROBOTS:
+                break;
+        }
         return 1; //TODO calculate price of good
         //(the base price) + (incPerLevel * (Planet Tech Level - minProduceLevel)) + (variance).
     }
