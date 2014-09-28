@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
 import spacetrader.Player;
@@ -39,16 +39,16 @@ public class MarketScreenController implements Initializable {
     private Planet planet;
     private MainController mainControl;
     
-    @FXML private TextField priceWaterBuy;
-    @FXML private TextField priceFursBuy;
-    @FXML private TextField priceFoodBuy;
-    @FXML private TextField priceOreBuy;
-    @FXML private TextField priceGamesBuy;
-    @FXML private TextField priceFirearmsBuy;
-    @FXML private TextField priceMedicineBuy;
-    @FXML private TextField priceMachinesBuy;
-    @FXML private TextField priceNarcoticsBuy;
-    @FXML private TextField priceRobotsBuy;
+    @FXML private Label priceWaterBuy;
+    @FXML private Label priceFursBuy;
+    @FXML private Label priceFoodBuy;
+    @FXML private Label priceOreBuy;
+    @FXML private Label priceGamesBuy;
+    @FXML private Label priceFirearmsBuy;
+    @FXML private Label priceMedicineBuy;
+    @FXML private Label priceMachinesBuy;
+    @FXML private Label priceNarcoticsBuy;
+    @FXML private Label priceRobotsBuy;
     @FXML private Text netBalanceText;
 
     /**
@@ -62,17 +62,17 @@ public class MarketScreenController implements Initializable {
         //one corresponding line in the marketscreen view.
     }
     
-    @FXML protected void goToFirstScreen(ActionEvent event) {
-        mainControl.goToFirstScreen();
-    }
-    
     public void setModel(Planet planet, Player player) {
          this.player = player;
          this.planet = planet;
-     }
+    }
     
     public void setMainControl(MainController mainControl) {
         this.mainControl = mainControl;
+    }
+    
+    @FXML protected void goToFirstScreen(ActionEvent event) {
+        mainControl.goToFirstScreen();
     }
     
     @FXML protected void setSellPrices() {
