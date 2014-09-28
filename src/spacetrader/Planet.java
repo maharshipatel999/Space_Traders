@@ -42,6 +42,8 @@ public class Planet {
         //picks a random Political System
         PoliticalSystem[] systems = PoliticalSystem.values();
         this.politSys = systems[rand.nextInt(systems.length)];
+        
+        this.market = new Market(this);
     }
 
     public String getName() {

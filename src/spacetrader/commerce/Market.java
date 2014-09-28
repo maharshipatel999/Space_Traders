@@ -18,24 +18,37 @@ import spacetrader.Planet;
 public class Market {
     
     private Planet planet;
-    private Map<TradeGood, Integer> prices;
+    private Map<TradeGood, Integer> sellPrices;
+    private Map<TradeGood, Integer> buyPrices;
     private Cargo stock;
     
     public Market(Planet planet) {
         this.planet = planet;
         
-        setAllPrices();
-        setMarketStock();
+        setAllSellPrices();
+        setAllBuyPrices();
+        //setMarketStock();
     }
     
     /**
-     * Sets the Map prices so that each TradeGood maps to its price on this planet.
+     * Sets the Map prices so that each TradeGood maps to its sell price on this planet.
      * If a good is not sold on this planet, its price is zero.
      */
-    private void setAllPrices() {
-        prices = new HashMap<>();
+    private void setAllSellPrices() {
+        sellPrices = new HashMap<>();
         for (TradeGood good : TradeGood.values()) {
-            prices.put(good, calculatePrice(good));
+            sellPrices.put(good, calculatePrice(good));
+        }
+    }
+    
+    /**
+     * Sets the Map prices so that each TradeGood maps to its buy price on this planet.
+     * If a good is not sold on this planet, its price is zero.
+     */
+    private void setAllBuyPrices() {
+        buyPrices = new HashMap<>();
+        for (TradeGood good : TradeGood.values()) {
+            buyPrices.put(good, calculatePrice(good));
         }
     }
     
@@ -46,7 +59,7 @@ public class Market {
      * @return the price of the TradeGood or 0 if it is not sold on this planet
      */
     private int calculatePrice(TradeGood good) {
-        int price;
+        int price = 0;
         int variance;
         Random varianceGenerator = new Random();
         switch (good) {
@@ -59,13 +72,9 @@ public class Market {
                 price = (int) ( 250 + (10 * (planet.getLevel().getLevelNumber() - 0)) + variance );
                 break;
             case FOOD:
-                variance = varianceGenerator.nextInt(5);
-                price = (int) ( 100 + (5 * (planet.getLevel().getLevelNumber() - 1)) + variance );
-                break;
-            case ORE:
-                if (planet.getLevel().getLevelNumber() >= 2) {
-                    variance = varianceGenerator.nextInt(10);
-                    price = (int) ( 350 + (20 * (planet.getLevel().getLevelNumber() - 2)) + variance );
+                if (planet.getLevel().getLevelNumber() >= 1) {
+                    variance = varianceGenerator.nextInt(5);
+                    price = (int) ( 100 + (5 * (planet.getLevel().getLevelNumber() - 1)) + variance );
                 } else {
                     //sets price to -1 if the good cannot be bought or sold at that planet
                     //The MarketPlaceController will check if the price is less than 0, and if it is,
@@ -73,20 +82,64 @@ public class Market {
                     price = -1;
                 }
                 break;
+            case ORE:
+                if (planet.getLevel().getLevelNumber() >= 2) {
+                    variance = varianceGenerator.nextInt(10);
+                    price = (int) ( 350 + (20 * (planet.getLevel().getLevelNumber() - 2)) + variance );
+                } else {
+                    price = -1;
+                }
+                break;
             case GAMES:
+                if (planet.getLevel().getLevelNumber() >= 3) {
+                    variance = varianceGenerator.nextInt(5);
+                    price = (int) ( 250 + (-10 * (planet.getLevel().getLevelNumber() - 3)) + variance );
+                } else {
+                    price = -1;
+                }
                 break;
             case FIREARMS:
+                if (planet.getLevel().getLevelNumber() >= 3) {
+                    variance = varianceGenerator.nextInt(100);
+                    price = (int) ( 1250 + (-75 * (planet.getLevel().getLevelNumber() - 3)) + variance );
+                } else {
+                    price = -1;
+                }
                 break;
             case MEDICINE:
+                if (planet.getLevel().getLevelNumber() >= 4) {
+                    variance = varianceGenerator.nextInt(10);
+                    price = (int) ( 650 + (-20 * (planet.getLevel().getLevelNumber() - 4)) + variance );
+                } else {
+                    price = -1;
+                }
                 break;
             case MACHINES:
+                if (planet.getLevel().getLevelNumber() >= 4) {
+                    variance = varianceGenerator.nextInt(5);
+                    price = (int) ( 900 + (-30 * (planet.getLevel().getLevelNumber() - 4)) + variance );
+                } else {
+                    price = -1;
+                }
                 break;
             case NARCOTICS:
+                if (planet.getLevel().getLevelNumber() >= 5) {
+                    variance = varianceGenerator.nextInt(150);
+                    price = (int) ( 3500 + (-125 * (planet.getLevel().getLevelNumber() - 5)) + variance );
+                } else {
+                    price = -1;
+                }
                 break;      
             case ROBOTS:
+                if (planet.getLevel().getLevelNumber() >= 6) {
+                    variance = varianceGenerator.nextInt(100);
+                    price = (int) ( 5000 + (-150 * (planet.getLevel().getLevelNumber() - 6)) + variance );
+                } else {
+                    price = -1;
+                }
                 break;
         }
-        return 1; //TODO calculate price of good
+        return price; //TODO calculate price of good
         //(the base price) + (incPerLevel * (Planet Tech Level - minProduceLevel)) + (variance).
     }
     
@@ -97,7 +150,7 @@ public class Market {
      */
     private void setMarketStock() {
         for (TradeGood good : TradeGood.values()) {
-            if (prices.get(good) > 0) {
+            if (sellPrices.get(good) > 0) {
                 stock.addItem(good, 10); //should not be 10
             }
         }
@@ -107,8 +160,16 @@ public class Market {
      * Gets the prices of all the TradeGoods as a Map.
      * @return the prices of goods on this planet.
      */
-    public Map<TradeGood, Integer> getPrices() {
-        return prices;
+    public Map<TradeGood, Integer> getSellPrices() {
+        return sellPrices;
+    }
+    
+    /**
+     * Gets the buy prices of all the TradeGoods as a Map.
+     * @return the prices of goods on this planet.
+     */
+    public Map<TradeGood, Integer> getBuyPrices() {
+        return buyPrices;
     }
     
     /**

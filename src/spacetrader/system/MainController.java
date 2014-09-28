@@ -85,6 +85,8 @@ public class MainController {
         //Pick a random planet to start off game
         ArrayList<Planet> planets = game.getUniverse().getPlanets();
         control.setModel(planets.get(0), game.getPlayer());
+        control.setBuyPrices();
+        control.setSellPrices();
     }
     
     /**
