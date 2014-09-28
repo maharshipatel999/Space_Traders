@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MarketPlaceController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MarketPlaceController">
    <children>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0">
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="700.0">
         <items>
             <SplitPane dividerPositions="0.7876254180602007" prefHeight="160.0" prefWidth="200.0">
               <items>
@@ -30,7 +30,7 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Button fx:id="incWaterBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Button fx:id="incWaterBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="38.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
@@ -46,7 +46,7 @@
                                           <Insets left="20.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label prefHeight="17.0" prefWidth="69.0" text="Buy Quantity" GridPane.columnIndex="3" />
+                                    <Label prefHeight="21.0" prefWidth="123.0" text="Buy Quantity" textAlignment="CENTER" GridPane.columnIndex="3" />
                                     <Label prefHeight="17.0" prefWidth="63.0" text="Store Price" GridPane.columnIndex="4">
                                        <GridPane.margin>
                                           <Insets left="15.0" />
@@ -97,15 +97,15 @@
                                           <Insets left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Button fx:id="incFursBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Button fx:id="incFoodBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Button fx:id="incOreBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Button fx:id="incGamesBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Button fx:id="incFirearmsBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Button fx:id="incMedicineBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <Button fx:id="incMachinesBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                    <Button fx:id="incNarcoticsBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                    <Button fx:id="incRobotsBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                    <Button fx:id="incFursBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="33.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Button fx:id="incFoodBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Button fx:id="incOreBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Button fx:id="incGamesBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Button fx:id="incFirearmsBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="38.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Button fx:id="incMedicineBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="37.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Button fx:id="incMachinesBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="39.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <Button fx:id="incNarcoticsBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="35.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                    <Button fx:id="incRobotsBuy" mnemonicParsing="false" prefHeight="31.0" prefWidth="38.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                                     <Button fx:id="decFursBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                     <Button fx:id="decFoodBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                     <Button fx:id="decOreBuy" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="2" GridPane.rowIndex="4" />
@@ -492,7 +492,7 @@
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="backButton" onAction="#goToFirstScreen" layoutX="17.0" layoutY="6.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" text="BACK">
+                  <Button fx:id="backButton" layoutX="17.0" layoutY="6.0" mnemonicParsing="false" onAction="#goToFirstScreen" prefHeight="38.0" prefWidth="100.0" text="BACK">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>
