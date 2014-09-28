@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="547.0" fitWidth="735.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Pictures/space%20image.jpg" />
+            <Image url="@../resources/images/space%20image.jpg" />
          </image>
       </ImageView>
       <Text fill="#74ad72" fontSmoothingType="LCD" layoutX="29.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Space Traders" wrappingWidth="676.515625">
