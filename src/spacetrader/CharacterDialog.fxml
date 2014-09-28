@@ -36,7 +36,7 @@
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_432_plus.png" />
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -45,7 +45,7 @@
                      <graphic>
                         <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_433_minus.png" />
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -71,7 +71,7 @@
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_432_plus.png" />
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -80,7 +80,7 @@
                      <graphic>
                         <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_433_minus.png" />
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -93,7 +93,7 @@
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_432_plus.png" />
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -102,7 +102,7 @@
                      <graphic>
                         <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_433_minus.png" />
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -115,7 +115,7 @@
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_432_plus.png" />
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -124,7 +124,7 @@
                      <graphic>
                         <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_433_minus.png" />
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -137,7 +137,7 @@
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_432_plus.png" />
+                              <Image url="@Pictures/glyphicons_432_plus.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -146,7 +146,7 @@
                      <graphic>
                         <ImageView fitHeight="5.0" fitWidth="14.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../resources/images/glyphicons_433_minus.png" />
+                              <Image url="@Pictures/glyphicons_433_minus.png" />
                            </image>
                         </ImageView>
                      </graphic>
