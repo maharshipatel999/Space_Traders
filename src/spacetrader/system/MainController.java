@@ -78,6 +78,7 @@ public class MainController {
      * Transitions the game screen to the First Screen.
      */
    public void goToMarketPlace() {
+        stage.setTitle("Welcome to the Market!");        
         MarketPlaceController control;
         control = (MarketPlaceController) changeScene("/spacetrader/MarketPlace.fxml");
         control.setMainControl(this);
