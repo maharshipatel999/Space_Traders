@@ -41,7 +41,7 @@ public class Transaction {
      * @param good the TradeGood which is being changed
      * @param newQuantity the new quantity of that TradeGood
      */
-    public void changeBuyQuantity(TradeGood good, int newQuantity) {
+    public void changeBuyQuantity(TradeGood good, int newQuantity) throws DepletedInventoryException {
         //Check if quantity is negative
         if (newQuantity < 0) {
             throw new IllegalArgumentException("Cannot buy a negative quantity of goods");
@@ -53,6 +53,10 @@ public class Transaction {
         //Check if player has a large enough remaining balance
         if (remainingBalance < purchaseCost) {
             throw new InsufficientFundsException("Player does not have enough credits to make this purchase.");
+        }
+        //Check to make sure market is not selling more than its stock
+        if (newQuantity > market.getStock().getQuantityOfGood(good)) {
+            throw new DepletedInventoryException("Cannot sell more goods than the market owns");
         }
         purchases.put(good, newQuantity);
         updateTotalCost();
@@ -77,6 +81,7 @@ public class Transaction {
     }
     
     public void complete() {
+        
         market.getStock().removeMultipleItems(purchases);
         market.getStock().addMultipleItems(sales);
         

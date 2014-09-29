@@ -18,6 +18,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import spacetrader.Planet;
 import spacetrader.Player;
 import spacetrader.commerce.Cargo;
@@ -34,8 +36,9 @@ import spacetrader.exceptions.InsufficientFundsException;
  */
 public class MarketScreenController implements Initializable {
     
+    @FXML private Text alertText;
     @FXML private Label planetName, planetGovt, planetLevel, planetResource;
-    @FXML private Label playerFunds, moneySpending, moneyRecieving, moneyRemaining;
+    @FXML private Label playerFunds, moneyRemaining;
     @FXML private Label totalPurchase, totalSale;
     @FXML private GridPane buyGrid, sellGrid;
     @FXML private Label stock0, stock1, stock2, stock3, stock4,
@@ -76,7 +79,7 @@ public class MarketScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
+        alertText.setFill(Color.TRANSPARENT);
     }
     
     public void setMainControl(MainController mainControl) {
@@ -211,11 +214,13 @@ public class MarketScreenController implements Initializable {
             updateBuyText(index);
             updateNetBalance();
         } catch (NumberFormatException e) {
-            //do nothing
+            displayAlert("Please input a number!");
+        } catch (DepletedInventoryException e) {
+            displayAlert("We are out of that item! Please try another selection.");
         } catch (InsufficientFundsException e) {
-            //do nothing
+            displayAlert("You do not have enough money to buy this item!");
         } catch (IllegalArgumentException e) {
-            //do nothing
+            displayAlert("Quantities must be positive!");
         }
     }
     
@@ -235,11 +240,11 @@ public class MarketScreenController implements Initializable {
             updateSellText(index);
             updateNetBalance();
         } catch (NumberFormatException e) {
-            //do nothing
+            displayAlert("Please input a number!");
         } catch (DepletedInventoryException e) {
-            //do nothing
+            displayAlert("You are out of that item! Please try another selection.");
         } catch (IllegalArgumentException e) {
-            //do nothing
+            displayAlert("Quantities must be positive!");
         }
     }
     
@@ -250,8 +255,7 @@ public class MarketScreenController implements Initializable {
         stocks[index].setText("" + (oldStock - quantity));
         numBuys[index].setText("" + quantity);
         costs[index].setText("$" + (quantity * planet.getMarket().getBuyPrices().get(good)));
-        totalPurchase.setText("$" + cashier.getTotalCost());
-        moneySpending.setText(totalPurchase.getText());
+        totalPurchase.setText("- " + cashier.getTotalCost() + " credits");
     }
     
     private void updateSellText(int index) {
@@ -261,12 +265,16 @@ public class MarketScreenController implements Initializable {
         inventorys[index].setText("" + (oldInventory - quantity));
         numSells[index].setText("" + quantity);
         revenues[index].setText("$" + (quantity * planet.getMarket().getBuyPrices().get(good)));
-        totalSale.setText("$" + cashier.getTotalRevenue());
-        moneyRecieving.setText(totalSale.getText());
+        totalSale.setText("+ " + cashier.getTotalRevenue() + " credits");
     }
     
     private void updateNetBalance() {
        moneyRemaining.setText(cashier.getRemainingBalance() + " credits"); 
+    }
+    
+    private void displayAlert(String message) {
+        alertText.setFill(Color.RED);
+        alertText.setText(message);
     }
         
     @FXML protected void completeTransaction(ActionEvent event) {
