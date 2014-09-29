@@ -11,11 +11,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="686.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MarketScreenController">
+<BorderPane prefHeight="686.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MarketScreenController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="BUY ITEMS">
+          <Tab fx:id="buyTab" onSelectionChanged="#buyTabChanged" text="BUY ITEMS">
                <content>
                   <GridPane fx:id="buyGrid" hgap="5.0" prefHeight="206.0" prefWidth="357.0">
                      <children>
@@ -254,24 +254,24 @@
                            </GridPane.margin>
                         </Label>
                         <Label text="Cost" GridPane.columnIndex="6" />
-                        <Label fx:id="cost2" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                        <Label fx:id="cost1" text="0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                        <Label fx:id="cost4" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                        <Label fx:id="cost3" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                        <Label fx:id="cost0" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                        <Label fx:id="cost5" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                        <Label fx:id="cost7" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-                        <Label fx:id="cost6" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-                        <Label fx:id="cost9" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
-                        <Label fx:id="cost8" prefHeight="21.0" prefWidth="43.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+                        <Label fx:id="cost2" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <Label fx:id="cost1" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                        <Label fx:id="cost4" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                        <Label fx:id="cost3" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                        <Label fx:id="cost0" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                        <Label fx:id="cost5" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+                        <Label fx:id="cost7" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+                        <Label fx:id="cost6" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+                        <Label fx:id="cost9" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
+                        <Label fx:id="cost8" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="79.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="108.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="77.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="75.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="0.0" prefWidth="39.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="55.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="0.0" prefWidth="34.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="74.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.0" minWidth="10.0" prefWidth="72.0" />
                      </columnConstraints>
                      <rowConstraints>
@@ -561,10 +561,10 @@
    <top>
       <GridPane prefHeight="84.0" prefWidth="730.0" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.0" minWidth="10.0" prefWidth="203.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="203.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="177.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="183.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -574,7 +574,7 @@
         </rowConstraints>
          <children>
             <Label prefHeight="21.0" prefWidth="147.0" text="Planet Name" />
-            <Label fx:id="planetName" prefHeight="25.0" prefWidth="261.0" text="Lubstown, USA" GridPane.rowIndex="1">
+            <Label fx:id="planetName" prefHeight="30.0" prefWidth="205.0" text="Lubstown, USA" GridPane.rowIndex="1">
                <font>
                   <Font name="Kartika" size="18.0" />
                </font>

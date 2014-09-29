@@ -100,5 +100,8 @@ public class Market {
         return stock;
     }
     
+    public Planet getPlanet() {
+        return planet;
+    }
     
 }

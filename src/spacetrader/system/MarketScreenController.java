@@ -12,10 +12,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -41,6 +43,7 @@ public class MarketScreenController implements Initializable {
     @FXML private Label playerFunds, moneyRemaining;
     @FXML private Label totalPurchase, totalSale;
     @FXML private GridPane buyGrid, sellGrid;
+    @FXML private Tab buyTab, sellTab;
     @FXML private Label stock0, stock1, stock2, stock3, stock4,
                         stock5, stock6, stock7, stock8, stock9;
     @FXML private Label goodBuy0, goodBuy1, goodBuy2, goodBuy3, goodBuy4,
@@ -69,9 +72,10 @@ public class MarketScreenController implements Initializable {
     private Transaction cashier;
     private List<TradeGood> buyGoods, sellGoods;
     private enum Change { INCREASE, DECREASE, CUSTOM }
+    private boolean viewIsInitialized = false;
     
     private Player player;
-    private Planet planet;
+    private Market market;
     private MainController mainControl;
 
     /**
@@ -88,9 +92,8 @@ public class MarketScreenController implements Initializable {
 
     public void setUpMarketScreen(Planet planet, Player player) {
         this.player = player;
-        this.planet = planet;
-        cashier = new Transaction(planet.getMarket(), 
-                 player.getShip().getCargo(), player.getWallet().getCredits());
+        this.market = planet.getMarket();
+        cashier = new Transaction(market, player.getShip().getCargo(), player.getWallet().getCredits());
         
         stocks = new Label[] {stock0, stock1, stock2, stock3, stock4,
                               stock5, stock6, stock7, stock8, stock9};
@@ -113,7 +116,7 @@ public class MarketScreenController implements Initializable {
         revenues = new Label[] {revenue0, revenue1, revenue2, revenue3, revenue4, 
                                 revenue5, revenue6, revenue7, revenue8, revenue9};
 
-        buyGoods = planet.getMarket().getStock().getGoodList();
+        buyGoods = market.getStock().getGoodList();
         sellGoods = player.getShip().getCargo().getGoodList();
         
         //Remove appropriate amount of rows from grid
@@ -124,13 +127,15 @@ public class MarketScreenController implements Initializable {
             deleteGridRows(sellGoods.size(), sellGrid);
         }
         
-        setUpBuyPanel(planet.getMarket());
-        setUpSellPanel(planet.getMarket(), player.getShip().getCargo());
+        setUpPanels(player.getShip().getCargo());
         planetName.setText(planet.getName());
         planetGovt.setText(planet.getPoliticalSystem().toString());
         planetLevel.setText(planet.getLevel().toString());
         planetResource.setText(planet.getResource().toString());
         playerFunds.setText("$" + player.getWallet().getCredits());
+        updateNetBalance();
+        viewIsInitialized = true;
+        checkForDisabling(buyGrid);
         
     }
     
@@ -143,14 +148,14 @@ public class MarketScreenController implements Initializable {
         ArrayList<Node> toRemove = new ArrayList<>();
         for (Node node : children) {
             Integer row = GridPane.getRowIndex(node);
-            if (row != null && row > numRows && row < 11) {
+            if (row != null && row > numRows) {
                 toRemove.add(node);
             }
         }
         children.removeAll(toRemove);
     }
     
-    private void setUpBuyPanel(Market market) {
+    private void setUpPanels(Cargo cargo) {
         for (int i = 0; i < buyGoods.size(); i++) {
             TradeGood good = buyGoods.get(i);
             
@@ -158,9 +163,7 @@ public class MarketScreenController implements Initializable {
             goodBuys[i].setText("" + good.type());
             priceBuys[i].setText("$" + market.getBuyPrices().get(good));
         }
-    }
-    
-    private void setUpSellPanel(Market market, Cargo cargo) {
+        
         for (int i = 0; i < sellGoods.size(); i++) {
             TradeGood good = sellGoods.get(i);
             
@@ -213,6 +216,7 @@ public class MarketScreenController implements Initializable {
             cashier.changeBuyQuantity(good, newQuantity);
             updateBuyText(index);
             updateNetBalance();
+            checkForDisabling(buyGrid);
         } catch (NumberFormatException e) {
             displayAlert("Please input a number!");
         } catch (DepletedInventoryException e) {
@@ -239,6 +243,7 @@ public class MarketScreenController implements Initializable {
             cashier.changeSellQuantity(good, newQuantity);
             updateSellText(index);
             updateNetBalance();
+            checkForDisabling(sellGrid);
         } catch (NumberFormatException e) {
             displayAlert("Please input a number!");
         } catch (DepletedInventoryException e) {
@@ -251,10 +256,10 @@ public class MarketScreenController implements Initializable {
     private void updateBuyText(int index) {
         TradeGood good = buyGoods.get(index);
         int quantity = cashier.getBuyQuantityOfGood(good);
-        int oldStock = planet.getMarket().getStock().getQuantityOfGood(good);
+        int oldStock = market.getStock().getQuantityOfGood(good);
         stocks[index].setText("" + (oldStock - quantity));
         numBuys[index].setText("" + quantity);
-        costs[index].setText("$" + (quantity * planet.getMarket().getBuyPrices().get(good)));
+        costs[index].setText("$" + (quantity * market.getBuyPrices().get(good)));
         totalPurchase.setText("- " + cashier.getTotalCost() + " credits");
     }
     
@@ -264,7 +269,7 @@ public class MarketScreenController implements Initializable {
         int oldInventory = player.getShip().getCargo().getQuantityOfGood(good);
         inventorys[index].setText("" + (oldInventory - quantity));
         numSells[index].setText("" + quantity);
-        revenues[index].setText("$" + (quantity * planet.getMarket().getBuyPrices().get(good)));
+        revenues[index].setText("$" + (quantity * market.getBuyPrices().get(good)));
         totalSale.setText("+ " + cashier.getTotalRevenue() + " credits");
     }
     
@@ -276,17 +281,68 @@ public class MarketScreenController implements Initializable {
         alertText.setFill(Color.RED);
         alertText.setText(message);
     }
+    
+    /**
+     * Checks to see if any buttons need to be disabled.
+    */
+    private void checkForDisabling(GridPane grid) {
+        final int DEC_COLUMN = 4;
+        final int INC_COLUMN = 5;
+        ObservableList<Node> children = grid.getChildren();
+        for (Node node : children) {
+            Integer column = GridPane.getColumnIndex(node);
+            Integer row = GridPane.getRowIndex(node);
+            if (column != null && row != null) {
+                if (column == DEC_COLUMN) {
+                    int quantity;
+                    if (grid == buyGrid) {
+                        quantity = cashier.getBuyQuantityOfGood(buyGoods.get(row - 1));
+                    } else {
+                        quantity = cashier.getSellQuantityOfGood(sellGoods.get(row - 1));
+                    }
+                    if (quantity == 0) {
+                        node.setDisable(true);
+                    } else {
+                        node.setDisable(false);
+                    }  
+                } else if (column == INC_COLUMN) {
+                    int price, quantity;
+                    if (grid == buyGrid) {
+                        price = market.getBuyPrices().get(buyGoods.get(row - 1));
+                        quantity = market.getStock().getQuantityOfGood(buyGoods.get(row - 1));
+                    } else {
+                        price = -1; //if selling, price doesn't matter
+                        quantity = player.getShip().getCargo().getQuantityOfGood(sellGoods.get(row - 1));
+                    }
+                    if (price > cashier.getRemainingBalance() || quantity == 0) {
+                        node.setDisable(true);
+                    } else {
+                        node.setDisable(false);
+                    }
+                }
+            }
+        }
+    }
+    
+    @FXML protected void buyTabChanged(Event e) {
+        if (viewIsInitialized) {
+            checkForDisabling(buyGrid);
+            checkForDisabling(sellGrid);
+        }
+    }
         
     @FXML protected void completeTransaction(ActionEvent event) {
         cashier.complete();
         player.getWallet().add(cashier.getTotalRevenue());
         player.getWallet().remove(cashier.getTotalCost());
-        mainControl.goToMarketScreen(planet);
+        mainControl.goToMarketScreen(market.getPlanet());
     }
     
     @FXML protected void goBack(ActionEvent event) {
         mainControl.goToFirstScreen();
     }
+    
+    
 }
     
 
