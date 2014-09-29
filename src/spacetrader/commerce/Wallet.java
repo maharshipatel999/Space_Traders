@@ -18,22 +18,30 @@ public class Wallet {
     public Wallet() {
         credits = 1000;
     }
+    
     public boolean isEmpty() {
         return credits == 0;
     }
-    public int add(int credits) {
-        if (credits < 0) {
+    
+    public int add(int amount) {
+        if (amount < 0) {
             throw new IllegalArgumentException("Cannot add negative credits");
-        } 
-        return this.credits += credits;
+        } else {
+            return credits += amount;
+        }
     }
-    public int remove(int credits) {
-        if (credits < 0) {
+    
+    public int remove(int amount) {
+        if (amount < 0) {
             throw new IllegalArgumentException("Cannot add negative credits");
-        }
-        if (this.credits < credits) {
+        } else if (credits < amount) {
             throw new InsufficientFundsException();
+        } else {
+            return credits -= amount;
         }
-        return this.credits -= credits;
+    }
+    
+    public int getCredits() {
+        return credits;
     }
 }

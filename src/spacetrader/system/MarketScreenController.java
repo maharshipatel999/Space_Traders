@@ -7,16 +7,25 @@
 package spacetrader.system;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+import javafx.scene.layout.GridPane;
 import spacetrader.Planet;
 import spacetrader.Player;
+import spacetrader.commerce.Cargo;
+import spacetrader.commerce.Market;
 import spacetrader.commerce.TradeGood;
+import spacetrader.commerce.Transaction;
+import spacetrader.exceptions.DepletedInventoryException;
+import spacetrader.exceptions.InsufficientFundsException;
 
 /**
  * FXML Controller class
@@ -24,258 +33,251 @@ import spacetrader.commerce.TradeGood;
  * @author nkaru_000
  */
 public class MarketScreenController implements Initializable {
-    private int buyQuantity1;
-    private int buyQuantity2;
-    private int buyQuantity3;
-    private int buyQuantity1Price = 100 ;
-    private int buyQuantity2Price = 200;
-    private int buyQuantity3Price = 300;
-    private int sellQuantity1;
-    private int sellQuantity2;
-    private int sellQuantity3;
-    private int sellQuantityPrice1 = 50 ;
-    private int sellQuantityPrice2= 100;
-    private int sellQuantityPrice3 = 350;
-    private int netBalance = 0;
+    
+    @FXML private Label planetName, planetGovt, planetLevel, planetResource;
+    @FXML private Label playerFunds, moneySpending, moneyRecieving, moneyRemaining;
+    @FXML private Label totalPurchase, totalSale;
+    @FXML private GridPane buyGrid, sellGrid;
+    @FXML private Label stock0, stock1, stock2, stock3, stock4,
+                        stock5, stock6, stock7, stock8, stock9;
+    @FXML private Label goodBuy0, goodBuy1, goodBuy2, goodBuy3, goodBuy4,
+                        goodBuy5, goodBuy6, goodBuy7, goodBuy8, goodBuy9;
+    @FXML private Label priceBuy0, priceBuy1, priceBuy2, priceBuy3, priceBuy4,
+                        priceBuy5, priceBuy6, priceBuy7, priceBuy8, priceBuy9;
+    @FXML private TextField numBuy0, numBuy1, numBuy2, numBuy3, numBuy4,
+                            numBuy5, numBuy6, numBuy7, numBuy8, numBuy9;
+    @FXML private Label cost0, cost1, cost2, cost3, cost4,
+                        cost5, cost6, cost7, cost8, cost9;
+    @FXML private Label inventory0, inventory1, inventory2, inventory3, inventory4,
+                        inventory5, inventory6, inventory7, inventory8, inventory9;
+    @FXML private Label goodSell0, goodSell1, goodSell2, goodSell3, goodSell4,
+                        goodSell5, goodSell6, goodSell7, goodSell8, goodSell9;
+    @FXML private Label pricySell0, priceSell1, priceSell2, priceSell3, priceSell4,
+                        priceSell5, priceSell6, priceSell7, priceSell8, priceSell9;
+    @FXML private TextField numSell0, numSell1, numSell2, numSell3, numSell4,
+                            numSell5, numSell6, numSell7, numSell8, numSell9;
+    @FXML private Label revenue0, revenue1, revenue2, revenue3, revenue4, 
+                        revenue5, revenue6, revenue7, revenue8, revenue9;
+    
+    private Label[] stocks, goodBuys, priceBuys, costs,
+                    inventorys, goodSells, priceSells, revenues;
+    private TextField[] numBuys, numSells;
+    
+    private Transaction cashier;
+    private List<TradeGood> buyGoods, sellGoods;
+    private enum Change { INCREASE, DECREASE, CUSTOM }
+    
     private Player player;
     private Planet planet;
     private MainController mainControl;
-    
-    @FXML private Label priceWaterSell;
-    @FXML private Label priceFursSell;
-    @FXML private Label priceFoodSell;
-    @FXML private Label priceOreSell;
-    @FXML private Label priceGamesSell;
-    @FXML private Label priceFirearmsSell;
-    @FXML private Label priceMedicineSell;
-    @FXML private Label priceMachinesSell;
-    @FXML private Label priceNarcoticsSell;
-    @FXML private Label priceRobotsSell;
-    @FXML private Label priceWaterBuy;
-    @FXML private Label priceFursBuy;
-    @FXML private Label priceFoodBuy;
-    @FXML private Label priceOreBuy;
-    @FXML private Label priceGamesBuy;
-    @FXML private Label priceFirearmsBuy;
-    @FXML private Label priceMedicineBuy;
-    @FXML private Label priceMachinesBuy;
-    @FXML private Label priceNarcoticsBuy;
-    @FXML private Label priceRobotsBuy;
-    @FXML private Text netBalanceText;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        netBalanceText = new Text();
-        netBalanceText.setText("0 Credits");
-        //for every item in the planet's market's stock, there should be 
-        //one corresponding line in the marketscreen view.
+        //TODO
     }
-    
-    @FXML protected void goToFirstScreen(ActionEvent event) {
-        mainControl.goToFirstScreen();
-    }
-    
-    public void setModel(Planet planet, Player player) {
-         this.player = player;
-         this.planet = planet;
-     }
     
     public void setMainControl(MainController mainControl) {
         this.mainControl = mainControl;
     }
+
+    public void setUpMarketScreen(Planet planet, Player player) {
+        this.player = player;
+        this.planet = planet;
+        cashier = new Transaction(planet.getMarket(), 
+                 player.getShip().getCargo(), player.getWallet().getCredits());
+        
+        stocks = new Label[] {stock0, stock1, stock2, stock3, stock4,
+                              stock5, stock6, stock7, stock8, stock9};
+        goodBuys = new Label[] {goodBuy0, goodBuy1, goodBuy2, goodBuy3, goodBuy4,
+                                goodBuy5, goodBuy6, goodBuy7, goodBuy8, goodBuy9};
+        priceBuys = new Label[] {priceBuy0, priceBuy1, priceBuy2, priceBuy3, priceBuy4,
+                                 priceBuy5, priceBuy6, priceBuy7, priceBuy8, priceBuy9};
+        numBuys = new TextField[] {numBuy0, numBuy1, numBuy2, numBuy3, numBuy4,
+                                   numBuy5, numBuy6, numBuy7, numBuy8, numBuy9};
+        costs = new Label[] {cost0, cost1, cost2, cost3, cost4,
+                             cost5, cost6, cost7, cost8, cost9};
+        inventorys = new Label[] {inventory0, inventory1, inventory2, inventory3, inventory4,
+                                  inventory5, inventory6, inventory7, inventory8, inventory9};
+        goodSells = new Label[] {goodSell0, goodSell1, goodSell2, goodSell3, goodSell4,
+                                 goodSell5, goodSell6, goodSell7, goodSell8, goodSell9};
+        priceSells = new Label[] {pricySell0, priceSell1, priceSell2, priceSell3, priceSell4,
+                                  priceSell5, priceSell6, priceSell7, priceSell8, priceSell9};
+        numSells = new TextField[] {numSell0, numSell1, numSell2, numSell3, numSell4,
+                                    numSell5, numSell6, numSell7, numSell8, numSell9};
+        revenues = new Label[] {revenue0, revenue1, revenue2, revenue3, revenue4, 
+                                revenue5, revenue6, revenue7, revenue8, revenue9};
+
+        buyGoods = planet.getMarket().getStock().getGoodList();
+        sellGoods = player.getShip().getCargo().getGoodList();
+        
+        //Remove appropriate amount of rows from grid
+        if (buyGoods.size() < 10) {
+            deleteGridRows(buyGoods.size(), buyGrid);
+        }
+        if (sellGoods.size() < 10) {
+            deleteGridRows(sellGoods.size(), sellGrid);
+        }
+        
+        setUpBuyPanel(planet.getMarket());
+        setUpSellPanel(planet.getMarket(), player.getShip().getCargo());
+        planetName.setText(planet.getName());
+        planetGovt.setText(planet.getPoliticalSystem().toString());
+        planetLevel.setText(planet.getLevel().toString());
+        planetResource.setText(planet.getResource().toString());
+        playerFunds.setText("$" + player.getWallet().getCredits());
+        
+    }
     
-    @FXML protected void setSellPrices() {
-        for (TradeGood good : TradeGood.values()) {
-        switch (good) {
-            case WATER:
-                priceWaterSell.setText(planet.getMarket().getSellPrices().get(TradeGood.WATER).toString());
-                break;
-            case FURS:
-                priceFursSell.setText(planet.getMarket().getSellPrices().get(TradeGood.FURS).toString());
-                break;
-            case FOOD:
-                priceFoodSell.setText(planet.getMarket().getSellPrices().get(TradeGood.FOOD).toString());
-                break;
-            case ORE:
-                priceOreSell.setText(planet.getMarket().getSellPrices().get(TradeGood.ORE).toString());
-                break;
-            case GAMES:
-                priceGamesSell.setText(planet.getMarket().getSellPrices().get(TradeGood.GAMES).toString());
-                break;
-            case FIREARMS:
-                priceFirearmsSell.setText(planet.getMarket().getSellPrices().get(TradeGood.FIREARMS).toString());
-                break;
-            case MEDICINE:
-                priceMedicineSell.setText(planet.getMarket().getSellPrices().get(TradeGood.MEDICINE).toString());
-                break;
-            case MACHINES:
-                priceMachinesSell.setText(planet.getMarket().getSellPrices().get(TradeGood.MACHINES).toString());
-                break;
-            case NARCOTICS:
-                priceNarcoticsSell.setText(planet.getMarket().getSellPrices().get(TradeGood.NARCOTICS).toString());
-                break;      
-            case ROBOTS:
-                priceRobotsSell.setText(planet.getMarket().getSellPrices().get(TradeGood.ROBOTS).toString());
-                break;
+    /**
+     * Deletes rows of the grid so that there is only the specified number remaining
+     * @param numRows how many rows not to delete
+     */
+    private void deleteGridRows(int numRows, GridPane grid) {
+        ObservableList<Node> children = grid.getChildren();
+        ArrayList<Node> toRemove = new ArrayList<>();
+        for (Node node : children) {
+            Integer row = GridPane.getRowIndex(node);
+            if (row != null && row > numRows && row < 11) {
+                toRemove.add(node);
             }
+        }
+        children.removeAll(toRemove);
+    }
+    
+    private void setUpBuyPanel(Market market) {
+        for (int i = 0; i < buyGoods.size(); i++) {
+            TradeGood good = buyGoods.get(i);
+            
+            stocks[i].setText("" + market.getStock().getQuantityOfGood(good));
+            goodBuys[i].setText("" + good.type());
+            priceBuys[i].setText("$" + market.getBuyPrices().get(good));
         }
     }
     
-    @FXML protected void setBuyPrices() {
-        for (TradeGood good : TradeGood.values()) {
-        switch (good) {
-            case WATER:
-                priceWaterBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.WATER).toString());
-                break;
-            case FURS:
-                priceFursBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.FURS).toString());
-                break;
-            case FOOD:
-                priceFoodBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.FOOD).toString());
-                break;
-            case ORE:
-                priceOreBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.ORE).toString());
-                break;
-            case GAMES:
-                priceGamesBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.GAMES).toString());
-                break;
-            case FIREARMS:
-                priceFirearmsBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.FIREARMS).toString());
-                break;
-            case MEDICINE:
-                priceMedicineBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.MEDICINE).toString());
-                break;
-            case MACHINES:
-                priceMachinesBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.MACHINES).toString());
-                break;
-            case NARCOTICS:
-                priceNarcoticsBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.NARCOTICS).toString());
-                break;      
-            case ROBOTS:
-                priceRobotsBuy.setText(planet.getMarket().getBuyPrices().get(TradeGood.ROBOTS).toString());
-                break;
-            }
+    private void setUpSellPanel(Market market, Cargo cargo) {
+        for (int i = 0; i < sellGoods.size(); i++) {
+            TradeGood good = sellGoods.get(i);
+            
+            inventorys[i].setText("" + cargo.getQuantityOfGood(good));
+            goodSells[i].setText("" + good.type());
+            priceSells[i].setText("$" + market.getSellPrices().get(good));
         }
+    }
+    
+    @FXML protected void increaseBuyQuantity(ActionEvent event) {
+        Integer row = GridPane.getRowIndex((Node) event.getSource());
+        if (row != null) {
+            modifyBuyQuantity(row - 1, Change.INCREASE);
+        }     
+    }
+    
+    @FXML protected void decreaseBuyQuantity(ActionEvent event) {
+        Integer row = GridPane.getRowIndex((Node) event.getSource());
+        if (row != null) {
+            modifyBuyQuantity(row - 1, Change.DECREASE);
+        }  
+    }
+    
+    @FXML protected void increaseSellQuantity(ActionEvent event) {
+        Integer row = GridPane.getRowIndex((Node) event.getSource());
+        if (row != null) {
+            modifySellQuantity(row - 1, Change.INCREASE);
+        }     
+    }
+    
+    @FXML protected void decreaseSellQuantity(ActionEvent event) {
+        Integer row = GridPane.getRowIndex((Node) event.getSource());
+        if (row != null) {
+            modifySellQuantity(row - 1, Change.DECREASE);
+        }  
+    }
+    
+    private void modifyBuyQuantity(int index, Change type) {
+        TradeGood good = buyGoods.get(index);
+        int oldQuantity = cashier.getBuyQuantityOfGood(good);
+        try {
+            int newQuantity;
+            if (type == Change.INCREASE) {
+                newQuantity = oldQuantity + 1;
+            } else if (type == Change.DECREASE) {
+                newQuantity = oldQuantity - 1;
+            } else {
+                newQuantity = Integer.parseInt(numBuys[index].getText());
+            }
+            cashier.changeBuyQuantity(good, newQuantity);
+            updateBuyText(index);
+            updateNetBalance();
+        } catch (NumberFormatException e) {
+            //do nothing
+        } catch (InsufficientFundsException e) {
+            //do nothing
+        } catch (IllegalArgumentException e) {
+            //do nothing
+        }
+    }
+    
+    private void modifySellQuantity(int index, Change type) {
+        TradeGood good = sellGoods.get(index);
+        int oldQuantity = cashier.getSellQuantityOfGood(good);
+        try {
+            int newQuantity;
+            if (type == Change.INCREASE) {
+                newQuantity = oldQuantity + 1;
+            } else if (type == Change.DECREASE) {
+                newQuantity = oldQuantity - 1;
+            } else {
+                newQuantity = Integer.parseInt(numSells[index].getText());
+            }
+            cashier.changeSellQuantity(good, newQuantity);
+            updateSellText(index);
+            updateNetBalance();
+        } catch (NumberFormatException e) {
+            //do nothing
+        } catch (DepletedInventoryException e) {
+            //do nothing
+        } catch (IllegalArgumentException e) {
+            //do nothing
+        }
+    }
+    
+    private void updateBuyText(int index) {
+        TradeGood good = buyGoods.get(index);
+        int quantity = cashier.getBuyQuantityOfGood(good);
+        int oldStock = planet.getMarket().getStock().getQuantityOfGood(good);
+        stocks[index].setText("" + (oldStock - quantity));
+        numBuys[index].setText("" + quantity);
+        costs[index].setText("$" + (quantity * planet.getMarket().getBuyPrices().get(good)));
+        totalPurchase.setText("$" + cashier.getTotalCost());
+        moneySpending.setText(totalPurchase.getText());
+    }
+    
+    private void updateSellText(int index) {
+        TradeGood good = sellGoods.get(index);
+        int quantity = cashier.getSellQuantityOfGood(good);
+        int oldInventory = player.getShip().getCargo().getQuantityOfGood(good);
+        inventorys[index].setText("" + (oldInventory - quantity));
+        numSells[index].setText("" + quantity);
+        revenues[index].setText("$" + (quantity * planet.getMarket().getBuyPrices().get(good)));
+        totalSale.setText("$" + cashier.getTotalRevenue());
+        moneyRecieving.setText(totalSale.getText());
     }
     
     private void updateNetBalance() {
+       moneyRemaining.setText(cashier.getRemainingBalance() + " credits"); 
+    }
         
+    @FXML protected void completeTransaction(ActionEvent event) {
+        cashier.complete();
+        player.getWallet().add(cashier.getTotalRevenue());
+        player.getWallet().remove(cashier.getTotalCost());
+        mainControl.goToMarketScreen(planet);
     }
     
-    @FXML protected void increaseBuyQuantity1(ActionEvent event) {
-        buyQuantity1++;
-        buyQuantity1Price *= buyQuantity1;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
-        buyQuantity3Price) + (sellQuantityPrice1 - 
-        sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText(netBalance + " credits");
-    }
-    @FXML protected void decreaseBuyQuantity1(ActionEvent event) {
-        if(buyQuantity1 > 0) {
-            buyQuantity1--;
-            buyQuantity1Price *= buyQuantity1;
-            netBalance = (buyQuantity1Price + buyQuantity2Price + 
-            buyQuantity3Price) + (sellQuantityPrice1 - 
-            sellQuantityPrice2 - sellQuantityPrice3);
-            netBalanceText.setText(netBalance + " credits");
-        }
-    }
-    @FXML protected void increaseBuyQuantity2(ActionEvent event) {
-        buyQuantity2++;
-        buyQuantity2Price *= buyQuantity2;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
-        buyQuantity3Price) + (sellQuantityPrice1 - 
-        sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText(netBalance + " credits");
-    }
-    @FXML protected void decreaseBuyQuantity2(ActionEvent event) {
-        if(buyQuantity2 > 0) {
-            buyQuantity2--;
-            buyQuantity2Price *= buyQuantity2;
-            netBalance = (buyQuantity1Price + buyQuantity2Price + 
-            buyQuantity3Price) + (sellQuantityPrice1 - 
-            sellQuantityPrice2 - sellQuantityPrice3);
-            netBalanceText.setText(netBalance + " credits");
-        }
-    }
-    @FXML protected void increaseBuyQuantity3(ActionEvent event) {
-        buyQuantity3++;
-        buyQuantity3Price *= buyQuantity3;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
-        buyQuantity3Price) + (sellQuantityPrice1 - 
-        sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText(netBalance + " credits");
-    }
-    @FXML protected void decreaseBuyQuantity(ActionEvent event) {
-        if(buyQuantity3 > 0) {
-            buyQuantity3--;
-            buyQuantity3Price *= buyQuantity3;
-            netBalance = (buyQuantity1Price + buyQuantity2Price + 
-            buyQuantity3Price) + (sellQuantityPrice1 - 
-            sellQuantityPrice2 - sellQuantityPrice3);
-            netBalanceText.setText(netBalance + " credits");
-        }
-    }
-    @FXML protected void increaseSellQuantity1(ActionEvent event) {
-        sellQuantity1++;
-        sellQuantityPrice1 *= sellQuantity1;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
-        buyQuantity3Price) + (sellQuantityPrice1 - 
-        sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText(netBalance + " credits");
-    }
-    @FXML protected void decreaseSellQuantity1(ActionEvent event) {
-        if (sellQuantity1 > 0) {
-            sellQuantity1--;    
-            sellQuantityPrice1 *= sellQuantity1;
-            netBalance = (buyQuantity1Price + buyQuantity2Price + 
-                buyQuantity3Price) + (sellQuantityPrice1 - 
-                sellQuantityPrice2 - sellQuantityPrice3);
-            netBalanceText.setText("" + netBalance);
-        }
-    }
-    @FXML protected void increaseSellQuantity2(ActionEvent event) {
-        sellQuantity1++;
-        sellQuantityPrice2 *= sellQuantity2;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
-                buyQuantity3Price) + (sellQuantityPrice1 - 
-                sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText("" + netBalance);
-        }
-    @FXML protected void decreaseSellQuantity2(ActionEvent event) {
-        if (sellQuantity2 > 0) {
-            sellQuantity2--;    
-            sellQuantityPrice2 *= sellQuantity2;
-            netBalance = (buyQuantity1Price + buyQuantity2Price + 
-                buyQuantity3Price) + (sellQuantityPrice1 - 
-                sellQuantityPrice2 - sellQuantityPrice3);
-            netBalanceText.setText("" + netBalance);
-        }
-    }
-    @FXML protected void increaseSellQuantity3(ActionEvent event) {
-        sellQuantity3++;
-        sellQuantityPrice3 *= sellQuantity3;
-        netBalance = (buyQuantity1Price + buyQuantity2Price + 
-                buyQuantity3Price) + (sellQuantityPrice1 - 
-                sellQuantityPrice2 - sellQuantityPrice3);
-        netBalanceText.setText("" + netBalance);
-    }
-    @FXML protected void decreaseSellQuantity3(ActionEvent event) {
-        if (sellQuantity3 > 0) {
-            sellQuantity3--;    
-            sellQuantityPrice3 *= sellQuantity3;
-            netBalance = (buyQuantity1Price + buyQuantity2Price + 
-                buyQuantity3Price) + (sellQuantityPrice1 - 
-                sellQuantityPrice2 - sellQuantityPrice3);
-            netBalanceText.setText("" + netBalance);
-        }
-    }
-        
-    @FXML protected void buyButtonPressed(ActionEvent event) {
-        // buy the specified items
+    @FXML protected void goBack(ActionEvent event) {
+        mainControl.goToFirstScreen();
     }
 }
     

@@ -7,6 +7,8 @@
 package spacetrader.system;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +25,7 @@ import spacetrader.Universe;
 public class FirstScreenController implements Initializable {
 
     private MainController mainControl;
+    private Universe universe;
     
     @FXML private TextArea spaceInformation;
     
@@ -43,7 +46,10 @@ public class FirstScreenController implements Initializable {
     }
     
     @FXML protected void goToMarket(ActionEvent event) {
-        mainControl.goToMarketScreen();
+        //Pick a random planet to start off game
+        ArrayList<Planet> planets = universe.getPlanets();
+        Random rand = new Random();
+        mainControl.goToMarketScreen(planets.get(rand.nextInt(planets.size())));
     }
     
     /**
@@ -52,6 +58,7 @@ public class FirstScreenController implements Initializable {
      * @param playerName the name of the game's player
      */
     public void displayUniverse(Universe universe, String playerName) {
+        this.universe = universe;
         for (Planet system : universe.getPlanets()) {
             spaceInformation.appendText(system + "\n");
         }

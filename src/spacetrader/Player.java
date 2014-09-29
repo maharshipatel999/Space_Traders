@@ -6,18 +6,22 @@
 
 package spacetrader;
 
+import spacetrader.commerce.Wallet;
+
 /**
  *
  * @author Seth
  */
 public class Player {
     
-    private String name;
-    private int pilotSkill;
-    private int fighterSkill;
-    private int traderSkill;
-    private int engineerSkill;
-    private int investorSkill;
+    private final String name;
+    private final int pilotSkill;
+    private final int fighterSkill;
+    private final int traderSkill;
+    private final int engineerSkill;
+    private final int investorSkill;
+    private final Wallet wallet;
+    private final SpaceShip ship;
     
     public Player(String name, int pilot, int fighter, int trader, int engineer, int investor) {
         this.name = name;
@@ -26,6 +30,9 @@ public class Player {
         this.traderSkill = trader;
         this.engineerSkill = engineer;
         this.investorSkill = investor;
+        
+        wallet = new Wallet();
+        ship = new SpaceShip(ShipType.GNAT);
     }
     
     public String getName() {
@@ -52,4 +59,11 @@ public class Player {
         return investorSkill;
     }
     
+    public Wallet getWallet() {
+        return wallet;
+    }
+    
+    public SpaceShip getShip() {
+        return ship;
+    }
 }

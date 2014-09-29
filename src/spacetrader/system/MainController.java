@@ -7,7 +7,6 @@
 package spacetrader.system;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -77,16 +76,12 @@ public class MainController {
       /**
      * Transitions the game screen to the First Screen.
      */
-   public void goToMarketScreen() {
+   public void goToMarketScreen(Planet planet) {
         stage.setTitle("Welcome to the Market!");        
         MarketScreenController control;
         control = (MarketScreenController) changeScene("/spacetrader/MarketScreen.fxml");
         control.setMainControl(this);
-        //Pick a random planet to start off game
-        ArrayList<Planet> planets = game.getUniverse().getPlanets();
-        control.setModel(planets.get(0), game.getPlayer());
-        control.setBuyPrices();
-        control.setSellPrices();
+        control.setUpMarketScreen(planet, game.getPlayer());
     }
     
     /**

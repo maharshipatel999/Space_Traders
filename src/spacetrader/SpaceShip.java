@@ -15,7 +15,7 @@ import spacetrader.commerce.Weapon;
  *
  * @author Caleb Stokols
  */
-public abstract class SpaceShip {
+public class SpaceShip {
     
     private ShipType type;
     private Cargo cargo;
@@ -26,11 +26,14 @@ public abstract class SpaceShip {
     
     public SpaceShip(ShipType type) {
         this.type = type;
-        Cargo cargo = new Cargo(type.numCargoSlots());
-        weapons = new EquipmentSlots<>(type.numWeaponSlots());
-        shields = new EquipmentSlots<>(type.numShieldSlots());
-        gadgets = new EquipmentSlots<>(type.numGadgetSlots());
-        tank = new FuelTank(type.fuel());
-
+        this.cargo = new Cargo(type.numCargoSlots());
+        this.weapons = new EquipmentSlots<>(type.numWeaponSlots());
+        this.shields = new EquipmentSlots<>(type.numShieldSlots());
+        this.gadgets = new EquipmentSlots<>(type.numGadgetSlots());
+        this.tank = new FuelTank(type.fuel());
+    }
+    
+    public Cargo getCargo() {
+        return cargo;
     }
 }
