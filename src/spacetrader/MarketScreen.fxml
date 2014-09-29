@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MarketScreenController">
+<BorderPane prefHeight="686.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MarketScreenController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -542,14 +542,14 @@
       </TabPane>
    </center>
    <bottom>
-    <AnchorPane maxHeight="90.0" minHeight="0.0" minWidth="0.0" prefHeight="74.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+    <AnchorPane maxHeight="90.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="750.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="497.0" layoutY="6.0" mnemonicParsing="false" onAction="#completeTransaction" prefHeight="38.0" prefWidth="339.0" text="COMPLETE TRANSACTION" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+            <Button layoutX="497.0" layoutY="6.0" mnemonicParsing="false" onAction="#completeTransaction" prefHeight="38.0" prefWidth="339.0" text="COMPLETE TRANSACTION" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0">
                <font>
                   <Font name="Copperplate Gothic Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="backButton" layoutX="17.0" layoutY="6.0" mnemonicParsing="false" onAction="#goBack" prefHeight="38.0" prefWidth="100.0" text="BACK" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+            <Button fx:id="backButton" layoutX="17.0" layoutY="6.0" mnemonicParsing="false" onAction="#goBack" prefHeight="38.0" prefWidth="100.0" text="BACK" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="15.0">
                <font>
                   <Font name="Copperplate Gothic Bold" size="20.0" />
                </font>
@@ -559,7 +559,7 @@
       </AnchorPane>
    </bottom>
    <top>
-      <GridPane prefHeight="98.0" prefWidth="740.0" BorderPane.alignment="CENTER">
+      <GridPane prefHeight="84.0" prefWidth="730.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -568,7 +568,7 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="42.0" minHeight="1.0" prefHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
         </rowConstraints>
