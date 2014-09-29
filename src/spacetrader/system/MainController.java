@@ -75,6 +75,7 @@ public class MainController {
     }
       /**
      * Transitions the game screen to the First Screen.
+     * @param planet the planet who's market we're visiting
      */
    public void goToMarketScreen(Planet planet) {
         stage.setTitle("Welcome to the Market!");        

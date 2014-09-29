@@ -622,20 +622,6 @@
             </Rectangle>
             <VBox prefHeight="648.0" prefWidth="220.0" spacing="5.0">
                <children>
-                  <Label text="Current Funds:">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="playerFunds" prefHeight="43.0" prefWidth="187.0" text="1000 credits">
-                     <font>
-                        <Font size="29.0" />
-                     </font>
-                  </Label>
-                  <Separator prefWidth="200.0" />
                   <Label text="TRANSACTION">
                      <VBox.margin>
                         <Insets top="20.0" />
@@ -644,9 +630,9 @@
                         <Font name="System Italic" size="21.0" />
                      </font>
                   </Label>
-                  <Label text="Spendings:">
+                  <Label fx:id="playerFunds" prefHeight="43.0" prefWidth="187.0" text="1000 credits">
                      <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font size="29.0" />
                      </font>
                   </Label>
                   <Label fx:id="totalPurchase" text="- 0 credits">
@@ -654,27 +640,12 @@
                         <Font size="23.0" />
                      </font>
                   </Label>
-                  <Label text="Recievings:">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
                   <Label fx:id="totalSale" text="+ 0 credits">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </Label>
-                  <Label text="Remaining:">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
+                  <Separator prefWidth="200.0" />
                   <Label fx:id="moneyRemaining" text="= 0 credits">
                      <font>
                         <Font size="29.0" />
@@ -685,7 +656,7 @@
                   <Insets left="15.0" />
                </padding>
                <StackPane.margin>
-                  <Insets top="60.0" />
+                  <Insets top="20.0" />
                </StackPane.margin>
                <opaqueInsets>
                   <Insets />

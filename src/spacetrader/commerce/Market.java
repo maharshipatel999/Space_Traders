@@ -32,36 +32,34 @@ public class Market {
     
     /**
      * Sets the Map sell/buy prices so that each TradeGood maps to its sell/buy price on this planet.
+     * Price is equal to (the base price) + (incPerLevel * (Planet Tech Level - minProduceLevel)) + (variance).
      * If a good is not sold on this planet, its price is -1.
      */
     private void setAllPrices() {
         sellPrices = new HashMap<>();
         buyPrices = new HashMap<>();
         for (TradeGood good : TradeGood.values()) {
-            sellPrices.put(good, calculatePrice(good));
-            buyPrices.put(good, calculatePrice(good));
+            Random rand = new Random();
+            int variance = rand.nextInt(good.variance());
+            int buyPrice = good.price();
+            int sellPrice = good.price();
+
+            if (planet.getLevel().ordinal() >= good.minProduceLevel()) {
+                buyPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
+                buyPrice += variance;
+            } else { 
+                buyPrice = -1;
+            }
+
+            if (planet.getLevel().ordinal() >= good.minUseLevel()) {
+                sellPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minUseLevel());
+                sellPrice += variance;
+            } else { 
+                sellPrice = -1;
+            }
+            buyPrices.put(good, buyPrice);
+            sellPrices.put(good, sellPrice);
         }
-    }
-    
-    /**
-     * Calculates the price of a TradeGood on the current planet using
-     * the TradeGood enum attributes.
-     * @param a TradeGood to sell
-     * @return the price of the TradeGood or -1 if it is not sold on this planet
-     */
-    private int calculatePrice(TradeGood good) {
-        Random rand = new Random();
-        //(the base price) + (incPerLevel * (Planet Tech Level - minProduceLevel)) + (variance).
-        
-        int price = good.price();
-        if (planet.getLevel().ordinal() >= good.minProduceLevel()) {
-            price += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
-            price += rand.nextInt(good.variance());
-        } else { 
-            //the controller won't let user change quantity of good if the price is < 0
-            price = -1; //the good cannot be bought or sold at that planet
-        }
-        return price;
     }
     
     /**
@@ -72,7 +70,7 @@ public class Market {
     private void setMarketStock() {
         Random rand = new Random();
         for (TradeGood good : TradeGood.values()) {
-            if (sellPrices.get(good) >= 0) {
+            if (buyPrices.get(good) >= 0) {
                 stock.addItem(good, rand.nextInt(15) + 10); //still needs to be changed
             }
         }

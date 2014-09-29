@@ -55,7 +55,7 @@ public class MarketScreenController implements Initializable {
                         inventory5, inventory6, inventory7, inventory8, inventory9;
     @FXML private Label goodSell0, goodSell1, goodSell2, goodSell3, goodSell4,
                         goodSell5, goodSell6, goodSell7, goodSell8, goodSell9;
-    @FXML private Label pricySell0, priceSell1, priceSell2, priceSell3, priceSell4,
+    @FXML private Label priceSell0, priceSell1, priceSell2, priceSell3, priceSell4,
                         priceSell5, priceSell6, priceSell7, priceSell8, priceSell9;
     @FXML private TextField numSell0, numSell1, numSell2, numSell3, numSell4,
                             numSell5, numSell6, numSell7, numSell8, numSell9;
@@ -106,7 +106,7 @@ public class MarketScreenController implements Initializable {
                                   inventory5, inventory6, inventory7, inventory8, inventory9};
         goodSells = new Label[] {goodSell0, goodSell1, goodSell2, goodSell3, goodSell4,
                                  goodSell5, goodSell6, goodSell7, goodSell8, goodSell9};
-        priceSells = new Label[] {pricySell0, priceSell1, priceSell2, priceSell3, priceSell4,
+        priceSells = new Label[] {priceSell0, priceSell1, priceSell2, priceSell3, priceSell4,
                                   priceSell5, priceSell6, priceSell7, priceSell8, priceSell9};
         numSells = new TextField[] {numSell0, numSell1, numSell2, numSell3, numSell4,
                                     numSell5, numSell6, numSell7, numSell8, numSell9};
