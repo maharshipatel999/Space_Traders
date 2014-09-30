@@ -40,13 +40,19 @@ public class Market {
         buyPrices = new HashMap<>();
         for (TradeGood good : TradeGood.values()) {
             Random rand = new Random();
-            int variance = rand.nextInt(good.variance());
+            int variance = rand.nextInt(good.variance() + 1);
             int buyPrice = good.price();
             int sellPrice = good.price();
 
             if (planet.getLevel().ordinal() >= good.minProduceLevel()) {
                 buyPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
                 buyPrice += variance;
+                //checks the resource of the planet and applies a price accordingly
+                if (planet.getResource() == good.highCondition()) {
+                    buyPrice = (int) (buyPrice * 1.5);
+                } else if (planet.getResource() == good.lowCondition()) {
+                    buyPrice = (int) (buyPrice * 0.5);
+                }
             } else {
                 buyPrice = -1;
             }
@@ -54,6 +60,12 @@ public class Market {
             if (planet.getLevel().ordinal() >= good.minUseLevel()) {
                 sellPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
                 sellPrice += variance;
+                //checks the resource of the planet and applies a price accordingly
+                if (planet.getResource() == good.highCondition()) {
+                    sellPrice = (int) (sellPrice * 1.5);
+                } else if (planet.getResource() == good.lowCondition()) {
+                    sellPrice = (int) (sellPrice * 0.5);
+                }
             } else { 
                 sellPrice = -1;
             }

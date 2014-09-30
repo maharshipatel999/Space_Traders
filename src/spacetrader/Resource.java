@@ -37,13 +37,19 @@ public enum Resource {
     private static final Random RANDOM = new Random();
     
     /**
-     *  Gets a random Resource
-     *  @return the resource being assigned
+     *  Gets a random Resource. There is a 2 in 3 chance the resource
+     *  will be NONE. If the resource is not NONE, there is an equal
+     *  probability among all other resources.
+     * 
+     *  @return Resource - the resource being assigned
      */
     public static Resource getRandomResource() {
-        return VALUES.get(RANDOM.nextInt(SIZE));
+        int probOfNone = RANDOM.nextInt(3);
+        if (probOfNone % 2 == 1) {
+            return VALUES.get(RANDOM.nextInt(12) + 1);
+        } else {
+            return Resource.NONE;
+        }
     }
     
 }
-
-
