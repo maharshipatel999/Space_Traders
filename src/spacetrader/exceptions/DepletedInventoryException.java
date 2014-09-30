@@ -10,7 +10,7 @@ package spacetrader.exceptions;
  *
  * @author Caleb
  */
-public class DepletedInventoryException extends Exception {
+public class DepletedInventoryException extends RuntimeException {
 
     /**
      * Creates a new instance of <code>DepletedInventoryException</code> without

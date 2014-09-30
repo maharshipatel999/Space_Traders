@@ -56,10 +56,10 @@ public class Transaction {
             throw new InsufficientFundsException("Player does not have enough credits to make this purchase.");
         }
         //Check to make sure market is not selling more than its stock
-        if (newQuantity > market.getStock().getQuantityOfGood(good)) {
+        if (newQuantity > market.getStock().getQuantity(good)) {
             throw new DepletedInventoryException("Cannot sell more goods than the market owns");
         }
-        if (playerCargo.availableSlots() < newQuantity) {
+        if (playerCargo.getMaxCapacity() - playerCargo.getCount() < newQuantity) {
             throw new CargoIsFullException("Cannot purchase more goods than cargo can carry");
         }
         purchases.put(good, newQuantity);
@@ -77,7 +77,7 @@ public class Transaction {
             throw new IllegalArgumentException("Cannot sell a negative quantity of goods");
         }
         //Check to make sure player is not selling more than he owns.
-        if (newQuantity > playerCargo.getQuantityOfGood(good)) {
+        if (newQuantity > playerCargo.getQuantity(good)) {
             throw new DepletedInventoryException("Cannot sell more goods than the player owns");
         }
         sales.put(good, newQuantity);

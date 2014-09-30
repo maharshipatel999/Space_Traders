@@ -18,6 +18,7 @@ public class CargoIsFullException extends RuntimeException {
      * detail message.
      */
     public CargoIsFullException() {
+        super();
     }
 
     /**

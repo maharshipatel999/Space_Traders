@@ -17,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -43,7 +42,6 @@ public class MarketScreenController implements Initializable {
     @FXML private Label playerFunds, moneyRemaining;
     @FXML private Label totalPurchase, totalSale;
     @FXML private GridPane buyGrid, sellGrid;
-    @FXML private Tab buyTab, sellTab;
     @FXML private Label stock0, stock1, stock2, stock3, stock4,
                         stock5, stock6, stock7, stock8, stock9;
     @FXML private Label goodBuy0, goodBuy1, goodBuy2, goodBuy3, goodBuy4,
@@ -116,8 +114,8 @@ public class MarketScreenController implements Initializable {
         revenues = new Label[] {revenue0, revenue1, revenue2, revenue3, revenue4, 
                                 revenue5, revenue6, revenue7, revenue8, revenue9};
 
-        buyGoods = market.getStock().getGoodList();
-        sellGoods = player.getShip().getCargo().getGoodList();
+        buyGoods = market.getStock().getTradeGoods();
+        sellGoods = player.getShip().getCargo().getTradeGoods();
         
         //Remove appropriate amount of rows from grid
         if (buyGoods.size() < 10) {
@@ -159,7 +157,7 @@ public class MarketScreenController implements Initializable {
         for (int i = 0; i < buyGoods.size(); i++) {
             TradeGood good = buyGoods.get(i);
             
-            stocks[i].setText("" + market.getStock().getQuantityOfGood(good));
+            stocks[i].setText("" + market.getStock().getQuantity(good));
             goodBuys[i].setText("" + good.type());
             priceBuys[i].setText("$" + market.getBuyPrices().get(good));
         }
@@ -167,7 +165,7 @@ public class MarketScreenController implements Initializable {
         for (int i = 0; i < sellGoods.size(); i++) {
             TradeGood good = sellGoods.get(i);
             
-            inventorys[i].setText("" + cargo.getQuantityOfGood(good));
+            inventorys[i].setText("" + cargo.getQuantity(good));
             goodSells[i].setText("" + good.type());
             priceSells[i].setText("$" + market.getSellPrices().get(good));
         }
@@ -256,7 +254,7 @@ public class MarketScreenController implements Initializable {
     private void updateBuyText(int index) {
         TradeGood good = buyGoods.get(index);
         int quantity = cashier.getBuyQuantityOfGood(good);
-        int oldStock = market.getStock().getQuantityOfGood(good);
+        int oldStock = market.getStock().getQuantity(good);
         stocks[index].setText("" + (oldStock - quantity));
         numBuys[index].setText("" + quantity);
         costs[index].setText("$" + (quantity * market.getBuyPrices().get(good)));
@@ -266,7 +264,7 @@ public class MarketScreenController implements Initializable {
     private void updateSellText(int index) {
         TradeGood good = sellGoods.get(index);
         int quantity = cashier.getSellQuantityOfGood(good);
-        int oldInventory = player.getShip().getCargo().getQuantityOfGood(good);
+        int oldInventory = player.getShip().getCargo().getQuantity(good);
         inventorys[index].setText("" + (oldInventory - quantity));
         numSells[index].setText("" + quantity);
         revenues[index].setText("$" + (quantity * market.getBuyPrices().get(good)));
@@ -309,10 +307,10 @@ public class MarketScreenController implements Initializable {
                     int price, quantity;
                     if (grid == buyGrid) {
                         price = market.getBuyPrices().get(buyGoods.get(row - 1));
-                        quantity = market.getStock().getQuantityOfGood(buyGoods.get(row - 1));
+                        quantity = market.getStock().getQuantity(buyGoods.get(row - 1));
                     } else {
                         price = -1; //if selling, price doesn't matter
-                        quantity = player.getShip().getCargo().getQuantityOfGood(sellGoods.get(row - 1));
+                        quantity = player.getShip().getCargo().getQuantity(sellGoods.get(row - 1));
                     }
                     if (price > cashier.getRemainingBalance() || quantity == 0) {
                         node.setDisable(true);

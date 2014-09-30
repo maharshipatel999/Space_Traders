@@ -12,21 +12,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import spacetrader.exceptions.CargoIsFullException;
+import spacetrader.exceptions.DepletedInventoryException;
 
 /**
- * This is the Cargo class that holds TradeGoods
- * @author Naveena
- * @version 1.0
+ * This class represents a holder for goods.
+ * It stores a mapping from each type of TradeGood to its quantity.
+ * Cargo is the only way a quantity of TradeGoods should ever be held.
+ * @author Naveena, Caleb
+ * @version 1.5
  *
  */
 public class Cargo {
     
     private final Map<TradeGood, Integer> tradeGoods;
-    private int numSlots;
+    private int maxCapacity;
     private int count;
     
-    public Cargo(int numSlots) {
-        this.numSlots = numSlots;
+    /**
+     * Creates a new Cargo with a specified number of available slots
+     * @param maxCapacity the initial max number of slots
+     */
+    public Cargo(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
         this.tradeGoods = new HashMap<>();
         for (TradeGood good : TradeGood.values()) {
             tradeGoods.put(good, 0);
@@ -34,19 +41,19 @@ public class Cargo {
     }
     
     /**
-     * Adds an item to the cargo if not full
+     * Adds an item to the cargo.
+     * If there is not enough space, an exception is thrown.
      * @param tradeGood the good to add
      * @param quantity the amount of good to add
      */
     public void addItem(TradeGood tradeGood, int quantity) {
-        if (isFull()) {
+        if (count + quantity > maxCapacity) {
             throw new CargoIsFullException();
         }
-        int currentQuantity = getQuantityOfGood(tradeGood);
-        int newQuantity = currentQuantity + quantity;
-        this.tradeGoods.put(tradeGood, newQuantity);
-        count += quantity;
-    } 
+        int currQuantity = this.tradeGoods.get(tradeGood);
+        this.tradeGoods.put(tradeGood, currQuantity + quantity);
+        this.count += quantity;
+    }
     
     /**
      * Adds multiple items to the cargo if not full
@@ -62,18 +69,37 @@ public class Cargo {
     }
     
     /**
-     * Removes an item to the cargo if not empty/insufficient amount of goods
+     * Adds the contents of another Cargo to the contents of this Cargo.
+     * If there is not space for every addition, an exception
+     * is thrown and no goods are added.
+     * otherCargo's contents are left unchanged
+     * @param otherCargo the cargo who's contents shall be added
+     */
+    public void addCargoContents(Cargo otherCargo) {
+        if (this.count + otherCargo.count > maxCapacity) {
+            throw new CargoIsFullException();
+        }
+        for (TradeGood good : TradeGood.values()) {
+            int currQuantity = this.tradeGoods.get(good);
+            int quantity = otherCargo.tradeGoods.get(good);
+            this.tradeGoods.put(good, currQuantity + quantity);
+        }
+        this.count += otherCargo.count;
+    }
+    
+    /**
+     * Removes an item from the cargo.
+     * Throws an exception if more goods are removed than currently exist.
      * @param tradeGood the good to remove
      * @param quantity the amount of good to remove
      */
     public void removeItem(TradeGood tradeGood, int quantity) {
-        int currentQuantity = getQuantityOfGood(tradeGood);
-        int newQuantity = currentQuantity - quantity;
-        if (newQuantity < 0) {
-            //TODO
+        int currQuantity = this.tradeGoods.get(tradeGood);
+        if (quantity > currQuantity) {
+            throw new DepletedInventoryException();
         }
-        this.tradeGoods.put(tradeGood, newQuantity);
-        count -= quantity;
+        this.tradeGoods.put(tradeGood, currQuantity - quantity);
+        this.count -= quantity;
     }
     
     /**
@@ -87,51 +113,91 @@ public class Cargo {
     }
     
     /**
-     * Increases the number of available slots.
+     * Removes the contents of another Cargo from the contents of this Cargo.
+     * If more goods are removed than currently exist, an exception
+     * is thrown and no goods are removed.
+     * otherCargo's contents are left unchanged
+     * @param otherCargo the cargo who's contents shall be removed
      */
-    public void addSlot() {
-        numSlots++;
+    public void removeCargoContents(Cargo otherCargo) {
+        for (TradeGood good : TradeGood.values()) {
+            if (otherCargo.tradeGoods.get(good) > this.tradeGoods.get(good)) {
+                throw new DepletedInventoryException();
+            }
+        }
+        for (TradeGood good : TradeGood.values()) {
+            int currQuantity = this.tradeGoods.get(good);
+            int quantity = otherCargo.tradeGoods.get(good);
+            this.tradeGoods.put(good, currQuantity - quantity);
+        }
+        this.count -= otherCargo.count;
     }
     
     /**
-     * Decreases the number of available slots
+     * Increases the number of available slots.
      */
-    public void removeSlot() {
-        numSlots--;
+    public void increaseCapacity() {
+        maxCapacity++;
     }
+    
+    /**
+     * Decreases the number of available slots.
+     */
+    public void decreaseCapacity() {
+        maxCapacity--;
+    }
+    
+    //REMOVE THIS
     /**
      * Checks if there are any empty cargo slots left based on ship's capacity
      * @return true if cargo is full
      */
     public boolean isFull() {
-        return (count == numSlots);
+        return (count == maxCapacity);
     }
     
-    public int availableSlots() {
-        return numSlots - count;
+    /**
+     * Determines the number of cargo slots that are still open.
+     * @return the remaining unfilled slots
+     */
+    public int getRemainingCapacity() {
+        return maxCapacity - count;
     }
     
-    public int slotsFilled() {
+    /**
+     * Gets the total number of good stored in this Cargo
+     * @return the total count
+     */
+    public int getCount() {
         return count;
     }
     
     /**
-     * Gets quantity of good currently in cargo
-     * @param tradeGood good that needs quantity check
+     * Gets the max number of goods that can be held in this cargo.
+     * @return the max capacity
+     */
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+    
+    /**
+     * Determines the quantity of goods stored in this Cargo for a specific
+     * type of good.
+     * @param tradeGood good who's quantity is being checked
      * @return quantity of good
      */
-    public int getQuantityOfGood(TradeGood tradeGood) {
+    public int getQuantity(TradeGood tradeGood) {
         return this.tradeGoods.get(tradeGood);
     }
     
     /**
-     * 
+     * Creates a list of the TradeGood types that this Cargo currently holds.
      * @return an ordered list of all the TradeGoods this cargo holds
      */
-    public List<TradeGood> getGoodList() {
+    public List<TradeGood> getTradeGoods() {
         ArrayList<TradeGood> goods = new ArrayList<>();
         for (TradeGood good : TradeGood.values()) {
-            if (tradeGoods.get(good) > 0) {
+            if (this.tradeGoods.get(good) > 0) {
                 goods.add(good);
             }
         }
