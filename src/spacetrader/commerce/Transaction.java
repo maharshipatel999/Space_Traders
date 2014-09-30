@@ -8,6 +8,7 @@ package spacetrader.commerce;
 
 import java.util.HashMap;
 import java.util.Map;
+import spacetrader.exceptions.CargoIsFullException;
 import spacetrader.exceptions.DepletedInventoryException;
 import spacetrader.exceptions.InsufficientFundsException;
 
@@ -57,6 +58,9 @@ public class Transaction {
         //Check to make sure market is not selling more than its stock
         if (newQuantity > market.getStock().getQuantityOfGood(good)) {
             throw new DepletedInventoryException("Cannot sell more goods than the market owns");
+        }
+        if (playerCargo.availableSlots() < newQuantity) {
+            throw new CargoIsFullException("Cannot purchase more goods than cargo can carry");
         }
         purchases.put(good, newQuantity);
         updateTotalCost();
