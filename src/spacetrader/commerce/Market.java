@@ -94,9 +94,15 @@ public class Market {
      */
     private void setMarketStock() {
         Random rand = new Random();
+        int amountToAdd;
         for (TradeGood good : TradeGood.values()) {
+            amountToAdd = rand.nextInt(7) + 12; //can be changed 
             if (buyPrices.get(good) >= 0) {
-                stock.addItem(good, rand.nextInt(15) + 10); //still needs to be changed
+                if (planet.getLevel() == good.bestLevel()) {
+                    stock.addItem(good, amountToAdd * 2);
+                } else {
+                    stock.addItem(good, amountToAdd);  
+                }
             }
         }
     }
