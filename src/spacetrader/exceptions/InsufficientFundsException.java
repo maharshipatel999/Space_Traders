@@ -26,6 +26,6 @@ public class InsufficientFundsException extends RuntimeException {
      * @param msg the detail message.
      */
     public InsufficientFundsException(String msg) {
-        super("Wallet lacks sufficient funds.");
+        super(msg);
     }
 }

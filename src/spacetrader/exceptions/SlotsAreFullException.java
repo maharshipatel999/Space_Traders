@@ -27,6 +27,6 @@ public class SlotsAreFullException extends RuntimeException {
      * @param msg the detail message.
      */
     public SlotsAreFullException(String msg) {
-        super("Ship slots are full.");
+        super(msg);
     }
 }

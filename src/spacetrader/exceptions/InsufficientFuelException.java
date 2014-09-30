@@ -26,6 +26,6 @@ public class InsufficientFuelException extends RuntimeException {
      * @param msg the detail message.
      */
     public InsufficientFuelException(String msg) {
-        super("Tank lacks sufficient fuel");
+        super(msg);
     }
 }
