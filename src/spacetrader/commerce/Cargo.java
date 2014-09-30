@@ -134,6 +134,25 @@ public class Cargo {
     }
     
     /**
+     * Removes all of the specified TradeGood type from the Cargo.
+     * @param good the good to remove
+     */
+    public void clearItem(TradeGood good) {
+        this.count -= this.tradeGoods.get(good);
+        this.tradeGoods.put(good, 0);
+    }
+    
+    /**
+     * Clears the entire Cargo by removing every good and setting count to 0.
+     */
+    public void clearAllItems() {
+        for (TradeGood good : TradeGood.values()) {
+            tradeGoods.put(good, 0);
+        }
+        this.count = 0;
+    }
+    
+    /**
      * Increases the number of available slots.
      */
     public void increaseCapacity() {

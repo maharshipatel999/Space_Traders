@@ -27,8 +27,10 @@ import spacetrader.commerce.Cargo;
 import spacetrader.commerce.Market;
 import spacetrader.commerce.TradeGood;
 import spacetrader.commerce.Transaction;
+import spacetrader.exceptions.CargoIsFullException;
 import spacetrader.exceptions.DepletedInventoryException;
 import spacetrader.exceptions.InsufficientFundsException;
+import spacetrader.exceptions.NegativeQuantityException;
 
 /**
  * FXML Controller class
@@ -91,7 +93,7 @@ public class MarketScreenController implements Initializable {
     public void setUpMarketScreen(Planet planet, Player player) {
         this.player = player;
         this.market = planet.getMarket();
-        cashier = new Transaction(market, player.getShip().getCargo(), player.getWallet().getCredits());
+        cashier = new Transaction(market, player.getShip().getCargo(), player.getWallet());
         
         stocks = new Label[] {stock0, stock1, stock2, stock3, stock4,
                               stock5, stock6, stock7, stock8, stock9};
@@ -201,7 +203,7 @@ public class MarketScreenController implements Initializable {
     
     private void modifyBuyQuantity(int index, Change type) {
         TradeGood good = buyGoods.get(index);
-        int oldQuantity = cashier.getBuyQuantityOfGood(good);
+        int oldQuantity = cashier.getQuantityBought(good);
         try {
             int newQuantity;
             if (type == Change.INCREASE) {
@@ -218,17 +220,19 @@ public class MarketScreenController implements Initializable {
         } catch (NumberFormatException e) {
             displayAlert("Please input a number!");
         } catch (DepletedInventoryException e) {
-            displayAlert("We are out of that item! Please try another selection.");
+            displayAlert("We are sold out of that item! Please try another selection.");
+        } catch (CargoIsFullException e) {
+            displayAlert("Your cargo is full! Please open up more slots.");
         } catch (InsufficientFundsException e) {
             displayAlert("You do not have enough money to buy this item!");
-        } catch (IllegalArgumentException e) {
-            displayAlert("Quantities must be positive!");
+        } catch (NegativeQuantityException e) {
+            displayAlert("Quantities must be greater than zero!");
         }
     }
     
     private void modifySellQuantity(int index, Change type) {
         TradeGood good = sellGoods.get(index);
-        int oldQuantity = cashier.getSellQuantityOfGood(good);
+        int oldQuantity = cashier.getQuantitySold(good);
         try {
             int newQuantity;
             if (type == Change.INCREASE) {
@@ -245,15 +249,15 @@ public class MarketScreenController implements Initializable {
         } catch (NumberFormatException e) {
             displayAlert("Please input a number!");
         } catch (DepletedInventoryException e) {
-            displayAlert("You are out of that item! Please try another selection.");
-        } catch (IllegalArgumentException e) {
-            displayAlert("Quantities must be positive!");
+            displayAlert("You have no more of that item to sell! Please try another selection.");
+        } catch (NegativeQuantityException e) {
+            displayAlert("Quantities must be greater than zero!");
         }
     }
     
     private void updateBuyText(int index) {
         TradeGood good = buyGoods.get(index);
-        int quantity = cashier.getBuyQuantityOfGood(good);
+        int quantity = cashier.getQuantityBought(good);
         int oldStock = market.getStock().getQuantity(good);
         stocks[index].setText("" + (oldStock - quantity));
         numBuys[index].setText("" + quantity);
@@ -263,7 +267,7 @@ public class MarketScreenController implements Initializable {
     
     private void updateSellText(int index) {
         TradeGood good = sellGoods.get(index);
-        int quantity = cashier.getSellQuantityOfGood(good);
+        int quantity = cashier.getQuantitySold(good);
         int oldInventory = player.getShip().getCargo().getQuantity(good);
         inventorys[index].setText("" + (oldInventory - quantity));
         numSells[index].setText("" + quantity);
@@ -294,9 +298,9 @@ public class MarketScreenController implements Initializable {
                 if (column == DEC_COLUMN) {
                     int quantity;
                     if (grid == buyGrid) {
-                        quantity = cashier.getBuyQuantityOfGood(buyGoods.get(row - 1));
+                        quantity = cashier.getQuantityBought(buyGoods.get(row - 1));
                     } else {
-                        quantity = cashier.getSellQuantityOfGood(sellGoods.get(row - 1));
+                        quantity = cashier.getQuantitySold(sellGoods.get(row - 1));
                     }
                     if (quantity == 0) {
                         node.setDisable(true);
@@ -331,8 +335,6 @@ public class MarketScreenController implements Initializable {
         
     @FXML protected void completeTransaction(ActionEvent event) {
         cashier.complete();
-        player.getWallet().add(cashier.getTotalRevenue());
-        player.getWallet().remove(cashier.getTotalCost());
         mainControl.goToMarketScreen(market.getPlanet());
     }
     
