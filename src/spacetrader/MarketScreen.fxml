@@ -254,16 +254,16 @@
                            </GridPane.margin>
                         </Label>
                         <Label text="Cost" GridPane.columnIndex="6" />
-                        <Label fx:id="cost2" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                        <Label fx:id="cost1" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                        <Label fx:id="cost4" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                        <Label fx:id="cost3" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                        <Label fx:id="cost0" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                        <Label fx:id="cost5" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                        <Label fx:id="cost7" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-                        <Label fx:id="cost6" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-                        <Label fx:id="cost9" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
-                        <Label fx:id="cost8" prefHeight="21.0" prefWidth="43.0" text="\$0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+                        <Label fx:id="cost2" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <Label fx:id="cost1" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                        <Label fx:id="cost4" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                        <Label fx:id="cost3" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                        <Label fx:id="cost0" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                        <Label fx:id="cost5" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+                        <Label fx:id="cost7" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+                        <Label fx:id="cost6" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+                        <Label fx:id="cost9" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
+                        <Label fx:id="cost8" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="79.0" />
@@ -502,16 +502,16 @@
                            </GridPane.margin>
                         </Label>
                         <Label text="Revenue" GridPane.columnIndex="6" />
-                        <Label fx:id="revenue0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                        <Label fx:id="revenue1" text="0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                        <Label fx:id="revenue2" text="0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                        <Label fx:id="revenue3" text="0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                        <Label fx:id="revenue4" text="0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                        <Label fx:id="revenue5" text="0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                        <Label fx:id="revenue6" text="0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-                        <Label fx:id="revenue7" text="0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-                        <Label fx:id="revenue8" text="0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
-                        <Label fx:id="revenue9" text="0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
+                        <Label fx:id="revenue0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                        <Label fx:id="revenue1" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                        <Label fx:id="revenue2" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <Label fx:id="revenue3" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                        <Label fx:id="revenue4" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                        <Label fx:id="revenue5" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+                        <Label fx:id="revenue6" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+                        <Label fx:id="revenue7" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+                        <Label fx:id="revenue8" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+                        <Label fx:id="revenue9" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="86.0" />
@@ -573,25 +573,37 @@
             <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="21.0" prefWidth="147.0" text="Planet Name" />
+            <Label prefHeight="21.0" prefWidth="147.0" text="Planet Name">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
             <Label fx:id="planetName" prefHeight="30.0" prefWidth="205.0" text="Lubstown, USA" GridPane.rowIndex="1">
                <font>
                   <Font name="Kartika" size="18.0" />
                </font>
             </Label>
-            <Label prefHeight="21.0" prefWidth="128.0" text="Government" GridPane.columnIndex="1" />
+            <Label prefHeight="21.0" prefWidth="128.0" text="Government" GridPane.columnIndex="1">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
             <Label fx:id="planetGovt" prefHeight="25.0" prefWidth="234.0" text="Swagocracy" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="Kartika" size="18.0" />
                </font>
             </Label>
-            <Label prefHeight="12.0" prefWidth="102.0" text="Tech Level" GridPane.columnIndex="2" />
+            <Label prefHeight="12.0" prefWidth="102.0" text="Tech Level" GridPane.columnIndex="2">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
             <Label fx:id="planetLevel" prefHeight="25.0" prefWidth="241.0" text="Hi Tech" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font name="Kartika" size="18.0" />
                </font>
             </Label>
-            <Label prefHeight="12.0" prefWidth="102.0" text="Resource" GridPane.columnIndex="3" />
+            <Label prefHeight="12.0" prefWidth="102.0" text="Resource" GridPane.columnIndex="3">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
             <Label fx:id="planetResource" prefHeight="25.0" prefWidth="234.0" text="Apple Pies" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font name="Kartika" size="18.0" />
@@ -630,25 +642,61 @@
                         <Font name="System Italic" size="21.0" />
                      </font>
                   </Label>
-                  <Label fx:id="playerFunds" prefHeight="43.0" prefWidth="187.0" text="1000 credits">
+                  <Label fx:id="playerFunds" prefHeight="43.0" prefWidth="187.0" text="₪1000">
                      <font>
                         <Font size="29.0" />
                      </font>
                   </Label>
-                  <Label fx:id="totalPurchase" text="- 0 credits">
+                  <Label fx:id="totalPurchase" text="– ₪0">
                      <font>
                         <Font size="23.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="4.0" />
+                     </VBox.margin>
                   </Label>
-                  <Label fx:id="totalSale" text="+ 0 credits">
+                  <Label fx:id="totalSale" text="+ ₪0">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </Label>
                   <Separator prefWidth="200.0" />
-                  <Label fx:id="moneyRemaining" text="= 0 credits">
+                  <Label fx:id="moneyRemaining" text="= 0 sprints">
                      <font>
                         <Font size="29.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets top="80.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <HBox prefHeight="47.0" prefWidth="201.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="112.0" text="Cargo Slots:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="cargoSlots" text="15">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
+                  <Label prefHeight="30.0" prefWidth="176.0" text="Special Events:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="priceEvent" prefHeight="32.0" prefWidth="196.0" text="None">
+                     <font>
+                        <Font size="22.0" />
                      </font>
                   </Label>
                </children>

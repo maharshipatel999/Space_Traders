@@ -16,19 +16,24 @@ import java.util.Random;
  * @author Caleb Stokols
  */
 public enum TechLevel {
-    PRE_AGRICULTURE,
-    AGRICULTURE,
-    MEDIEVAL,
-    RENAISSANCE,
-    EARLY_INDUSTRIAL,
-    INDUSTRIAL,
-    POST_INDUSTRIAL,
-    HI_TECH;
+    PRE_AGRICULTURE("Pre-Agriculture"),
+    AGRICULTURE("Algriculture"),
+    MEDIEVAL("Medieval"),
+    RENAISSANCE("Renaissance"),
+    EARLY_INDUSTRIAL("Early-Industrial"),
+    INDUSTRIAL("Industrial"),
+    POST_INDUSTRIAL("Post-Industrial"),
+    HI_TECH("High Tech");
     
     private static final List<TechLevel> VALUES =
         Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
+    private final String type;
+    
+    TechLevel(String type) {
+        this.type = type;
+    }
     
     /**
      *  Gets a random Tech Level
@@ -36,6 +41,10 @@ public enum TechLevel {
      */
     public static TechLevel getRandomTechLevel() {
         return VALUES.get(RANDOM.nextInt(SIZE));
+    }
+    
+    public String type() {
+        return type;
     }
             
 }

@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -41,7 +42,7 @@ public class MarketScreenController implements Initializable {
     
     @FXML private Text alertText;
     @FXML private Label planetName, planetGovt, planetLevel, planetResource;
-    @FXML private Label playerFunds, moneyRemaining;
+    @FXML private Label playerFunds, moneyRemaining, cargoSlots, priceEvent;
     @FXML private Label totalPurchase, totalSale;
     @FXML private GridPane buyGrid, sellGrid;
     @FXML private Label stock0, stock1, stock2, stock3, stock4,
@@ -129,10 +130,12 @@ public class MarketScreenController implements Initializable {
         
         setUpPanels(player.getShip().getCargo());
         planetName.setText(planet.getName());
-        planetGovt.setText(planet.getPoliticalSystem().toString());
-        planetLevel.setText(planet.getLevel().toString());
-        planetResource.setText(planet.getResource().toString());
-        playerFunds.setText("$" + player.getWallet().getCredits());
+        planetGovt.setText(planet.getPoliticalSystem().type());
+        planetLevel.setText(planet.getLevel().type());
+        planetResource.setText(planet.getResource().type());
+        playerFunds.setText("₪" + player.getWallet().getCredits());
+        cargoSlots.setText("" + player.getShip().getCargo().getMaxCapacity());
+        priceEvent.setText(planet.getPriceIncEvent().desc());
         updateNetBalance();
         viewIsInitialized = true;
         checkForDisabling(buyGrid);
@@ -161,7 +164,7 @@ public class MarketScreenController implements Initializable {
             
             stocks[i].setText("" + market.getStock().getQuantity(good));
             goodBuys[i].setText("" + good.type());
-            priceBuys[i].setText("$" + market.getBuyPrices().get(good));
+            priceBuys[i].setText("₪" + market.getBuyPrices().get(good));
         }
         
         for (int i = 0; i < sellGoods.size(); i++) {
@@ -169,7 +172,7 @@ public class MarketScreenController implements Initializable {
             
             inventorys[i].setText("" + cargo.getQuantity(good));
             goodSells[i].setText("" + good.type());
-            priceSells[i].setText("$" + market.getSellPrices().get(good));
+            priceSells[i].setText("₪" + market.getSellPrices().get(good));
         }
     }
     
@@ -261,8 +264,8 @@ public class MarketScreenController implements Initializable {
         int oldStock = market.getStock().getQuantity(good);
         stocks[index].setText("" + (oldStock - quantity));
         numBuys[index].setText("" + quantity);
-        costs[index].setText("$" + (quantity * market.getBuyPrices().get(good)));
-        totalPurchase.setText("- " + cashier.getTotalCost() + " credits");
+        costs[index].setText("₪" + (quantity * market.getBuyPrices().get(good)));
+        totalPurchase.setText("– ₪" + cashier.getTotalCost());
     }
     
     private void updateSellText(int index) {
@@ -271,8 +274,8 @@ public class MarketScreenController implements Initializable {
         int oldInventory = player.getShip().getCargo().getQuantity(good);
         inventorys[index].setText("" + (oldInventory - quantity));
         numSells[index].setText("" + quantity);
-        revenues[index].setText("$" + (quantity * market.getBuyPrices().get(good)));
-        totalSale.setText("+ " + cashier.getTotalRevenue() + " credits");
+        revenues[index].setText("₪" + (quantity * market.getBuyPrices().get(good)));
+        totalSale.setText("+ ₪" + cashier.getTotalRevenue());
     }
     
     private void updateNetBalance() {
@@ -290,6 +293,11 @@ public class MarketScreenController implements Initializable {
     private void checkForDisabling(GridPane grid) {
         final int DEC_COLUMN = 4;
         final int INC_COLUMN = 5;
+        Tooltip moneyAlert = new Tooltip("You do not have enough money to buy this item");
+        Tooltip stockAlert = new Tooltip("This item is out of stock");
+        Tooltip cargoAlert = new Tooltip("You have no more of this item to sell");
+        Tooltip negativeAlert = new Tooltip("The quantity cannot be decreased any further");
+        
         ObservableList<Node> children = grid.getChildren();
         for (Node node : children) {
             Integer column = GridPane.getColumnIndex(node);
@@ -304,22 +312,37 @@ public class MarketScreenController implements Initializable {
                     }
                     if (quantity == 0) {
                         node.setDisable(true);
+                        Tooltip.install(node, negativeAlert);
                     } else {
                         node.setDisable(false);
+                        Tooltip.uninstall(node, negativeAlert);
                     }  
                 } else if (column == INC_COLUMN) {
                     int price, quantity;
                     if (grid == buyGrid) {
-                        price = market.getBuyPrices().get(buyGoods.get(row - 1));
-                        quantity = market.getStock().getQuantity(buyGoods.get(row - 1));
+                        TradeGood good = buyGoods.get(row - 1);
+                        price = market.getBuyPrices().get(good);
+                        quantity = market.getStock().getQuantity(good) - cashier.getQuantityBought(good);
                     } else {
+                        TradeGood good = sellGoods.get(row - 1);
                         price = -1; //if selling, price doesn't matter
-                        quantity = player.getShip().getCargo().getQuantity(sellGoods.get(row - 1));
+                        quantity = player.getShip().getCargo().getQuantity(good) - cashier.getQuantitySold(good);
                     }
-                    if (price > cashier.getRemainingBalance() || quantity == 0) {
+                    if (quantity <= 0) {
                         node.setDisable(true);
+                        if (grid == buyGrid) {
+                            Tooltip.install(node, stockAlert);
+                        } else {
+                            Tooltip.install(node, cargoAlert);
+                        }
+                    } else if (price > cashier.getRemainingBalance()) {
+                        node.setDisable(true);
+                        Tooltip.install(node, moneyAlert);
                     } else {
                         node.setDisable(false);
+                        Tooltip.uninstall(node, stockAlert);
+                        Tooltip.uninstall(node, cargoAlert);
+                        Tooltip.uninstall(node, moneyAlert);
                     }
                 }
             }

@@ -5,27 +5,34 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import spacetrader.Resource;
-import static spacetrader.Resource.values;
 
 /**
 + *
 + * @author Seth
 + */
 public enum PriceIncreaseEvent {
-    DROUGHT(),
-    COLD(),
-    CROP_FAIL(),
-    WAR(),
-    BOREDOM(),
-    PLAGUE(),
-    LACK_OF_WORKERS(),
-    NONE();
+    DROUGHT("Drought!"),
+    COLD("It's too cold!"),
+    CROP_FAIL("Crops are failing!"),
+    WAR("War!"),
+    BOREDOM("People are bored!"),
+    PLAGUE("The plague!"),
+    LACK_OF_WORKERS("Not enough workers!"),
+    NONE("None");
     
     private static final List<PriceIncreaseEvent> VALUES =
         Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
+    private String desc;
+    
+    PriceIncreaseEvent(String desc) {
+        this.desc = desc;
+    }
+    
+    public String desc() {
+        return desc;
+    }
     
     
     /**

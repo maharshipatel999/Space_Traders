@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import static spacetrader.Resource.values;
 
 /**
  * 
@@ -38,7 +37,7 @@ public enum PoliticalSystem {
         private final double hiTechPriceIncreasePercent;
         private final double essentialGoodsPriceIncreasePercent;
 	private final boolean hasForbiddenGoods;
-	private final String name;
+	private final String type;
         private static final List<PoliticalSystem> VALUES =
             Collections.unmodifiableList(Arrays.asList(values()));
         private static final int SIZE = VALUES.size();
@@ -46,7 +45,7 @@ public enum PoliticalSystem {
 	
         PoliticalSystem(double police, double pirate, double trader,
                          double bribe, double general, double hiTech,
-                         double essential, boolean forbidden, String name) {
+                         double essential, boolean forbidden, String type) {
             policePercent = police;
             piratePercent = pirate;
             traderPercent = trader;
@@ -55,40 +54,44 @@ public enum PoliticalSystem {
             hiTechPriceIncreasePercent = hiTech;
             essentialGoodsPriceIncreasePercent = essential;
             hasForbiddenGoods = forbidden;
-            this.name = name;
+            this.type = type;
         }
         
-	public double policeMultiplier(){
+	public double policeMultiplier() {
             return 1 + (policePercent / 100);
 	}
         
-	public double pirateMultiplier(){
+	public double pirateMultiplier() {
             return 1 + (piratePercent / 100);
 	}
         
-	public double traderMultiplier(){
+	public double traderMultiplier() {
             return 1 + (traderPercent / 100);
 	}
         
-	public double bribeMultiplier(){
+	public double bribeMultiplier() {
             return 1 + (bribePercent / 100);
 	}
 	
-	public double generalPriceMultiplier(){
+	public double generalPriceMultiplier() {
             return 1 + (generalPriceIncreasePercent / 100);
 	}
 	
-	public double hiTechPriceMultipier(){
+	public double hiTechPriceMultipier() {
             return 1 + (hiTechPriceIncreasePercent / 100);
 	}
 	
-	public double essentialGoodsPriceMultiplier(){
+	public double essentialGoodsPriceMultiplier() {
             return 1 + (essentialGoodsPriceIncreasePercent / 100);
 	}
         
-        public boolean hasForbidden(){
+        public boolean hasForbidden() {
             return hasForbiddenGoods;
 	}
+        
+        public String type() {
+            return type;
+        }
 
         /**
          *  Gets a random PoliticalSystem
