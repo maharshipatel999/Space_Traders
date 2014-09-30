@@ -1,5 +1,11 @@
 package spacetrader;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import static spacetrader.Resource.values;
+
 /**
  * 
  * @author Caleb Stokols
@@ -33,6 +39,10 @@ public enum PoliticalSystem {
         private final double essentialGoodsPriceIncreasePercent;
 	private final boolean hasForbiddenGoods;
 	private final String name;
+        private static final List<PoliticalSystem> VALUES =
+            Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+        private static final Random RANDOM = new Random();
 	
         PoliticalSystem(double police, double pirate, double trader,
                          double bribe, double general, double hiTech,
@@ -79,6 +89,13 @@ public enum PoliticalSystem {
         public boolean hasForbidden(){
             return hasForbiddenGoods;
 	}
-        
+
+        /**
+         *  Gets a random PoliticalSystem
+         *  @return the political system being assigned
+         */
+        public static PoliticalSystem getRandomPoliticalSystem() {
+            return VALUES.get(RANDOM.nextInt(SIZE));
+        }
         
 }

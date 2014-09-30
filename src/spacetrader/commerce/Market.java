@@ -47,12 +47,12 @@ public class Market {
             if (planet.getLevel().ordinal() >= good.minProduceLevel()) {
                 buyPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
                 buyPrice += variance;
-            } else { 
+            } else {
                 buyPrice = -1;
             }
 
             if (planet.getLevel().ordinal() >= good.minUseLevel()) {
-                sellPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minUseLevel());
+                sellPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
                 sellPrice += variance;
             } else { 
                 sellPrice = -1;

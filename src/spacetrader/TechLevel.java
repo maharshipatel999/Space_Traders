@@ -6,6 +6,11 @@
 
 package spacetrader;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 /**
  *
  * @author Caleb Stokols
@@ -19,4 +24,18 @@ public enum TechLevel {
     INDUSTRIAL,
     POST_INDUSTRIAL,
     HI_TECH;
+    
+    private static final List<TechLevel> VALUES =
+        Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
+    
+    /**
+     *  Gets a random Tech Level
+     *  @return the tech level being assigned
+     */
+    public static TechLevel getRandomTechLevel() {
+        return VALUES.get(RANDOM.nextInt(SIZE));
+    }
+            
 }

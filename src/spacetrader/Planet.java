@@ -32,16 +32,13 @@ public class Planet {
         this.location = location;
         
         //picks a random TechLevel
-        TechLevel[] levels = TechLevel.values();
-        this.level = levels[rand.nextInt(levels.length)];
+        this.level = TechLevel.getRandomTechLevel();
         
         //picks a random Resource
-        Resource[] resources = Resource.values();
-        this.resource = Resource.values()[rand.nextInt(resources.length)];
+        this.resource = Resource.getRandomResource();
         
         //picks a random Political System
-        PoliticalSystem[] systems = PoliticalSystem.values();
-        this.politSys = systems[rand.nextInt(systems.length)];
+        this.politSys = PoliticalSystem.getRandomPoliticalSystem();
         
         this.market = new Market(this);
     }
