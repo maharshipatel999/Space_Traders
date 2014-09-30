@@ -66,6 +66,10 @@ public class Planet {
     public void setPriceIncEvent(PriceIncreaseEvent priceIncEvent) {
         this.priceIncEvent = priceIncEvent;
     }
+    
+    public PriceIncreaseEvent getPriceIncEvent() {
+        return this.priceIncEvent;
+    }
      
     public Market getMarket() {
         return market;
