@@ -21,10 +21,10 @@ public class Universe {
     
     private final Random rand = new Random();
     
+    public static final int WIDTH = 150;
+    public static final int HEIGHT = 100;
     private static final int PLANET_MAX_AMOUNT = 120;
     private static final int PLANET_MIN_AMOUNT = 100;
-    private static final int WIDTH = 150;
-    private static final int HEIGHT = 100;
     private static final int MIN_DISTANCE = 5;
     
     private final ArrayList<Planet> planets;
@@ -38,11 +38,14 @@ public class Universe {
     public Universe() {
         int planetAmount = rand.nextInt(PLANET_MAX_AMOUNT - PLANET_MIN_AMOUNT) + PLANET_MIN_AMOUNT;
         planets = new ArrayList<>(planetAmount);
-        Planet homePlanet = new Planet("Pallet", new Point(WIDTH/2, HEIGHT/2),
+        
+        //Add Home Planet
+        Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
             TechLevel.AGRICULTURE , Resource.NONE ,PoliticalSystem.DEMOCRACY);
         planets.add(homePlanet);
         planetNames.add(homePlanet.getName());
         planetLocations.add(homePlanet.getLocation());
+        
         //Create all the planets!
         for (int i = 0; i < planetAmount; i++) {
             //pick random name
@@ -56,15 +59,15 @@ public class Universe {
             Point location; 
             do {
                 location = generateRandomLocation();
-            } while (planetLocations.contains(location));
-            if (isIsolated(location)) {
+            } while (planetLocations.contains(location) || !isIsolated(location));
             planetLocations.add(location);
-            }
+            
             //create planet
             Planet planet = new Planet(name, location);
             planets.add(planet);
         }
-    }   
+    }
+    
     private boolean isIsolated(Point point) {
         for (Point p : planetLocations) {
             if (point.distance(p.getX(), p.getY()) < MIN_DISTANCE) {
@@ -73,9 +76,9 @@ public class Universe {
             }
         return true;
     }
+    
     public void updatePriceEvent(Planet p) {
-        PriceIncreaseEvent[] priceIncEvents = PriceIncreaseEvent.values();
-         p.setPriceIncEvent(priceIncEvents[rand.nextInt(priceIncEvents.length)]);
+         p.setPriceIncEvent(PriceIncreaseEvent.getRandomPriceEvent());
     }
     /**
      * Gets a list of all the planets in the universe.

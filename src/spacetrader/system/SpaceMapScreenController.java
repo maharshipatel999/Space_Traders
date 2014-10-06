@@ -26,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import org.controlsfx.control.MasterDetailPane;
 import spacetrader.Planet;
+import spacetrader.Universe;
 
 /**
  * FXML Controller class
@@ -160,12 +161,12 @@ public class SpaceMapScreenController implements Initializable {
                                        Color.BLACK);
             this.getChildren().add(background);
 
-           planetIcons = new HashMap<>();
+            planetIcons = new HashMap<>();
             
             for (Planet planet : planets) {
                 //assign each planet a location that is scaled to the size of the map
-                double planetX = (MAP_WIDTH * (planet.getLocation().getX() / 150)) + LEFT_MARGIN; //remove magic number
-                double planetY = (MAP_HEIGHT * (planet.getLocation().getY() / 100)) + TOP_MARGIN;
+                double planetX = (MAP_WIDTH * (planet.getLocation().getX() / Universe.WIDTH)) + LEFT_MARGIN; //remove magic number
+                double planetY = (MAP_HEIGHT * (planet.getLocation().getY() / Universe.HEIGHT)) + TOP_MARGIN;
 
                 //create an icon for each planet
                 Circle planetIcon = new Circle(planetX, planetY, PLANET_RADIUS, Color.GREEN);
