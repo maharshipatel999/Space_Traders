@@ -48,6 +48,20 @@ public class MainController {
     }
     
     /**
+     * Moves a player to a selected planet. The destination planet's prices should
+     * be recalculated. Every planet in the universe who's priceIncreaseEvent counter
+     * has ran out should have it removed. If the destination planet doesn't have a
+     * priceIncreaseEvent currently, one should be randomly added based on a small probability.
+     * All the planets who's tradeGood stock has been decremented should have their stock increased.
+     * (Not every planet because then planets that are visited late in the game would
+     * have a huge stock of tradeGoods.
+     * @param destination 
+     */
+    public void takeTurn(Planet destination) {
+        //TODO
+    }
+    
+    /**
      * Transitions the game screen to the Welcome Screen.
      */
     public void goToWelcomeScreen() {

@@ -104,12 +104,19 @@ public class SpaceMapScreenController implements Initializable {
         mainControl.goToMarketScreen(planetMap.selectedPlanet);
     }
     
+    /**
+     * !!! When the pane is revealed the right part of the map is unviewable!!! need to fix
+     * Reveals the detail pane with the specified planet's information.
+     * @param planet selected planet
+     */
     private void showPlanetInfo(Planet planet) {
-        System.out.println("\n" + planetMap.getTranslateX() + ", " + planetMap.getLayoutX());
         mapScreen.setShowDetailNode(true);
         infoControl.setPlanetInfo(planet);
     }
     
+    /**
+     * Hides the detail pane.
+     */
     private void hidePlanetInfo() {
         mapScreen.setShowDetailNode(false);
     }

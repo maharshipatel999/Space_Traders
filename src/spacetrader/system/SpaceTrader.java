@@ -70,7 +70,7 @@ public class SpaceTrader extends Application {
         }
         this.player = player;
     }
-    
+
     /**
      * @param args the command line arguments
      */
