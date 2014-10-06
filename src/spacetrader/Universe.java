@@ -68,6 +68,23 @@ public class Universe {
         }
     }
     
+    /**
+     * Finds the planet with the specified name. 
+     * @param name the name of the planet to find
+     * @return the planet with the specified name, or null if not found.
+     */
+    public Planet getPlanet(String name) {
+        if (planetNames.contains(name)) {
+            for (Planet planet : planets) {
+                if (planet.getName().equals(name)) {
+                    return planet;
+                }
+            }
+        }
+        return null;
+    }
+    
+    
     private boolean isIsolated(Point point) {
         for (Point p : planetLocations) {
             if (point.distance(p.getX(), p.getY()) < MIN_DISTANCE) {

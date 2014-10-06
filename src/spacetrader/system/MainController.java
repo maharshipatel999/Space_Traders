@@ -95,7 +95,7 @@ public class MainController {
         SpaceMapScreenController control;
         control = (SpaceMapScreenController) changeScene("/spacetrader/SpaceMapScreen.fxml");
         control.setMainControl(this);
-        control.setUpMap(game.getUniverse().getPlanets());
+        control.setUpMap(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets());
     }
     
     /**

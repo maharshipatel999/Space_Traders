@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -38,9 +39,11 @@ public class SpaceMapScreenController implements Initializable {
     @FXML private MasterDetailPane mapScreen;
     
     private MainController mainControl;
-    private ArrayList<Planet> planets;
+    private MapDetailController infoControl;
     private MapPane planetMap;
     private Pane planetInfo;
+    
+    private Planet currentPlanet;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,6 +56,8 @@ public class SpaceMapScreenController implements Initializable {
         } catch (IOException e) {
             Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
         }
+        infoControl = loader.getController();
+        infoControl.setMapControl(this);
         
         mapScreen.setDetailNode(planetInfo);
     }
@@ -65,41 +70,60 @@ public class SpaceMapScreenController implements Initializable {
         this.mainControl = mainControl;
     }
     
-    public void setUpMap(ArrayList<Planet> planets) {
-        this.planets = planets;
-        planetMap.addPlanets();
+    /**
+     * Adds all the planets to the map.
+     * @param currentPlanet the planet the player currently is
+     * @param planets the planets this map will display.
+     */
+    public void setUpMap(Planet currentPlanet, ArrayList<Planet> planets) {
+        this.currentPlanet = currentPlanet;
+        planetMap.addPlanets(planets);
+        
         mapScreen.setDividerPosition((planetInfo.getPrefWidth()) / mapScreen.getWidth());
     }
     
+    /**
+     * Determines if a specified planet is in range of the current planet given the player's current
+     * fuel amount and spaceship type.
+     * 
+     * Still needs to be correctly implemented!!
+     * 
+     * @param planet the planet we are trying to travel to
+     * @return true if the planet is in range
+     */
+    public boolean isInRangeOf(Planet planet) {
+        int fuelAmount = 200; //this should actually be determined by the space ship!!!
+        Circle icon1 = planetMap.planetIcons.get(currentPlanet);
+        Circle icon2 = planetMap.planetIcons.get(planet);
+        Point2D point1 = new Point2D(icon1.getCenterX(), icon1.getCenterY());
+        Point2D point2 = new Point2D(icon2.getCenterX(), icon2.getCenterY());
+        return point1.distance(point2) < fuelAmount;
+    }
+    
+    public void travelToPlanet() {
+        mainControl.goToMarketScreen(planetMap.selectedPlanet);
+    }
+    
     private void showPlanetInfo(Planet planet) {
-        /*Circle icon = planetMap.planetIcons.get(planet);
-        System.out.println(icon.getCenterX() + ", " +  planetInfo.getPrefWidth() + ", " +  Math.abs(planetMap.getTranslateX()) + ", " +  mapScreen.getWidth());
-        if (icon.getCenterX() + planetInfo.getPrefWidth() > Math.abs(planetMap.getTranslateX()) + mapScreen.getWidth()) {
-            planetMap.dragContext.x -= planetInfo.getPrefWidth();
-            TranslateTransition tt = new TranslateTransition(Duration.millis(100), planetMap);
-            tt.setByX(-1 * planetInfo.getPrefWidth());
-            tt.play();
-            wasShifted = true;
-        }*/
         System.out.println("\n" + planetMap.getTranslateX() + ", " + planetMap.getLayoutX());
         mapScreen.setShowDetailNode(true);
-        System.out.println(planetMap.getTranslateX() + ", " + planetMap.getLayoutX());
-        //planetMap.dragContext.x = planetMap.getTranslateX();
+        infoControl.setPlanetInfo(planet);
     }
     
     private void hidePlanetInfo() {
         mapScreen.setShowDetailNode(false);
-        //planetMap.dragContext.x = planetMap.getTranslateX();
-        /*if (wasShifted) {
-            planetMap.dragContext.x += planetInfo.getPrefWidth();
-            TranslateTransition tt = new TranslateTransition(Duration.millis(100), planetMap);
-            tt.setByX(planetInfo.getPrefWidth());
-            tt.play();
-            wasShifted = false;
-        }*/
-        
     }
     
+    @Override
+    public String toString() {
+        String toString = String.format("Size:(%f, %f)", mapScreen.getWidth(), mapScreen.getHeight());
+        return toString;
+    }
+    
+    /**
+     * Represents the map of all the planets. Scales the Universe to the size
+     * of the map display. The map is draggable within the master pane.
+     */
     private class MapPane extends Pane {
         public static final double MAP_WIDTH = 1800;
         public static final double MAP_HEIGHT = 1200;
@@ -120,8 +144,6 @@ public class SpaceMapScreenController implements Initializable {
                 dragContext.mouseY = event.getSceneY();
                 dragContext.x = this.getTranslateX();
                 dragContext.y = this.getTranslateY();
-
-                //printLocation(event);
             });
             
             addEventHandler(MouseEvent.MOUSE_DRAGGED, (event) -> {
@@ -155,7 +177,7 @@ public class SpaceMapScreenController implements Initializable {
             });
         }
 
-        private void addPlanets() {
+        private void addPlanets(ArrayList<Planet> planets) {
             background = new Rectangle(MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN,
                                        MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN,
                                        Color.BLACK);
@@ -184,25 +206,33 @@ public class SpaceMapScreenController implements Initializable {
                     });
                 planetIcons.put(planet, planetIcon); 
 
-                Text nameText = new Text(planetX + PLANET_RADIUS, planetY - PLANET_RADIUS, planet.getName());
+                //Create text for the name of each planet.
+                double textX = planetX - (PLANET_RADIUS / 2) - (5 * planet.getName().length() / 2);
+                double textY = planetY - PLANET_RADIUS - 4;
+                Text nameText = new Text(textX, textY, planet.getName());
                 nameText.setFill(Color.WHITE);
 
                 this.getChildren().add(planetIcon);
                 this.getChildren().add(nameText);
+                
+                if (planet == currentPlanet) {
+                    planetIcon.setFill(Color.BLUE);
+                    Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), 200, Color.TRANSPARENT);
+                    flightRadius.setOpacity(.3);
+                    flightRadius.setStroke(Color.PERU);
+                    this.getChildren().add(flightRadius);
+                }
             }
         }
-
-        //for testing
-        private void printLocation(MouseEvent event) {
-            System.out.printf("%n%f, %f, %f, %f%n", this.getWidth(), this.getHeight(), this.getPrefWidth(), this.getPrefHeight());
-            System.out.printf("%f, %f, %f, %f%n", mapScreen.getWidth(), mapScreen.getHeight(), mapScreen.getPrefWidth(), mapScreen.getPrefHeight());
-            System.out.printf("%f, %f%n", background.getWidth(), background.getHeight());
-            System.out.printf("%f, %f, %f, %f%n", this.getTranslateX(), this.getTranslateY(), this.getLayoutX(), this.getLayoutY());
-            System.out.printf("%f, %f%n", this.dragContext.x, this.dragContext.y);
-            System.out.printf("%f, %f, Scene: %f, %f, Screen: %f, %f%n", event.getX(), event.getY(), event.getSceneX(), event.getSceneY(), event.getScreenX(), event.getScreenY());
-
+            
+        @Override
+        public String toString() {
+            String toString = String.format("Size:(%f, %f), RectSize:(%f, %f)", getWidth(), getHeight(), background.getWidth(), background.getHeight());
+            toString += String.format(" TranslateX,Y:(%f, %f), LayoutX,Y:(%f, %f)", getTranslateX(), getTranslateY(), getLayoutX(), getLayoutY());
+            toString += String.format("%nDragContext x,y:(%f, %f), MouseX,Y:(%f, %f)", dragContext.x, dragContext.y, dragContext.mouseX, dragContext.mouseY);
+            return toString;
         }
-    
+        
         private final class MapDragContext {
             public double mouseX;
             public double mouseY;
