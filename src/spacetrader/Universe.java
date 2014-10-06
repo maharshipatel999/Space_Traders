@@ -21,15 +21,15 @@ public class Universe {
     
     private final Random rand = new Random();
     
-    private final int PLANET_MAX_AMOUNT = 120;
-    private final int PLANET_MIN_AMOUNT = 100;
-    private final int WIDTH = 150;
-    private final int HEIGHT = 100;
-    private final int MIN_DISTANCE = 5;
+    private static final int PLANET_MAX_AMOUNT = 120;
+    private static final int PLANET_MIN_AMOUNT = 100;
+    private static final int WIDTH = 150;
+    private static final int HEIGHT = 100;
+    private static final int MIN_DISTANCE = 5;
     
-    private ArrayList<Planet> planets;
-    private Set<String> planetNames = new HashSet<>();
-    private Set<Point> planetLocations = new HashSet<>(100);
+    private final ArrayList<Planet> planets;
+    private final Set<String> planetNames = new HashSet<>();
+    private final Set<Point> planetLocations = new HashSet<>(100);
     
     /**
      * Creates the Universe with a semi-randomly chosen amount of Planets.
@@ -38,7 +38,11 @@ public class Universe {
     public Universe() {
         int planetAmount = rand.nextInt(PLANET_MAX_AMOUNT - PLANET_MIN_AMOUNT) + PLANET_MIN_AMOUNT;
         planets = new ArrayList<>(planetAmount);
-        
+        Planet homePlanet = new Planet("Pallet", new Point(WIDTH/2, HEIGHT/2),
+            TechLevel.AGRICULTURE , Resource.NONE ,PoliticalSystem.DEMOCRACY);
+        planets.add(homePlanet);
+        planetNames.add(homePlanet.getName());
+        planetLocations.add(homePlanet.getLocation());
         //Create all the planets!
         for (int i = 0; i < planetAmount; i++) {
             //pick random name
