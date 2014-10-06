@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,6 +38,8 @@ public class MapDetailController implements Initializable {
     @FXML private HBox priceDisplayButtons;
     @FXML private ToggleGroup prices;
     @FXML private Button warpButton;
+    @FXML private Label appxWaterPrice, appxFursPrice, appxFoodPrice, appxOrePrice, appxGamesPrice,
+            appxFirearmsPrice, appxMedicinePrice, appxMachinesPrice, appxNarcoticsPrice, appxRobotsPrice;
     
     private SpaceMapScreenController mapControl;
     private Planet selectedPlanet;
