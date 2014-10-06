@@ -68,10 +68,10 @@ public class MainController {
      * Transitions the game screen to the First Screen.
      */
     public void goToFirstScreen() {
-        FirstScreenController control;
-        control = (FirstScreenController) changeScene("/spacetrader/FirstScreen.fxml");
+        HomeScreenController control;
+        control = (HomeScreenController) changeScene("/spacetrader/HomeScreen.fxml");
         control.setMainControl(this);
-        control.displayUniverse(game.getUniverse(), game.getPlayer().getName());
+        
     }
       /**
      * Transitions the game screen to the First Screen.
@@ -82,6 +82,7 @@ public class MainController {
         MarketScreenController control;
         control = (MarketScreenController) changeScene("/spacetrader/MarketScreen.fxml");
         control.setMainControl(this);
+        game.setPlanet(planet);
         control.setUpMarketScreen(planet, game.getPlayer());
     }
     

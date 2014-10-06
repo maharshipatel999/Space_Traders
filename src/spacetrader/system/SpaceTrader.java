@@ -8,6 +8,7 @@ package spacetrader.system;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import spacetrader.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
 
@@ -22,6 +23,7 @@ public class SpaceTrader extends Application {
     private Universe universe;
     private Player player;
     private MainController mainControl;
+    private Planet planet;
     
     @Override
     public void start(Stage primaryStage) {
@@ -69,6 +71,27 @@ public class SpaceTrader extends Application {
             throw new IllegalArgumentException("Player cannot be null.");
         }
         this.player = player;
+    }
+    
+    /**
+     * Gets the current planet player is on.
+     * 
+     * @return current planet
+     */
+    public Planet getPlanet() {
+        return this.planet;
+    }
+    
+    /**
+     * Sets the planet that the player is on
+     * 
+     * @param planet player's current planet, cannot be null
+     */
+    public void setPlanet(Planet planet) {
+        if (planet == null) {
+            throw new IllegalArgumentException("Planet cannot be null.");
+        }
+        this.planet = planet;
     }
     
     /**
