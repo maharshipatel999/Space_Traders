@@ -25,6 +25,7 @@ public class Universe {
     private final int PLANET_MIN_AMOUNT = 100;
     private final int WIDTH = 150;
     private final int HEIGHT = 100;
+    private final int MIN_DISTANCE = 5;
     
     private ArrayList<Planet> planets;
     private Set<String> planetNames = new HashSet<>();
@@ -52,13 +53,22 @@ public class Universe {
             do {
                 location = generateRandomLocation();
             } while (planetLocations.contains(location));
+            if (isIsolated(location)) {
             planetLocations.add(location);
-            
+            }
             //create planet
             Planet planet = new Planet(name, location);
             planets.add(planet);
         }
-    }    
+    }   
+    private boolean isIsolated(Point point) {
+        for (Point p : planetLocations) {
+            if (point.distance(p.getX(), p.getY()) < MIN_DISTANCE) {
+                return false;
+                }
+            }
+        return true;
+    }
     public void updatePriceEvent(Planet p) {
         PriceIncreaseEvent[] priceIncEvents = PriceIncreaseEvent.values();
          p.setPriceIncEvent(priceIncEvents[rand.nextInt(priceIncEvents.length)]);
