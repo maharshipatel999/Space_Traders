@@ -37,6 +37,15 @@ public class Planet {
         
         this.market = new Market(this);
     }
+    public Planet(String name, Point location, TechLevel level, Resource resource,
+            PoliticalSystem politSys) {
+        this.name = name;
+        this.location = location;
+        this.level = level;
+        this.resource = resource;
+        this.politSys = politSys;
+        this.market = new Market(this);
+    }
 
     public String getName() {
         return this.name;
