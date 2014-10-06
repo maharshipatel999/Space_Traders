@@ -1,75 +1,178 @@
 package spacetrader;
-
+  /*
+    private final int fuel, fuelCost, hullStrength, crew, size;
+    private final int minTechLevel, price, repairCost;
+    private final int bounty, occurrence;
+    private final int police, pirate, trader;
+    */
 public enum ShipType {
-    FLEA        (10, 0, 0, 0, 20, 25, 2000, 5, 2, 20, "Flea"),
-    GNAT        (15, 1, 0, 1, 14, 100, 10000, 50, 28, 14, "Gnat"),
-    FIREFLY     (20, 1, 1, 1, 17, 100, 25000, 75, 20, 17, "Firefly"),
-    MOSQUITO    (15, 2, 1, 1, 13, 100, 30000, 100, 20, 13, "Mosquito"),
-    BUMBLEBEE   (25, 1, 2, 2, 15, 100, 60000, 125, 15, 15, "Bumblebee"),
-    BEETLE      (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Beetle"), //TODO
-    HORNET      (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Hornet"), //TODO
-    GRASSHOPPER (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Grasshopper"), //TODO
-    TERMITE     (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Termite"), //TODO
-    WASP        (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Wasp"); //TODO
+    FLEA        ("Flea", 10, 0, 0, 0,
+                 20, 1, 25, 1, 0,
+                 4,2000,1,
+                 5,2,
+                 -1,-1,0),
+    GNAT        ("Gnat", 15, 1, 0, 1,
+                 14, 2, 100, 1, 1,
+                 5,10000,1,
+                 50,28,
+                 0,0,0),
+    FIREFLY     ("Firefly", 20, 1, 1, 1,
+                 17, 3, 100, 1, 1,
+                 5,25000,1,
+                 75,20,
+                 0,0,0),
+    MOSQUITO    ("Mosquito", 15, 2, 1, 1,
+                 13, 5, 100, 1, 1,
+                 5,30000,1,
+                 100,20,
+                 0,1,0),
+    BUMBLEBEE   ("Bumblebee", 25, 1, 2, 2,
+                 15, 7, 100, 2, 2,
+                 5,0,1,
+                 125,15,
+                 0,1,0),
+    BEETLE      ("Beetle", 0, 0, 0, 0,
+                 20, 25, 2000, 1, 2,
+                 0,0,1,
+                 0,0,
+                 0,0,0),
+    HORNET      ("Hornet", 0, 0, 0, 0,
+                 20, 25, 2000, 1, 2,
+                 0,0,1,
+                 0,0,
+                 0,0,0),
+    GRASSHOPPER ("Grasshopper", 0, 0, 0, 0,
+                 20, 25, 2000, 1, 2,
+                 0,0,1,
+                 0,0,
+                 0,0,0),
+    TERMITE     ("Termite", 0, 0, 0, 0,
+                 20, 25, 2000, 5, 2,
+                 0,0,0,
+                 0,0,
+                 0,0,0),
+    WASP        ("Wasp", 0, 0, 0, 0,
+                 20, 25, 2000, 5, 2,
+                 0,0,0,
+                 0,0,
+                 0,0,0);
 
-    private final int cargoBay; //how much cargo the ship can carry
-    private final int weaponSlots;
-    private final int shieldSlots;
-    private final int gadgetSlots;
-    private final int parsecsPerTank;
-    private final int hullStrength;
-    private final int price;
-    private final int bounty; //don't know what this is
-    private final int occurrence; //don't know what this is
-    private final int fuel;
-    private final String name;
+    private final String type;
+    private final int cargoBay, weaponSlots, shieldSlots, gadgetSlots;
+    private final int fuel, fuelCost, hullStrength, crew, size;
+    private final int minTechLevel, price, repairCost;
+    private final int bounty, occurrence;
+    private final int police, pirate, trader;
     
 
-    private ShipType(int cargo, int weaponSlots, int shieldSlots, int gadgetSlots,
-                      int parsecs, int hullStrength, int price, int bounty, int occurrence,
-                      int fuel, String name) {
-        this.cargoBay = cargo;
+    ShipType(   String type,
+                int cargoBay,
+                int weaponSlots,
+                int shieldSlots,
+                int gadgetSlots,
+                int fuel,
+                int fuelCost,
+                int hullStrength,
+                int crew,
+                int size,
+                int minTechLevel,
+                int price,
+                int repairCost,
+                int bounty,
+                int occurrence,
+                int police,
+                int pirate,
+                int trader) {
+        this.type = type;
+        this.cargoBay = cargoBay;
         this.weaponSlots = weaponSlots;
         this.shieldSlots = shieldSlots;
         this.gadgetSlots = gadgetSlots;
-        this.parsecsPerTank = parsecs;
+        this.fuel = fuel;
+        this.fuelCost = fuelCost;
         this.hullStrength = hullStrength;
+        this.crew = crew;
+        this.size = size;
+        this.minTechLevel = minTechLevel;
         this.price = price;
+        this.repairCost = repairCost;
         this.bounty = bounty;
         this.occurrence = occurrence;
-        this.fuel = fuel;
-        this.name = name;
+        this.police = police;
+        this.pirate = pirate;
+        this.trader = trader;
+        
     }
     
-    public int numGadgetSlots(){
-        return gadgetSlots;
+    public String type() {
+        return type;
     }
 
-    public int numWeaponSlots() {
-        return weaponSlots;
-    }
-
-    public int numShieldSlots() {
-        return shieldSlots;
-    }
-    
-    public int numCargoSlots() {
+    public int cargoBay() {
         return cargoBay;
     }
 
-    public int parsecsPerTank() {
-        return parsecsPerTank;
+    public int weaponSlots() {
+        return weaponSlots;
+    }
+
+    public int shieldSlots() {
+        return shieldSlots;
+    }
+
+    public int gadgetSlots() {
+        return gadgetSlots;
+    }
+
+    public int fuel() {
+        return fuel;
+    }
+
+    public int fuelCost() {
+        return fuelCost;
     }
 
     public int hullStrength() {
         return hullStrength;
     }
 
+    public int crew() {
+        return crew;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public int minTechLevel() {
+        return minTechLevel;
+    }
+
     public int price() {
         return price;
     }
-    
-    public int fuel() {
-        return fuel;
+
+    public int repairCost() {
+        return repairCost;
+    }
+
+    public int bounty() {
+        return bounty;
+    }
+
+    public int occurrence() {
+        return occurrence;
+    }
+
+    public int police() {
+        return police;
+    }
+
+    public int pirate() {
+        return pirate;
+    }
+
+    public int trader() {
+        return trader;
     }
 }
