@@ -43,7 +43,8 @@ public class MainController {
     public void setUpGame(Player player) {
         game.setUniverse(new Universe());
         game.setPlayer(player);
-        goToFirstScreen();
+        goToSpaceMapScreen();
+        //goToFirstScreen();
     }
     
     /**
@@ -73,7 +74,7 @@ public class MainController {
         control.setMainControl(this);
         control.displayUniverse(game.getUniverse(), game.getPlayer().getName());
     }
-      /**
+    /**
      * Transitions the game screen to the First Screen.
      * @param planet the planet who's market we're visiting
      */
@@ -83,6 +84,18 @@ public class MainController {
         control = (MarketScreenController) changeScene("/spacetrader/MarketScreen.fxml");
         control.setMainControl(this);
         control.setUpMarketScreen(planet, game.getPlayer());
+    }
+   
+   /**
+     * Transitions the game screen to the Space Map Screen.
+     * @param planet the planet who's market we're visiting
+     */
+   public void goToSpaceMapScreen() {
+        stage.setTitle("Space Map!");        
+        SpaceMapScreenController control;
+        control = (SpaceMapScreenController) changeScene("/spacetrader/SpaceMapScreen.fxml");
+        control.setMainControl(this);
+        control.setUpMap(game.getUniverse().getPlanets());
     }
     
     /**

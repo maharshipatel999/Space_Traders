@@ -30,14 +30,9 @@ public class Planet {
     public Planet(String name, Point location) {
         this.name = name;
         this.location = location;
-        
-        //picks a random TechLevel
+
         this.level = TechLevel.getRandomTechLevel();
-        
-        //picks a random Resource
         this.resource = Resource.getRandomResource();
-        
-        //picks a random Political System
         this.politSys = PoliticalSystem.getRandomPoliticalSystem();
         
         this.market = new Market(this);

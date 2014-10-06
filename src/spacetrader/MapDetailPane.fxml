@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MapDetailController">
+   <children>
+      <TabPane tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Information" />
+          <Tab text="Avg Price List">
+               <content>
+                  <VBox prefWidth="250.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Button layoutX="172.0" layoutY="486.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="67.0" text="WARP" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
+   </children>
+   <opaqueInsets>
+      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+   </opaqueInsets>
+</AnchorPane>
