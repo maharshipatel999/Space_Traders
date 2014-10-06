@@ -26,10 +26,10 @@ public class SpaceShip {
     
     public SpaceShip(ShipType type) {
         this.type = type;
-        this.cargo = new Cargo(type.numCargoSlots());
-        this.weapons = new EquipmentSlots<>(type.numWeaponSlots());
-        this.shields = new EquipmentSlots<>(type.numShieldSlots());
-        this.gadgets = new EquipmentSlots<>(type.numGadgetSlots());
+        this.cargo = new Cargo(type.cargoBay());
+        this.weapons = new EquipmentSlots<>(type.weaponSlots());
+        this.shields = new EquipmentSlots<>(type.shieldSlots());
+        this.gadgets = new EquipmentSlots<>(type.gadgetSlots());
         this.tank = new FuelTank(type.fuel());
     }
     
