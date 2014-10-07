@@ -101,7 +101,7 @@ public class SpaceMapScreenController implements Initializable {
     }
     
     public void travelToPlanet() {
-        mainControl.goToMarketScreen(planetMap.selectedPlanet);
+        mainControl.goToWarpScreen(planetMap.selectedPlanet);
     }
     
     /**

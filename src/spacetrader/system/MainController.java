@@ -101,6 +101,14 @@ public class MainController {
         control.setUpMarketScreen(planet, game.getPlayer());
     }
    
+   public void goToWarpScreen(Planet planet) {
+       stage.setTitle("Traveling to " + planet.toString());
+       WarpScreenController control;
+       control = (WarpScreenController) changeScene("/spacetrader/WarpScreen.fxml");
+       control.setMainControl(this);
+       control.travel(planet);
+   }
+   
    /**
      * Transitions the game screen to the Space Map Screen.
      * @param planet the planet who's market we're on
