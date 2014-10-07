@@ -22,7 +22,8 @@ public class FuelTank {
      * @param maxFuel 
      */
     public FuelTank(int maxFuel) {
-        fuel = maxFuel;
+        this.maxFuel = maxFuel;
+        this.fuel = maxFuel;
     }
     
     /**
