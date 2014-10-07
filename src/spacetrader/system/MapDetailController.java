@@ -59,6 +59,10 @@ public class MapDetailController implements Initializable {
         this.mapControl = mapControl;
     }
     
+    /**
+     * Fills in the sidebar with information from the planet selected
+     * @param planet the selected planet
+     */
     public void setPlanetInfo(Planet planet) {
         selectedPlanet = planet;
         planetName.setText(planet.getName());
@@ -103,7 +107,6 @@ public class MapDetailController implements Initializable {
             TradeGood good = TradeGood.values()[i];
             int appxPrice = selectedPlanet.getMarket().getAppxPrices().get(good);
             if (appxPrice >= 0) {
-                System.out.println("Sumdee");
                 appxPricesLabels[i].setText("₪" + appxPrice);
             } else {
                 appxPricesLabels[i].setText("-----");
@@ -111,6 +114,10 @@ public class MapDetailController implements Initializable {
         }
     }
     
+    /**
+     * Sets the amount of police that will be on the planet
+     * @param planet the planet that will be assigned a certain # of police
+     */
     //I just used completely random numbers. This needs to be actually calculated.
     private String determinePoliceAmount(Planet planet) {
         double policeVariable = Math.random() * 21; //SHOULDNT BE RANDOM
@@ -135,6 +142,10 @@ public class MapDetailController implements Initializable {
         return policeAmount;
     }
 
+    /**
+     * Sets the amount of pirates that will be on the planet
+     * @param planet the planet that will be assigned a certain # of pirates
+     */
     //I just used completely random numbers. This needs to be actually calculated.
     private String determinePirateAmount(Planet planet) {
         double pirateVariable = Math.random() * 21; //SHOULDNT BE RANDOM
@@ -159,6 +170,10 @@ public class MapDetailController implements Initializable {
         return pirateAmount;
     }
     
+    /**
+     * Warps the player to the selected planet
+     * @param event the event to occue
+     */
     @FXML protected void warpToPlanet(ActionEvent event) {
         mapControl.travelToPlanet();
     }

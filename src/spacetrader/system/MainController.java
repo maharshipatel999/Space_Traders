@@ -107,7 +107,12 @@ public class MainController {
         control.setMainControl(this);
         control.setUpMarketScreen(planet, game.getPlayer());
     }
-   
+
+   /**
+     * Transitions the game screen to the Warp Screen
+     * @param source the planet we are on
+     * @param dest the planet we are going to
+     */
    public void goToWarpScreen(Planet source, Planet dest) {
        stage.setTitle("Traveling to " + dest.getName());
        WarpScreenController control;

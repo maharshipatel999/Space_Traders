@@ -24,6 +24,10 @@ public class Market {
     private Map<TradeGood, Integer> appxPrices;
     private Cargo stock;
     
+    /**
+     * Constructor
+     * @param planet the planet to be assigned an instance of Market
+     */
     public Market(Planet planet) {
         this.planet = planet;
         stock = new Cargo(1000);
@@ -167,6 +171,10 @@ public class Market {
         return stock;
     }
     
+    /**
+     * Gets the planet this Market is assigned to
+     * @return the planet
+     */
     public Planet getPlanet() {
         return planet;
     }

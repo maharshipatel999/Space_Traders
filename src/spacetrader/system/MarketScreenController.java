@@ -87,10 +87,20 @@ public class MarketScreenController implements Initializable {
         alertText.setFill(Color.TRANSPARENT);
     }
     
+    /**
+     * Sets the main controller
+     * @param mainControl the controller to be set as the mainControl
+     */
     public void setMainControl(MainController mainControl) {
         this.mainControl = mainControl;
     }
 
+    /**
+     * Sets up the market screen for this planet. Shows planet information, resource,
+     * and price increase event. Enables user to buy/sell goods on this planet.
+     * @param planet the planet who's market we are at
+     * @param player the user, who may purchase/sell goods at this market
+     */
     public void setUpMarketScreen(Planet planet, Player player) {
         this.player = player;
         this.market = planet.getMarket();
@@ -158,6 +168,10 @@ public class MarketScreenController implements Initializable {
         children.removeAll(toRemove);
     }
     
+    /**
+     * Shows the price of each TradeGood
+     * @param cargo the player's cargo, which contains his/her goods
+     */
     private void setUpPanels(Cargo cargo) {
         for (int i = 0; i < buyGoods.size(); i++) {
             TradeGood good = buyGoods.get(i);
@@ -176,6 +190,10 @@ public class MarketScreenController implements Initializable {
         }
     }
     
+    /**
+     * Increases the quantity to be bought
+     * @param event mouse click on the "^" button (on Buy screen)
+     */
     @FXML protected void increaseBuyQuantity(ActionEvent event) {
         Integer row = GridPane.getRowIndex((Node) event.getSource());
         if (row != null) {
@@ -183,6 +201,10 @@ public class MarketScreenController implements Initializable {
         }     
     }
     
+    /**
+     * Decreases the quantity to be bought
+     * @param event mouse click on the down arrow head button (on Buy screen)
+     */
     @FXML protected void decreaseBuyQuantity(ActionEvent event) {
         Integer row = GridPane.getRowIndex((Node) event.getSource());
         if (row != null) {
@@ -190,6 +212,10 @@ public class MarketScreenController implements Initializable {
         }  
     }
     
+    /**
+     * Increase the quantity to sell
+     * @param event mouse click on the "^" button (on Sell screen)
+     */
     @FXML protected void increaseSellQuantity(ActionEvent event) {
         Integer row = GridPane.getRowIndex((Node) event.getSource());
         if (row != null) {
@@ -197,6 +223,10 @@ public class MarketScreenController implements Initializable {
         }     
     }
     
+    /**
+     * Decreases the quantity to be sold
+     * @param event mouse click on the down arrow head button (on Sell screen)
+     */
     @FXML protected void decreaseSellQuantity(ActionEvent event) {
         Integer row = GridPane.getRowIndex((Node) event.getSource());
         if (row != null) {
@@ -258,6 +288,11 @@ public class MarketScreenController implements Initializable {
         }
     }
     
+    /**
+     * Updates the transaction with the latest selection of trade goods. Shows how
+     * many sprints will be subtracted from the player's total if the transaction occurs.
+     * @param index the index of the good we are calculating into the transaction
+     */
     private void updateBuyText(int index) {
         TradeGood good = buyGoods.get(index);
         int quantity = cashier.getQuantityBought(good);
@@ -268,6 +303,11 @@ public class MarketScreenController implements Initializable {
         totalPurchase.setText("– ₪" + cashier.getTotalCost());
     }
     
+    /**
+     * Updates the transaction with the latest selection of trade goods. Shows how
+     * many sprints will be added to the player's total if the transaction occurs.
+     * @param index the index of the good we are calculating into the transaction
+     */
     private void updateSellText(int index) {
         TradeGood good = sellGoods.get(index);
         int quantity = cashier.getQuantitySold(good);
@@ -278,10 +318,17 @@ public class MarketScreenController implements Initializable {
         totalSale.setText("+ ₪" + cashier.getTotalRevenue());
     }
     
+    /**
+     * Updates the player's net balance.
+     */
     private void updateNetBalance() {
        moneyRemaining.setText(cashier.getRemainingBalance() + " credits"); 
     }
     
+    /**
+     * Displays an alert for the user.
+     * @param message the message to be displayed
+     */
     private void displayAlert(String message) {
         alertText.setFill(Color.RED);
         alertText.setText(message);
@@ -349,18 +396,30 @@ public class MarketScreenController implements Initializable {
         }
     }
     
+    /**
+     * Checks for disabling when the buy tab is changed
+     * @param e the event that causes this action to occur
+     */
     @FXML protected void buyTabChanged(Event e) {
         if (viewIsInitialized) {
             checkForDisabling(buyGrid);
             checkForDisabling(sellGrid);
         }
     }
-        
+    
+    /**
+     * Completes the transaction and refreshes the market screen
+     * @param event mouse click on "Complete Transaction" button
+     */
     @FXML protected void completeTransaction(ActionEvent event) {
         cashier.complete();
         mainControl.goToMarketScreen(market.getPlanet());
     }
     
+    /**
+     * Goes back to the home screen
+     * @param event mouse click on "Back" button
+     */
     @FXML protected void goBack(ActionEvent event) {
         mainControl.goToHomeScreen(player.getLocation());
     }

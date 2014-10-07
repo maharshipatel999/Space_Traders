@@ -147,6 +147,9 @@ public class SpaceMapScreenController implements Initializable {
         private Planet selectedPlanet;
         private Map<Planet, Circle> planetIcons;
 
+        /**
+         * Constructor.
+         */
         public MapPane() {
             addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
                 //remember initial mouse cursor coordinates and node position
@@ -187,6 +190,10 @@ public class SpaceMapScreenController implements Initializable {
             });
         }
 
+        /**
+         * Adds planets into the MapPane
+         * @param planets the list of planets to be added
+         */
         private void addPlanets(ArrayList<Planet> planets) {
             background = new Rectangle(MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN,
                                        MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN,
@@ -236,7 +243,7 @@ public class SpaceMapScreenController implements Initializable {
                 }
             }
         }     
-    
+
         @Override
         public String toString() {
             String toString = String.format("Size:(%f, %f), RectSize:(%f, %f)", getWidth(), getHeight(), background.getWidth(), background.getHeight());
@@ -245,6 +252,9 @@ public class SpaceMapScreenController implements Initializable {
             return toString;
         }
         
+        /**
+         * TODO
+         */
         private final class MapDragContext {
             public double mouseX;
             public double mouseY;

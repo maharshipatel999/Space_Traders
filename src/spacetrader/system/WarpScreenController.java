@@ -44,12 +44,20 @@ public class WarpScreenController implements Initializable {
         this.mainControl = mainControl;
     }
 
+    /**
+     * Travels from one planet to another.
+     * @param source the planet we are at
+     * @param destination the planet we are going to
+     */
     public void travel(Planet source, Planet destination) {
         this.dest = destination;
         animateShip();
         mainControl.takeTurn(dest, (int) Universe.distanceBetweenPlanets(source, destination));
     }
     
+    /**
+     * Shows travel animation screen for a short period of time.
+     */
     private void animateShip() {
         /*TranslateTransition tt = new TranslateTransition(Duration.millis(30000), shipSprite);
         final float TRANSLATE_FACTOR = 300f;
