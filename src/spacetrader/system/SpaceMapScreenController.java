@@ -18,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -135,11 +134,11 @@ public class SpaceMapScreenController implements Initializable {
      * of the map display. The map is draggable within the master pane.
      */
     private class MapPane extends Pane {
-        public static final double MAP_WIDTH = 1800;
-        public static final double MAP_HEIGHT = 1200;
+        public static final double MAP_WIDTH = 2700;
+        public static final double MAP_HEIGHT = 1800;
         public static final double LEFT_MARGIN = 40, RIGHT_MARGIN = 90;
         public static final double TOP_MARGIN = 40, BOTTOM_MARGIN = 40;
-        public static final double PLANET_RADIUS = 8;
+        public static final double PLANET_RADIUS = 10;
         
         private final MapDragContext dragContext = new MapDragContext();
         
