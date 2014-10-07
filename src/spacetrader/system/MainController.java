@@ -29,6 +29,8 @@ public class MainController {
     /**
      * Creates the MainController.
      * MainController has a reference to the main class and stage. 
+     * @param game
+     * @param stage
      */
     public MainController(SpaceTrader game, Stage stage) {
         this.game = game;
@@ -102,7 +104,6 @@ public class MainController {
         MarketScreenController control;
         control = (MarketScreenController) changeScene("/spacetrader/MarketScreen.fxml");
         control.setMainControl(this);
-        game.setPlanet(planet);
         control.setUpMarketScreen(planet, game.getPlayer());
     }
    
