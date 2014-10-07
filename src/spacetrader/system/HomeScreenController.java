@@ -14,7 +14,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import spacetrader.Planet;
+import spacetrader.Player;
 import spacetrader.Universe;
 
 /**
@@ -28,6 +30,8 @@ public class HomeScreenController implements Initializable {
     private Universe universe;
     
     @FXML private Button marketPlaceButton;
+    @FXML private Label planetName;
+    @FXML private Label playerName;
     
     /**
      * Gives this controller a reference to the MainController.
@@ -37,8 +41,13 @@ public class HomeScreenController implements Initializable {
         this.mainControl = mainControl;
     }
     
+    public void setUpHomeScreen(Player player, Planet planet) {
+        planetName.setText(planet.toString());
+        playerName.setText(player.getName());
+    }
+    
     @FXML protected void goToMarket(ActionEvent event) {
-        mainControl.goToMarketScreen(mainControl.game.getPlanet());
+        mainControl.goToMarketScreen(mainControl.game.getPlayer().getLocation());
     }
     
     /**

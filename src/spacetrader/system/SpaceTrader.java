@@ -73,15 +73,15 @@ public class SpaceTrader extends Application {
         this.player = player;
     }
     
-    /**
-     * Gets the current planet player is on.
-     * 
-     * @return current planet
-     */
-    public Planet getPlanet() {
-        return this.planet;
-    }
-    
+//    /**
+//     * Gets the current planet player is on.
+//     * 
+//     * @return current planet
+//     */
+//    public Planet getPlanet() {
+//        return this.planet;
+//    }
+//    
     /**
      * Sets the planet that the player is on
      * 

@@ -7,6 +7,8 @@
 package spacetrader.system;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +45,10 @@ public class MainController {
     public void setUpGame(Player player) {
         game.setUniverse(new Universe());
         game.setPlayer(player);
-        goToFirstScreen();
+        ArrayList<Planet> planets = game.getUniverse().getPlanets();
+        Random rand = new Random();
+        player.setLocation(planets.get(rand.nextInt(planets.size())));
+        goToFirstScreen(player, player.getLocation());
     }
     
     /**
@@ -67,10 +72,11 @@ public class MainController {
     /**
      * Transitions the game screen to the First Screen.
      */
-    public void goToFirstScreen() {
+    public void goToFirstScreen(Player player, Planet planet) {
         HomeScreenController control;
         control = (HomeScreenController) changeScene("/spacetrader/HomeScreen.fxml");
         control.setMainControl(this);
+        control.setUpHomeScreen(player, planet);
         
     }
       /**
