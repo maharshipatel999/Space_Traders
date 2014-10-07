@@ -22,6 +22,7 @@ public class Player {
     private final int investorSkill;
     private final Wallet wallet;
     private final SpaceShip ship;
+    private Planet location;
     
     public Player(String name, int pilot, int fighter, int trader, int engineer, int investor) {
         this.name = name;
@@ -65,5 +66,13 @@ public class Player {
     
     public SpaceShip getShip() {
         return ship;
+    }
+    
+    public Planet getLocation() {
+        return this.location;
+    }
+    
+    public void setLocation(Planet planet) {
+        this.location = planet;
     }
 }
