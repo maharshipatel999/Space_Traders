@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="363.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.WarpScreenController">
+   <children>
+      <ImageView fitHeight="547.0" fitWidth="735.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/images/travelScreen.jpg" />
+         </image>
+      </ImageView>
+      
+      <ImageView id="playership" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" x="230" y="380">
+         <image>
+            <Image url="@../resources/images/redFighter.png" />
+         </image>
+      </ImageView>
+      <Text fill="#74ad72" fontSmoothingType="LCD" layoutX="312.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Traveling..." wrappingWidth="162.515625">
+         <font>
+            <Font name="Imprint MT Shadow" size="30.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
