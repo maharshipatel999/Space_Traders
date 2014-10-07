@@ -72,27 +72,6 @@ public class SpaceTrader extends Application {
         }
         this.player = player;
     }
-    
-        /**
-     * Gets the current planet player is on.
-     * 
-     * @return current planet
-     */
-    public Planet getPlanet() {
-        return this.planet;
-    }
-    
-    /**
-     * Sets the planet that the player is on
-     * 
-     * @param planet player's current planet, cannot be null
-     */
-    public void setPlanet(Planet planet) {
-        if (planet == null) {
-            throw new IllegalArgumentException("Planet cannot be null.");
-        }
-        this.planet = planet;
-    }
 
     /**
      * @param args the command line arguments
