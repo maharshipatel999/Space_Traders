@@ -39,15 +39,28 @@ public class HomeScreenController implements Initializable {
         this.mainControl = mainControl;
     }
     
+    /**
+     * Customizes text on homescreen based on player and planet names
+     * @param player player that is currently playing
+     * @param planet planet that player is currently on
+     */
     public void setUpHomeScreen(Player player, Planet planet) {
         planetName.setText(planet.toString());
         playerName.setText(player.getName());
     }
     
+    /**
+     * Changes scene to planet's marketplace
+     * @param event mouseclick on marketplace button
+     */
     @FXML protected void goToMarket(ActionEvent event) {
         mainControl.goToMarketScreen(mainControl.game.getPlayer().getLocation());
     }
     
+    /**
+     * Changes scene to space map
+     * @param event mouseclick on travel button
+     */
     @FXML protected void goToSpace(ActionEvent event) {
         mainControl.goToSpaceMapScreen(mainControl.game.getPlayer().getLocation());
     }
