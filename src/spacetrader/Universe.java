@@ -104,6 +104,11 @@ public class Universe {
     public ArrayList<Planet> getPlanets() {
         return planets;
     }
+
+    public static double distanceBetweenPlanets(Planet p1, Planet p2) {
+        return Point.distance(p1.getLocation().getX(), p1.getLocation().getY(), p2.getLocation().getX(), p2.getLocation().getY());
+    }
+    
     
     /**
      * Creates a new random point between MAX_LOC (exclusive) and MIN_LOC (inclusive).

@@ -139,6 +139,6 @@ public class MapDetailController implements Initializable {
     }
     
     @FXML protected void warpToPlanet(ActionEvent event) {
-        mapControl.travelToPlanet();
+        mapControl.travelToPlanet(selectedPlanet);
     }
 }

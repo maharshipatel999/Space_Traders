@@ -7,20 +7,12 @@
 package spacetrader.system;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import spacetrader.Planet;
 import spacetrader.Universe;
-import javafx.scene.shape.*;
-import javafx.animation.Transition.*;
 
 /**
  * FXML Controller class
@@ -30,6 +22,7 @@ import javafx.animation.Transition.*;
 public class WarpScreenController implements Initializable {
 
     @FXML private Text destination;
+    
     private MainController mainControl;
     private Planet dest;
     
@@ -46,32 +39,20 @@ public class WarpScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        //TODO
     }
     
-
-    
-    public void travel(Planet destination) {
-        dest = destination;
+    public void travel(Planet source, Planet destination) {
+        this.dest = destination;
         update();
-        arriveAtPlanet();
+        mainControl.takeTurn(dest, (int) Universe.distanceBetweenPlanets(source, destination));
     }
-    
-
     
     public void update() {
-     try{
-         Thread.sleep(1000);
-     } catch (Exception e) {
-         
-     }     
-
-
+        try {
+            Thread.sleep(1200);
+        } catch (Exception e) {
+           //CATCH 
+        }     
     }
-    
-    protected void arriveAtPlanet() {
-        //Pick a random planet to start off game
-        mainControl.goToMarketScreen(dest);
-    }
-    
 }

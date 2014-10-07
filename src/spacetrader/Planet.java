@@ -82,6 +82,10 @@ public class Planet {
     public boolean isVisited() {
         return visited;
     }
+    
+    public void setVisited() {
+        visited = true;
+    }
 
     @Override
     public String toString() {

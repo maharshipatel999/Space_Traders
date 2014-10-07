@@ -36,4 +36,10 @@ public class SpaceShip {
     public Cargo getCargo() {
         return cargo;
     }
+
+    public FuelTank getTank() {
+        return tank;
+    }
+    
+    
 }

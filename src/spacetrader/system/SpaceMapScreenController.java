@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -27,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import org.controlsfx.control.MasterDetailPane;
 import spacetrader.Planet;
+import spacetrader.Player;
 import spacetrader.Universe;
 
 /**
@@ -44,6 +44,7 @@ public class SpaceMapScreenController implements Initializable {
     private Pane planetInfo;
     
     private Planet currentPlanet;
+    private int fuelAmount;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,11 +73,13 @@ public class SpaceMapScreenController implements Initializable {
     
     /**
      * Adds all the planets to the map.
+     * @param player
      * @param currentPlanet the planet the player currently is
      * @param planets the planets this map will display.
      */
-    public void setUpMap(Planet currentPlanet, ArrayList<Planet> planets) {
+    public void setUpMap(Player player, Planet currentPlanet, ArrayList<Planet> planets) {
         this.currentPlanet = currentPlanet;
+        fuelAmount = player.getShip().getTank().getFuelAmount();
         planetMap.addPlanets(planets);
         
         mapScreen.setDividerPosition((planetInfo.getPrefWidth()) / mapScreen.getWidth());
@@ -92,16 +95,11 @@ public class SpaceMapScreenController implements Initializable {
      * @return true if the planet is in range
      */
     public boolean isInRangeOf(Planet planet) {
-        int fuelAmount = 200; //this should actually be determined by the space ship!!!
-        Circle icon1 = planetMap.planetIcons.get(currentPlanet);
-        Circle icon2 = planetMap.planetIcons.get(planet);
-        Point2D point1 = new Point2D(icon1.getCenterX(), icon1.getCenterY());
-        Point2D point2 = new Point2D(icon2.getCenterX(), icon2.getCenterY());
-        return point1.distance(point2) < fuelAmount;
+        return Universe.distanceBetweenPlanets(currentPlanet, planet) < fuelAmount;
     }
     
-    public void travelToPlanet() {
-        mainControl.goToWarpScreen(planetMap.selectedPlanet);
+    public void travelToPlanet(Planet currentPlanet) {
+        mainControl.goToWarpScreen(currentPlanet, planetMap.selectedPlanet);
     }
     
     /**
@@ -222,11 +220,13 @@ public class SpaceMapScreenController implements Initializable {
                 this.getChildren().add(planetIcon);
                 this.getChildren().add(nameText);
                 
+                //Create flight radius
                 if (planet == currentPlanet) {
+                    double maxTravelDistance = (MAP_WIDTH * (fuelAmount / (double) Universe.WIDTH));
                     planetIcon.setFill(Color.BLUE);
-                    Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), 200, Color.TRANSPARENT);
-                    flightRadius.setOpacity(.3);
-                    flightRadius.setStroke(Color.PERU);
+                    Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
+                    flightRadius.setOpacity(.6);
+                    flightRadius.setStroke(Color.LAWNGREEN);
                     this.getChildren().add(flightRadius);
                 }
             }

@@ -44,7 +44,7 @@ public class MainController {
         game.setUniverse(new Universe());
         game.setPlayer(player);
         player.setLocation(game.getUniverse().getPlanet("Pallet"));
-        goToFirstScreen(player.getLocation());
+        goToHomeScreen(player.getLocation());
     }
     
     /**
@@ -56,9 +56,12 @@ public class MainController {
      * (Not every planet because then planets that are visited late in the game would
      * have a huge stock of tradeGoods.
      * @param destination 
+     * @param distance 
      */
-    public void takeTurn(Planet destination) {
-        //TODO
+    public void takeTurn(Planet destination, int distance) {
+        game.getPlayer().setLocation(destination);
+        game.getPlayer().getShip().getTank().removeFuel(distance);
+        goToHomeScreen(destination);
     }
     
     /**
@@ -81,11 +84,13 @@ public class MainController {
     }
     /**
      * Transitions the game screen to the First Screen.
+     * @param planet
      */
-    public void goToFirstScreen(Planet planet) {
+    public void goToHomeScreen(Planet planet) {
         HomeScreenController control;
         control = (HomeScreenController) changeScene("/spacetrader/HomeScreen.fxml");
         control.setMainControl(this);
+        planet.setVisited();
         control.setUpHomeScreen(game.getPlayer(), planet);
     }
     /**
@@ -101,12 +106,12 @@ public class MainController {
         control.setUpMarketScreen(planet, game.getPlayer());
     }
    
-   public void goToWarpScreen(Planet planet) {
-       stage.setTitle("Traveling to " + planet.toString());
+   public void goToWarpScreen(Planet source, Planet dest) {
+       stage.setTitle("Traveling to " + dest.getName());
        WarpScreenController control;
        control = (WarpScreenController) changeScene("/spacetrader/WarpScreen.fxml");
        control.setMainControl(this);
-       control.travel(planet);
+       control.travel(source, dest);
    }
    
    /**
@@ -118,7 +123,7 @@ public class MainController {
         SpaceMapScreenController control;
         control = (SpaceMapScreenController) changeScene("/spacetrader/SpaceMapScreen.fxml");
         control.setMainControl(this);
-        control.setUpMap(planet, game.getUniverse().getPlanets());
+        control.setUpMap(game.getPlayer(), planet, game.getUniverse().getPlanets());
     }
     
     /**

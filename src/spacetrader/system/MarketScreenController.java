@@ -362,7 +362,7 @@ public class MarketScreenController implements Initializable {
     }
     
     @FXML protected void goBack(ActionEvent event) {
-        mainControl.goToFirstScreen(player.getLocation());
+        mainControl.goToHomeScreen(player.getLocation());
     }
     
     
