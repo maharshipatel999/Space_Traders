@@ -61,6 +61,7 @@ public class MainController {
     public void takeTurn(Planet destination, int distance) {
         game.getPlayer().setLocation(destination);
         game.getPlayer().getShip().getTank().removeFuel(distance);
+        System.out.println(distance);
         goToHomeScreen(destination);
     }
     

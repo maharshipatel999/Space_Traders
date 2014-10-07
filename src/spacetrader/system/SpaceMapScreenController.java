@@ -14,9 +14,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -35,8 +37,9 @@ import spacetrader.Universe;
  * @author Caleb
  */
 public class SpaceMapScreenController implements Initializable {
-
     @FXML private MasterDetailPane mapScreen;
+    @FXML private Text fuelRemaingText;
+    
     
     private MainController mainControl;
     private MapDetailController infoControl;
@@ -45,12 +48,12 @@ public class SpaceMapScreenController implements Initializable {
     
     private Planet currentPlanet;
     private int fuelAmount;
+    private int maxFuelAmount;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         planetMap = new MapPane();
         mapScreen.setMasterNode(planetMap);
-        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/MapDetailPane.fxml"));
         try {
             planetInfo = loader.load();
@@ -71,6 +74,7 @@ public class SpaceMapScreenController implements Initializable {
         this.mainControl = mainControl;
     }
     
+    
     /**
      * Adds all the planets to the map.
      * @param player
@@ -79,7 +83,9 @@ public class SpaceMapScreenController implements Initializable {
      */
     public void setUpMap(Player player, Planet currentPlanet, ArrayList<Planet> planets) {
         this.currentPlanet = currentPlanet;
-        fuelAmount = player.getShip().getTank().getFuelAmount();
+        this.fuelAmount = player.getShip().getTank().getFuelAmount();
+        this.maxFuelAmount = player.getShip().getTank().getMaxFuel();
+        fuelRemaingText.setText("Fuel Remaining : " + fuelAmount + "/" + maxFuelAmount);
         planetMap.addPlanets(planets);
         
         mapScreen.setDividerPosition((planetInfo.getPrefWidth()) / mapScreen.getWidth());
@@ -98,8 +104,8 @@ public class SpaceMapScreenController implements Initializable {
         return Universe.distanceBetweenPlanets(currentPlanet, planet) < fuelAmount;
     }
     
-    public void travelToPlanet(Planet currentPlanet) {
-        mainControl.goToWarpScreen(currentPlanet, planetMap.selectedPlanet);
+    public void travelToPlanet() {
+        mainControl.goToWarpScreen(this.currentPlanet, planetMap.selectedPlanet);
     }
     
     /**
@@ -118,7 +124,9 @@ public class SpaceMapScreenController implements Initializable {
     private void hidePlanetInfo() {
         mapScreen.setShowDetailNode(false);
     }
-    
+    @FXML protected void backToPlanet(ActionEvent event) {
+            mainControl.goToHomeScreen(currentPlanet);
+        }
     @Override
     public String toString() {
         String toString = String.format("Size:(%f, %f)", mapScreen.getWidth(), mapScreen.getHeight());
@@ -230,8 +238,8 @@ public class SpaceMapScreenController implements Initializable {
                     this.getChildren().add(flightRadius);
                 }
             }
-        }
-            
+        }     
+    
         @Override
         public String toString() {
             String toString = String.format("Size:(%f, %f), RectSize:(%f, %f)", getWidth(), getHeight(), background.getWidth(), background.getHeight());
