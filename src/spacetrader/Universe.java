@@ -21,14 +21,15 @@ public class Universe {
     
     private final Random rand = new Random();
     
-    private final int PLANET_MAX_AMOUNT = 120;
-    private final int PLANET_MIN_AMOUNT = 100;
-    private final int WIDTH = 150;
-    private final int HEIGHT = 100;
+    public static final int WIDTH = 150;
+    public static final int HEIGHT = 100;
+    private static final int PLANET_MAX_AMOUNT = 120;
+    private static final int PLANET_MIN_AMOUNT = 100;
+    private static final int MIN_DISTANCE = 5;
     
-    private ArrayList<Planet> planets;
-    private Set<String> planetNames = new HashSet<>();
-    private Set<Point> planetLocations = new HashSet<>(100);
+    private final ArrayList<Planet> planets;
+    private final Set<String> planetNames = new HashSet<>();
+    private final Set<Point> planetLocations = new HashSet<>(100);
     
     /**
      * Creates the Universe with a semi-randomly chosen amount of Planets.
@@ -37,6 +38,13 @@ public class Universe {
     public Universe() {
         int planetAmount = rand.nextInt(PLANET_MAX_AMOUNT - PLANET_MIN_AMOUNT) + PLANET_MIN_AMOUNT;
         planets = new ArrayList<>(planetAmount);
+        
+        //Add Home Planet
+        Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
+            TechLevel.AGRICULTURE , Resource.NONE ,PoliticalSystem.DEMOCRACY);
+        planets.add(homePlanet);
+        planetNames.add(homePlanet.getName());
+        planetLocations.add(homePlanet.getLocation());
         
         //Create all the planets!
         for (int i = 0; i < planetAmount; i++) {
@@ -51,17 +59,43 @@ public class Universe {
             Point location; 
             do {
                 location = generateRandomLocation();
-            } while (planetLocations.contains(location));
+            } while (planetLocations.contains(location) || !isIsolated(location));
             planetLocations.add(location);
             
             //create planet
             Planet planet = new Planet(name, location);
             planets.add(planet);
         }
-    }    
+    }
+    
+    /**
+     * Finds the planet with the specified name. 
+     * @param name the name of the planet to find
+     * @return the planet with the specified name, or null if not found.
+     */
+    public Planet getPlanet(String name) {
+        if (planetNames.contains(name)) {
+            for (Planet planet : planets) {
+                if (planet.getName().equals(name)) {
+                    return planet;
+                }
+            }
+        }
+        return null;
+    }
+    
+    
+    private boolean isIsolated(Point point) {
+        for (Point p : planetLocations) {
+            if (point.distance(p.getX(), p.getY()) < MIN_DISTANCE) {
+                return false;
+                }
+            }
+        return true;
+    }
+    
     public void updatePriceEvent(Planet p) {
-        PriceIncreaseEvent[] priceIncEvents = PriceIncreaseEvent.values();
-         p.setPriceIncEvent(priceIncEvents[rand.nextInt(priceIncEvents.length)]);
+         p.setPriceIncEvent(PriceIncreaseEvent.getRandomPriceEvent());
     }
     /**
      * Gets a list of all the planets in the universe.

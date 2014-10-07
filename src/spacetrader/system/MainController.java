@@ -49,6 +49,22 @@ public class MainController {
         Random rand = new Random();
         player.setLocation(planets.get(rand.nextInt(planets.size())));
         goToFirstScreen(player, player.getLocation());
+        goToSpaceMapScreen();
+        //goToFirstScreen();
+    }
+    
+    /**
+     * Moves a player to a selected planet. The destination planet's prices should
+     * be recalculated. Every planet in the universe who's priceIncreaseEvent counter
+     * has ran out should have it removed. If the destination planet doesn't have a
+     * priceIncreaseEvent currently, one should be randomly added based on a small probability.
+     * All the planets who's tradeGood stock has been decremented should have their stock increased.
+     * (Not every planet because then planets that are visited late in the game would
+     * have a huge stock of tradeGoods.
+     * @param destination 
+     */
+    public void takeTurn(Planet destination) {
+        //TODO
     }
     
     /**
@@ -79,7 +95,7 @@ public class MainController {
         control.setUpHomeScreen(player, planet);
         
     }
-      /**
+    /**
      * Transitions the game screen to the First Screen.
      * @param planet the planet who's market we're visiting
      */
@@ -90,6 +106,18 @@ public class MainController {
         control.setMainControl(this);
         game.setPlanet(planet);
         control.setUpMarketScreen(planet, game.getPlayer());
+    }
+   
+   /**
+     * Transitions the game screen to the Space Map Screen.
+     * @param planet the planet who's market we're visiting
+     */
+   public void goToSpaceMapScreen() {
+        stage.setTitle("Space Map!");        
+        SpaceMapScreenController control;
+        control = (SpaceMapScreenController) changeScene("/spacetrader/SpaceMapScreen.fxml");
+        control.setMainControl(this);
+        control.setUpMap(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets());
     }
     
     /**
