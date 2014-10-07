@@ -7,6 +7,7 @@
 package spacetrader.system;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
+import spacetrader.commerce.TradeGood;
 
 /**
  * FXML Controller class
@@ -86,8 +88,27 @@ public class MapDetailController implements Initializable {
                 planetInformation.getChildren().add(outOfRangeText);
             }
         }
+        setApproximatePrices();
         
-        
+    }
+    
+    /**
+     * Sets approximate prices of each good in map detail sidebar
+     */
+    private void setApproximatePrices() {
+        Label[] appxPricesLabels  = new Label[] { appxWaterPrice, appxFursPrice, appxFoodPrice,
+            appxOrePrice, appxGamesPrice, appxFirearmsPrice, appxMedicinePrice,
+            appxMachinesPrice,appxNarcoticsPrice, appxRobotsPrice };
+        for (int i = 0; i < TradeGood.values().length; i++) {
+            TradeGood good = TradeGood.values()[i];
+            int appxPrice = selectedPlanet.getMarket().getAppxPrices().get(good);
+            if (appxPrice >= 0) {
+                System.out.println("Sumdee");
+                appxPricesLabels[i].setText("₪" + appxPrice);
+            } else {
+                appxPricesLabels[i].setText("-----");
+            }
+        }
     }
     
     //I just used completely random numbers. This needs to be actually calculated.

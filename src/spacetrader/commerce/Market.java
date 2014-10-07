@@ -21,13 +21,19 @@ public class Market {
     private Planet planet;
     private Map<TradeGood, Integer> sellPrices;
     private Map<TradeGood, Integer> buyPrices;
+    private Map<TradeGood, Integer> appxPrices;
     private Cargo stock;
     
     public Market(Planet planet) {
         this.planet = planet;
         stock = new Cargo(1000);
         
+        sellPrices = new HashMap<>();
+        buyPrices = new HashMap<>();
+        appxPrices = new HashMap<>();
+        
         setAllPrices();
+        setApproximatePrices();
         setMarketStock();
     }
     
@@ -37,8 +43,6 @@ public class Market {
      * If a good is not sold on this planet, its price is -1.
      */
     private void setAllPrices() {
-        sellPrices = new HashMap<>();
-        buyPrices = new HashMap<>();
         PriceIncreaseEvent incEvent = PriceIncreaseEvent.getRandomPriceEvent();
         planet.setPriceIncEvent(incEvent);
         for (TradeGood good : TradeGood.values()) {
@@ -77,7 +81,7 @@ public class Market {
                 //check if there is a priceIncreaseEvent
                 //each good has a PriceIncreaseEvent, so we don't need to check if its none
                 if (planet.getPriceIncEvent() == good.incEvent()) {
-                    buyPrice = (int) (buyPrice * 2.5);
+                    sellPrice = (int) (sellPrice * 2.5);
                 }
             } else { 
                 sellPrice = -1;
@@ -86,6 +90,30 @@ public class Market {
             sellPrices.put(good, sellPrice);
         }
     }
+    
+    /**
+     * Sets the approximate price for each TradeGood, which will be used
+     * in the space map to aid the user in determining which planet he/she
+     * should travel to.
+     */
+    private void setApproximatePrices() {
+        for (TradeGood good : TradeGood.values()) {
+            int appxPrice = good.price();
+            if (planet.getLevel().ordinal() >= good.minUseLevel()) {
+                appxPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
+                //checks the resource of the planet and applies a price accordingly
+//                if ((planet.getResource() == good.highCondition()) && good.highCondition() != Resource.NONE) {
+//                    sellPrice = (int) (sellPrice * 1.5);
+//                } else if ((planet.getResource() == good.lowCondition()) && good.lowCondition() != Resource.NONE) {
+//                    sellPrice = (int) (sellPrice * 0.5);
+//                }
+            } else { 
+                appxPrice = -1;
+            }
+            appxPrices.put(good, appxPrice);
+        }
+    }
+    
     
     /**
      * Creates a stock of all the goods sold on this Planet.
@@ -121,6 +149,14 @@ public class Market {
      */
     public Map<TradeGood, Integer> getBuyPrices() {
         return buyPrices;
+    }
+    
+    /**
+     * Gets the approximate prices of all the TradeGoods as a Map.
+     * @return the approximate prices of goods on this planet.
+     */
+    public Map<TradeGood, Integer> getAppxPrices() {
+        return appxPrices;
     }
     
     /**
