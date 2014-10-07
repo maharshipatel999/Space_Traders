@@ -88,9 +88,6 @@ public class SpaceMapScreenController implements Initializable {
     /**
      * Determines if a specified planet is in range of the current planet given the player's current
      * fuel amount and spaceship type.
-     * 
-     * Still needs to be correctly implemented!!
-     * 
      * @param planet the planet we are trying to travel to
      * @return true if the planet is in range
      */
