@@ -7,8 +7,6 @@
 package spacetrader.system;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -45,12 +43,8 @@ public class MainController {
     public void setUpGame(Player player) {
         game.setUniverse(new Universe());
         game.setPlayer(player);
-        ArrayList<Planet> planets = game.getUniverse().getPlanets();
-        Random rand = new Random();
-        player.setLocation(planets.get(rand.nextInt(planets.size())));
-        goToFirstScreen(player, player.getLocation());
-        goToSpaceMapScreen();
-        //goToFirstScreen();
+        player.setLocation(game.getUniverse().getPlanet("Pallet"));
+        goToFirstScreen(player.getLocation());
     }
     
     /**
@@ -88,11 +82,11 @@ public class MainController {
     /**
      * Transitions the game screen to the First Screen.
      */
-    public void goToFirstScreen(Player player, Planet planet) {
+    public void goToFirstScreen(Planet planet) {
         HomeScreenController control;
         control = (HomeScreenController) changeScene("/spacetrader/HomeScreen.fxml");
         control.setMainControl(this);
-        control.setUpHomeScreen(player, planet);
+        control.setUpHomeScreen(game.getPlayer(), planet);
     }
     /**
      * Transitions the game screen to the First Screen.
@@ -109,14 +103,14 @@ public class MainController {
    
    /**
      * Transitions the game screen to the Space Map Screen.
-     * @param planet the planet who's market we're visiting
+     * @param planet the planet who's market we're on
      */
-   public void goToSpaceMapScreen() {
+   public void goToSpaceMapScreen(Planet planet) {
         stage.setTitle("Space Map!");        
         SpaceMapScreenController control;
         control = (SpaceMapScreenController) changeScene("/spacetrader/SpaceMapScreen.fxml");
         control.setMainControl(this);
-        control.setUpMap(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets());
+        control.setUpMap(planet, game.getUniverse().getPlanets());
     }
     
     /**

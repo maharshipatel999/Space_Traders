@@ -7,8 +7,6 @@
 package spacetrader.system;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,6 +46,10 @@ public class HomeScreenController implements Initializable {
     
     @FXML protected void goToMarket(ActionEvent event) {
         mainControl.goToMarketScreen(mainControl.game.getPlayer().getLocation());
+    }
+    
+    @FXML protected void goToSpace(ActionEvent event) {
+        mainControl.goToSpaceMapScreen(mainControl.game.getPlayer().getLocation());
     }
     
     /**
