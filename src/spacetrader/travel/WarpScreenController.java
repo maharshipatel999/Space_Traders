@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package spacetrader.system;
+package spacetrader.travel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
 import spacetrader.Universe;
+import spacetrader.system.MainController;
 
 /**
  * FXML Controller class

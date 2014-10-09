@@ -6,6 +6,7 @@
 
 package spacetrader.system;
 
+import spacetrader.travel.WarpScreenController;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,7 +117,7 @@ public class MainController {
    public void goToWarpScreen(Planet source, Planet dest) {
        stage.setTitle("Traveling to " + dest.getName());
        WarpScreenController control;
-       control = (WarpScreenController) changeScene("/spacetrader/WarpScreen.fxml");
+       control = (WarpScreenController) changeScene("/spacetrader/travel/WarpScreen.fxml");
        control.setMainControl(this);
        control.travel(source, dest);
    }

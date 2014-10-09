@@ -238,7 +238,7 @@ public class SpaceMapScreenController implements Initializable {
                     Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
                     flightRadius.setOpacity(.6);
                     flightRadius.setStroke(Color.LAWNGREEN);
-                    this.getChildren().add(flightRadius);
+                    this.getChildren().add(1, flightRadius);
                 }
             }
         }     

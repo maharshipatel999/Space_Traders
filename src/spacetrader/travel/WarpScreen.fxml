@@ -10,17 +10,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="363.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.WarpScreenController">
+<AnchorPane id="AnchorPane" prefHeight="363.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.WarpScreenController">
    <children>
       <ImageView fitHeight="547.0" fitWidth="735.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../resources/images/travelScreen.jpg" />
+            <Image url="@../../resources/images/travelScreen.jpg" />
          </image>
       </ImageView>
       
       <ImageView fx:id="shipSprite" fitHeight="70.0" fitWidth="70.0" layoutX="-192.0" layoutY="-59.0" pickOnBounds="true" preserveRatio="true" rotate="78.7" x="230.0" y="380">
          <image>
-            <Image url="@../resources/images/redFighter.png" />
+            <Image url="@../../resources/images/redFighter.png" />
          </image>
       </ImageView>
       <Text fill="#74ad72" fontSmoothingType="LCD" layoutX="312.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Traveling..." wrappingWidth="162.515625">
