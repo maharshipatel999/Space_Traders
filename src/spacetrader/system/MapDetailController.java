@@ -52,7 +52,7 @@ public class MapDetailController implements Initializable {
     
     /**
      * Gives this controller a reference to the SpaceMapScreenController.
-     * @param mainControl the map controller
+     * @param mapControl the map controller
      */
     public void setMapControl(SpaceMapScreenController mapControl) {
         this.mapControl = mapControl;

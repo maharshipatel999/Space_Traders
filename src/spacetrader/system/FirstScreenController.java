@@ -22,20 +22,11 @@ import spacetrader.Universe;
  *
  * @author Caleb
  */
-public class FirstScreenController implements Initializable {
+public class FirstScreenController extends SceneController implements Initializable {
 
-    private MainController mainControl;
     private Universe universe;
     
     @FXML private TextArea spaceInformation;
-    
-    /**
-     * Gives this controller a reference to the MainController.
-     * @param mainControl the Main Controller of SpaceTrader
-     */
-    public void setMainControl(MainController mainControl) {
-        this.mainControl = mainControl;
-    }
     
     /**
      * Initializes the controller class.

@@ -14,19 +14,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
 import spacetrader.Universe;
-import spacetrader.system.MainController;
+import spacetrader.system.SceneController;
 
 /**
  * FXML Controller class
  *
  * @author Caleb
  */
-public class WarpScreenController implements Initializable {
+public class WarpScreenController extends SceneController implements Initializable {
 
     @FXML private Text destinationText;
     @FXML private ImageView shipSprite;
-    
-    private MainController mainControl;
+
     private Planet dest;
     
     /**
@@ -35,14 +34,6 @@ public class WarpScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO
-    }
-    
-    /**
-     * Gives this controller a reference to the MainController.
-     * @param mainControl the Main Controller of SpaceTrader
-     */
-    public void setMainControl(MainController mainControl) {
-        this.mainControl = mainControl;
     }
 
     /**

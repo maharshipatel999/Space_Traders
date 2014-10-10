@@ -24,7 +24,7 @@ import spacetrader.Player;
  *
  * @author Caleb Stokols
  */
-public class CharacterDialogController implements Initializable {
+public class CharacterDialogController extends SceneController implements Initializable {
 
    //These instance variables will eventually go in a Player Class.
     private int pilotSkill;
@@ -32,7 +32,6 @@ public class CharacterDialogController implements Initializable {
     private int traderSkill;
     private int engineerSkill;
     private int investorSkill;
-    private MainController mainControl;
     
     @FXML private TextField nameText;
     @FXML private Text pilotSkillText;
@@ -50,14 +49,6 @@ public class CharacterDialogController implements Initializable {
             FXCollections.observableArrayList("Easy", "Medium", "Hard", "Ultra"));
         difficultyChoiceBox.setValue("Medium");
         confirmMessage.setFill(Color.TRANSPARENT);
-    }
-
-    /**
-     * Gives this controller a reference to the MainController.
-     * @param mainControl the Main Controller of SpaceTrader
-     */
-    public void setMainControl(MainController mainControl) {
-        this.mainControl = mainControl;
     }
     
     /**

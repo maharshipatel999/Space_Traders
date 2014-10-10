@@ -38,7 +38,7 @@ import spacetrader.exceptions.NegativeQuantityException;
  *
  * @author nkaru_000
  */
-public class MarketScreenController implements Initializable {
+public class MarketScreenController extends SceneController implements Initializable {
     
     @FXML private Text alertText;
     @FXML private Label planetName, planetGovt, planetLevel, planetResource;
@@ -77,7 +77,6 @@ public class MarketScreenController implements Initializable {
     
     private Player player;
     private Market market;
-    private MainController mainControl;
 
     /**
      * Initializes the controller class.
@@ -85,14 +84,6 @@ public class MarketScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         alertText.setFill(Color.TRANSPARENT);
-    }
-    
-    /**
-     * Sets the main controller
-     * @param mainControl the controller to be set as the mainControl
-     */
-    public void setMainControl(MainController mainControl) {
-        this.mainControl = mainControl;
     }
 
     /**

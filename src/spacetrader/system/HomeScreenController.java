@@ -22,9 +22,8 @@ import spacetrader.Universe;
  *
  * @author nkaru_000
  */
-public class HomeScreenController implements Initializable {
+public class HomeScreenController extends SceneController implements Initializable {
 
-    private MainController mainControl;
     private Universe universe;
     
     @FXML private Button marketPlaceButton;
@@ -32,15 +31,7 @@ public class HomeScreenController implements Initializable {
     @FXML private Label playerName;
     
     /**
-     * Gives this controller a reference to the MainController.
-     * @param mainControl the Main Controller of SpaceTrader
-     */
-    public void setMainControl(MainController mainControl) {
-        this.mainControl = mainControl;
-    }
-    
-    /**
-     * Customizes text on homescreen based on player and planet names
+     * Customizes text on homes screen based on player and planet names
      * @param player player that is currently playing
      * @param planet planet that player is currently on
      */

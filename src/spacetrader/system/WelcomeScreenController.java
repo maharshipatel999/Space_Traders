@@ -19,19 +19,9 @@ import spacetrader.Player;
  *
  * @author Caleb
  */
-public class WelcomeScreenController implements Initializable {
+public class WelcomeScreenController extends SceneController implements Initializable {
     
     @FXML private Button easterEgg;
-    
-    private MainController mainControl;
-    
-    /**
-     * Gives this controller a reference to the MainController.
-     * @param mainControl the Main Controller of SpaceTrader
-     */
-    public void setMainControl(MainController mainControl) {
-        this.mainControl = mainControl;
-    }
     
     @FXML protected void startNewGame(ActionEvent event) {
          mainControl.goToPlayerConfigScreen();

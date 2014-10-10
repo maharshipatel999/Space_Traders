@@ -35,12 +35,10 @@ import spacetrader.Universe;
  *
  * @author Caleb
  */
-public class SpaceMapScreenController implements Initializable {
+public class SpaceMapScreenController extends SceneController implements Initializable {
     @FXML private MasterDetailPane mapScreen;
     @FXML private Text fuelRemaingText;
     
-    
-    private MainController mainControl;
     private MapDetailController infoControl;
     private MapPane planetMap;
     private Pane planetInfo;
@@ -63,16 +61,7 @@ public class SpaceMapScreenController implements Initializable {
         infoControl.setMapControl(this);
         
         mapScreen.setDetailNode(planetInfo);
-    }
-    
-    /**
-     * Gives this controller a reference to the MainController.
-     * @param mainControl the Main Controller of SpaceTrader
-     */
-    public void setMainControl(MainController mainControl) {
-        this.mainControl = mainControl;
-    }
-    
+    } 
     
     /**
      * Adds all the planets to the map.
@@ -124,13 +113,13 @@ public class SpaceMapScreenController implements Initializable {
     }
     
     @FXML protected void backToPlanet(ActionEvent event) {
-            mainControl.goToHomeScreen(currentPlanet);
-        }
+        mainControl.goToHomeScreen(currentPlanet);
+    }
     
     
     /**
      * Centers the map on a given planet.
-     * @param planet 
+     * @param planet the planet to center the map on
      */
     private void centerOnPlanet(Planet planet) {
         double planetX = planetMap.planetIcons.get(planet).getCenterX();
