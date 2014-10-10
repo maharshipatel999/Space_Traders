@@ -88,6 +88,8 @@ public class SpaceMapScreenController implements Initializable {
         planetMap.addPlanets(planets);
         
         mapScreen.setDividerPosition((planetInfo.getPrefWidth()) / mapScreen.getWidth());
+        
+        centerOnPlanet(currentPlanet);
     }
     
     /**
@@ -120,9 +122,39 @@ public class SpaceMapScreenController implements Initializable {
     private void hidePlanetInfo() {
         mapScreen.setShowDetailNode(false);
     }
+    
     @FXML protected void backToPlanet(ActionEvent event) {
             mainControl.goToHomeScreen(currentPlanet);
         }
+    
+    
+    /**
+     * Centers the map on a given planet.
+     * @param planet 
+     */
+    private void centerOnPlanet(Planet planet) {
+        double planetX = planetMap.planetIcons.get(planet).getCenterX();
+        double planetY = planetMap.planetIcons.get(planet).getCenterY();
+        
+        double translateX = -1 * planetX + (mapScreen.getWidth() / 2);
+        double translateY = -1 * planetY + (mapScreen.getHeight() / 2);
+        
+        if (translateX > 0) {
+            translateX = 0;
+        } else if (translateX < (mapScreen.getWidth() - planetMap.background.getWidth())) {
+            translateX = mapScreen.getWidth() - planetMap.background.getWidth();
+        }
+        if (translateY > 0) {
+            translateY = 0;
+        } else if (translateY < (mapScreen.getHeight() - planetMap.background.getHeight())) {
+            translateY = mapScreen.getHeight() - planetMap.background.getHeight();
+        }
+        planetMap.setTranslateX(translateX);
+        planetMap.setTranslateY(translateY);
+        planetMap.dragContext.x = translateX;
+        planetMap.dragContext.y = translateY;
+    }
+    
     @Override
     public String toString() {
         String toString = String.format("Size:(%f, %f)", mapScreen.getWidth(), mapScreen.getHeight());
