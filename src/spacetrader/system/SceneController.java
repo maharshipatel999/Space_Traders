@@ -21,5 +21,4 @@ public abstract class SceneController {
     public void setMainControl(MainController mainControl) {
         this.mainControl = mainControl;
     }
-    
 }
