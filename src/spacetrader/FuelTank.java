@@ -18,8 +18,8 @@ public class FuelTank {
     private int maxFuel;
     
     /**
-     * 
-     * @param maxFuel 
+     * Creates a new fuel tank with a max fuel amount.
+     * @param maxFuel the max fuel amount for this tank.
      */
     public FuelTank(int maxFuel) {
         this.maxFuel = maxFuel;
@@ -27,7 +27,7 @@ public class FuelTank {
     }
     
     /**
-     * 
+     * Gets the current remaining amount of fuel.
      * @return 
      */
     public int getFuelAmount() {
@@ -35,7 +35,7 @@ public class FuelTank {
     }
     
     /**
-     * 
+     * Gets the max amount of fuel this tank can hold.
      * @return 
      */
     public int getMaxFuel() {
@@ -43,8 +43,8 @@ public class FuelTank {
     }
     
     /**
-     * 
-     * @param fuelAmount 
+     * Adds a specified amount of fuel to this tank.
+     * @param fuelAmount the amount of fuel to add
      */
     public void addFuel(int fuelAmount) {
         fuel += fuelAmount;
@@ -54,8 +54,9 @@ public class FuelTank {
     }
     
     /**
-     * 
-     * @param fuelAmount 
+     * Removes a specified amount of fuel from this tank.
+     * Throws an exception if fuelAmount is too large.
+     * @param fuelAmount the amount of fuel to remove
      */
     public void removeFuel(int fuelAmount) {
         if (fuelAmount > fuel) {
@@ -64,10 +65,18 @@ public class FuelTank {
         fuel -= fuelAmount;
     }
     
+    /**
+     * Increases the max fuel of this tank by a specified amount.
+     * @param amount how much to increase the max fuel by
+     */
     public void increaseMaxFuel(int amount) {
         maxFuel += amount;
     }
     
+    /**
+     * Decreases the max fuel of this tank by a specified amount
+     * @param amount how much to decrease the max fuel by
+     */
     public void decreaseMaxFuel(int amount) {
         if (amount < maxFuel) {
             throw new IllegalArgumentException("Amount is too large.");

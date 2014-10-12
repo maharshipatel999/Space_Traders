@@ -19,18 +19,24 @@ public class SpaceShip {
     
     private ShipType type;
     private Cargo cargo;
+    private FuelTank tank;
     private EquipmentSlots<Weapon> weapons;
     private EquipmentSlots<Shield> shields;
     private EquipmentSlots<Gadget> gadgets;
-    private FuelTank tank;
+    
+    private int maxHullStrength;
+    private int hullStrength;
     
     public SpaceShip(ShipType type) {
         this.type = type;
         this.cargo = new Cargo(type.cargoBay());
+        this.tank = new FuelTank(type.fuel());
         this.weapons = new EquipmentSlots<>(type.weaponSlots());
         this.shields = new EquipmentSlots<>(type.shieldSlots());
         this.gadgets = new EquipmentSlots<>(type.gadgetSlots());
-        this.tank = new FuelTank(type.fuel());
+        
+        this.maxHullStrength = type.hullStrength();
+        this.hullStrength = maxHullStrength;
     }
     
     public Cargo getCargo() {
@@ -39,6 +45,30 @@ public class SpaceShip {
 
     public FuelTank getTank() {
         return tank;
+    }
+
+    public ShipType getType() {
+        return type;
+    }
+
+    public EquipmentSlots<Weapon> getWeapons() {
+        return weapons;
+    }
+
+    public EquipmentSlots<Shield> getShields() {
+        return shields;
+    }
+
+    public EquipmentSlots<Gadget> getGadgets() {
+        return gadgets;
+    }
+
+    public int getMaxHullStrength() {
+        return maxHullStrength;
+    }
+
+    public int getHullStrength() {
+        return hullStrength;
     }
     
     

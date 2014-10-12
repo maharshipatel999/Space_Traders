@@ -17,7 +17,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import spacetrader.Player;
 import spacetrader.commerce.TradeGood;
-import spacetrader.system.SceneController;
 
 /**
  * FXML Controller class
@@ -25,8 +24,28 @@ import spacetrader.system.SceneController;
  * @author Caleb
  */
 public class StartScreenController extends SceneController implements Initializable {
-
+ 
+    @FXML private Label playerName;
+    @FXML private Label playerMoney;
+    @FXML private Label playerPoliceRecord;
+    @FXML private Label playerRep;
+    @FXML private Label playerTotalKills;
+    @FXML private Label playerPilot;
+    @FXML private Label playerTrader;
+    @FXML private Label playerFighter;
+    @FXML private Label playerEngineer;
+    @FXML private Label playerInvestor;
+    
+    @FXML private Label cargoSlots;
     @FXML private GridPane inventory;
+    
+    @FXML private Label shipType;
+    @FXML private Label shipFuel;
+    @FXML private Label shipHull;
+    @FXML private Label shipWeaponSlots;
+    @FXML private Label shipShieldSlots;
+    @FXML private Label shipGadgetSlots;
+    
     
     private Stage startStage;
     
@@ -45,12 +64,33 @@ public class StartScreenController extends SceneController implements Initializa
     public void setUpPlayerStats(Player player, Stage myStage) {
         this.startStage = myStage;
         
+        playerName.setText(player.getName());
+        playerMoney.setText("₪" + player.getWallet().getCredits());
+        playerRep.setText(player.getReputation().toString());
+        playerPoliceRecord.setText(player.getPoliceRecord().toString());
+        playerTotalKills.setText("" + (player.getTraderKills() + player.getPoliceKills() + player.getPirateKills()));
+        playerPilot.setText("" + player.getPilotSkill());
+        playerFighter.setText("" + player.getFighterSkill());
+        playerTrader.setText("" + player.getTraderSkill());
+        playerEngineer.setText("" + player.getEngineerSkill());
+        playerInvestor.setText("" + player.getInvestorSkill());
+        
+        shipType.setText("" + player.getShip().getType().toString());
+        shipFuel.setText(player.getShip().getTank().getFuelAmount() + "/" + player.getShip().getTank().getMaxFuel());
+        shipHull.setText(player.getShip().getHullStrength() + "/" + player.getShip().getMaxHullStrength());
+        shipWeaponSlots.setText(player.getShip().getWeapons().getNumFilledSlots() + "/" + player.getShip().getWeapons().getNumSlots());
+        shipShieldSlots.setText(player.getShip().getShields().getNumFilledSlots() + "/" + player.getShip().getShields().getNumSlots());
+        shipGadgetSlots.setText(player.getShip().getGadgets().getNumFilledSlots() + "/" + player.getShip().getGadgets().getNumSlots());
+        
+        
+        cargoSlots.setText(player.getShip().getCargo().getCount() + "/" + player.getShip().getCargo().getMaxCapacity());
+        
         List<TradeGood> tradeGoodList = player.getShip().getCargo().getTradeGoods();
         for (int i = 0; i < tradeGoodList.size(); i++) {
             TradeGood good = tradeGoodList.get(i);
             int quantity = player.getShip().getCargo().getQuantity(good);
             if (quantity > 0) {
-                inventory.addRow(1 + i, new Label(tradeGoodList.get(i).type()), new Label("" + quantity));
+                inventory.addRow(3 + i, new Label(tradeGoodList.get(i).type()), new Label("" + quantity));
             }
         }
     }

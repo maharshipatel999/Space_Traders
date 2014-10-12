@@ -23,6 +23,7 @@ public class EquipmentSlots<T> {
      * @param numSlots the initial number of slots
      */
     public EquipmentSlots(int numSlots) {
+        this.list = new ArrayList<T>();
         this.numSlots = numSlots;
     }
 
@@ -79,6 +80,14 @@ public class EquipmentSlots<T> {
      */
     public void removeSlot() {
         numSlots--;
+    }
+    
+    /**
+     * Determines the number of filled slots.
+     * @return the amount of filled slots.
+     */
+    public int getNumFilledSlots() {
+        return list.size();
     }
     
     /**

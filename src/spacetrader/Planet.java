@@ -18,6 +18,17 @@ import spacetrader.commerce.PriceIncreaseEvent;
 public class Planet {
 
     private final Random rand = new Random();
+    private final String[] activity =
+    {
+        "Absent",
+        "Minimal",
+        "Few",
+        "Some",
+        "Moderate",
+        "Many",
+        "Abundant",
+        "Swarms"
+    };
 
     private final String name;
     private final Point location;
@@ -87,32 +98,27 @@ public class Planet {
         visited = true;
     }
     
+    private int calculateStrengthOfPolice(PoliceRecord record) {
+        int strength = politSys.strengthPolice();
+        if (record.ordinal() < PoliceRecord.VILLAIN.ordinal()) {
+            strength *= 3;
+        } else if (record.ordinal() < PoliceRecord.CRIMINAL.ordinal()) {
+            strength *= 2;
+        }
+        
+        return strength;
+    }
+    
     /**
      * Determine the amount of police that will be on the planet
      * @return description of how many police can be expected to be on the planet
      */
     //I just used completely random numbers. This needs to be actually calculated.
     public String expectedAmountOfPolice() {
-        double policeVariable = Math.random() * 21; //SHOULDNT BE RANDOM
-        String policeAmount;
-        if (policeVariable > 21) {
-            policeAmount = "Swarms";
-        } else if (policeVariable > 18) {
-            policeAmount = "Abundant";
-        } else if (policeVariable > 15) {
-            policeAmount = "Many";
-        } else if (policeVariable > 12) {
-            policeAmount = "Moderate";
-        } else if (policeVariable > 9) {
-            policeAmount = "Some";
-        } else if (policeVariable > 6) {
-            policeAmount = "Few";
-        } else if (policeVariable > 3) {
-            policeAmount = "Minimal";
-        } else {
-            policeAmount = "Absent";
-        }
-        return policeAmount;
+        double policeVariable =  Math.random() * 21; //SHOULDNT BE RANDOM
+        
+        int activityIndex = (int) policeVariable / activity.length;
+        return activity[activityIndex];
     }
 
     /**
@@ -122,25 +128,9 @@ public class Planet {
     //I just used completely random numbers. This needs to be actually calculated.
     public String expectedAmountOfPirates() {
         double pirateVariable = Math.random() * 21; //SHOULDNT BE RANDOM
-        String pirateAmount;
-        if (pirateVariable > 21) {
-            pirateAmount = "Swarms";
-        } else if (pirateVariable > 18) {
-            pirateAmount = "Abundant";
-        } else if (pirateVariable > 15) {
-            pirateAmount = "Many";
-        } else if (pirateVariable > 12) {
-            pirateAmount = "Moderate";
-        } else if (pirateVariable > 9) {
-            pirateAmount = "Some";
-        } else if (pirateVariable > 6) {
-            pirateAmount = "Few";
-        } else if (pirateVariable > 3) {
-            pirateAmount = "Minimal";
-        } else {
-            pirateAmount = "Absent";
-        }
-        return pirateAmount;
+        
+        int activityIndex = (int) pirateVariable / activity.length;
+        return activity[activityIndex];
     }
 
     @Override

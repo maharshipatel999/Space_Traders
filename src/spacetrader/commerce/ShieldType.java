@@ -14,18 +14,41 @@ import spacetrader.TechLevel;
  */
 public enum ShieldType {
 
-    ENERGY        (TechLevel.EARLY_INDUSTRIAL, 50, 25, "Energy Shield"),
-    REFLECTIVE    (TechLevel.POST_INDUSTRIAL, 100, 150, "Reflective Shield");
+    ENERGY        ("Energy shield",     100, 5000,  TechLevel.INDUSTRIAL,      70),
+    REFLECTIVE    ("Reflective shield", 200, 20000, TechLevel.POST_INDUSTRIAL, 30);
     
-    private TechLevel minTechLevel;
-    private int price;
-    private int defense;
-    private String name;
+    private final String type;
+    private final int power;
+    private final int price;
+    private final TechLevel minTechLevel;
+    private final int chance;
     
-    private ShieldType(TechLevel minTechLevel, int price, int defense, String name) {
-        this.minTechLevel = minTechLevel;
+    private ShieldType(String type, int power, int price, TechLevel minTechLevel, int chance) {
+        this.type = type;
+        this.power = power;
         this.price = price;
-        this.defense = defense;
-        this.name = name;
+        this.minTechLevel = minTechLevel;
+        this.chance = chance;    
+    }
+    
+    public int power() {
+        return power;
+    }
+
+    public int price() {
+        return price;
+    }
+
+    public TechLevel minTechLevel() {
+        return minTechLevel;
+    }
+
+    public int chance() {
+        return chance;
+    }
+    
+    @Override
+    public String toString() {
+        return type;
     }
 }

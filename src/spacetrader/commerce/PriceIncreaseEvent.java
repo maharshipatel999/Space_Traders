@@ -11,20 +11,21 @@ import java.util.Random;
 + * @author Seth
 + */
 public enum PriceIncreaseEvent {
-    DROUGHT("Drought!"),
-    COLD("It's too cold!"),
-    CROP_FAIL("Crops are failing!"),
-    WAR("War!"),
-    BOREDOM("People are bored!"),
-    PLAGUE("The plague!"),
-    LACK_OF_WORKERS("Not enough workers!"),
-    NONE("None");
+    DROUGHT         ("Suffering from a drought!"),
+    COLD            ("Suffering from a cold spell!"),
+    CROP_FAIL       ("Suffering from a crop failure!"),
+    WAR             ("At war!"),
+    BOREDOM         ("Suffering from extreme boredom!"),
+    PLAGUE          ("Ravaged by plague!"),
+    LACK_OF_WORKERS ("Lacking enough workers!"),
+    NONE            ("Under no particular pressure.");
+    
+    private String desc;
     
     private static final List<PriceIncreaseEvent> VALUES =
         Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
-    private String desc;
     
     PriceIncreaseEvent(String desc) {
         this.desc = desc;
@@ -46,7 +47,7 @@ public enum PriceIncreaseEvent {
     public static PriceIncreaseEvent getRandomPriceEvent() {
         int probOfNone = RANDOM.nextInt(5);
         if (probOfNone % 4 == 1) {
-            return VALUES.get(RANDOM.nextInt(7));
+            return VALUES.get(RANDOM.nextInt(SIZE - 1));
         } else {
             return PriceIncreaseEvent.NONE;
         }
