@@ -70,6 +70,9 @@ public class SpaceShip {
     public int getHullStrength() {
         return hullStrength;
     }
+    public void setHullStrength(int hullStrength) {
+        this.hullStrength = hullStrength;
+    }
     
     
 }

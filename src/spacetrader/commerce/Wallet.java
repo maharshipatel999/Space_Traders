@@ -44,4 +44,7 @@ public class Wallet {
     public int getCredits() {
         return credits;
     }
+    public void setCredits(int credits) {
+        this.credits = credits;
+    }
 }
