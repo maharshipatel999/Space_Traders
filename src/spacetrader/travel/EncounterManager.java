@@ -8,7 +8,7 @@ package spacetrader.travel;
 
 /**
  * This class will handle all the probability of creating and handling encounters.
- * @author 
+ * @author Caleb
  */
 public class EncounterManager {
     

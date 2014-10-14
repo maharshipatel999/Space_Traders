@@ -33,8 +33,8 @@ public class MainController {
     /**
      * Creates the MainController.
      * MainController has a reference to the main class and stage. 
-     * @param game
-     * @param stage
+     * @param game the main SpaceTrader class
+     * @param stage the game's main window frame
      */
     public MainController(SpaceTrader game, Stage stage) {
         this.game = game;
@@ -50,7 +50,7 @@ public class MainController {
     /**
      * Sets the game's universe to a new universe and the game's player
      * to a specified Player.
-     * @param player 
+     * @param player the player of the game
      */
     public void setUpGame(Player player) {
         game.setUniverse(new Universe());
@@ -67,8 +67,8 @@ public class MainController {
      * All the planets who's tradeGood stock has been decremented should have their stock increased.
      * (Not every planet because then planets that are visited late in the game would
      * have a huge stock of tradeGoods.
-     * @param destination 
-     * @param distance 
+     * @param destination which planet the player is traveling to
+     * @param distance which planet the player is leaving
      */
     public void takeTurn(Planet destination, int distance) {
         game.getPlayer().setLocation(destination);
@@ -97,7 +97,7 @@ public class MainController {
     }
     /**
      * Transitions the game screen to the First Screen.
-     * @param planet
+     * @param planet the planet who's home screen we should view
      */
     public void goToHomeScreen(Planet planet) {
         HomeScreenController control;
@@ -145,7 +145,6 @@ public class MainController {
    
    /**
      * Transitions the game screen to the Space Map Screen.
-     * @param planet the planet who's market we're on
      */
    public void goToStartScreen() {
         Stage startStage = new Stage();

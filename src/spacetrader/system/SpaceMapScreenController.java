@@ -65,7 +65,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
     
     /**
      * Adds all the planets to the map.
-     * @param player
+     * @param player the player of the game
      * @param currentPlanet the planet the player currently is
      * @param planets the planets this map will display.
      */

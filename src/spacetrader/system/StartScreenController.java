@@ -59,7 +59,8 @@ public class StartScreenController extends SceneController implements Initializa
     
     /**
      * Display all the player's current information onto the Start Screen.
-     * @param player 
+     * @param player the player who's stats should be displayed
+     * @param myStage the window which should display the start screen
      */
     public void setUpPlayerStats(Player player, Stage myStage) {
         this.startStage = myStage;

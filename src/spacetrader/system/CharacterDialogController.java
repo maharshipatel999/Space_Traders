@@ -73,7 +73,7 @@ public class CharacterDialogController extends SceneController implements Initia
     /**
      * Increase the pilot skill count when + is clicked.
      * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void increasePilot(ActionEvent event) {
         if(skillPointsRemaining()) {
@@ -85,8 +85,7 @@ public class CharacterDialogController extends SceneController implements Initia
     
     /**
      * Decrease the pilot skill count when - is clicked.
-     * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void decreasePilot(ActionEvent event) {
         if (pilotSkill > 0) {
@@ -99,7 +98,7 @@ public class CharacterDialogController extends SceneController implements Initia
     /**
      * Increase the fighter skill count when + is clicked.
      * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void increaseFighter(ActionEvent event) {
         if(skillPointsRemaining()) {
@@ -112,7 +111,7 @@ public class CharacterDialogController extends SceneController implements Initia
     /**
      * Decrease the fighter skill count when - is clicked.
      * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void decreaseFighter(ActionEvent event) {
         if (fighterSkill > 0) {
@@ -125,7 +124,7 @@ public class CharacterDialogController extends SceneController implements Initia
     /**
      * Increase the trader skill count when + is clicked.
      * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void increaseTrader(ActionEvent event) {
         if(skillPointsRemaining()) {
@@ -137,8 +136,7 @@ public class CharacterDialogController extends SceneController implements Initia
     
     /**
      * Decrease the trader skill count when - is clicked.
-     * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void decreaseTrader(ActionEvent event) {
         if (traderSkill > 0) {
@@ -151,7 +149,7 @@ public class CharacterDialogController extends SceneController implements Initia
     /**
      * Increase the engineer skill count when + is clicked.
      * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void increaseEngineer(ActionEvent event) {
         if(skillPointsRemaining()) {
@@ -164,7 +162,7 @@ public class CharacterDialogController extends SceneController implements Initia
     /**
      * Decrease the engineer skill count when - is clicked.
      * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void decreaseEngineer(ActionEvent event) {
         if (engineerSkill > 0) {
@@ -177,7 +175,7 @@ public class CharacterDialogController extends SceneController implements Initia
     /**
      * Increase the investor skill count when + is clicked.
      * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void increaseInvestor(ActionEvent event) {
         if(skillPointsRemaining()) {
@@ -190,7 +188,7 @@ public class CharacterDialogController extends SceneController implements Initia
     /**
      * Decrease the investor skill count when - is clicked.
      * 
-     * @param event 
+     * @param event the event which occurred
      */
     @FXML protected void decreaseInvestor(ActionEvent event) {
         if (investorSkill > 0) {

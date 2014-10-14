@@ -28,7 +28,7 @@ public class FuelTank {
     
     /**
      * Gets the current remaining amount of fuel.
-     * @return 
+     * @return this fueltank's current fuel amount
      */
     public int getFuelAmount() {
         return fuel;
@@ -36,7 +36,7 @@ public class FuelTank {
     
     /**
      * Gets the max amount of fuel this tank can hold.
-     * @return 
+     * @return the maximum capacity of this fueltank
      */
     public int getMaxFuel() {
         return maxFuel;
