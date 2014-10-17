@@ -157,7 +157,7 @@ public class MainController {
    public void goToStartScreen() {
         Stage startStage = new Stage();
         startStage.initOwner(stage);
-        startStage.setAlwaysOnTop(true);
+        //startStage.setAlwaysOnTop(true);
         startStage.initModality(Modality.WINDOW_MODAL);
         startStage.setTitle("Start Screen!");
         
