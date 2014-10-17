@@ -14,6 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import spacetrader.Planet;
@@ -71,6 +74,11 @@ public class MainController {
      * @param distance which planet the player is leaving
      */
     public void takeTurn(Planet destination, int distance) {
+       /*if(eventGenerator.makeEvent()) {
+           RandomEvent event = eventGenerator.getRandomEvent();
+           event.doAction();
+       }*/
+        
         game.getPlayer().setLocation(destination);
         game.getPlayer().getShip().getTank().removeFuel(distance);
         System.out.println(distance);
@@ -167,6 +175,18 @@ public class MainController {
         }
         myStage.show();
         return loader.getController();*/
+    }
+   
+    public void displayPopUpMessage(String message, String title) {
+        Stage popUpStage = new Stage();
+        popUpStage.initOwner(stage);
+        popUpStage.setAlwaysOnTop(true);
+        popUpStage.initModality(Modality.WINDOW_MODAL);
+        popUpStage.setTitle(title);
+        
+        Pane rootPane = new FlowPane();
+        rootPane.getChildren().add(new Text(message));
+        popUpStage.setScene(new Scene(rootPane));
     }
     
     /**

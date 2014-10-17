@@ -115,12 +115,30 @@ public class Player {
     public void increasePirateKills() {
         pirateKills++;
     }
+    
+    public int getPoliceRecordScore() {
+        return policeRecordScore;
+    }
 
+    public int getReputationScore() {
+        return reputationScore;
+    }
+    
     public PoliceRecord getPoliceRecord() {
         return PoliceRecord.getPoliceRecord(policeRecordScore);
     }
     
     public Reputation getReputation() {
         return Reputation.getReputation(reputationScore);
+    }
+    
+    /**
+     * Calculates the player's currrent worth. This is determined by the amount of money you own
+     * minus the money you owe. It also considers the value of your spaceship and all the things in it.
+     * @return 
+     */
+    public int getCurrentWorth() {
+        int worth = wallet.getCredits() - debt;
+        return worth;
     }
 }

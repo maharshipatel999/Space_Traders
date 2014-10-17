@@ -6,10 +6,21 @@
 
 package spacetrader.travel;
 
+import spacetrader.Player;
+
 /**
- * This class will handle all the probability of creating and handling encounters.
+ *
  * @author Caleb
  */
-public class EncounterManager {
+public class Encounter {
     
+    Player player;
+    
+    public void Encounter(Player player) {
+        this.player = player;
+    }
+    
+    public Player getPlayer() {
+        return player;
+    }
 }
