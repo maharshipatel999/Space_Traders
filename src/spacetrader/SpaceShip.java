@@ -18,12 +18,12 @@ import spacetrader.commerce.Weapon;
  */
 public class SpaceShip implements Serializable {
     
-    private ShipType type;
-    private Cargo cargo;
-    private FuelTank tank;
-    private EquipmentSlots<Weapon> weapons;
-    private EquipmentSlots<Shield> shields;
-    private EquipmentSlots<Gadget> gadgets;
+    private final ShipType type;
+    private final Cargo cargo;
+    private final FuelTank tank;
+    private final EquipmentSlots<Weapon> weapons;
+    private final EquipmentSlots<Shield> shields;
+    private final EquipmentSlots<Gadget> gadgets;
     
     private int maxHullStrength;
     private int hullStrength;

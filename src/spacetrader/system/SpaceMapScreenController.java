@@ -221,7 +221,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
             this.getChildren().add(background);
 
             planetIcons = new HashMap<>();
-            
+
             for (Planet planet : planets) {
                 //assign each planet a location that is scaled to the size of the map
                 double planetX = (MAP_WIDTH * (planet.getLocation().getX() / Universe.WIDTH)) + LEFT_MARGIN; //remove magic number
@@ -251,7 +251,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
 
                 this.getChildren().add(planetIcon);
                 this.getChildren().add(nameText);
-                
+
                 //Create flight radius
                 if (planet == currentPlanet) {
                     double maxTravelDistance = (MAP_WIDTH * (fuelAmount / (double) Universe.WIDTH));
@@ -271,7 +271,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
             toString += String.format("%nDragContext x,y:(%f, %f), MouseX,Y:(%f, %f)", dragContext.x, dragContext.y, dragContext.mouseX, dragContext.mouseY);
             return toString;
         }
-        
+
         /**
          * TODO
          */

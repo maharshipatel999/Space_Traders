@@ -6,24 +6,14 @@
 
 package spacetrader;
 
+import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Wallet;
 
 /**
  *
  * @author Seth
  */
-public class Player {
-    
-    private final String name;
-    private final int pilotSkill;
-    private final int fighterSkill;
-    private final int traderSkill;
-    private final int engineerSkill;
-    private final int investorSkill;
-    
-    private final Wallet wallet;
-    private final SpaceShip ship;
-    private Planet location;
+public class Player extends Trader {
     
     private int debt = 0; // Current Debt
     private int policeKills = 0; // Number of police ships killed
@@ -32,40 +22,19 @@ public class Player {
     private int policeRecordScore = 0; // 0 = Clean record
     private int reputationScore = 0; // 0 = Harmless
     
+    private final Wallet wallet;
+    private final PlayerShip ship;
+    private Planet location;
+    
     public Player(String name, int pilot, int fighter, int trader, int engineer, int investor) {
-        this.name = name;
-        this.pilotSkill = pilot;
-        this.fighterSkill = fighter;
-        this.traderSkill = trader;
-        this.engineerSkill = engineer;
-        this.investorSkill = investor;
+        super(name, pilot, fighter, trader, engineer, investor);
         
         wallet = new Wallet();
-        ship = new SpaceShip(ShipType.GNAT);
+        ship = new PlayerShip(ShipType.GNAT);
     }
     
-    public String getName() {
-        return name;
-    }
-    
-    public int getPilotSkill() {
-        return pilotSkill;
-    }
-
-    public int getFighterSkill() {
-        return fighterSkill;
-    }
-
-    public int getTraderSkill() {
-        return traderSkill;
-    }
-
-    public int getEngineerSkill() {
-        return engineerSkill;
-    }
-
-    public int getInvestorSkill() {
-        return investorSkill;
+    public int getEffectiveSkill(Skill type) {
+        return Math.max(getSkill(type), ship.getCrewSkill(type));
     }
     
     public Wallet getWallet() {
@@ -115,12 +84,30 @@ public class Player {
     public void increasePirateKills() {
         pirateKills++;
     }
+    
+    public int getPoliceRecordScore() {
+        return policeRecordScore;
+    }
 
+    public int getReputationScore() {
+        return reputationScore;
+    }
+    
     public PoliceRecord getPoliceRecord() {
         return PoliceRecord.getPoliceRecord(policeRecordScore);
     }
     
     public Reputation getReputation() {
         return Reputation.getReputation(reputationScore);
+    }
+    
+    /**
+     * Calculates the player's currrent worth. This is determined by the amount of money you own
+     * minus the money you owe. It also considers the value of your spaceship and all the things in it.
+     * @return 
+     */
+    public int getCurrentWorth() {
+        int worth = wallet.getCredits() - debt;
+        return worth;
     }
 }

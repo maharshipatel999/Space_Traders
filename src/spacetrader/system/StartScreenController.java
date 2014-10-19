@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import spacetrader.Player;
+import spacetrader.SkillList.Skill;
 import spacetrader.commerce.TradeGood;
 
 /**
@@ -70,11 +71,11 @@ public class StartScreenController extends SceneController implements Initializa
         playerRep.setText(player.getReputation().toString());
         playerPoliceRecord.setText(player.getPoliceRecord().toString());
         playerTotalKills.setText("" + (player.getTraderKills() + player.getPoliceKills() + player.getPirateKills()));
-        playerPilot.setText("" + player.getPilotSkill());
-        playerFighter.setText("" + player.getFighterSkill());
-        playerTrader.setText("" + player.getTraderSkill());
-        playerEngineer.setText("" + player.getEngineerSkill());
-        playerInvestor.setText("" + player.getInvestorSkill());
+        playerPilot.setText("" + player.getSkill(Skill.PILOT));
+        playerFighter.setText("" + player.getSkill(Skill.FIGHTER));
+        playerTrader.setText("" + player.getSkill(Skill.TRADER));
+        playerEngineer.setText("" + player.getSkill(Skill.ENGINEER));
+        playerInvestor.setText("" + player.getSkill(Skill.INVESTOR));
         
         shipType.setText("" + player.getShip().getType().toString());
         shipFuel.setText(player.getShip().getTank().getFuelAmount() + "/" + player.getShip().getTank().getMaxFuel());

@@ -8,7 +8,6 @@ package spacetrader.system;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import spacetrader.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
 
@@ -23,7 +22,6 @@ public class SpaceTrader extends Application {
     private Universe universe;
     private Player player;
     private MainController mainControl;
-    private Planet planet;
     
     @Override
     public void start(Stage primaryStage) {
