@@ -6,6 +6,7 @@
 
 package spacetrader;
 
+import java.io.Serializable;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.Gadget;
 import spacetrader.commerce.Shield;
@@ -15,7 +16,7 @@ import spacetrader.commerce.Weapon;
  *
  * @author Caleb Stokols
  */
-public class SpaceShip {
+public class SpaceShip implements Serializable {
     
     private ShipType type;
     private Cargo cargo;

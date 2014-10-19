@@ -6,6 +6,7 @@
 package spacetrader;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.Random;
 import spacetrader.commerce.Market;
 import spacetrader.commerce.PriceIncreaseEvent;
@@ -15,7 +16,7 @@ import spacetrader.commerce.PriceIncreaseEvent;
  *
  * @author maharshipatel999
  */
-public class Planet {
+public class Planet implements Serializable {
 
     private final Random rand = new Random();
     private final String[] activity =

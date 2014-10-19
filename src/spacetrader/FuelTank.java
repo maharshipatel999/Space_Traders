@@ -6,13 +6,14 @@
 
 package spacetrader;
 
+import java.io.Serializable;
 import spacetrader.exceptions.InsufficientFuelException;
 
 /**
  *
  * @author Caleb
  */
-public class FuelTank {
+public class FuelTank implements Serializable {
     
     private int fuel;
     private int maxFuel;
