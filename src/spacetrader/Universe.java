@@ -42,6 +42,7 @@ public class Universe {
         //Add Home Planet
         Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
             TechLevel.AGRICULTURE , Resource.NONE ,PoliticalSystem.DEMOCRACY);
+        homePlanet.setRandomPriceIncEvent();
         planets.add(homePlanet);
         planetNames.add(homePlanet.getName());
         planetLocations.add(homePlanet.getLocation());
@@ -64,6 +65,7 @@ public class Universe {
             
             //create planet
             Planet planet = new Planet(name, location);
+            planet.setRandomPriceIncEvent();
             planets.add(planet);
         }
     }
@@ -95,7 +97,7 @@ public class Universe {
     }
     
     public void updatePriceEvent(Planet p) {
-         p.setPriceIncEvent(PriceIncreaseEvent.getRandomPriceEvent());
+         p.setRandomPriceIncEvent();
     }
     /**
      * Gets a list of all the planets in the universe.

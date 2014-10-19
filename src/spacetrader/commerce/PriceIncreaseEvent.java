@@ -53,4 +53,14 @@ public enum PriceIncreaseEvent {
         }
     }
     
+    /**
+     * Determines a random duration that the price increase event
+     * will last. This number will be between 1 - 10.
+     * 
+     * @return int - the length of the event
+     */
+    public static int setRandomPriceIncDuration() {
+        return RANDOM.nextInt(10) + 1;
+    }
+    
 }

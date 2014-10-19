@@ -79,6 +79,15 @@ public class MainController {
            event.doAction();
        }*/
         
+        //processes time aspect of price increase events
+        for (Planet planet : game.getUniverse().getPlanets()) {
+            if (planet.getPriceIncDuration() > 0) {
+                planet.setPriceIncDuration(planet.getPriceIncDuration() - 1);
+            } else {
+                planet.setRandomPriceIncEvent();
+            }
+        }
+        
         game.getPlayer().setLocation(destination);
         game.getPlayer().getShip().getTank().removeFuel(distance);
         System.out.println(distance);
@@ -180,7 +189,7 @@ public class MainController {
     public void displayPopUpMessage(String message, String title) {
         Stage popUpStage = new Stage();
         popUpStage.initOwner(stage);
-        popUpStage.setAlwaysOnTop(true);
+        //popUpStage.setAlwaysOnTop(true);
         popUpStage.initModality(Modality.WINDOW_MODAL);
         popUpStage.setTitle(title);
         

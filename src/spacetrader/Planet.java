@@ -36,6 +36,7 @@ public class Planet {
     private final Resource resource;
     private final PoliticalSystem politSys;
     private PriceIncreaseEvent priceIncEvent;
+    private int priceIncDuration;
     private Market market;
 
     private boolean visited;
@@ -77,11 +78,20 @@ public class Planet {
     public PoliticalSystem getPoliticalSystem() {
         return this.politSys;
     }
-
-    public void setPriceIncEvent(PriceIncreaseEvent priceIncEvent) {
-        this.priceIncEvent = priceIncEvent;
+    
+    public void setRandomPriceIncEvent() {
+        this.priceIncEvent = PriceIncreaseEvent.getRandomPriceEvent();
+        this.setPriceIncDuration(PriceIncreaseEvent.setRandomPriceIncDuration());
     }
 
+    public int getPriceIncDuration() {
+        return this.priceIncDuration;
+    }
+    
+    public void setPriceIncDuration(int priceIncDuration) {
+        this.priceIncDuration = priceIncDuration;
+    }
+    
     public PriceIncreaseEvent getPriceIncEvent() {
         return this.priceIncEvent;
     }
@@ -141,6 +151,7 @@ public class Planet {
         finStr.append("Tech Level: " + level + "\n");
         finStr.append("Resource: " + resource + "\n");
         finStr.append("Political System: " + politSys + "\n");
+        finStr.append("Price Increase Event: " + priceIncEvent + "\n");
         return finStr.toString();
     }
 

@@ -47,8 +47,8 @@ public class Market {
      * If a good is not sold on this planet, its price is -1.
      */
     private void setAllPrices() {
-        PriceIncreaseEvent incEvent = PriceIncreaseEvent.getRandomPriceEvent();
-        planet.setPriceIncEvent(incEvent);
+//        PriceIncreaseEvent incEvent = PriceIncreaseEvent.getRandomPriceEvent();
+//        planet.setPriceIncEvent();
         for (TradeGood good : TradeGood.values()) {
             Random rand = new Random();
             int variance = rand.nextInt(good.variance() + 1);
