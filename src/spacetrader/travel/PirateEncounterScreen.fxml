@@ -1,11 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.PirateEncounterController">
-    
+<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.PirateEncounterController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="350.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <fill>
+            <LinearGradient endX="0.44660194174757284" endY="1.0" startX="0.4466019417475728" startY="0.009708737864077666">
+               <stops>
+                  <Stop color="#1753a8" />
+                  <Stop color="#1753a8" offset="0.007246376811594203" />
+                  <Stop color="#2489bf" offset="0.11871270247229326" />
+                  <Stop color="#0e4f72" offset="0.3442739414606423" />
+                  <Stop color="#377d9e" offset="0.6585677749360614" />
+                  <Stop color="#298cc2" offset="0.8690679170218812" />
+                  <Stop color="#1466e0" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <BorderPane layoutX="109.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Encounter!" wrappingWidth="168.9140625" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets top="15.0" />
+               </BorderPane.margin>
+            </Text>
+         </top>
+         <bottom>
+            <AnchorPane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button layoutX="69.0" layoutY="-5.0" mnemonicParsing="false" onAction="#submitPressed" prefHeight="31.0" prefWidth="100.0" text="Let Board" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="69.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="439.0" layoutY="-5.0" mnemonicParsing="false" onAction="#fleePressed" prefHeight="31.0" prefWidth="100.0" text="Flee" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="61.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="250.0" layoutY="-5.0" mnemonicParsing="false" onAction="#attackPressed" prefHeight="31.0" prefWidth="100.0" text="Attack" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </bottom>
+         <center>
+            <VBox prefHeight="268.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text fill="#61010b" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrr Matey! You have encountered a pirate! " textAlignment="CENTER" wrappingWidth="588.6708984375">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Text>
+                  <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" text="What do you do?" textAlignment="CENTER" wrappingWidth="571.505859375">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets top="80.0" />
+               </padding>
+            </VBox>
+         </center>
+      </BorderPane>
+      <ImageView fitHeight="137.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <image>
+            <Image url="@../../resources/images/pirate%20icon.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>
