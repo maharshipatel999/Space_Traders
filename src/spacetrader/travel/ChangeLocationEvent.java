@@ -6,27 +6,34 @@
 
 package spacetrader.travel;
 
+import spacetrader.Planet;
 import spacetrader.Player;
 
 /**
  *
  * @author Seth
  */
-public class ChangeHullEvent extends RandomEvent {
+public class ChangeLocationEvent extends RandomEvent {
+    private Planet planet;
     /**
-     * Constructor for ChangeHullEvent
+     * constructor for ChangeLocationEvent 
      * @param player
      * @param message
-     * @param quantityChange 
+     * @param quantityChange
+     * @param planet 
      */
-    public ChangeHullEvent(Player player, String message, int quantityChange) {
+    public ChangeLocationEvent(Player player, String message, int quantityChange, Planet planet) {
         super(player, message, quantityChange);
+        this.planet = planet;
     }
     /**
-     * Sets hullstrength to hullstreth + quantity change
+     * override doEvent method in Random event
+     * sets player's location to new planet
+     * changes hull strength
      */
     @Override
     public void doEvent() {
         player.getShip().setHullStrength(player.getShip().getHullStrength() + quantityChange);
+        player.setLocation(planet);
     }
 }
