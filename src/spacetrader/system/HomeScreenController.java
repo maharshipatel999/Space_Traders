@@ -29,6 +29,8 @@ public class HomeScreenController extends SceneController implements Initializab
     @FXML private Button marketPlaceButton;
     @FXML private Label planetName;
     @FXML private Label playerName;
+    @FXML private Button saveGame;
+    
     
     /**
      * Customizes text on homes screen based on player and planet names
@@ -64,4 +66,7 @@ public class HomeScreenController extends SceneController implements Initializab
         // TODO
     }    
     
+    @FXML public void goToOverwrite() {
+        mainControl.goToOverwriteScreen();        
+    }
 }

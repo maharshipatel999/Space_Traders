@@ -186,6 +186,20 @@ public class MainController {
         return loader.getController();*/
     }
    
+    public void goToOverwriteScreen() {
+        stage.setTitle("Save Game!");        
+        OverwriteScreenController control;
+        control = (OverwriteScreenController) changeScene("/spacetrader/persistence/OverwriteScreen.fxml", stage);
+        control.setMainControl(this);
+    }
+    
+    public void goToReloadScreen() {
+        stage.setTitle("Reload Game!");        
+        ReloadGameScreenController control;
+        control = (ReloadGameScreenController) changeScene("/spacetrader/persistence/ReloadGameScreen.fxml", stage);
+        control.setMainControl(this);
+    }
+   
     public void displayPopUpMessage(String message, String title) {
         Stage popUpStage = new Stage();
         popUpStage.initOwner(stage);

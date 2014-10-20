@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.ReloadGameScreenController">
+   <children>
+      <ImageView fitHeight="546.0" fitWidth="745.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/images/space%20image.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="252.0" layoutY="97.0" prefHeight="336.0" prefWidth="241.0" spacing="30.0">
+         <children>
+            <Button fx:id="game1" mnemonicParsing="false" onAction="#reloadGame1" text="Game 1">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="game2" mnemonicParsing="false" onAction="#reloadGame2" text="Game 2">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="game3" mnemonicParsing="false" onAction="#reloadGame3" text="Game 3">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="20.0" />
+               </font>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+      <Text fill="WHITE" layoutX="167.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to reload!" textAlignment="CENTER">
+         <font>
+            <Font name="Segoe Script" size="36.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

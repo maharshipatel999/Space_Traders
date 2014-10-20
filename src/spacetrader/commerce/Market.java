@@ -6,6 +6,7 @@
 
 package spacetrader.commerce;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -16,7 +17,7 @@ import spacetrader.Resource;
  *
  * @author Caleb
  */
-public class Market {
+public class Market implements Serializable {
     
     private Planet planet;
     private Map<TradeGood, Integer> sellPrices;

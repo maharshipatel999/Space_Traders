@@ -6,13 +6,14 @@
 
 package spacetrader;
 
+import java.io.Serializable;
 import spacetrader.SkillList.Skill;
 
 /**
  * Represents a character in the game that has a name and skills.
  * @author Caleb Stokols
  */
-public class Trader {
+public class Trader implements Serializable {
     
     private final String name;
     private final SkillList skillList;

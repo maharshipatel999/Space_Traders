@@ -6,6 +6,7 @@
 
 package spacetrader;
 
+import java.io.Serializable;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Wallet;
 
@@ -13,7 +14,7 @@ import spacetrader.commerce.Wallet;
  *
  * @author Seth
  */
-public class Player extends Trader {
+public class Player extends Trader implements Serializable {
     
     private int debt = 0; // Current Debt
     private int policeKills = 0; // Number of police ships killed
@@ -23,7 +24,7 @@ public class Player extends Trader {
     private int reputationScore = 0; // 0 = Harmless
     
     private final Wallet wallet;
-    private final PlayerShip ship;
+    private PlayerShip ship;
     private Planet location;
     
     public Player(String name, int pilot, int fighter, int trader, int engineer, int investor) {
@@ -109,5 +110,9 @@ public class Player extends Trader {
     public int getCurrentWorth() {
         int worth = wallet.getCredits() - debt;
         return worth;
+    }
+    
+    public void setShip(PlayerShip ship) {
+        this.ship = ship;
     }
 }

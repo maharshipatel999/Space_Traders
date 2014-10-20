@@ -6,13 +6,14 @@
 
 package spacetrader.commerce;
 
+import java.io.Serializable;
 import spacetrader.exceptions.InsufficientFundsException;
 
 /**
  *
  * @author Seth
  */
-public class Wallet {
+public class Wallet implements Serializable {
     private int credits;
     
     public Wallet() {
