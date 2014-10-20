@@ -23,6 +23,13 @@ public class EncounterManager {
     private final int numTotalEncounters;
     private Player p;
     
+    /**
+     * creates LinkedList with all Encounters for one transition period
+     * @param source source planet
+     * @param destination destination planet
+     * @param ship ship Player is using
+     * @param p Player in the game
+     */
     public EncounterManager(Planet source, Planet destination, PlayerShip ship, Player p) {
         encounters = new LinkedList<Encounter>();
         this.p = p;
@@ -58,7 +65,7 @@ public class EncounterManager {
     }
     
     /**
-     * returns the total number of encounters returned by arraylist
+     * returns the total number of encounters returned by LinkedList
      * @return total encounters for warp
      */
     public int getNumTotalEncounters() {
