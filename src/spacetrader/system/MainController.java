@@ -9,19 +9,26 @@ package spacetrader.system;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.AnchorPaneBuilder;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import spacetrader.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
+import spacetrader.travel.Encounter;
+import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.WarpScreenController;
 
 /**
@@ -161,6 +168,18 @@ public class MainController {
     }
    
    /**
+    * Transitions to the encounter screen corresponding with the specified encounter
+    * @param encounter the encounter which is currently getting handled
+    */
+   public void goToEncounterScreen(Encounter encounter) {
+        stage.setTitle("Space Encounter!");
+        EncounterScreenController control;
+        control = (EncounterScreenController) changeScene(encounter.getFXMLScene(), stage);
+        control.setMainControl(this);
+        control.setEncounter(encounter);
+   }
+   
+   /**
      * Transitions the game screen to the Space Map Screen.
      */
    public void goToStartScreen() {
@@ -185,7 +204,7 @@ public class MainController {
         myStage.show();
         return loader.getController();*/
     }
-   
+    
     public void displayPopUpMessage(String message, String title) {
         Stage popUpStage = new Stage();
         popUpStage.initOwner(stage);
@@ -198,7 +217,46 @@ public class MainController {
         popUpStage.setScene(new Scene(rootPane));
     }
     
-    /**
+    public void displayAlertMessage(String alertTitle, String alert) {
+        final int WIDTH = 300;
+        final int HEIGHT = 200;
+        
+        Stage dialog = new Stage();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle(alertTitle);
+        Text message = new Text(alert);
+        message.setWrappingWidth(WIDTH);
+        
+        Button confirm  = new Button("OK");
+        confirm.addEventHandler(ActionEvent.ACTION, (ActionEvent) -> {
+            dialog.close();
+        });
+        AnchorPane pane = AnchorPaneBuilder.create().children(message, confirm).build();
+        pane.setPrefWidth(WIDTH);
+        pane.setPrefHeight(HEIGHT);
+        dialog.setScene(new Scene(pane));
+        dialog.show();
+
+//Popup dialogStage = new Popup();
+        //dialogStage..initModality(Modality.WINDOW_MODAL);
+/*        //dialogStage.setTitle(alertTitle);
+        VBox box = new VBox(new Text(alert), new Button("Ok"));
+        box.setAlignment(Pos.CENTER);
+        box.setPadding(new Insets(5));
+        dialogStage.getContent().add(box);
+        dialogStage.show(stage);*/
+        
+        //Dialogs.create().showInformation();//.showInformationDialog();
+        
+        /*Dialogs.create()
+            .owner(stage)
+            .title(alertTitle)
+            .masthead(null)
+            .message(alert)
+            .showInformation();*/
+    }
+    
+    /** 
      * Changes the current scene to the scene specified by fxmlScene.
      * @param fxmlScene the name of the fxml file that holds the new scene
      * @param myStage the value of myStage

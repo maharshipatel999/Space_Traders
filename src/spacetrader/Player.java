@@ -37,11 +37,15 @@ public class Player extends Trader {
         return Math.max(getSkill(type), ship.getCrewSkill(type));
     }
     
+    public int getCredits() {
+        return wallet.getCredits();
+    }
+    
     public Wallet getWallet() {
         return wallet;
     }
     
-    public SpaceShip getShip() {
+    public PlayerShip getShip() {
         return ship;
     }
     
@@ -88,6 +92,10 @@ public class Player extends Trader {
     public int getPoliceRecordScore() {
         return policeRecordScore;
     }
+    
+    public void setPoliceRecordScore(int score) {
+        policeRecordScore = score;
+    }
 
     public int getReputationScore() {
         return reputationScore;
@@ -109,5 +117,14 @@ public class Player extends Trader {
     public int getCurrentWorth() {
         int worth = wallet.getCredits() - debt;
         return worth;
+    }
+    
+    public void payInterest() {
+	int interest;
+
+	if (debt > 0) {
+            interest = Math.max(1, debt / 10);
+            wallet.removeForcefully(interest);
+	}
     }
 }

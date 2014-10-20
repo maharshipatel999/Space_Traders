@@ -9,6 +9,7 @@ package spacetrader;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.Gadget;
 import spacetrader.commerce.Shield;
+import spacetrader.commerce.TradeGood;
 import spacetrader.commerce.Weapon;
 
 /**
@@ -50,7 +51,7 @@ public class SpaceShip {
     public ShipType getType() {
         return type;
     }
-
+    
     public EquipmentSlots<Weapon> getWeapons() {
         return weapons;
     }
@@ -70,8 +71,19 @@ public class SpaceShip {
     public int getHullStrength() {
         return hullStrength;
     }
+    
     public void setHullStrength(int hullStrength) {
         this.hullStrength = hullStrength;
+    }
+    
+    /**
+     * Determines if this ship is carrying firearms or narcotics.
+     * @return true if this ship is carrying firearms or narcotics, false otherwise
+     */
+    public boolean isCarryingIllegalGoods() {
+        int firearms = cargo.getQuantity(TradeGood.FIREARMS);
+        int narcotics = cargo.getQuantity(TradeGood.NARCOTICS);
+        return firearms + narcotics > 0;
     }
     
     
