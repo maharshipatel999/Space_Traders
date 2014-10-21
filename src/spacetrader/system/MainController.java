@@ -30,6 +30,8 @@ import spacetrader.Player;
 import spacetrader.Universe;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
+import spacetrader.travel.RandomEvent;
+import spacetrader.travel.RandomEventGenerator;
 import spacetrader.travel.WarpScreenController;
 
 /**
@@ -82,10 +84,12 @@ public class MainController {
      * @param distance which planet the player is leaving
      */
     public void takeTurn(Planet destination, int distance) {
-       /*if(eventGenerator.makeEvent()) {
-           RandomEvent event = eventGenerator.getRandomEvent();
-           event.doAction();
-       }*/
+        RandomEventGenerator events = new RandomEventGenerator(game.getUniverse(), game.getPlayer());
+        if (events.eventOccurs()) {
+            RandomEvent event = events.getRandomEvent();
+            event.doEvent();
+            System.out.println(event.getMessage());
+       }
         
         //processes time aspect of price increase events
         for (Planet planet : game.getUniverse().getPlanets()) {
@@ -98,7 +102,6 @@ public class MainController {
         
         game.getPlayer().setLocation(destination);
         game.getPlayer().getShip().getTank().removeFuel(distance);
-        System.out.println(distance);
         goToHomeScreen(destination);
     }
     
@@ -205,7 +208,21 @@ public class MainController {
         myStage.show();
         return loader.getController();*/
     }
+   
+    public void goToOverwriteScreen() {
+        stage.setTitle("Save Game!");        
+        OverwriteScreenController control;
+        control = (OverwriteScreenController) changeScene("/spacetrader/persistence/OverwriteScreen.fxml", stage);
+        control.setMainControl(this);
+    }
     
+    public void goToReloadScreen() {
+        stage.setTitle("Reload Game!");        
+        ReloadGameScreenController control;
+        control = (ReloadGameScreenController) changeScene("/spacetrader/persistence/ReloadGameScreen.fxml", stage);
+        control.setMainControl(this);
+    }
+
     public void displayPopUpMessage(String message, String title) {
         Stage popUpStage = new Stage();
         popUpStage.initOwner(stage);

@@ -22,13 +22,14 @@ import spacetrader.Player;
 public class WelcomeScreenController extends SceneController implements Initializable {
     
     @FXML private Button easterEgg;
+    @FXML private Button reloadButton;
     
     @FXML protected void startNewGame(ActionEvent event) {
-         mainControl.goToPlayerConfigScreen();
+        mainControl.goToPlayerConfigScreen();
     }
          
     @FXML protected void reloadGame(ActionEvent event) {
-         //TODO
+        mainControl.goToReloadScreen();
     }
 
     @Override

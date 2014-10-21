@@ -7,6 +7,7 @@
 package spacetrader;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -17,7 +18,7 @@ import spacetrader.commerce.PriceIncreaseEvent;
  *
  * @author maharshipatel999, Caleb Stokols
  */
-public class Universe {
+public class Universe implements Serializable {
     
     private final Random rand = new Random();
     

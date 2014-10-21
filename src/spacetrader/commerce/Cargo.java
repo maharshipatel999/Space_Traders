@@ -6,6 +6,7 @@
 
 package spacetrader.commerce;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ import spacetrader.exceptions.DepletedInventoryException;
  * @version 1.5
  *
  */
-public class Cargo {
+public class Cargo implements Serializable {
     
     private final Map<TradeGood, Integer> tradeGoods;
     private int maxCapacity;

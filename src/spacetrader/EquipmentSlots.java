@@ -6,6 +6,7 @@
 
 package spacetrader;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import spacetrader.exceptions.SlotsAreFullException;
 
@@ -13,7 +14,7 @@ import spacetrader.exceptions.SlotsAreFullException;
  * Represents a container for ship equipment. This is backed by an ArraylList.
  * @author Caleb Stokols
  */
-public class EquipmentSlots<T> {
+public class EquipmentSlots<T> implements Serializable {
     
     private ArrayList<T> list;
     private int numSlots;

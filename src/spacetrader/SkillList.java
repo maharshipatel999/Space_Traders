@@ -6,6 +6,7 @@
 
 package spacetrader;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  *
  * @author Caleb
  */
-public class SkillList {
+public class SkillList implements Serializable {
 
     public enum Skill {
         PILOT, FIGHTER, TRADER, ENGINEER, INVESTOR;
