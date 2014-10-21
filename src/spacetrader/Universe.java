@@ -44,6 +44,7 @@ public class Universe implements Serializable {
         Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
             TechLevel.AGRICULTURE , Resource.NONE ,PoliticalSystem.DEMOCRACY);
         homePlanet.setRandomPriceIncEvent();
+        homePlanet.getMarket().setAllPrices();
         planets.add(homePlanet);
         planetNames.add(homePlanet.getName());
         planetLocations.add(homePlanet.getLocation());

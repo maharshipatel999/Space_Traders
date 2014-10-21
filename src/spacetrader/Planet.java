@@ -80,6 +80,11 @@ public class Planet implements Serializable {
         return this.politSys;
     }
     
+    public void setPriceIncEvent(PriceIncreaseEvent priceIncEvent) {
+        this.priceIncEvent = priceIncEvent;
+        this.setPriceIncDuration(PriceIncreaseEvent.setRandomPriceIncDuration());
+    }
+    
     public void setRandomPriceIncEvent() {
         this.priceIncEvent = PriceIncreaseEvent.getRandomPriceEvent();
         this.setPriceIncDuration(PriceIncreaseEvent.setRandomPriceIncDuration());

@@ -20,6 +20,7 @@ import org.controlsfx.dialog.Dialogs;
 import spacetrader.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
+import spacetrader.commerce.PriceIncreaseEvent;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.RandomEvent;
@@ -87,9 +88,13 @@ public class MainController {
             }
         }
 
+        destination.getMarket().setAllPrices();
         game.getPlayer().setLocation(destination);
         game.getPlayer().getShip().getTank().removeFuel(distance);
         goToHomeScreen(destination);
+        if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
+            displayAlertMessage("Price Increase Event!", destination.getPriceIncEvent().desc());
+        }
         
         if (eventGenerator.eventOccurs()) {
             RandomEvent event = eventGenerator.getRandomEvent();

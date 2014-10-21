@@ -46,9 +46,7 @@ public class Market implements Serializable {
      * Price is equal to (the base price) + (incPerLevel * (Planet Tech Level - minProduceLevel)) + (variance).
      * If a good is not sold on this planet, its price is -1.
      */
-    private void setAllPrices() {
-//        PriceIncreaseEvent incEvent = PriceIncreaseEvent.getRandomPriceEvent();
-//        planet.setPriceIncEvent();
+    public void setAllPrices() {
         for (TradeGood good : TradeGood.values()) {
             Random rand = new Random();
             int variance = rand.nextInt(good.variance() + 1);
