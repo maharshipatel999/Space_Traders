@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import spacetrader.Player;
+import spacetrader.PlayerShip;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.TradeGood;
 
@@ -65,6 +66,7 @@ public class StartScreenController extends SceneController implements Initializa
      */
     public void setUpPlayerStats(Player player, Stage myStage) {
         this.startStage = myStage;
+        PlayerShip ship = player.getShip();
         
         playerName.setText(player.getName());
         playerMoney.setText("₪" + player.getWallet().getCredits());
@@ -77,20 +79,20 @@ public class StartScreenController extends SceneController implements Initializa
         playerEngineer.setText("" + player.getSkill(Skill.ENGINEER));
         playerInvestor.setText("" + player.getSkill(Skill.INVESTOR));
         
-        shipType.setText("" + player.getShip().getType().toString());
-        shipFuel.setText(player.getShip().getTank().getFuelAmount() + "/" + player.getShip().getTank().getMaxFuel());
-        shipHull.setText(player.getShip().getHullStrength() + "/" + player.getShip().getMaxHullStrength());
-        shipWeaponSlots.setText(player.getShip().getWeapons().getNumFilledSlots() + "/" + player.getShip().getWeapons().getNumSlots());
-        shipShieldSlots.setText(player.getShip().getShields().getNumFilledSlots() + "/" + player.getShip().getShields().getNumSlots());
-        shipGadgetSlots.setText(player.getShip().getGadgets().getNumFilledSlots() + "/" + player.getShip().getGadgets().getNumSlots());
+        shipType.setText("" + ship.getType().toString());
+        shipFuel.setText(ship.getTank().getFuelAmount() + "/" + ship.getTank().getMaxFuel());
+        shipHull.setText(ship.getHullStrength() + "/" + ship.getMaxHullStrength());
+        shipWeaponSlots.setText(ship.getWeapons().getNumFilledSlots() + "/" + ship.getType().weaponSlots());
+        shipShieldSlots.setText(ship.getShields().getNumFilledSlots() + "/" + ship.getType().shieldSlots());
+        shipGadgetSlots.setText(ship.getGadgets().getNumFilledSlots() + "/" + ship.getType().gadgetSlots());
         
         
-        cargoSlots.setText(player.getShip().getCargo().getCount() + "/" + player.getShip().getCargo().getMaxCapacity());
+        cargoSlots.setText(ship.getCargo().getCount() + "/" + ship.getCargo().getMaxCapacity());
         
-        List<TradeGood> tradeGoodList = player.getShip().getCargo().getTradeGoods();
+        List<TradeGood> tradeGoodList = ship.getCargo().getTradeGoods();
         for (int i = 0; i < tradeGoodList.size(); i++) {
             TradeGood good = tradeGoodList.get(i);
-            int quantity = player.getShip().getCargo().getQuantity(good);
+            int quantity = ship.getCargo().getQuantity(good);
             if (quantity > 0) {
                 inventory.addRow(3 + i, new Label(tradeGoodList.get(i).type()), new Label("" + quantity));
             }

@@ -7,20 +7,28 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
+import spacetrader.SpaceShip;
 
 /**
  *
  * @author Caleb
  */
-public class Encounter {
+public abstract class Encounter {
     
-    Player player;
+    private Player player;
+    private SpaceShip opponent;
+    private String encounterScene;
     
-    public void Encounter(Player player) {
+    public Encounter(Player player, String fxmlScene) {
         this.player = player;
+        this.encounterScene = fxmlScene;
     }
-    
+
     public Player getPlayer() {
         return player;
+    }
+    
+    public String getFXMLScene() {
+        return encounterScene;
     }
 }

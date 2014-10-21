@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public enum TechLevel {
     PRE_AGRICULTURE("Pre-Agriculture"),
-    AGRICULTURE("Algriculture"),
+    AGRICULTURE("Agriculture"),
     MEDIEVAL("Medieval"),
     RENAISSANCE("Renaissance"),
     EARLY_INDUSTRIAL("Early-Industrial"),

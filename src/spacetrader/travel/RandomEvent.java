@@ -22,5 +22,8 @@ public abstract class RandomEvent {
         this.message = message;
         this.quantityChange = quantityChange;
     }
+      public String getMessage() {
+        return message;
+    }
     public abstract void doEvent();
 }
