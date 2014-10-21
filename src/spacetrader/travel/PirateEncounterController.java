@@ -8,6 +8,7 @@ package spacetrader.travel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -23,6 +24,17 @@ public class PirateEncounterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
     
+    @FXML protected void attackPressed() {
+        
+    }
+    
+    @FXML protected void surrenderPressed() {
+        
+    }
+    
+    @FXML protected void fleePressed() {
+        
+    }
 }

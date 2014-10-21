@@ -694,9 +694,9 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="priceEvent" prefHeight="32.0" prefWidth="196.0" text="None">
+                  <Label fx:id="priceEvent" prefHeight="32.0" prefWidth="196.0" text="None" wrapText="true">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="17.0" />
                      </font>
                   </Label>
                </children>

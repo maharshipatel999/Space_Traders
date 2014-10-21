@@ -14,8 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import spacetrader.Planet;
-import spacetrader.Player;
-import spacetrader.Universe;
+import spacetrader.commerce.PriceIncreaseEvent;
 
 /**
  * FXML Controller class
@@ -24,20 +23,24 @@ import spacetrader.Universe;
  */
 public class HomeScreenController extends SceneController implements Initializable {
 
-    private Universe universe;
+    private Planet planet;
     
     @FXML private Button marketPlaceButton;
     @FXML private Label planetName;
-    @FXML private Label playerName;
     
     /**
      * Customizes text on homes screen based on player and planet names
-     * @param player player that is currently playing
      * @param planet planet that player is currently on
      */
-    public void setUpHomeScreen(Player player, Planet planet) {
-        planetName.setText(planet.toString());
-        playerName.setText(player.getName());
+    public void setUpHomeScreen(Planet planet) {
+        this.planet = planet;
+        String description = String.format("%s\n\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
+                planet.getName(), planet.getLocation().x, planet.getLocation().y, planet.getLevel().type(), planet.getPoliticalSystem().type(), planet.getResource().type());
+        if (planet.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
+            description += "\n\nThis planet is currently suffering an abdormality:\n" + planet.getPriceIncEvent().desc();
+        }
+        
+        planetName.setText(description);
     }
     
     /**
@@ -45,7 +48,7 @@ public class HomeScreenController extends SceneController implements Initializab
      * @param event mouseclick on marketplace button
      */
     @FXML protected void goToMarket(ActionEvent event) {
-        mainControl.goToMarketScreen(mainControl.game.getPlayer().getLocation());
+        mainControl.goToMarketScreen(planet);
     }
     
     /**
@@ -53,7 +56,7 @@ public class HomeScreenController extends SceneController implements Initializab
      * @param event mouseclick on travel button
      */
     @FXML protected void goToSpace(ActionEvent event) {
-        mainControl.goToSpaceMapScreen(mainControl.game.getPlayer().getLocation());
+        mainControl.goToSpaceMapScreen(planet);
     }
     
     /**

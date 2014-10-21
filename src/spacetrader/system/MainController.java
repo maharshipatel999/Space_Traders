@@ -24,6 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.controlsfx.dialog.Dialogs;
 import spacetrader.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
@@ -128,7 +129,7 @@ public class MainController {
         control = (HomeScreenController) changeScene("/spacetrader/HomeScreen.fxml", stage);
         control.setMainControl(this);
         planet.setVisited();
-        control.setUpHomeScreen(game.getPlayer(), planet);
+        control.setUpHomeScreen(planet);
     }
     /**
      * Transitions the game screen to the First Screen.
@@ -236,6 +237,13 @@ public class MainController {
         pane.setPrefHeight(HEIGHT);
         dialog.setScene(new Scene(pane));
         dialog.show();
+        
+        Dialogs.create()
+        .owner(stage)
+        .title("Information Dialog")
+        .masthead(null)
+        .message("I have a great message for you!")
+        .showInformation();
 
 //Popup dialogStage = new Popup();
         //dialogStage..initModality(Modality.WINDOW_MODAL);

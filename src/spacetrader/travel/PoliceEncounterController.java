@@ -47,8 +47,10 @@ public class PoliceEncounterController extends EncounterScreenController impleme
     }
     
     @FXML protected void bribePressed(ActionEvent e) {
-        //if (encounter.getPlayer().getLocation().getPoliticalSystem().bribeLevel() <= 0) {
+        if (encounter.getPlayer().getLocation().getPoliticalSystem().bribeLevel() <= 0) {
             mainControl.displayAlertMessage("Bribery Failed!", "These officers cannot be bribed.");
-        //}
+        } else {
+            mainControl.displayAlertMessage("Bribery Offer", "I will offer you a bribery!");
+        }
     }
 }

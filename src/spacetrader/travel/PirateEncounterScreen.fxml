@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
@@ -17,13 +18,15 @@
          <fill>
             <LinearGradient endX="0.44660194174757284" endY="1.0" startX="0.4466019417475728" startY="0.009708737864077666">
                <stops>
-                  <Stop color="#1753a8" />
-                  <Stop color="#1753a8" offset="0.007246376811594203" />
-                  <Stop color="#2489bf" offset="0.11871270247229326" />
-                  <Stop color="#0e4f72" offset="0.3442739414606423" />
-                  <Stop color="#377d9e" offset="0.6585677749360614" />
-                  <Stop color="#298cc2" offset="0.8690679170218812" />
-                  <Stop color="#1466e0" offset="1.0" />
+                  <Stop color="#a61717" />
+                  <Stop color="#a61717" offset="0.007246376811594203" />
+                  <Stop color="#a61717" offset="0.007246376811594203" />
+                  <Stop color="#bd2457" offset="0.11871270247229326" />
+                  <Stop color="#f81a1a" offset="0.3442739414606423" />
+                  <Stop color="#9c364c" offset="0.6585677749360614" />
+                  <Stop color="#6f344c" offset="0.8654447286160841" />
+                  <Stop color="#da0e29" offset="0.9963768115942029" />
+                  <Stop color="#da0e29" offset="1.0" />
                </stops>
             </LinearGradient>
          </fill>
@@ -42,7 +45,7 @@
          <bottom>
             <AnchorPane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="69.0" layoutY="-5.0" mnemonicParsing="false" onAction="#letBoardPressed" prefHeight="31.0" prefWidth="100.0" text="Let Board" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="69.0">
+                  <Button layoutX="69.0" layoutY="-5.0" mnemonicParsing="false" onAction="#surrenderPressed" prefHeight="43.0" prefWidth="116.0" text="Surrender" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="69.0">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -52,8 +55,7 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button layoutX="250.0" layoutY="-5.0" mnemonicParsing="false" onAction="#attackPressed"
-                          prefHeight="31.0" prefWidth="100.0" text="Attack" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0">
+                  <Button layoutX="250.0" layoutY="-5.0" mnemonicParsing="false" onAction="#attackPressed" prefHeight="31.0" prefWidth="100.0" text="Attack" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -90,10 +92,13 @@
             </VBox>
          </center>
       </BorderPane>
-      <ImageView fitHeight="137.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <ImageView fitHeight="96.0" fitWidth="103.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="10.0">
          <image>
-            <Image url="@../../resources/images/pirate%20icon.png" />
+            <Image url="@../../resources/images/jolly%20roger.png" />
          </image>
+         <effect>
+            <ColorAdjust brightness="0.02" contrast="0.07" hue="-0.39" saturation="0.59" />
+         </effect>
       </ImageView>
    </children>
 </AnchorPane>

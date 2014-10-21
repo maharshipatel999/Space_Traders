@@ -21,35 +21,35 @@ public class EncounterManager {
     
     private Queue<Encounter> encounters;
     private final int numTotalEncounters;
-    private Player p;
+    private Player player;
     
     /**
-     * creates LinkedList with all Encounters for one transition period
+     * Creates queue with all Encounters for one transition period
      * @param source source planet
      * @param destination destination planet
      * @param ship ship Player is using
-     * @param p Player in the game
+     * @param player Player in the game
      */
-    public EncounterManager(Planet source, Planet destination, PlayerShip ship, Player p) {
-        encounters = new LinkedList<Encounter>();
-        this.p = p;
-        int pirateLevels = source.getPoliticalSystem().strengthPirates();
-        int traderLevels = source.getPoliticalSystem().strengthTraders();
-        int policeLevels = source.getPoliticalSystem().strengthPolice();
+    public EncounterManager(Planet source, Planet destination, PlayerShip ship, Player player) {
+        encounters = new LinkedList<>();
+        this.player = player;
+        int pirateLevels = destination.getPoliticalSystem().strengthPirates();
+        int traderLevels = destination.getPoliticalSystem().strengthTraders();
+        int policeLevels = destination.getPoliticalSystem().strengthPolice();
         int counter = pirateLevels + traderLevels + policeLevels;
-        int pirateProportion = pirateLevels/counter;
-        int traderProportion = traderLevels/counter;
-        Random randomEncounterGenerator = new Random();
+        int pirateProportion = pirateLevels / counter;
+        int traderProportion = traderLevels / counter;
+        Random rand = new Random();
         while(counter > 0) {
-            double d = randomEncounterGenerator.nextDouble();
-            if(d <= pirateProportion) {
-                encounters.add(new PirateEncounter(p));
+            double d = rand.nextDouble();
+            if (d <= pirateProportion) {
+                encounters.add(new PirateEncounter(player));
             } else if (pirateProportion < d && d <= (pirateProportion + traderProportion)) {
-                encounters.add(new TraderEncounter(p));
+                encounters.add(new TraderEncounter(player));
             } else {
-                encounters.add(new PoliceEncounter(p));
+                encounters.add(new PoliceEncounter(player));
             }      
-            counter-=5;
+            counter -= 5;
         }
         numTotalEncounters = encounters.size();
          //figure this out with an algorithm
