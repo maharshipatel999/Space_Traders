@@ -25,8 +25,11 @@ public class RandomEventGenerator {
     private final int MIN_HULL_QUANTITY = 10;
     private final int MAX_WALLET_QUANTITY = 301;
     private final int MIN_WALLET_QUANTITY = 10;
+    private final int RANDOM_EVENT_CHANCE = 101;
     
-    public RandomEventGenerator() {
+    public RandomEventGenerator(Universe universe, Player player) {
+        this.universe = universe;
+        this.player = player;
         events.add(new ChangeLocationEvent(player, "A giant space worm ate you and spat you out at a distant planet.", -1 * random.nextInt(MAX_HULL_QUANTITY - MIN_HULL_QUANTITY) + MIN_HULL_QUANTITY, getRandomPlanet()));
         events.add(new ChangeLocationEvent(player, "Your ship had a warp drive malfuntion and you found yourself at a distant planet.", 0, getRandomPlanet()));
         events.add(new ChangeLocationEvent(player, "You stayed up too late watching your favorite soap opera Lightyears Of Our Life, and fell asleep at the helm. You now find youself at a distant planet.", 0, getRandomPlanet()));
@@ -55,13 +58,37 @@ public class RandomEventGenerator {
         events.add(new ChangeHullEvent(player, "There was a scoutmob for joe's hull repair shop that you took advantage of.",random.nextInt(MAX_HULL_QUANTITY - MIN_HULL_QUANTITY) + MIN_HULL_QUANTITY));
         events.add(new ChangeHullEvent(player, "You found a roll of duct tape lying on the shelf and used it to repair your hull.",random.nextInt(MAX_HULL_QUANTITY - MIN_HULL_QUANTITY) + MIN_HULL_QUANTITY));
         events.add(new ChangeHullEvent(player, "Your insurance company finally came through and paid to get you hull repaired.",random.nextInt(MAX_HULL_QUANTITY - MIN_HULL_QUANTITY) + MIN_HULL_QUANTITY));
-        events.add(new ChangeHullEvent(player, "",random.nextInt(MAX_HULL_QUANTITY - MIN_HULL_QUANTITY) + MIN_HULL_QUANTITY));
-        events.add(new ChangeHullEvent(player, "",random.nextInt(MAX_HULL_QUANTITY - MIN_HULL_QUANTITY) + MIN_HULL_QUANTITY));
         events.add(new ChangeWalletEvent(player, "It's your lucky day! You found ₪ on the ground",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "JACKPOT!!! You won the space lottery!",1500));
+        events.add(new ChangeWalletEvent(player, "You got a part time job space stripping, don't quit your day job!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "A space burglar broke into your ship!", -1 * random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You have to pay child support for your space children", -1 * random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You made poor investments in alien technology",1 * random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "Space hackers hacked your bank account",-1* random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You made a great investment in the alien market!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You struck space oil on a moon",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You conquered a alien planet and sold their people into slavery!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You commandeered a pirate ship!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You founded a new space football league and become its first commisioner!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You birthed space twins! Congratulations!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You earned you earned yourself a space promotion!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You double parked your spaceship and you were ticketed!",-1 * random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You started a popluar chain of space resterants seving space burgers!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You caught space herpes and now have to pay for treatment",-1 * random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You won money at the space race tracks!",random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You become addicted to space world of warcraft and have to pay a monthely fee!",-1 *random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
+        events.add(new ChangeWalletEvent(player, "You lost a game of space poker with you fat cat space friends", -1 * random.nextInt(MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY));
     }
     private Planet getRandomPlanet() {
         ArrayList<Planet> planets = universe.getPlanets();
         int randPlanet = random.nextInt(planets.size());
         return planets.get(randPlanet);
+    }
+    public RandomEvent getRandomEvent() {
+        return events.get(random.nextInt(events.size()));
+    }
+    public boolean eventOccurs() {
+        int percent = random.nextInt(101);
+        return percent <= RANDOM_EVENT_CHANCE;
     }
 }

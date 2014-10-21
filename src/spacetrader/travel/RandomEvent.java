@@ -13,7 +13,7 @@ import spacetrader.Player;
  * @author Seth
  */
 public abstract class RandomEvent {
-    private String message;
+    private final String message;
     protected int quantityChange; 
     protected Player player;
     
