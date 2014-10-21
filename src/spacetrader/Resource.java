@@ -20,7 +20,7 @@ public enum Resource {
     MINERAL_RICH("Mineral Rich"),
     MINERAL_POOR("Mineral Poor"),
     DESERT("Desert"),
-    LOTS_OF_WATER("Lack of Water"),
+    LOTS_OF_WATER("Lots of Water"),
     RICH_SOIL("Rich Soil"),
     POOR_SOIL("Poor Soil"),
     RICH_FAUNA("Rich Fauna"),

@@ -48,8 +48,10 @@ public class MainController {
         this.stage = stage;
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-            if (event.getCode() == KeyCode.ESCAPE) {
-                goToStartScreen();
+            if (game.getUniverse() != null) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    goToStartScreen();
+                }
             }
         });
     }
@@ -62,7 +64,6 @@ public class MainController {
     public void setUpGame(Player player) {
         game.setUniverse(new Universe());
         game.setPlayer(player);
-        eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);
         player.setLocation(game.getUniverse().getPlanet("Pallet"));
         goToHomeScreen(player.getLocation());
     }
@@ -93,7 +94,11 @@ public class MainController {
         game.getPlayer().getShip().getTank().removeFuel(distance);
         goToHomeScreen(destination);
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayAlertMessage("Price Increase Event!", destination.getPriceIncEvent().desc());
+            displayAlertMessage("Notice!", destination.getPriceIncEvent().desc());
+        }
+        if (eventGenerator == null) {
+            eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);
+
         }
         
         if (eventGenerator.eventOccurs()) {

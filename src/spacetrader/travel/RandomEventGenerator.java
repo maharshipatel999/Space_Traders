@@ -28,7 +28,7 @@ public class RandomEventGenerator {
     private final int MAX_WALLET_QUANTITY = 300;
     private final int MIN_WALLET_QUANTITY = 10;
     
-    private final int RANDOM_EVENT_CHANCE = 15;
+    private final int RANDOM_EVENT_CHANCE = 100;
     
     public RandomEventGenerator(Player player, Universe universe, MainController mainControl) {
         this.universe = universe;
