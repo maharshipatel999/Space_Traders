@@ -9,21 +9,13 @@ package spacetrader.system;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.AnchorPaneBuilder;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.controlsfx.dialog.Dialogs;
 import spacetrader.Planet;
 import spacetrader.Player;
@@ -42,6 +34,7 @@ public class MainController {
     
     SpaceTrader game;
     Stage stage;
+    RandomEventGenerator eventGenerator;
     
     /**
      * Creates the MainController.
@@ -68,6 +61,7 @@ public class MainController {
     public void setUpGame(Player player) {
         game.setUniverse(new Universe());
         game.setPlayer(player);
+        eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);
         player.setLocation(game.getUniverse().getPlanet("Pallet"));
         goToHomeScreen(player.getLocation());
     }
@@ -83,14 +77,7 @@ public class MainController {
      * @param destination which planet the player is traveling to
      * @param distance which planet the player is leaving
      */
-    public void takeTurn(Planet destination, int distance) {
-        RandomEventGenerator events = new RandomEventGenerator(game.getUniverse(), game.getPlayer());
-        if (events.eventOccurs()) {
-            RandomEvent event = events.getRandomEvent();
-            event.doEvent();
-            System.out.println(event.getMessage());
-       }
-        
+    public void takeTurn(Planet destination, int distance) { 
         //processes time aspect of price increase events
         for (Planet planet : game.getUniverse().getPlanets()) {
             if (planet.getPriceIncDuration() > 0) {
@@ -99,10 +86,16 @@ public class MainController {
                 planet.setRandomPriceIncEvent();
             }
         }
-        
+
         game.getPlayer().setLocation(destination);
         game.getPlayer().getShip().getTank().removeFuel(distance);
         goToHomeScreen(destination);
+        
+        if (eventGenerator.eventOccurs()) {
+            RandomEvent event = eventGenerator.getRandomEvent();
+            event.doEvent();
+            displayAlertMessage("Special Event!", event.getMessage());
+       }
     }
     
     /**
@@ -186,7 +179,7 @@ public class MainController {
    /**
      * Transitions the game screen to the Space Map Screen.
      */
-   public void goToStartScreen() {
+   public final void goToStartScreen() {
         Stage startStage = new Stage();
         startStage.initOwner(stage);
         //startStage.setAlwaysOnTop(true);
@@ -222,63 +215,39 @@ public class MainController {
         control = (ReloadGameScreenController) changeScene("/spacetrader/persistence/ReloadGameScreen.fxml", stage);
         control.setMainControl(this);
     }
-
-    public void displayPopUpMessage(String message, String title) {
-        Stage popUpStage = new Stage();
-        popUpStage.initOwner(stage);
-        //popUpStage.setAlwaysOnTop(true);
-        popUpStage.initModality(Modality.WINDOW_MODAL);
-        popUpStage.setTitle(title);
-        
-        Pane rootPane = new FlowPane();
-        rootPane.getChildren().add(new Text(message));
-        popUpStage.setScene(new Scene(rootPane));
-    }
     
     public void displayAlertMessage(String alertTitle, String alert) {
-        final int WIDTH = 300;
-        final int HEIGHT = 200;
+        Dialogs.create()
+        .owner(stage)
+        .title(alertTitle)
+        //.masthead(null)
+        .message(alert)
+        .showInformation();
+        
+        /*final int MIN_WIDTH = 400;
+        final int MIN_HEIGHT = 120;
         
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle(alertTitle);
         Text message = new Text(alert);
-        message.setWrappingWidth(WIDTH);
+        message.setWrappingWidth(MIN_WIDTH);
+        message.setTextAlignment(TextAlignment.CENTER);
+        message.setFont(new Font(18.0));
         
-        Button confirm  = new Button("OK");
-        confirm.addEventHandler(ActionEvent.ACTION, (ActionEvent) -> {
+        Button confirmButton  = new Button("OK");
+        confirmButton.addEventHandler(ActionEvent.ACTION, (ActionEvent) -> {
             dialog.close();
         });
-        AnchorPane pane = AnchorPaneBuilder.create().children(message, confirm).build();
-        pane.setPrefWidth(WIDTH);
-        pane.setPrefHeight(HEIGHT);
+        AnchorPane pane = new AnchorPane();
+        pane.setPadding(new Insets(10, 10, 0, 10));
+        AnchorPane.setRightAnchor(confirmButton, 10.0);
+        AnchorPane.setBottomAnchor(confirmButton, 10.0);
+        //AnchorPane.setTopAnchor(message, 10.0);
+        pane.getChildren().addAll(message, confirmButton);
+        pane.setMinSize(MIN_WIDTH, MIN_HEIGHT);
         dialog.setScene(new Scene(pane));
-        dialog.show();
-        
-        Dialogs.create()
-        .owner(stage)
-        .title("Information Dialog")
-        .masthead(null)
-        .message("I have a great message for you!")
-        .showInformation();
-
-//Popup dialogStage = new Popup();
-        //dialogStage..initModality(Modality.WINDOW_MODAL);
-/*        //dialogStage.setTitle(alertTitle);
-        VBox box = new VBox(new Text(alert), new Button("Ok"));
-        box.setAlignment(Pos.CENTER);
-        box.setPadding(new Insets(5));
-        dialogStage.getContent().add(box);
-        dialogStage.show(stage);*/
-        
-        //Dialogs.create().showInformation();//.showInformationDialog();
-        
-        /*Dialogs.create()
-            .owner(stage)
-            .title(alertTitle)
-            .masthead(null)
-            .message(alert)
-            .showInformation();*/
+        dialog.showAndWait();*/
     }
     
     /** 

@@ -32,7 +32,6 @@ public class Market implements Serializable {
     public Market(Planet planet) {
         this.planet = planet;
         stock = new Cargo(1000);
-        
         sellPrices = new HashMap<>();
         buyPrices = new HashMap<>();
         appxPrices = new HashMap<>();

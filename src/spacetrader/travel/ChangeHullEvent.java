@@ -21,6 +21,16 @@ public class ChangeHullEvent extends RandomEvent {
      */
     public ChangeHullEvent(Player player, String message, int quantityChange) {
         super(player, message, quantityChange);
+        
+        if (quantityChange > 0) {
+            if (player.getShip().getHullStrength() + quantityChange >= player.getShip().getMaxHullStrength()) {
+                this.message += "\n\n" + "Your ship was completely repaired!";
+            } else {
+                this.message += "\n\n" + quantityChange + " repairs were done on your ship!";
+            }
+        } else {
+            this.message += "\n\n" + "Your hull received " + Math.abs(quantityChange) + " damage.";
+        }
     }
     /**
      * Sets hullstrength to hullstreth + quantity change

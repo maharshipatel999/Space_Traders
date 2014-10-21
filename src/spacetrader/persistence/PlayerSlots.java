@@ -6,12 +6,8 @@
 
 package spacetrader.persistence;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import javafx.fxml.FXML;
 
 /**
  *
@@ -40,10 +36,10 @@ public class PlayerSlots implements Serializable {
     }
     
     public List<Object> getPlayer2() {
-        return this.player1;
+        return this.player2;
     }
     
     public List<Object> getPlayer3() {
-        return this.player1;
+        return this.player3;
     }
 }

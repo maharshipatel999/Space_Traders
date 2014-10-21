@@ -8,23 +8,30 @@ package spacetrader.travel;
 
 import spacetrader.Planet;
 import spacetrader.Player;
+import spacetrader.system.MainController;
 
 /**
  *
  * @author Seth
  */
 public class ChangeLocationEvent extends RandomEvent {
+    
     private Planet planet;
+    private MainController mainControl;
+    
     /**
      * constructor for ChangeLocationEvent 
      * @param player
      * @param message
      * @param quantityChange
      * @param planet 
+     * @param mainControl 
      */
-    public ChangeLocationEvent(Player player, String message, int quantityChange, Planet planet) {
+    public ChangeLocationEvent(Player player, String message, int quantityChange, Planet planet, MainController mainControl) {
         super(player, message, quantityChange);
+        this.message += "\n\nYou are now at the planet" + planet;
         this.planet = planet;
+        this.mainControl = mainControl;
     }
     /**
      * override doEvent method in Random event
@@ -35,5 +42,6 @@ public class ChangeLocationEvent extends RandomEvent {
     public void doEvent() {
         player.getShip().setHullStrength(player.getShip().getHullStrength() + quantityChange);
         player.setLocation(planet);
+        mainControl.goToHomeScreen(planet);
     }
 }

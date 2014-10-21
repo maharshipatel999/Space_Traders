@@ -13,7 +13,8 @@ import spacetrader.Player;
  * @author Seth
  */
 public abstract class RandomEvent {
-    private final String message;
+    
+    protected String message;
     protected int quantityChange; 
     protected Player player;
     
@@ -22,8 +23,10 @@ public abstract class RandomEvent {
         this.message = message;
         this.quantityChange = quantityChange;
     }
-      public String getMessage() {
+    
+    public String getMessage() {
         return message;
     }
+    
     public abstract void doEvent();
 }

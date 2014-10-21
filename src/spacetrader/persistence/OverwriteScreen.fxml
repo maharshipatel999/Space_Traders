@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.OverwriteScreenController">
+<AnchorPane id="AnchorPane" prefHeight="477.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.OverwriteScreenController">
    <children>
       <Text fill="WHITE" layoutX="177.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to reload!" textAlignment="CENTER">
          <font>
@@ -38,17 +38,17 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <ImageView fitHeight="553.0" fitWidth="755.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="481.0" fitWidth="655.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../../resources/images/space%20image.jpg" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="126.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to overwrite!" textAlignment="CENTER">
+      <Text fill="WHITE" layoutX="61.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to overwrite!" textAlignment="CENTER">
          <font>
             <Font name="Segoe Script" size="36.0" />
          </font>
       </Text>
-      <VBox alignment="CENTER" layoutX="257.0" layoutY="136.0" prefHeight="336.0" prefWidth="241.0" spacing="30.0">
+      <VBox alignment="CENTER" layoutX="207.0" layoutY="110.0" prefHeight="357.0" prefWidth="241.0" spacing="30.0">
          <children>
             <Button fx:id="player1" mnemonicParsing="false" onAction="#overwritePlayer1" text="Game 1">
                <font>
@@ -70,5 +70,10 @@
             <Insets />
          </opaqueInsets>
       </VBox>
+      <Button layoutX="21.0" layoutY="404.0" mnemonicParsing="false" onAction="#goBack" prefHeight="15.0" prefWidth="85.0" text="Back" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

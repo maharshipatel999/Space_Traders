@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -36,21 +37,25 @@ public class ReloadGameScreenController extends SceneController implements Initi
         setObjects(objects);
         mainControl.goToHomeScreen(mainControl.game.getPlayer().getLocation());
     }
-    
+
     @FXML public void reloadGame2() throws IOException, ClassNotFoundException {
         PlayerSlots slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
         List<Object> objects = slots.getPlayer2();
         setObjects(objects);
         mainControl.goToHomeScreen(mainControl.game.getPlayer().getLocation());
     }
-    
+
     @FXML public void reloadGame3() throws IOException, ClassNotFoundException {
         PlayerSlots slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
         List<Object> objects = slots.getPlayer3();
         setObjects(objects);
         mainControl.goToHomeScreen(mainControl.game.getPlayer().getLocation());
     }
-    
+
+    @FXML protected void goBack(ActionEvent e) {
+        mainControl.goToWelcomeScreen();
+    }
+
     private void setObjects(List<Object> objects) {
         mainControl.game.setUniverse((Universe) objects.get(0));
         mainControl.game.setPlayer((Player) objects.get(1));
