@@ -14,7 +14,7 @@ import spacetrader.Universe;
 import spacetrader.system.MainController;
 
 /**
- *
+ * A utility class for creating random events.
  * @author Seth
  */ 
 public class RandomEventGenerator {
@@ -30,6 +30,12 @@ public class RandomEventGenerator {
     
     private final int RANDOM_EVENT_CHANCE = 100;
     
+    /**
+     * Creates a new Random Event Generator and fills a list of all the possible random events.
+     * @param player the player of the game
+     * @param universe the game's universe
+     * @param mainControl the main controller
+     */
     public RandomEventGenerator(Player player, Universe universe, MainController mainControl) {
         this.universe = universe;
         events.add(new ChangeLocationEvent(player, "A giant space worm ate you and spat you out at a distant planet.", -1 * getRandomHullQuantity(), getRandomPlanet(), mainControl));
@@ -81,24 +87,44 @@ public class RandomEventGenerator {
         events.add(new ChangeWalletEvent(player, "You lost a game of space poker with your fat space friends", -1 * getRandomWalletQuantity()));
     }
 
+    /**
+     * Generates a random amount for the hull to be damaged or repaired.
+     * @return a random amount of hull strength
+     */
     private int getRandomHullQuantity() {
         return random.nextInt(1 + MAX_HULL_QUANTITY - MIN_HULL_QUANTITY) + MIN_HULL_QUANTITY;
     }
 
+    /**
+     * Generates a random amount to remove or add to the player's wallet.
+     * @return a random amount of money
+     */
     private int getRandomWalletQuantity() {
         return random.nextInt(1 + MAX_WALLET_QUANTITY - MIN_WALLET_QUANTITY) + MIN_WALLET_QUANTITY;
     }
 
+    /**
+     * Gets a random planet in the universe for the player to transport to.
+     * @return a random planet
+     */
     private Planet getRandomPlanet() {
         ArrayList<Planet> planets = universe.getPlanets();
         int randPlanet = random.nextInt(planets.size());
-        return planets.get(randPlanet);
+        return planets.get(randPlanet);  //FIX this should never return the player's current location, or previous location.
     }
 
+    /**
+     * Gets a new random event.
+     * @return a random event.
+     */
     public RandomEvent getRandomEvent() {
         return events.get(random.nextInt(events.size()));
     }
 
+    /**
+     * Determines if an event should occur.
+     * @return true if an event should occur, false otherwise.
+     */
     public boolean eventOccurs() {
         int percent = random.nextInt(100);
         return percent <= RANDOM_EVENT_CHANCE;

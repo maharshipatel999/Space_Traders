@@ -11,7 +11,7 @@ import spacetrader.Player;
 import spacetrader.system.MainController;
 
 /**
- *
+ * Represents a random event that changes the player's location
  * @author Seth
  */
 public class ChangeLocationEvent extends RandomEvent {

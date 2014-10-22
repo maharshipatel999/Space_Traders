@@ -9,7 +9,7 @@ package spacetrader.travel;
 import spacetrader.Player;
 
 /**
- *
+ * Represents an encounter with the police.
  * @author Caleb
  */
 public class PoliceEncounter extends Encounter {
@@ -30,14 +30,18 @@ public class PoliceEncounter extends Encounter {
     private static final int FINE_DECREASE = 4 * 10;
     private static final int FINE_ROUND = 50;
     
+    /**
+     * Creates a new police encounter.
+     * @param player the player of the game
+     */
     public PoliceEncounter(Player player) {
         super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml");
     }
     
     /**
-     * Calculates the fine for carrying illegal goods
-     * @param player
-     * @return 
+     * Determines if the player is carrying illegal goods. If he is, fines him
+     * and takes the illegal goods. If not, the player is free to go. Updates
+     * the player's police record accordingly.
      */
     public void inspectPlayer() {
         //determine if player is carrying illegal goods
@@ -62,9 +66,13 @@ public class PoliceEncounter extends Encounter {
         }
     }
     
+    /**
+     * Calculates the amount of bribe, police on the player's planet will ask for.
+     * @return the bribe the police are asking for
+     */
     public int calculcateBribe() {
         int bribe = getPlayer().getCurrentWorth();
-        bribe /= 10 + (10 * getPlayer().getLocation().getPoliticalSystem().bribeLevel());
+        bribe /= 10 + (10 * getPlayer().getLocation().getPoliticalSystem().bribeLevel()); //This should be the destination planet, not the current planet.
         return bribe;
     }
 }

@@ -9,7 +9,7 @@ package spacetrader.travel;
 import spacetrader.Player;
 
 /**
- *
+ * Represents a random event that changes the player's wallet.
  * @author Seth
  */
 public class ChangeWalletEvent extends RandomEvent {

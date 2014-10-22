@@ -9,11 +9,15 @@ package spacetrader.travel;
 import spacetrader.Player;
 
 /**
- *
+ * Represents an ecnounter with a trader.
  * @author Caleb
  */
 public class TraderEncounter extends Encounter {
     
+    /**
+     * Creates a new TraderEncounter
+     * @param player the player of the game
+     */
     public TraderEncounter(Player player) {
         super(player, "/spacetrader/travel/TraderEncounterScreen.fxml");
     }

@@ -9,11 +9,15 @@ package spacetrader.travel;
 import spacetrader.Player;
 
 /**
- *
+ * Represents an encounter with a pirate.
  * @author Caleb
  */
 public class PirateEncounter extends Encounter {
     
+    /**
+     * Creates a new pirate encounter.
+     * @param player the player of the game
+     */
     public PirateEncounter(Player player) {
         super(player, "/spacetrader/travel/PirateEncounterScreen.fxml");
     }
