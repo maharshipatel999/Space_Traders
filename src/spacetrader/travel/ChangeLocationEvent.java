@@ -29,7 +29,7 @@ public class ChangeLocationEvent extends RandomEvent {
      */
     public ChangeLocationEvent(Player player, String message, int quantityChange, Planet planet, MainController mainControl) {
         super(player, message, quantityChange);
-        this.message += "\n\nYou are now at the planet" + planet;
+        this.message += "\n\nYou are now at the planet " + planet.getName() + ".";
         this.planet = planet;
         this.mainControl = mainControl;
     }

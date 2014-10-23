@@ -43,7 +43,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
     private MapPane planetMap;
     private Pane planetInfo;
     
-    private Planet currentPlanet;
+    protected Planet currentPlanet;
     private int fuelAmount;
     private int maxFuelAmount;
     
@@ -203,7 +203,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                                         && event.getClickCount() == 2) {
                     hidePlanetInfo();
                     if (selectedPlanet != null) {
-                        planetIcons.get(selectedPlanet).setFill(Color.GREEN);
+                        planetIcons.get(selectedPlanet).setFill(getPlanetColor(selectedPlanet));
                         selectedPlanet = null;
                     }
                 }
@@ -228,20 +228,23 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 double planetY = (MAP_HEIGHT * (planet.getLocation().getY() / Universe.HEIGHT)) + TOP_MARGIN;
 
                 //create an icon for each planet
-                Circle planetIcon = new Circle(planetX, planetY, PLANET_RADIUS, Color.GREEN);
-                planetIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) ->
-                    {
-                        if (selectedPlanet == null) {
-                            showPlanetInfo(planet);
-                            planetIcon.setFill(Color.RED);
-                        } else if (planet != selectedPlanet) {
-                            showPlanetInfo(planet);
-                            planetIcon.setFill(Color.RED);
-                            planetIcons.get(selectedPlanet).setFill(Color.GREEN);
-                        }
-                        selectedPlanet = planet;
-                    });
-                planetIcons.put(planet, planetIcon); 
+                
+                Circle planetIcon = new Circle(planetX, planetY, PLANET_RADIUS, getPlanetColor(planet));
+                planetIcons.put(planet, planetIcon);
+                if (planet != currentPlanet) {
+                    planetIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) ->
+                        {
+                            if (selectedPlanet == null) {
+                                showPlanetInfo(planet);
+                                planetIcon.setFill(Color.RED);
+                            } else if (planet != selectedPlanet) {
+                                showPlanetInfo(planet);
+                                planetIcon.setFill(Color.RED);
+                                planetIcons.get(selectedPlanet).setFill(getPlanetColor(selectedPlanet));
+                            }
+                            selectedPlanet = planet;
+                        });
+                }
 
                 //Create text for the name of each planet.
                 double textX = planetX - (PLANET_RADIUS / 2) - (5 * planet.getName().length() / 2);
@@ -259,10 +262,14 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
                     flightRadius.setOpacity(.6);
                     flightRadius.setStroke(Color.LAWNGREEN);
-                    this.getChildren().add(1, flightRadius);
+                    this.getChildren().add(1, flightRadius); //add at index 1, so the circle is beneath all the planets
                 }
             }
-        }     
+        }
+        
+        private Color getPlanetColor(Planet p) {
+            return p.isVisited() ? Color.DARKCYAN : Color.GREEN;
+        }
 
         @Override
         public String toString() {

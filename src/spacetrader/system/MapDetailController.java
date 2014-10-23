@@ -16,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
 import spacetrader.commerce.TradeGood;
@@ -42,12 +44,16 @@ public class MapDetailController implements Initializable {
     @FXML private Label appxWaterPrice, appxFursPrice, appxFoodPrice, appxOrePrice, appxGamesPrice,
             appxFirearmsPrice, appxMedicinePrice, appxMachinesPrice, appxNarcoticsPrice, appxRobotsPrice;
     
+    private Label[] appxPricesLabels;
+    
     private SpaceMapScreenController mapControl;
     private Planet selectedPlanet;
+    private boolean showAbsolutePrices;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //todo
+        showAbsolutePrices = true;
     }
     
     /**
@@ -70,6 +76,10 @@ public class MapDetailController implements Initializable {
         policePresence.setText(planet.expectedAmountOfPolice());
         piratePresence.setText(planet.expectedAmountOfPirates());
         
+        this.appxPricesLabels = new Label[] { appxWaterPrice, appxFursPrice, appxFoodPrice,
+                appxOrePrice, appxGamesPrice, appxFirearmsPrice, appxMedicinePrice,
+                appxMachinesPrice,appxNarcoticsPrice, appxRobotsPrice };
+        
         if (planet.isVisited()) {
             planetResources.setText(planet.getResource().type());
         } else {
@@ -81,7 +91,7 @@ public class MapDetailController implements Initializable {
             priceDisplayButtons.setDisable(false);
             warpButton.setDisable(false);
             planetInformation.getChildren().remove(outOfRangeText);
-            //TODO: set up average price list
+            setApproximatePrices();
             
         } else {
             averagePriceList.setDisable(true);
@@ -90,26 +100,70 @@ public class MapDetailController implements Initializable {
             if (!planetInformation.getChildren().contains(outOfRangeText)) {
                 planetInformation.getChildren().add(outOfRangeText);
             }
+            hideApproximatePrices();
         }
-        setApproximatePrices();
         
+        
+    }
+    
+    public void hideApproximatePrices() {
+        for (int i = 0; i < TradeGood.values().length; i++) {
+            appxPricesLabels[i].setText("-----");
+            changeFont(appxPricesLabels[i], false);        } 
     }
     
     /**
      * Sets approximate prices of each good in map detail sidebar
      */
     private void setApproximatePrices() {
-        Label[] appxPricesLabels  = new Label[] { appxWaterPrice, appxFursPrice, appxFoodPrice,
-            appxOrePrice, appxGamesPrice, appxFirearmsPrice, appxMedicinePrice,
-            appxMachinesPrice,appxNarcoticsPrice, appxRobotsPrice };
         for (int i = 0; i < TradeGood.values().length; i++) {
             TradeGood good = TradeGood.values()[i];
-            int appxPrice = selectedPlanet.getMarket().getAppxPrices().get(good);
-            if (appxPrice >= 0) {
-                appxPricesLabels[i].setText("₪" + appxPrice);
+            int absolutePrice = selectedPlanet.getMarket().getAppxPrices().get(good);
+            int currentPlanetPrice = mapControl.currentPlanet.getMarket().getBuyPrices().get(good);
+            changeFont(appxPricesLabels[i], false);
+            //if the selected planet sells this good
+            if (absolutePrice >= 0) {
+                //determine whether to show absolute prices or relative prices
+                if (showAbsolutePrices) {
+                    this.appxPricesLabels[i].setText("₪" + absolutePrice);
+                } else {
+                    int relativePrice = absolutePrice - currentPlanetPrice;
+                    appxPricesLabels[i].setText(((relativePrice >= 0) ? "+ ₪" : "- ₪") + Math.abs(relativePrice));
+                    if (currentPlanetPrice < 0) {
+                        appxPricesLabels[i].setText("-----");
+                    }
+                }
             } else {
                 appxPricesLabels[i].setText("-----");
             }
+            if (absolutePrice > currentPlanetPrice && currentPlanetPrice >= 0) {
+                changeFont(appxPricesLabels[i], true);
+            }
+        }
+    }
+    
+    /**
+     * Sets the font bold if isBold is true, otherwise the font is normal
+     * @param isBold true if the font should be bold
+     */
+    private void changeFont(Label text, boolean isBold) {
+        String fontFamily = text.getFont().getFamily();
+        double fontSize = text.getFont().getSize();
+        FontWeight style = isBold ? FontWeight.BOLD : FontWeight.NORMAL;
+        text.setFont(Font.font(fontFamily, style, fontSize));
+    }
+    
+    @FXML protected void absolutePressed(ActionEvent event) {
+        if (!showAbsolutePrices) {
+            showAbsolutePrices = true;
+            setApproximatePrices();
+        }
+    }
+    
+    @FXML protected void relativePressed(ActionEvent event) {
+        if (showAbsolutePrices) {
+            showAbsolutePrices = false;
+            setApproximatePrices();
         }
     }
     
