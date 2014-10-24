@@ -9,7 +9,7 @@ package spacetrader.travel;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
-import spacetrader.Planet;
+import spacetrader.planets.Planet;
 import spacetrader.Player;
 import spacetrader.ships.PlayerShip;
 import spacetrader.PoliceRecord;

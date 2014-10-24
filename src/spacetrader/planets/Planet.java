@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader;
+package spacetrader.planets;
 
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.Random;
+import spacetrader.PoliceRecord;
 import spacetrader.commerce.Market;
 import spacetrader.commerce.PriceIncreaseEvent;
 

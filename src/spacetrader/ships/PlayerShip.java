@@ -6,8 +6,6 @@
 
 package spacetrader.ships;
 
-import spacetrader.ships.ShipType;
-import spacetrader.ships.SpaceShip;
 import java.util.ArrayList;
 import spacetrader.Mercenary;
 import spacetrader.SkillList;

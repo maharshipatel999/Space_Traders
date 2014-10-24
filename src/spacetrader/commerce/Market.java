@@ -10,8 +10,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import spacetrader.Planet;
-import spacetrader.Resource;
+import spacetrader.planets.Planet;
+import spacetrader.planets.Resource;
 
 /**
  *

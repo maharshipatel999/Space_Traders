@@ -1,4 +1,4 @@
-package spacetrader;
+package spacetrader.planets;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -6,6 +6,7 @@
 
 package spacetrader;
 
+import spacetrader.planets.Planet;
 import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
 import java.io.Serializable;

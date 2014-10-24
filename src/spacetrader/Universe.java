@@ -6,6 +6,10 @@
 
 package spacetrader;
 
+import spacetrader.planets.Planet;
+import spacetrader.planets.PoliticalSystem;
+import spacetrader.planets.Resource;
+import spacetrader.planets.TechLevel;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;

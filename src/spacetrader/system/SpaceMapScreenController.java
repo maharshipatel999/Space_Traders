@@ -28,7 +28,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import org.controlsfx.control.MasterDetailPane;
-import spacetrader.Planet;
+import spacetrader.planets.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
 

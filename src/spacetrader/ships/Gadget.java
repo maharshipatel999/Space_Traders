@@ -6,7 +6,7 @@
 
 package spacetrader.ships;
 
-import spacetrader.TechLevel;
+import spacetrader.planets.TechLevel;
 
 /**
  *

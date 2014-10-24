@@ -7,7 +7,7 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
-import spacetrader.PoliticalSystem;
+import spacetrader.planets.PoliticalSystem;
 import spacetrader.ships.ShipType;
 
 /**

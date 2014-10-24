@@ -14,7 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import spacetrader.Planet;
+import spacetrader.planets.Planet;
 import spacetrader.Universe;
 
 /**

@@ -16,7 +16,7 @@
    <children>
       <ImageView fitHeight="438.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../resources/images/space%20image.jpg" />
+            <Image url="@../../resources/images/space%20image.jpg" />
          </image>
       </ImageView>
       <GridPane prefHeight="438.0" prefWidth="601.0" vgap="10.0">
@@ -34,7 +34,7 @@
                <graphic>
                   <ImageView fitHeight="107.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/images/cash%20register.png" />
+                        <Image url="@../../resources/images/cash%20register.png" />
                      </image></ImageView>
                </graphic>
                <font>
@@ -45,7 +45,7 @@
                <graphic>
                   <ImageView fitHeight="89.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/images/stockmarket.png" />
+                        <Image url="@../../resources/images/stockmarket.png" />
                      </image></ImageView>
                </graphic>
                <font>
@@ -76,7 +76,7 @@
                <graphic>
                   <ImageView fitHeight="89.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/images/ship.png" />
+                        <Image url="@../../resources/images/ship.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -88,7 +88,7 @@
                <graphic>
                   <ImageView fitHeight="51.0" fitWidth="53.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/images/spaceship_icon.png" />
+                        <Image url="@../../resources/images/spaceship_icon.png" />
                      </image>
                   </ImageView>
                </graphic>

@@ -6,7 +6,7 @@
 
 package spacetrader.travel;
 
-import spacetrader.Planet;
+import spacetrader.planets.Planet;
 import spacetrader.Player;
 import spacetrader.system.MainController;
 

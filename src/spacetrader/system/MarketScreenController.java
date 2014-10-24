@@ -22,7 +22,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import spacetrader.Planet;
+import spacetrader.planets.Planet;
 import spacetrader.Player;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.Market;

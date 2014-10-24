@@ -8,7 +8,7 @@ package spacetrader.travel;
 
 import java.util.ArrayList;
 import java.util.Random;
-import spacetrader.Planet;
+import spacetrader.planets.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
 import spacetrader.system.MainController;

@@ -2,7 +2,7 @@ package spacetrader.ships;
 
 //type, cargoBay, weaponSlots, shieldSlots, gadgetSlots, crew;
 
-import spacetrader.TechLevel;
+import spacetrader.planets.TechLevel;
 
 //fuel, fuelCost, hullStrength, size;
 //minTechLevel, price, repairCost;

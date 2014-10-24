@@ -6,8 +6,8 @@
 
 package spacetrader.commerce;
 
-import spacetrader.Resource;
-import spacetrader.TechLevel;
+import spacetrader.planets.Resource;
+import spacetrader.planets.TechLevel;
 
 /**
  *

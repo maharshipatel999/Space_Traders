@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import spacetrader.Planet;
+import spacetrader.planets.Planet;
 import spacetrader.Universe;
 import spacetrader.system.SceneController;
 

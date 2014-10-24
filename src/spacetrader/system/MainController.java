@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
-import spacetrader.Planet;
+import spacetrader.planets.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
 import spacetrader.commerce.PriceIncreaseEvent;
@@ -132,7 +132,7 @@ public class MainController {
      */
     public void goToHomeScreen(Planet planet) {
         HomeScreenController control;
-        control = (HomeScreenController) changeScene("/spacetrader/HomeScreen.fxml", stage);
+        control = (HomeScreenController) changeScene("/spacetrader/planets/HomeScreen.fxml", stage);
         control.setMainControl(this);
         planet.setVisited();
         control.setUpHomeScreen(planet);
@@ -144,7 +144,7 @@ public class MainController {
    public void goToMarketScreen(Planet planet) {
         stage.setTitle("Welcome to the Market!");        
         MarketScreenController control;
-        control = (MarketScreenController) changeScene("/spacetrader/MarketScreen.fxml", stage);
+        control = (MarketScreenController) changeScene("/spacetrader/commerce/MarketScreen.fxml", stage);
         control.setMainControl(this);
         control.setUpMarketScreen(planet, game.getPlayer());
     }
