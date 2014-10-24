@@ -118,8 +118,8 @@ public class MapDetailController implements Initializable {
     private void setApproximatePrices() {
         for (int i = 0; i < TradeGood.values().length; i++) {
             TradeGood good = TradeGood.values()[i];
-            int absolutePrice = selectedPlanet.getMarket().getAppxPrices().get(good);
-            int currentPlanetPrice = mapControl.currentPlanet.getMarket().getBuyPrices().get(good);
+            int absolutePrice = selectedPlanet.getMarket().getAppxPrice(good);
+            int currentPlanetPrice = mapControl.currentPlanet.getMarket().getBuyPrice(good);
             changeFont(appxPricesLabels[i], false);
             //if the selected planet sells this good
             if (absolutePrice >= 0) {

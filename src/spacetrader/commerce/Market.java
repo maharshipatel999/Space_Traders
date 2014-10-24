@@ -138,27 +138,30 @@ public class Market implements Serializable {
     }
     
     /**
-     * Gets the prices of all the TradeGoods as a Map.
-     * @return the prices of goods on this planet.
+     * Gets the selling price of a specific TradeGood.
+     * @param good the TradeGood to find the price off
+     * @return the price of a good on this planet.
      */
-    public Map<TradeGood, Integer> getSellPrices() {
-        return sellPrices;
+    public int getSellPrice(TradeGood good) {
+        return sellPrices.get(good);
     }
     
     /**
-     * Gets the buy prices of all the TradeGoods as a Map.
-     * @return the prices of goods on this planet.
+     * Gets the buying price of a specific TradeGood.
+     * @param good the TradeGood to find the price off
+     * @return the price of a good on this planet.
      */
-    public Map<TradeGood, Integer> getBuyPrices() {
-        return buyPrices;
+    public int getBuyPrice(TradeGood good) {
+        return buyPrices.get(good);
     }
     
     /**
-     * Gets the approximate prices of all the TradeGoods as a Map.
-     * @return the approximate prices of goods on this planet.
+     * Gets the approximate price of a specific TradeGood.
+     * @param good the TradeGood to find the price off
+     * @return the price of a good on this planet.
      */
-    public Map<TradeGood, Integer> getAppxPrices() {
-        return appxPrices;
+    public int getAppxPrice(TradeGood good) {
+        return appxPrices.get(good);
     }
     
     /**

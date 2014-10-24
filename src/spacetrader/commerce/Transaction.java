@@ -64,7 +64,7 @@ public class Transaction {
         if (newTotalCount > playerCargo.getMaxCapacity()) {
             throw new CargoIsFullException("Cannot purchase more goods than cargo can carry");
         }
-        int purchaseCost = quantityChange * market.getBuyPrices().get(good);
+        int purchaseCost = quantityChange * market.getBuyPrice(good);
         
         //Check if player has a large enough remaining balance
         if (remainingBalance < purchaseCost) {
@@ -129,7 +129,7 @@ public class Transaction {
     private void updateTotalCost() {
         totalCost = 0;
         for (TradeGood good : TradeGood.values()) {
-            totalCost += purchases.getQuantity(good) * market.getBuyPrices().get(good);
+            totalCost += purchases.getQuantity(good) * market.getBuyPrice(good);
         }
         updateBalance();
     }
@@ -137,7 +137,7 @@ public class Transaction {
     private void updateTotalRevenue() {
         totalRevenue = 0;
         for (TradeGood good : TradeGood.values()) {
-            totalRevenue += sales.getQuantity(good) * market.getSellPrices().get(good);
+            totalRevenue += sales.getQuantity(good) * market.getSellPrice(good);
         }
         updateBalance();
     }

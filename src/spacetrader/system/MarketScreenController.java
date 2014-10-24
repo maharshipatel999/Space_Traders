@@ -169,7 +169,7 @@ public class MarketScreenController extends SceneController implements Initializ
             
             stocks[i].setText("" + market.getStock().getQuantity(good));
             goodBuys[i].setText("" + good.type());
-            priceBuys[i].setText("₪" + market.getBuyPrices().get(good));
+            priceBuys[i].setText("₪" + market.getBuyPrice(good));
         }
         
         for (int i = 0; i < sellGoods.size(); i++) {
@@ -177,7 +177,7 @@ public class MarketScreenController extends SceneController implements Initializ
             
             inventorys[i].setText("" + cargo.getQuantity(good));
             goodSells[i].setText("" + good.type());
-            priceSells[i].setText("₪" + market.getSellPrices().get(good));
+            priceSells[i].setText("₪" + market.getSellPrice(good));
         }
     }
     
@@ -290,7 +290,7 @@ public class MarketScreenController extends SceneController implements Initializ
         int oldStock = market.getStock().getQuantity(good);
         stocks[index].setText("" + (oldStock - quantity));
         numBuys[index].setText("" + quantity);
-        costs[index].setText("₪" + (quantity * market.getBuyPrices().get(good)));
+        costs[index].setText("₪" + (quantity * market.getBuyPrice(good)));
         totalPurchase.setText("– ₪" + cashier.getTotalCost());
     }
     
@@ -305,7 +305,7 @@ public class MarketScreenController extends SceneController implements Initializ
         int oldInventory = player.getShip().getCargo().getQuantity(good);
         inventorys[index].setText("" + (oldInventory - quantity));
         numSells[index].setText("" + quantity);
-        revenues[index].setText("₪" + (quantity * market.getBuyPrices().get(good)));
+        revenues[index].setText("₪" + (quantity * market.getBuyPrice(good)));
         totalSale.setText("+ ₪" + cashier.getTotalRevenue());
     }
     
@@ -359,7 +359,7 @@ public class MarketScreenController extends SceneController implements Initializ
                     int price, quantity;
                     if (grid == buyGrid) {
                         TradeGood good = buyGoods.get(row - 1);
-                        price = market.getBuyPrices().get(good);
+                        price = market.getBuyPrice(good);
                         quantity = market.getStock().getQuantity(good) - cashier.getQuantityBought(good);
                     } else {
                         TradeGood good = sellGoods.get(row - 1);
