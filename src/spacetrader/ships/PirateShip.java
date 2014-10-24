@@ -1,4 +1,4 @@
-package spacetrader;
+package spacetrader.ships;
 
 import java.util.*;
 

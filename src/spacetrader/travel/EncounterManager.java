@@ -11,10 +11,10 @@ import java.util.Queue;
 import java.util.Random;
 import spacetrader.Planet;
 import spacetrader.Player;
-import spacetrader.PlayerShip;
+import spacetrader.ships.PlayerShip;
 import spacetrader.PoliceRecord;
-import spacetrader.ShipType;
-import spacetrader.SpaceShip;
+import spacetrader.ships.ShipType;
+import spacetrader.ships.SpaceShip;
 
 /**
  * This class will handle all the probability of creating and handling encounters.

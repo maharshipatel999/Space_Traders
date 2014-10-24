@@ -6,6 +6,8 @@
 
 package spacetrader;
 
+import spacetrader.ships.PlayerShip;
+import spacetrader.ships.ShipType;
 import java.io.Serializable;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Wallet;

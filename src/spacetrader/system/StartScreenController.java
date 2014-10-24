@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import spacetrader.Player;
-import spacetrader.PlayerShip;
+import spacetrader.ships.PlayerShip;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.TradeGood;
 

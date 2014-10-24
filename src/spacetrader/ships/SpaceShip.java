@@ -4,15 +4,13 @@
  * and open the template in the editor.
  */
 
-package spacetrader;
+package spacetrader.ships;
 
 import java.io.Serializable;
+import spacetrader.Player;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Cargo;
-import spacetrader.commerce.Gadget;
-import spacetrader.commerce.Shield;
 import spacetrader.commerce.TradeGood;
-import spacetrader.commerce.Weapon;
 
 /**
  *
@@ -33,7 +31,7 @@ public class SpaceShip implements Serializable {
     public SpaceShip(ShipType type) {
         this.type = type;
         this.cargo = new Cargo(type.cargoBay());
-        this.tank = new FuelTank(type.fuel() + 50); //added fuel for testing
+        this.tank = new FuelTank(type.fuel() + 10); //added fuel for testing
         this.weapons = new EquipmentSlots<>(type.weaponSlots());
         this.shields = new EquipmentSlots<>(type.shieldSlots());
         this.gadgets = new EquipmentSlots<>(type.gadgetSlots());

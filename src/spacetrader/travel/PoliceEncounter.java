@@ -8,7 +8,7 @@ package spacetrader.travel;
 
 import spacetrader.Player;
 import spacetrader.PoliticalSystem;
-import spacetrader.ShipType;
+import spacetrader.ships.ShipType;
 
 /**
  * Represents an encounter with the police.

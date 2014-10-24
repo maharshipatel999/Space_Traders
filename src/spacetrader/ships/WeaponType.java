@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package spacetrader.commerce;
+package spacetrader.ships;
 
 import spacetrader.TechLevel;
 
@@ -12,10 +12,10 @@ import spacetrader.TechLevel;
  *
  * @author nkaru_000
  */
-public enum ShieldType {
-
-    ENERGY        ("Energy shield",     100, 5000,  TechLevel.INDUSTRIAL,      70),
-    REFLECTIVE    ("Reflective shield", 200, 20000, TechLevel.POST_INDUSTRIAL, 30);
+public enum WeaponType {
+    PULSE        ("Pulse laser",    15, 2000,  TechLevel.INDUSTRIAL, 50),
+    BEAM         ("Beam laser",	    25, 12500, TechLevel.POST_INDUSTRIAL, 35),
+    MILITARY     ("Military laser", 35, 35000, TechLevel.HI_TECH, 15);
     
     private final String type;
     private final int power;
@@ -23,7 +23,7 @@ public enum ShieldType {
     private final TechLevel minTechLevel;
     private final int chance;
     
-    private ShieldType(String type, int power, int price, TechLevel minTechLevel, int chance) {
+    private WeaponType(String type, int power, int price, TechLevel minTechLevel, int chance) {
         this.type = type;
         this.power = power;
         this.price = price;
@@ -51,4 +51,5 @@ public enum ShieldType {
     public String toString() {
         return type;
     }
+    
 }

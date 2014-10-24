@@ -8,8 +8,8 @@ package spacetrader.travel;
 
 import spacetrader.Player;
 import spacetrader.PoliticalSystem;
-import spacetrader.ShipType;
-import spacetrader.SpaceShip;
+import spacetrader.ships.ShipType;
+import spacetrader.ships.SpaceShip;
 
 /**
  * Represents an abstract Encounter.

@@ -15,7 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import spacetrader.Player;
-import spacetrader.PlayerShip;
+import spacetrader.ships.PlayerShip;
 import spacetrader.Universe;
 import spacetrader.persistence.PlayerSlots;
 import spacetrader.persistence.SerializableUtil;

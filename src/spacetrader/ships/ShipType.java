@@ -1,6 +1,9 @@
-package spacetrader;
+package spacetrader.ships;
 
 //type, cargoBay, weaponSlots, shieldSlots, gadgetSlots, crew;
+
+import spacetrader.TechLevel;
+
 //fuel, fuelCost, hullStrength, size;
 //minTechLevel, price, repairCost;
 //bounty, occurrence,   police, pirate, trader;

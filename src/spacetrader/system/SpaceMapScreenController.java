@@ -18,8 +18,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -222,7 +224,21 @@ public class SpaceMapScreenController extends SceneController implements Initial
                                        MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN,
                                        Color.BLACK);
             this.getChildren().add(background);
-
+            FlowPane starsPane = new FlowPane();
+            int starImageWidth = (int) (new ImageView("/resources/images/starfield.png")).getImage().getWidth();
+            int extraSpace = ((int) (MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN)) % starImageWidth;
+            
+            starsPane.setPrefSize(MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN + extraSpace,
+                                       MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN);
+            
+            for (int i = 0; i < 20; i++) {
+                ImageView stars = new ImageView("/resources/images/starfield.png");
+                starsPane.getChildren().add(stars);
+            }
+            this.getChildren().add(starsPane);
+            
+            int numberOfBackgroundNodes = this.getChildren().size();
+            
             planetIcons = new HashMap<>();
 
             for (Planet planet : planets) {
@@ -265,7 +281,8 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
                     flightRadius.setOpacity(.6);
                     flightRadius.setStroke(Color.LAWNGREEN);
-                    this.getChildren().add(1, flightRadius); //add at index 1, so the circle is beneath all the planets
+                    //add right above the background, so that the circle is beneath all the planets, but is still visible
+                    this.getChildren().add(numberOfBackgroundNodes, flightRadius); 
                 }
             }
         }

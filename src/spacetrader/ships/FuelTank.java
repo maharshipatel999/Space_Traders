@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package spacetrader;
+package spacetrader.ships;
 
 import java.io.Serializable;
 import spacetrader.exceptions.InsufficientFuelException;
