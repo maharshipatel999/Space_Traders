@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import spacetrader.Planet;
 import spacetrader.Universe;
@@ -25,6 +26,8 @@ public class WarpScreenController extends SceneController implements Initializab
 
     @FXML private Text destinationText;
     @FXML private ImageView shipSprite;
+    
+    @FXML private AnchorPane warpPane;
 
     private Planet dest;
     
@@ -33,7 +36,7 @@ public class WarpScreenController extends SceneController implements Initializab
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
+        
     }
 
     /**

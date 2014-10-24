@@ -61,7 +61,7 @@ public enum ShipType {
     private final TechLevel minTechLevel;
     private final int price, repairCost; //repair-cost: cost of repairing 1 point of hull strength
     private final int bounty, occurrence; //occurence: percentage of the ships you meet
-    private final int police, pirate, trader; //min strength required for a police/pirate/trader to have this ship 
+    private final int police, pirate, trader; //min strength required for a police/pirate/trader to have this ship
 
     ShipType(String type,
             int cargoBay,
@@ -173,5 +173,11 @@ public enum ShipType {
 
     public int trader() {
         return trader;
+    }
+    
+    public String spriteFile() {
+        String fileName = Character.toLowerCase(type.charAt(0)) + type.substring(1);
+        fileName = "/resources/images/ship_sprites/" + fileName + ".png";
+        return fileName;
     }
 }

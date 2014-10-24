@@ -234,30 +234,7 @@ public class MainController {
         .message(alert)
         .showInformation();
         
-        /*final int MIN_WIDTH = 400;
-        final int MIN_HEIGHT = 120;
         
-        Stage dialog = new Stage();
-        dialog.initStyle(StageStyle.UTILITY);
-        dialog.setTitle(alertTitle);
-        Text message = new Text(alert);
-        message.setWrappingWidth(MIN_WIDTH);
-        message.setTextAlignment(TextAlignment.CENTER);
-        message.setFont(new Font(18.0));
-        
-        Button confirmButton  = new Button("OK");
-        confirmButton.addEventHandler(ActionEvent.ACTION, (ActionEvent) -> {
-            dialog.close();
-        });
-        AnchorPane pane = new AnchorPane();
-        pane.setPadding(new Insets(10, 10, 0, 10));
-        AnchorPane.setRightAnchor(confirmButton, 10.0);
-        AnchorPane.setBottomAnchor(confirmButton, 10.0);
-        //AnchorPane.setTopAnchor(message, 10.0);
-        pane.getChildren().addAll(message, confirmButton);
-        pane.setMinSize(MIN_WIDTH, MIN_HEIGHT);
-        dialog.setScene(new Scene(pane));
-        dialog.showAndWait();*/
     }
     
     /** 
