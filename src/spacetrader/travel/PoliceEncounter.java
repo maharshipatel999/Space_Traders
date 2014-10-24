@@ -7,6 +7,8 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
+import spacetrader.PoliticalSystem;
+import spacetrader.ShipType;
 
 /**
  * Represents an encounter with the police.
@@ -74,5 +76,10 @@ public class PoliceEncounter extends Encounter {
         int bribe = getPlayer().getCurrentWorth();
         bribe /= 10 + (10 * getPlayer().getLocation().getPoliticalSystem().bribeLevel()); //This should be the destination planet, not the current planet.
         return bribe;
+    }
+    
+    @Override
+    public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
+        return type.police() < 0 || politics.strengthPolice() < type.police();
     }
 }

@@ -7,6 +7,8 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
+import spacetrader.PoliticalSystem;
+import spacetrader.ShipType;
 
 /**
  * Represents an encounter with a pirate.
@@ -20,5 +22,10 @@ public class PirateEncounter extends Encounter {
      */
     public PirateEncounter(Player player) {
         super(player, "/spacetrader/travel/PirateEncounterScreen.fxml");
+    }
+    
+    @Override
+    public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
+        return type.pirate() < 0 || politics.strengthPirates() < type.pirate();
     }
 }

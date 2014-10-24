@@ -7,6 +7,8 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
+import spacetrader.PoliticalSystem;
+import spacetrader.ShipType;
 
 /**
  * Represents an ecnounter with a trader.
@@ -20,6 +22,11 @@ public class TraderEncounter extends Encounter {
      */
     public TraderEncounter(Player player) {
         super(player, "/spacetrader/travel/TraderEncounterScreen.fxml");
+    }
+    
+    @Override
+    public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
+        return type.trader() < 0 || politics.strengthTraders() < type.trader();
     }
     
 }

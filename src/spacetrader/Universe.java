@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import spacetrader.commerce.PriceIncreaseEvent;
 
 /**
  *
@@ -23,7 +22,7 @@ public class Universe implements Serializable {
     private final Random rand = new Random();
     
     public static final int WIDTH = 150;
-    public static final int HEIGHT = 100;
+    public static final int HEIGHT = 110;
     private static final int PLANET_MAX_AMOUNT = 120;
     private static final int PLANET_MIN_AMOUNT = 100;
     private static final int MIN_DISTANCE = 5;

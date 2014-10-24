@@ -7,6 +7,8 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
+import spacetrader.PoliticalSystem;
+import spacetrader.ShipType;
 import spacetrader.SpaceShip;
 
 /**
@@ -38,6 +40,22 @@ public abstract class Encounter {
     }
     
     /**
+     * Sets the opponent space ship of this encounter
+     * @param opponent the space ship who the player is encountering
+     */
+    public void setOpponent(SpaceShip opponent) {
+        this.opponent = opponent;
+    }
+    
+    /**
+     * Gets the opponent of this encounter
+     * @return the encounter's opponent
+     */
+    public SpaceShip getOpponent() {
+        return opponent;
+    }
+    
+    /**
      * Gets the fxml scene associated with this encounter. For instance, if this
      * is a PoliceEncounter, it will return the "PoliceEncounterScreen.fxml".
      * @return fxml scene of this encounter's associated view
@@ -45,4 +63,12 @@ public abstract class Encounter {
     public String getFXMLScene() {
         return encounterScene;
     }
+    
+    /**
+     * Determines if this encounter allows the opponent to have the specified 
+     * type of space ship.
+     * @param <error>
+     * @return true if its legal
+     */
+    public abstract boolean isLegalShipType(ShipType type, PoliticalSystem system);
 }

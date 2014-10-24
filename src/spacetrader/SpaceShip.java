@@ -7,6 +7,7 @@
 package spacetrader;
 
 import java.io.Serializable;
+import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.Gadget;
 import spacetrader.commerce.Shield;
@@ -87,5 +88,17 @@ public class SpaceShip implements Serializable {
         return firearms + narcotics > 0;
     }
     
+    /**
+     * I don't know exactly what this will be used for.
+     * Determines the price of this ship
+     * @param player the player of the game
+     * @return the price of this ship
+     */
+    public int shipPrice(Player player) {
+        int basePrice = type.price() * (100 - player.getEffectiveSkill(Skill.TRADER)) / 100;
+        
+        //change basePrice more based on its contentes
+        return basePrice;
+    }
     
 }

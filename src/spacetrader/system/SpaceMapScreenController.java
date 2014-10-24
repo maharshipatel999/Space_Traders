@@ -91,6 +91,9 @@ public class SpaceMapScreenController extends SceneController implements Initial
         return Universe.distanceBetweenPlanets(currentPlanet, planet) < fuelAmount;
     }
     
+    /**
+     * Goes to the warp screen traveling to the selected planet.
+     */
     public void travelToPlanet() {
         mainControl.goToWarpScreen(this.currentPlanet, planetMap.selectedPlanet);
     }
@@ -156,7 +159,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
      */
     private class MapPane extends Pane {
         public static final double MAP_WIDTH = 2700;
-        public static final double MAP_HEIGHT = 1800;
+        public static final double MAP_HEIGHT = 1980;
         public static final double LEFT_MARGIN = 40, RIGHT_MARGIN = 90;
         public static final double TOP_MARGIN = 40, BOTTOM_MARGIN = 40;
         public static final double PLANET_RADIUS = 10;
@@ -203,7 +206,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                                         && event.getClickCount() == 2) {
                     hidePlanetInfo();
                     if (selectedPlanet != null) {
-                        planetIcons.get(selectedPlanet).setFill(getPlanetColor(selectedPlanet));
+                        planetIcons.get(selectedPlanet).setFill(getUnselectedPlanetColor(selectedPlanet));
                         selectedPlanet = null;
                     }
                 }
@@ -229,7 +232,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
 
                 //create an icon for each planet
                 
-                Circle planetIcon = new Circle(planetX, planetY, PLANET_RADIUS, getPlanetColor(planet));
+                Circle planetIcon = new Circle(planetX, planetY, PLANET_RADIUS, getUnselectedPlanetColor(planet));
                 planetIcons.put(planet, planetIcon);
                 if (planet != currentPlanet) {
                     planetIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) ->
@@ -240,7 +243,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                             } else if (planet != selectedPlanet) {
                                 showPlanetInfo(planet);
                                 planetIcon.setFill(Color.RED);
-                                planetIcons.get(selectedPlanet).setFill(getPlanetColor(selectedPlanet));
+                                planetIcons.get(selectedPlanet).setFill(getUnselectedPlanetColor(selectedPlanet));
                             }
                             selectedPlanet = planet;
                         });
@@ -267,7 +270,12 @@ public class SpaceMapScreenController extends SceneController implements Initial
             }
         }
         
-        private Color getPlanetColor(Planet p) {
+        /**
+         * Determines the color of a planet that is not selected.
+         * @param p the planet
+         * @return the color of that planet
+         */
+        private Color getUnselectedPlanetColor(Planet p) {
             return p.isVisited() ? Color.DARKCYAN : Color.GREEN;
         }
 
