@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package spacetrader.system;
+package spacetrader.persistence;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,9 +15,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import spacetrader.persistence.PlayerSlots;
-import spacetrader.persistence.SerializableUtil;
+import spacetrader.system.SceneController;
+import spacetrader.system.SpaceTrader;
 
 /**
  * FXML Controller class
@@ -25,18 +24,23 @@ import spacetrader.persistence.SerializableUtil;
  * @author nkaru_000
  */
 public class OverwriteScreenController extends SceneController implements Initializable {
-
-    @FXML private Button player1;
-    @FXML private Button player2;
-    @FXML private Button player3;
     
     private PlayerSlots slots;
+    private SpaceTrader game;
+    
+    /**
+     * Gives this controller access to the entire game.
+     * @param game
+     */
+    public void setUpSaveScreen(SpaceTrader game) {
+        this.game = game;
+    }
     
     private List<Object> setUpPlayer() {
         List<Object> objList = new ArrayList<>();
-        objList.add(mainControl.game.getUniverse());
-        objList.add(mainControl.game.getPlayer());
-        objList.add(mainControl.game.getPlayer().getShip());
+        objList.add(game.getUniverse());
+        objList.add(game.getPlayer());
+        objList.add(game.getPlayer().getShip());
         return objList;
     }
     
@@ -92,11 +96,12 @@ public class OverwriteScreenController extends SceneController implements Initia
             System.out.println("IOException");
             System.out.println(e.getMessage());
         }
-        mainControl.goToHomeScreen(mainControl.game.getPlayer().getLocation());
-     }
+        
+        mainControl.displaySaveProgress("Overwrite Save File", "Saving...", "Game Successfully Saved!");
+    }
     
     @FXML protected void goBack(ActionEvent event) {
-        mainControl.goToHomeScreen(mainControl.game.getPlayer().getLocation());
+        mainControl.goToHomeScreen(game.getPlayer().getLocation());
     }
     
     /**

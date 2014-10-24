@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package spacetrader.system;
+package spacetrader.persistence;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,12 +13,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import spacetrader.Player;
 import spacetrader.ships.PlayerShip;
 import spacetrader.Universe;
-import spacetrader.persistence.PlayerSlots;
-import spacetrader.persistence.SerializableUtil;
+import spacetrader.system.SceneController;
+import spacetrader.system.SpaceTrader;
 
 /**
  * FXML Controller class
@@ -26,30 +25,41 @@ import spacetrader.persistence.SerializableUtil;
  * @author nkaru_000
  */
 public class ReloadGameScreenController extends SceneController implements Initializable {
-
-    @FXML private Button game1;
-    @FXML private Button game2;
-    @FXML private Button game3;
+    
+    private SpaceTrader game;
+    
+    /**
+     * Gives this controller access to the entire game.
+     * @param game
+     */
+    public void setUpReloadScreen(SpaceTrader game) {
+        this.game = game;
+    }
+    
     
     @FXML public void reloadGame1() throws IOException, ClassNotFoundException {
         PlayerSlots slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
         List<Object> objects = slots.getPlayer1();
         setObjects(objects);
-        mainControl.goToHomeScreen(mainControl.game.getPlayer().getLocation());
+        goToHome();
     }
 
     @FXML public void reloadGame2() throws IOException, ClassNotFoundException {
         PlayerSlots slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
         List<Object> objects = slots.getPlayer2();
         setObjects(objects);
-        mainControl.goToHomeScreen(mainControl.game.getPlayer().getLocation());
+        goToHome();
     }
 
     @FXML public void reloadGame3() throws IOException, ClassNotFoundException {
         PlayerSlots slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
         List<Object> objects = slots.getPlayer3();
         setObjects(objects);
-        mainControl.goToHomeScreen(mainControl.game.getPlayer().getLocation());
+        goToHome();
+    }
+    
+    private void goToHome() {
+        mainControl.displaySaveProgress("Loading Save File", "Loading...", "Game Successfully Loaded!");
     }
 
     @FXML protected void goBack(ActionEvent e) {
@@ -57,9 +67,9 @@ public class ReloadGameScreenController extends SceneController implements Initi
     }
 
     private void setObjects(List<Object> objects) {
-        mainControl.game.setUniverse((Universe) objects.get(0));
-        mainControl.game.setPlayer((Player) objects.get(1));
-        mainControl.game.getPlayer().setShip((PlayerShip) objects.get(2));
+        game.setUniverse((Universe) objects.get(0));
+        game.setPlayer((Player) objects.get(1));
+        game.getPlayer().setShip((PlayerShip) objects.get(2));
     }
        
     

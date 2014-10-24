@@ -9,6 +9,10 @@ package spacetrader.system;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -17,10 +21,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
-import spacetrader.planets.Planet;
 import spacetrader.Player;
 import spacetrader.Universe;
 import spacetrader.commerce.PriceIncreaseEvent;
+import spacetrader.persistence.OverwriteScreenController;
+import spacetrader.persistence.ReloadGameScreenController;
+import spacetrader.planets.Planet;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.RandomEvent;
@@ -33,9 +39,9 @@ import spacetrader.travel.WarpScreenController;
  */
 public class MainController {
     
-    SpaceTrader game;
-    Stage stage;
-    RandomEventGenerator eventGenerator;
+    private SpaceTrader game;
+    private Stage stage;
+    private RandomEventGenerator eventGenerator;
     
     /**
      * Creates the MainController.
@@ -217,6 +223,7 @@ public class MainController {
         OverwriteScreenController control;
         control = (OverwriteScreenController) changeScene("/spacetrader/persistence/OverwriteScreen.fxml", stage);
         control.setMainControl(this);
+        control.setUpSaveScreen(game);
     }
     
     public void goToReloadScreen() {
@@ -224,17 +231,59 @@ public class MainController {
         ReloadGameScreenController control;
         control = (ReloadGameScreenController) changeScene("/spacetrader/persistence/ReloadGameScreen.fxml", stage);
         control.setMainControl(this);
+        control.setUpReloadScreen(game);
     }
     
     public void displayAlertMessage(String alertTitle, String alert) {
         Dialogs.create()
-        .owner(stage)
-        .title(alertTitle)
-        //.masthead(null)
-        .message(alert)
-        .showInformation();
+            .owner(stage)
+            .title(alertTitle)
+            //.masthead(null)
+            .message(alert)
+            .showInformation();
+    }
+    
+    public void displayProgess(String progressTitle, Service service) {
+        Dialogs.create()
+                .owner(stage)
+                .title(progressTitle)
+                .showWorkerProgress(service);
         
         
+        service.start();
+    }
+    
+    /**
+     * This is for displaying save progress to the player
+     * @param progressTitle the popup window title
+     * @param updateMessage the message that is displayed over the progress bar
+     * @param finishMessage the message displayed when finished
+     */
+    public void displaySaveProgress(String progressTitle, String updateMessage, String finishMessage) {
+        Service<Void> saveService = new Service<Void>() {
+            @Override public Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override public Void call() throws InterruptedException {
+                        updateMessage(updateMessage);
+                        updateProgress(0, 100);
+                        for (int i = 0; i < 100; i++) {
+                            Thread.sleep(10);
+                            updateProgress(i + 1, 100);
+                        }
+                        updateMessage(finishMessage);
+                        return null;
+                    }
+                };
+            }
+        };
+        
+        saveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override public void handle(WorkerStateEvent e) {
+                goToHomeScreen(game.getPlayer().getLocation());
+            }
+        });
+        
+        displayProgess(progressTitle, saveService);
     }
     
     /** 

@@ -231,9 +231,8 @@ public class SpaceMapScreenController extends SceneController implements Initial
             starsPane.setPrefSize(MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN + extraSpace,
                                        MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN);
             
-            for (int i = 0; i < 20; i++) {
-                ImageView stars = new ImageView("/resources/images/starfield.png");
-                starsPane.getChildren().add(stars);
+            for (int i = 0; i < 16; i++) {
+                starsPane.getChildren().add(new ImageView("/resources/images/starfield.png"));
             }
             this.getChildren().add(starsPane);
             

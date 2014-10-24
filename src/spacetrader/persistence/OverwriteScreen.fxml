@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="477.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.OverwriteScreenController">
+<AnchorPane id="AnchorPane" prefHeight="477.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.persistence.OverwriteScreenController">
    <children>
       <Text fill="WHITE" layoutX="177.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to reload!" textAlignment="CENTER">
          <font>
