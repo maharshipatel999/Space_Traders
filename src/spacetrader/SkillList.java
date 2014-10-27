@@ -20,6 +20,8 @@ public class SkillList implements Serializable {
         PILOT, FIGHTER, TRADER, ENGINEER, INVESTOR;
     }
     
+    public static int MAX_SKILL = 10;
+    
     private final Map<Skill, Integer> skills;
 
     public SkillList() {

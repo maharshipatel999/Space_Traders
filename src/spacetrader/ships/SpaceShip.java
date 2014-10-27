@@ -87,7 +87,7 @@ public class SpaceShip implements Serializable {
     }
     
     /**
-     * I don't know exactly what this will be used for.
+     * This method should be put in the shipYard
      * Determines the price of this ship
      * @param player the player of the game
      * @return the price of this ship
@@ -97,6 +97,42 @@ public class SpaceShip implements Serializable {
         
         //change basePrice more based on its contentes
         return basePrice;
+    }
+    
+    /**
+     * Used in calculating the worth of this ship
+     * @return the selling price of this ship
+     */
+    public int currentShipPriceWithoutCargo() {
+        //trade-in value is 3/4 original price
+        int currentPrice = (type.price() * 3) / 4;
+        
+        //subtract repair costs
+        currentPrice -= (maxHullStrength - hullStrength) * type.repairCost();
+        
+        //subtract cost to fill tank with fuel
+        currentPrice -= (getTank().getMaxFuel() - getTank().getFuelAmount());
+        
+        //add reduced cost of equipment
+        for (int i = 0; i < weapons.getNumFilledSlots(); i++) {
+            currentPrice += weapons.getItem(i).getType().price() * .75;
+        }
+        for (int i = 0; i < shields.getNumFilledSlots(); i++) {
+            currentPrice += weapons.getItem(i).getType().price() * .75;
+        }
+        //for (int i = 0; i < gadgets.getNumFilledSlots(); i++) {
+        //    currentPrice += gadgets.getItem(i).getType().price() * .75;
+        //}
+        
+        return currentPrice;
+    }
+    
+    /**
+     * Calculated the worth of this ship
+     * @return this ship's current worth
+     */
+    public int currentShipPrice() {
+        return currentShipPriceWithoutCargo() + cargo.getCostOfAllGoods();
     }
     
 }

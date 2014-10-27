@@ -116,11 +116,10 @@ public class Player extends Trader implements Serializable {
     /**
      * Calculates the player's currrent worth. This is determined by the amount of money you own
      * minus the money you owe. It also considers the value of your spaceship and all the things in it.
-     * @return 
+     * @return the player's current worth
      */
     public int getCurrentWorth() {
-        int worth = wallet.getCredits() - debt;
-        return worth;
+        return wallet.getCredits() - debt + ship.currentShipPrice();
     }
     
     public void setShip(PlayerShip ship) {

@@ -37,6 +37,7 @@ public class Planet implements Serializable {
     private final TechLevel level;
     private final Resource resource;
     private final PoliticalSystem politSys;
+    private final int size;
     private PriceIncreaseEvent priceIncEvent;
     private int priceIncDuration;
     private Market market;
@@ -56,6 +57,7 @@ public class Planet implements Serializable {
         this.level = level;
         this.resource = resource;
         this.politSys = politSys;
+        this.size = rand.nextInt(5); //this should probably be moved to the Universe class
 
         this.market = new Market(this);
         this.visited = false;
@@ -79,6 +81,14 @@ public class Planet implements Serializable {
 
     public PoliticalSystem getPoliticalSystem() {
         return this.politSys;
+    }
+    
+    /**
+     * Returns the size of this planet, a value between 0 and 4.
+     * @return this planet's size
+     */
+    public int getSize() {
+        return size;
     }
     
     public void setPriceIncEvent(PriceIncreaseEvent priceIncEvent) {

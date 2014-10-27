@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import spacetrader.exceptions.CargoIsFullException;
 import spacetrader.exceptions.DepletedInventoryException;
 
@@ -26,8 +25,10 @@ import spacetrader.exceptions.DepletedInventoryException;
 public class Cargo implements Serializable {
     
     private final Map<TradeGood, Integer> tradeGoods;
+    private final Map<TradeGood, Integer> costOfGoods;
     private int maxCapacity;
     private int count;
+    
     
     /**
      * Creates a new Cargo with a specified number of available slots
@@ -36,37 +37,31 @@ public class Cargo implements Serializable {
     public Cargo(int maxCapacity) {
         this.maxCapacity = maxCapacity;
         this.tradeGoods = new HashMap<>();
+        this.costOfGoods = new HashMap<>();
         for (TradeGood good : TradeGood.values()) {
             tradeGoods.put(good, 0);
+            costOfGoods.put(good, 0);
         }
     }
     
     /**
      * Adds an item to the cargo.
+     * Adds the cost of that good to this TradeGood's total cost
      * If there is not enough space, an exception is thrown.
      * @param tradeGood the good to add
      * @param quantity the amount of good to add
+     * @param cost
      */
-    public void addItem(TradeGood tradeGood, int quantity) {
+    public void addItem(TradeGood tradeGood, int quantity, int cost) {
         if (count + quantity > maxCapacity) {
             throw new CargoIsFullException();
         }
         int currQuantity = this.tradeGoods.get(tradeGood);
         this.tradeGoods.put(tradeGood, currQuantity + quantity);
         this.count += quantity;
-    }
-    
-    /**
-     * Adds multiple items to the cargo if not full
-     * @param newGoods map of goods and their quantities to add
-     */
-    public void addMultipleItems(Map<TradeGood, Integer> newGoods) {
-        if (isFull()) {
-            throw new CargoIsFullException();
-        }
-        for (Entry<TradeGood, Integer> item : newGoods.entrySet()) {
-            addItem(item.getKey(), item.getValue());
-        }
+        
+        int newCost = this.costOfGoods.get(tradeGood) + (quantity * cost);
+        this.costOfGoods.put(tradeGood, newCost);
     }
     
     /**
@@ -84,6 +79,8 @@ public class Cargo implements Serializable {
             int currQuantity = this.tradeGoods.get(good);
             int quantity = otherCargo.tradeGoods.get(good);
             this.tradeGoods.put(good, currQuantity + quantity);
+            int newCost = this.costOfGoods.get(good) + otherCargo.costOfGoods.get(good);
+            this.costOfGoods.put(good, newCost);
         }
         this.count += otherCargo.count;
     }
@@ -101,15 +98,12 @@ public class Cargo implements Serializable {
         }
         this.tradeGoods.put(tradeGood, currQuantity - quantity);
         this.count -= quantity;
-    }
-    
-    /**
-     * Removes multiple items from the cargo if not empty
-     * @param goods map of goods and their quantities to remove
-     */
-    public void removeMultipleItems(Map<TradeGood, Integer> goods) {
-        for (Entry<TradeGood, Integer> item : goods.entrySet()) {
-            removeItem(item.getKey(), item.getValue());
+        //adjust cost of this trade good
+        int costPerGood = this.costOfGoods.get(tradeGood) / quantity;
+        int newCost = this.costOfGoods.get(tradeGood) - (quantity * costPerGood);
+        this.costOfGoods.put(tradeGood, newCost);
+        if (tradeGoods.get(tradeGood) == 0) {
+            costOfGoods.put(tradeGood, 0);
         }
     }
     
@@ -130,6 +124,13 @@ public class Cargo implements Serializable {
             int currQuantity = this.tradeGoods.get(good);
             int quantity = otherCargo.tradeGoods.get(good);
             this.tradeGoods.put(good, currQuantity - quantity);
+            //adjust cost of this trade good
+            int costPerGood = this.costOfGoods.get(good) / quantity;
+            int newCost = this.costOfGoods.get(good) - (quantity * costPerGood);
+            this.costOfGoods.put(good, newCost);
+            if (tradeGoods.get(good) == 0) {
+                costOfGoods.put(good, 0);
+            }
         }
         this.count -= otherCargo.count;
     }
@@ -141,6 +142,7 @@ public class Cargo implements Serializable {
     public void clearItem(TradeGood good) {
         this.count -= this.tradeGoods.get(good);
         this.tradeGoods.put(good, 0);
+        this.costOfGoods.put(good, 0);
     }
     
     /**
@@ -148,9 +150,8 @@ public class Cargo implements Serializable {
      */
     public void clearAllItems() {
         for (TradeGood good : TradeGood.values()) {
-            tradeGoods.put(good, 0);
+            clearItem(good);
         }
-        this.count = 0;
     }
     
     /**
@@ -208,6 +209,29 @@ public class Cargo implements Serializable {
      */
     public int getQuantity(TradeGood tradeGood) {
         return this.tradeGoods.get(tradeGood);
+    }
+    
+    /**
+     * Determines the total worth of a kind of good stored in this Cargo
+     * based on how much it was bought for.
+     * @param tradeGood good who's cost is being checked
+     * @return cost of good
+     */
+    public int getCostOfGood(TradeGood tradeGood) {
+        return this.costOfGoods.get(tradeGood);
+    }
+    
+    /**
+     * Determines the amount of money that was spent purchasing all 
+     * the goods in this Cargo. ie. the Cargo's total worth
+     * @return the cost of all goods in this Cargo
+     */
+    public int getCostOfAllGoods() {
+        int worth = 0;
+        for (TradeGood good : TradeGood.values()) {
+            worth += costOfGoods.get(good);
+        }
+        return worth;
     }
     
     /**

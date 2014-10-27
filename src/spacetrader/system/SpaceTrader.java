@@ -22,6 +22,7 @@ public class SpaceTrader extends Application {
     private Universe universe;
     private Player player;
     private MainController mainControl;
+    private int days;
     
     @Override
     public void start(Stage primaryStage) {
@@ -71,6 +72,14 @@ public class SpaceTrader extends Application {
         this.player = player;
     }
 
+    public int getDays() {
+        return days;
+    }
+
+    public void increaseDays() {
+        days++;
+    }
+    
     /**
      * @param args the command line arguments
      */

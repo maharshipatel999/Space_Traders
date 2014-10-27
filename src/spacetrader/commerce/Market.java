@@ -10,6 +10,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import spacetrader.Player;
+import spacetrader.PoliceRecord;
+import spacetrader.SkillList;
+import spacetrader.SkillList.Skill;
 import spacetrader.planets.Planet;
 import spacetrader.planets.Resource;
 
@@ -28,6 +32,7 @@ public class Market implements Serializable {
     /**
      * Constructor
      * @param planet the planet to be assigned an instance of Market
+     * @param player
      */
     public Market(Planet planet) {
         this.planet = planet;
@@ -36,7 +41,6 @@ public class Market implements Serializable {
         buyPrices = new HashMap<>();
         appxPrices = new HashMap<>();
         
-        setAllPrices();
         setApproximatePrices();
         setMarketStock();
     }
@@ -45,49 +49,41 @@ public class Market implements Serializable {
      * Sets the Map sell/buy prices so that each TradeGood maps to its sell/buy price on this planet.
      * Price is equal to (the base price) + (incPerLevel * (Planet Tech Level - minProduceLevel)) + (variance).
      * If a good is not sold on this planet, its price is -1.
+     * @param player
      */
-    public void setAllPrices() {
+    public void setAllPrices(Player player) {
+        setApproximatePrices();
+        
         for (TradeGood good : TradeGood.values()) {
             Random rand = new Random();
-            int variance = rand.nextInt(good.variance() + 1);
-            int buyPrice = good.price();
-            int sellPrice = good.price();
 
-            if (planet.getLevel().ordinal() >= good.minProduceLevel()) {
-                buyPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
-                buyPrice += variance;
-                //checks the resource of the planet and applies a price accordingly
-                if ((planet.getResource() == good.highCondition()) && good.highCondition() != Resource.NONE) {
+            int buyPrice = appxPrices.get(good);
+            if (buyPrice >= 0) {
+                //check if there is a priceIncreaseEvent
+                //each trade good has a PriceIncreaseEvent, so we don't need to check if its none
+                if (planet.getPriceIncEvent() == good.incEvent()) {
                     buyPrice = (int) (buyPrice * 1.5);
-                } else if ((planet.getResource() == good.lowCondition()) && good.lowCondition() != Resource.NONE) {
-                    buyPrice = (int) (buyPrice * 0.5);
                 }
-                //check if there is a priceIncreaseEvent
-                //each good has a PriceIncreaseEvent, so we don't need to check if its none
-                if (planet.getPriceIncEvent() == good.incEvent()) {
-                    buyPrice = (int) (buyPrice * 2.5);
-                }
-            } else {
-                buyPrice = -1;
+                
+                int variance1 = rand.nextInt(good.variance() + 1);
+                int variance2 = rand.nextInt(good.variance() + 1);
+                
+                buyPrice += variance1 - variance2;
             }
-
-            if (planet.getLevel().ordinal() >= good.minUseLevel()) {
-                sellPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
-                sellPrice += variance;
-                //checks the resource of the planet and applies a price accordingly
-                if ((planet.getResource() == good.highCondition()) && good.highCondition() != Resource.NONE) {
-                    sellPrice = (int) (sellPrice * 1.5);
-                } else if ((planet.getResource() == good.lowCondition()) && good.lowCondition() != Resource.NONE) {
-                    sellPrice = (int) (sellPrice * 0.5);
-                }
-                //check if there is a priceIncreaseEvent
-                //each good has a PriceIncreaseEvent, so we don't need to check if its none
-                if (planet.getPriceIncEvent() == good.incEvent()) {
-                    sellPrice = (int) (sellPrice * 2.5);
-                }
-            } else { 
-                sellPrice = -1;
+            
+            int sellPrice = buyPrice;
+            
+            //adjust for intermediary if player is a criminal
+            if (player.getPoliceRecord().ordinal() < PoliceRecord.DUBIOUS.ordinal()) {
+                sellPrice *= 0.9;
             }
+            
+            // BuyPrice = SellPrice + 1 to 12% (depending on trader skill (minimum is 1, max 12))
+            buyPrice *= 1.03 + ((SkillList.MAX_SKILL - player.getEffectiveSkill(Skill.TRADER)) / 100);
+            if (buyPrice <= sellPrice) {
+                buyPrice = sellPrice + 1;
+            }
+            
             buyPrices.put(good, buyPrice);
             sellPrices.put(good, sellPrice);
         }
@@ -101,16 +97,34 @@ public class Market implements Serializable {
     private void setApproximatePrices() {
         for (TradeGood good : TradeGood.values()) {
             int appxPrice = good.price();
-            if (planet.getLevel().ordinal() >= good.minUseLevel()) {
-                appxPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
-                //checks the resource of the planet and applies a price accordingly
-//                if ((planet.getResource() == good.highCondition()) && good.highCondition() != Resource.NONE) {
-//                    sellPrice = (int) (sellPrice * 1.5);
-//                } else if ((planet.getResource() == good.lowCondition()) && good.lowCondition() != Resource.NONE) {
-//                    sellPrice = (int) (sellPrice * 0.5);
-//                }
-            } else { 
+
+            if ((good == TradeGood.FIREARMS && !planet.getPoliticalSystem().firearmsOK() ||
+                    good == TradeGood.NARCOTICS && !planet.getPoliticalSystem().drugsOK() ||
+                    planet.getLevel().ordinal() < good.minProduceLevel())) {
                 appxPrice = -1;
+            } else {
+                appxPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
+                
+                //if the good is highly wanted, increase the price
+                if (good == planet.getPoliticalSystem().wanted()) {
+                    appxPrice *= (4.0 / 3);
+                }
+                
+                //high trader activity decreases the price
+                appxPrice *= (100 - (2 * planet.getPoliticalSystem().strengthTraders())) / 100;
+                
+                //large systems have high production which decreases prices
+                appxPrice *= (100 - planet.getSize()) / 100;
+                
+                
+                //checks the resource of the planet and applies a price accordingly
+                if (planet.isVisited()) {
+                    if ((planet.getResource() == good.highCondition()) && good.highCondition() != Resource.NONE) {
+                        appxPrice *= (4.0 / 3);
+                    } else if ((planet.getResource() == good.lowCondition()) && good.lowCondition() != Resource.NONE) {
+                        appxPrice *= (3.0 / 4);
+                    }
+                }
             }
             appxPrices.put(good, appxPrice);
         }
@@ -124,19 +138,34 @@ public class Market implements Serializable {
      */
     private void setMarketStock() {
         Random rand = new Random();
-        int amountToAdd;
         for (TradeGood good : TradeGood.values()) {
-            amountToAdd = rand.nextInt(7) + 12; //can be changed 
-            if (buyPrices.get(good) >= 0) {
-                if (planet.getLevel() == good.bestLevel()) {
-                    stock.addItem(good, amountToAdd * 2);
-                } else {
-                    stock.addItem(good, amountToAdd);  
-                }
+            int quantity = 9 + rand.nextInt(5);
+            quantity -= Math.abs(good.bestLevel().ordinal() - planet.getLevel().ordinal());
+            quantity *= (1 + planet.getSize());
+
+            // Because of the enormous profits possible, there shouldn't be too many robots or narcotics available
+            if (good == TradeGood.ROBOTS || good == TradeGood.NARCOTICS) {
+                quantity = 1 + ((quantity * 3) / 4);
             }
+            //if the price is expecially expensive, there should be less of it and vice versa
+            if (planet.getResource() == good.lowCondition() && good.lowCondition() != Resource.NONE) {
+                quantity = (quantity * 4) / 3;
+            } else if (planet.getResource() == good.highCondition() && good.highCondition() != Resource.NONE) {
+                quantity = (quantity * 3) / 4;
+            }
+            //when there is a price increase event, the quantity should be very low
+            if (planet.getPriceIncEvent() == good.incEvent())
+                quantity /= 5;
+
+           quantity -= rand.nextInt(10) + rand.nextInt(10);
+           
+           if (quantity < 0) {
+               quantity = 0;
+           }
+           
+           stock.addItem(good, quantity, 0);
         }
     }
-    
     /**
      * Gets the selling price of a specific TradeGood.
      * @param good the TradeGood to find the price off

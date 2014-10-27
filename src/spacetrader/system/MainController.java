@@ -20,8 +20,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import spacetrader.Player;
+import spacetrader.PoliceRecord;
 import spacetrader.Universe;
 import spacetrader.commerce.PriceIncreaseEvent;
 import spacetrader.persistence.OverwriteScreenController;
@@ -42,6 +45,9 @@ public class MainController {
     private SpaceTrader game;
     private Stage stage;
     private RandomEventGenerator eventGenerator;
+    
+    private WarpScreenController warpScreenControl;
+    private Scene warpScreenScene;
     
     /**
      * Creates the MainController.
@@ -70,8 +76,7 @@ public class MainController {
     public void setUpGame(Player player) {
         game.setUniverse(new Universe());
         game.setPlayer(player);
-        player.setLocation(game.getUniverse().getPlanet("Pallet"));
-        goToHomeScreen(player.getLocation());
+        travelToPlanet(game.getUniverse().getPlanet("Pallet"));
     }
     
     /**
@@ -94,17 +99,25 @@ public class MainController {
                 planet.setRandomPriceIncEvent();
             }
         }
-
-        destination.getMarket().setAllPrices();
-        game.getPlayer().setLocation(destination);
+        game.increaseDays();
+        
+        //adjust police record score
+        if (game.getDays() % 3 == 0 && game.getPlayer().getPoliceRecord().ordinal() > PoliceRecord.CLEAN.ordinal()) {
+            int newRecord = game.getPlayer().getPoliceRecordScore() - 1;
+            game.getPlayer().setPoliceRecordScore(newRecord);
+	}
+	if (game.getPlayer().getPoliceRecord().ordinal() < PoliceRecord.DUBIOUS.ordinal()) {
+            int newRecord = game.getPlayer().getPoliceRecordScore() + 1;
+            game.getPlayer().setPoliceRecordScore(newRecord);
+        }
+        
         game.getPlayer().getShip().getTank().removeFuel(distance);
-        goToHomeScreen(destination);
+        travelToPlanet(destination);
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
             displayAlertMessage("Notice!", destination.getPriceIncEvent().desc());
         }
         if (eventGenerator == null) {
             eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);
-
         }
         
         if (eventGenerator.eventOccurs()) {
@@ -132,15 +145,28 @@ public class MainController {
         control = (CharacterDialogController) changeScene("/spacetrader/CharacterDialog.fxml", stage);
         control.setMainControl(this);
     }
+    
     /**
-     * Transitions the game screen to the First Screen.
+     * Takes care of the actual act of going to a planet.
+     * Things that happens every time you go to a planet from a different planet
+     * should be put here.
+     * @param destination 
+     */
+    public void travelToPlanet(Planet destination) {
+        game.getPlayer().setLocation(destination);
+        destination.setVisited();
+        destination.getMarket().setAllPrices(game.getPlayer());
+        goToHomeScreen(destination);
+    }
+    
+    /**
+     * Transitions the game screen to the First Screen. Does not do anything extra.
      * @param planet the planet who's home screen we should view
      */
     public void goToHomeScreen(Planet planet) {
         HomeScreenController control;
         control = (HomeScreenController) changeScene("/spacetrader/planets/HomeScreen.fxml", stage);
         control.setMainControl(this);
-        planet.setVisited();
         control.setUpHomeScreen(planet);
     }
     /**
@@ -162,10 +188,22 @@ public class MainController {
      */
    public void goToWarpScreen(Planet source, Planet dest) {
        stage.setTitle("Traveling to " + dest.getName());
-       WarpScreenController control;
-       control = (WarpScreenController) changeScene("/spacetrader/travel/WarpScreen.fxml", stage);
-       control.setMainControl(this);
-       control.travel(source, dest);
+       warpScreenControl = (WarpScreenController) changeScene("/spacetrader/travel/WarpScreen.fxml", stage);
+       warpScreenControl.setMainControl(this);
+       warpScreenControl.travel(source, dest);
+       warpScreenScene = stage.getScene();
+   }
+   
+   /**
+    * Goes back to a warp screen that was already in progress
+    */
+   public void goBackToWarpScreen() {
+        if (warpScreenControl == null) { //this is only for testing purposes
+            goToWarpScreen(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets().get(10));
+        }
+        
+        stage.setScene(warpScreenScene);
+        warpScreenControl.continueTraveling();
    }
    
    /**
@@ -205,7 +243,7 @@ public class MainController {
         StartScreenController control;
         control = (StartScreenController) changeScene("/spacetrader/StartScreen.fxml", startStage);
         control.setMainControl(this);
-        control.setUpPlayerStats(game.getPlayer(), startStage);
+        control.setUpPlayerStats(game.getPlayer(), startStage, this);
         
         
        /* FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlScene));
@@ -241,6 +279,17 @@ public class MainController {
             //.masthead(null)
             .message(alert)
             .showInformation();
+    }
+    
+    public Action displayYesNoComfirmation(String optionsTitle, String mastHead, String message) {
+        Action response = Dialogs.create()
+            .owner(stage)
+            .title(optionsTitle)
+            .masthead(mastHead)
+            .message(message)
+            .actions(Dialog.Actions.YES, Dialog.Actions.NO)
+            .showConfirm();
+        return response;
     }
     
     public void displayProgess(String progressTitle, Service service) {

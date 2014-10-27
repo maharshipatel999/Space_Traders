@@ -7,7 +7,9 @@
 package spacetrader.system;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,10 +17,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.Dialogs;
 import spacetrader.Player;
-import spacetrader.ships.PlayerShip;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.TradeGood;
+import spacetrader.ships.PlayerShip;
+import spacetrader.travel.PirateEncounter;
+import spacetrader.travel.PoliceEncounter;
+import spacetrader.travel.TraderEncounter;
 
 /**
  * FXML Controller class
@@ -48,8 +54,9 @@ public class StartScreenController extends SceneController implements Initializa
     @FXML private Label shipShieldSlots;
     @FXML private Label shipGadgetSlots;
     
-    
+    private Player player;
     private Stage startStage;
+    private MainController mainControl;
     
     /**
      * Initializes the controller class.
@@ -64,8 +71,10 @@ public class StartScreenController extends SceneController implements Initializa
      * @param player the player who's stats should be displayed
      * @param myStage the window which should display the start screen
      */
-    public void setUpPlayerStats(Player player, Stage myStage) {
+    public void setUpPlayerStats(Player player, Stage myStage, MainController mainControl) {
         this.startStage = myStage;
+        this.player = player;
+        this.mainControl = mainControl;
         PlayerShip ship = player.getShip();
         
         playerName.setText(player.getName());
@@ -101,6 +110,44 @@ public class StartScreenController extends SceneController implements Initializa
     
     @FXML protected void closeWindow(ActionEvent event) {
         startStage.close();
+    }
+    
+    @FXML protected void enableCheats(ActionEvent event) {
+        List<String> choices = new ArrayList<>();
+        choices.add("Increase Fuel");
+        choices.add("Get Money!");
+        choices.add("Show Police Encounter");
+        choices.add("Show Pirate Encounter");
+        choices.add("Show Trader Encounter");
+
+        Optional<String> response = Dialogs.create()
+                .owner(startStage)
+                .title("Cheats!")
+                .masthead("If you're not a member of the Wombo Combo, get out of here jerk!")
+                .message("Choose your cheat:")
+                .showChoices(choices);
+
+        // One way to get the response value.
+        if (response.isPresent()) {
+            switch (response.get()) {
+                case "Increase Fuel":
+                    player.getShip().getTank().increaseMaxFuel(50);
+                    player.getShip().getTank().addFuel(50);
+                    break;
+                case "Get Money!":
+                    player.getWallet().add(10000);
+                    break;
+                case "Show Police Encounter":
+                    mainControl.goToEncounterScreen(new PoliceEncounter(player));
+                    break;
+                case "Show Pirate Encounter":
+                    mainControl.goToEncounterScreen(new PirateEncounter(player));
+                    break;
+                case "Show Trader Encounter":
+                    mainControl.goToEncounterScreen(new TraderEncounter(player));
+                    break;
+            }
+        }
     }
     
 }

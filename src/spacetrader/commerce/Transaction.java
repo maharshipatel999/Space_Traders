@@ -71,7 +71,7 @@ public class Transaction {
             throw new InsufficientFundsException("Player does not have enough credits to make this purchase.");
         }
         purchases.clearItem(good);
-        purchases.addItem(good, newQuantity);
+        purchases.addItem(good, newQuantity, market.getBuyPrice(good));
         updateTotalCost();
     }
     
@@ -90,7 +90,7 @@ public class Transaction {
             throw new DepletedInventoryException("Cannot sell more goods than the player owns");
         }
         sales.clearItem(good);
-        sales.addItem(good, newQuantity);
+        sales.addItem(good, newQuantity, market.getSellPrice(good));
         updateTotalRevenue();
     }
     

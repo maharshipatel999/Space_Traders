@@ -35,4 +35,8 @@ public class Shield {
     public int getPowerRemaining() {
         return type.power();
     }
+    
+    public ShieldType getType() {
+        return type;
+    }
 }

@@ -7,6 +7,7 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
+import spacetrader.commerce.TradeGood;
 import spacetrader.planets.PoliticalSystem;
 import spacetrader.ships.ShipType;
 
@@ -44,8 +45,9 @@ public class PoliceEncounter extends Encounter {
      * Determines if the player is carrying illegal goods. If he is, fines him
      * and takes the illegal goods. If not, the player is free to go. Updates
      * the player's police record accordingly.
+     * @return true if the player was caught carrying illegal goods, false otherwise
      */
-    public void inspectPlayer() {
+    public boolean inspectPlayer() {
         //determine if player is carrying illegal goods
         if (getPlayer().getShip().isCarryingIllegalGoods()) {
             //calculate the player's fine
@@ -58,13 +60,19 @@ public class PoliceEncounter extends Encounter {
             fine = Math.max(fine, MINIMUM_FINE_AMOUNT);
 
             getPlayer().getWallet().removeForcefully(fine);
+            
+            //remove the illegal goods
+            getPlayer().getShip().getCargo().clearItem(TradeGood.FIREARMS);
+            getPlayer().getShip().getCargo().clearItem(TradeGood.NARCOTICS);
 
             //update police record
             int newRecord = getPlayer().getPoliceRecordScore() + TRAFFICKING;
             getPlayer().setPoliceRecordScore(newRecord);
+            return true;
         } else {
             int newRecord = getPlayer().getPoliceRecordScore() - TRAFFICKING;
             getPlayer().setPoliceRecordScore(newRecord);
+            return false;
         }
     }
     

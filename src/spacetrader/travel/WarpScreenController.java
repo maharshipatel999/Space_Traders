@@ -8,6 +8,8 @@ package spacetrader.travel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -29,7 +31,10 @@ public class WarpScreenController extends SceneController implements Initializab
     
     @FXML private AnchorPane warpPane;
 
-    private Planet dest;
+    private Planet destinationPlanet;
+    
+    public int travelRemaining;
+    public EncounterManager encounters;
     
     /**
      * Initializes the controller class.
@@ -45,9 +50,18 @@ public class WarpScreenController extends SceneController implements Initializab
      * @param destination the planet we are going to
      */
     public void travel(Planet source, Planet destination) {
-        this.dest = destination;
-        animateShip();
-        mainControl.takeTurn(dest, (int) Universe.distanceBetweenPlanets(source, destination));
+        this.destinationPlanet = destination;
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(WarpScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        mainControl.takeTurn(destinationPlanet, (int) Universe.distanceBetweenPlanets(source, destination));
+    }
+    
+    public void continueTraveling() {
+        //continue from where we left off
     }
     
     /**
@@ -59,10 +73,5 @@ public class WarpScreenController extends SceneController implements Initializab
         tt.setByX(5.005f * TRANSLATE_FACTOR);
         tt.setByY(-1f * TRANSLATE_FACTOR);
         tt.play();*/
-        try {
-            Thread.sleep(1200);
-        } catch (InterruptedException e) {
-            //TODO
-        }
     }
 }

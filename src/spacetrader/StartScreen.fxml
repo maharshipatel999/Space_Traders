@@ -136,6 +136,7 @@
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="102.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="98.0" />
+                        <ColumnConstraints />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="-Infinity" minHeight="6.0" vgrow="SOMETIMES" />
@@ -168,6 +169,7 @@
                         <Insets />
                      </opaqueInsets>
                   </GridPane>
+                  <Button mnemonicParsing="false" onAction="#enableCheats" text="CHEAT" />
                </children>
             </FlowPane>
          </center>
