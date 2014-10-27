@@ -6,16 +6,17 @@
 
 package spacetrader;
 
-import spacetrader.planets.Planet;
-import spacetrader.planets.PoliticalSystem;
-import spacetrader.planets.Resource;
-import spacetrader.planets.TechLevel;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import spacetrader.planets.Planet;
+import spacetrader.planets.PoliticalSystem;
+import spacetrader.planets.Resource;
+import spacetrader.planets.TechLevel;
+import spacetrader.planets.Wormhole;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Universe implements Serializable {
     private final ArrayList<Planet> planets;
     private final Set<String> planetNames = new HashSet<>();
     private final Set<Point> planetLocations = new HashSet<>(100);
+    private final ArrayList<Planet> wormholePlanets;
     
     /**
      * Creates the Universe with a semi-randomly chosen amount of Planets.
@@ -72,6 +74,34 @@ public class Universe implements Serializable {
             Planet planet = new Planet(name, location);
             planet.setRandomPriceIncEvent();
             planets.add(planet);
+        }
+        
+        //assign wormholes
+        wormholePlanets = new ArrayList<>(9);
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                double w1 = ((double) (j - 1) / 3) * WIDTH;
+                double w2 = ((double) j / 3) * WIDTH;
+                double h1 = ((double) (i - 1) / 3) * HEIGHT;
+                double h2 = ((double) i / 3) * HEIGHT;
+                //System.out.println(w1 + " " + w2 + " " + h1 + " " + h2);
+                for (Planet planet : planets) {
+                    double planetX = planet.getLocation().getX();
+                    double planetY = planet.getLocation().getY();
+                    if (planetX > w1 && planetX < w2 && planetY > h1 && planetY < h2) {
+                        wormholePlanets.add(planet);
+                        break;
+                    }
+                }
+            }       
+        }
+        for (int i = 0; i < wormholePlanets.size(); i ++) {
+            int destInt;
+            do {
+                destInt = rand.nextInt(9);
+            } while (destInt == i);
+            Wormhole curHole = new Wormhole(wormholePlanets.get(i), wormholePlanets.get(destInt));
+            wormholePlanets.get(i).setWormhole(curHole);
         }
     }
     

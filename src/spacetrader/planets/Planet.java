@@ -40,6 +40,7 @@ public class Planet implements Serializable {
     private PriceIncreaseEvent priceIncEvent;
     private int priceIncDuration;
     private Market market;
+    private Wormhole wormhole;
 
     private boolean visited;
 
@@ -58,6 +59,7 @@ public class Planet implements Serializable {
         this.politSys = politSys;
 
         this.market = new Market(this);
+        this.wormhole = null;
         this.visited = false;
     }
 
@@ -113,6 +115,14 @@ public class Planet implements Serializable {
     
     public void setVisited() {
         visited = true;
+    }
+    
+    public Wormhole getWormhole() {
+        return this.wormhole;
+    }
+    
+    public void setWormhole(Wormhole wormhole) {
+        this.wormhole = wormhole;
     }
     
     private int calculateStrengthOfPolice(PoliceRecord record) {
