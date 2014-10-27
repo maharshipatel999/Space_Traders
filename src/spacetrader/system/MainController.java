@@ -153,6 +153,13 @@ public class MainController {
     public void goToShipyard() {
         //MAHARSHI MUST iMPLEMENT
     }
+
+     /**
+     * Transitions the game screen to the Ship Market.
+     */
+    public void goToShipMarketd() {
+        //MAHARSHI MUST iMPLEMENT
+    }
     
     /**
      * Takes care of the actual act of going to a planet.
