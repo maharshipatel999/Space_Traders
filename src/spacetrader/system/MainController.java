@@ -136,6 +136,7 @@ public class MainController {
         control = (WelcomeScreenController) changeScene("/spacetrader/WelcomeScreen.fxml", stage);
         control.setMainControl(this);
     }
+ 
     
     /**
      * Transitions the game screen to the Character Dialog.
@@ -144,6 +145,13 @@ public class MainController {
         CharacterDialogController control;
         control = (CharacterDialogController) changeScene("/spacetrader/CharacterDialog.fxml", stage);
         control.setMainControl(this);
+    }
+
+     /**
+     * Transitions the game screen to the Shipyard.
+     */
+    public void goToShipyard() {
+        //MAHARSHI MUST iMPLEMENT
     }
     
     /**
