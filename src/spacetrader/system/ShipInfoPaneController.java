@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import spacetrader.ships.ShipType;
 
@@ -19,7 +21,8 @@ import spacetrader.ships.ShipType;
  * @author Seth
  */
 public class ShipInfoPaneController implements Initializable {
-@FXML private Text nameText;
+    
+    @FXML private Text nameText;
     @FXML private Text sizeText;
     @FXML private Text cargoSlotsText;
     @FXML private Text fuelCapacityText;
@@ -28,6 +31,7 @@ public class ShipInfoPaneController implements Initializable {
     @FXML private Text shieldSlotsText;
     @FXML private Text gadgetSlotsText;
     @FXML private Text crewQuartersText;
+    @FXML private ImageView shipImage;
     /**
      * Initializes the controller class.
      */
@@ -45,5 +49,6 @@ public class ShipInfoPaneController implements Initializable {
         shieldSlotsText.setText("" + ship.shieldSlots());
         gadgetSlotsText.setText("" + ship.gadgetSlots());
         crewQuartersText.setText("" + ship.crew());
+        shipImage.setImage(new Image(ship.spriteFile()));
     }
 }

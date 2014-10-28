@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -8,60 +9,60 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="spacetrader.ships.ShipInfoPaneController">
+<AnchorPane id="AnchorPane" prefHeight="446.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.ships.ShipInfoPaneController">
    <children>
-      <VBox layoutX="8.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="500.0" prefWidth="308.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="33.0" prefWidth="300.0" spacing="5.0">
+            <ImageView fx:id="shipImage" fitHeight="87.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox prefHeight="3.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NAME:" />
                   <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </HBox>
-            <HBox prefHeight="34.0" prefWidth="300.0" spacing="5.0">
+            <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SIZE:" />
                   <Text fx:id="sizeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </HBox>
-            <HBox prefHeight="47.0" prefWidth="300.0" spacing="5.0">
+            <HBox prefHeight="9.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CARGO SLOTS:" />
                   <Text fx:id="cargoSlotsText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </HBox>
-            <HBox prefHeight="43.0" prefWidth="300.0" spacing="5.0">
+            <HBox prefHeight="8.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FUEL CAPACITY:" />
                   <Text fx:id="fuelCapacityText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </HBox>
-            <HBox prefHeight="46.0" prefWidth="310.0" spacing="5.0">
+            <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="HULL STRENGTH:" />
                   <Text fx:id="nameText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </HBox>
-            <HBox prefHeight="41.0" prefWidth="310.0" spacing="5.0">
+            <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WEAPON SLOTS:" />
                   <Text fx:id="weaponSlotsText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </HBox>
-            <HBox prefHeight="41.0" prefWidth="310.0" spacing="5.0">
+            <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SHEILD SLOTS:" />
                   <Text fx:id="shieldSlotsText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </HBox>
-            <HBox prefHeight="42.0" prefWidth="310.0" spacing="5.0">
+            <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GADGET SLOTS:" />
                   <Text fx:id="gadgetSlotsText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </HBox>
-            <HBox prefHeight="44.0" prefWidth="310.0" spacing="5.0">
+            <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CREW QUARTERS:" />
                   <Text fx:id="crewQuartersText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
@@ -69,7 +70,7 @@
             </HBox>
          </children>
          <padding>
-            <Insets top="50.0" />
+            <Insets left="15.0" top="10.0" />
          </padding>
       </VBox>
    </children>

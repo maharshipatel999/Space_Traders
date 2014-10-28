@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.ShipYardScreenController">
+<AnchorPane id="AnchorPane" prefHeight="371.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.ShipYardScreenController">
    <children>
       <GridPane layoutX="121.0" layoutY="57.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -23,7 +24,13 @@
             <RowConstraints maxHeight="202.0" minHeight="10.0" prefHeight="178.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="walletAmt" text="Label" GridPane.valignment="TOP" />
+            <Label fx:id="walletAmt" text="Label" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="5.0" top="5.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
             <ProgressBar fx:id="fuelProgress" prefHeight="18.0" prefWidth="132.0" progress="0.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="3.0" />
@@ -54,7 +61,10 @@
                   <Insets top="17.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="backToHomeScreen" mnemonicParsing="false" onAction="#goBackToHomeScreen" prefHeight="25.0" prefWidth="76.0" text="Back" GridPane.rowIndex="3" />
+            <Button fx:id="backToHomeScreen" mnemonicParsing="false" onAction="#goBackToHomeScreen" prefHeight="25.0" prefWidth="76.0" text="Back" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="30.0" top="80.0" />
+               </GridPane.margin></Button>
          </children>
       </GridPane>
    </children>
