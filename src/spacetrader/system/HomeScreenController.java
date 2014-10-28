@@ -28,6 +28,7 @@ public class HomeScreenController extends SceneController implements Initializab
     @FXML private Button marketPlaceButton;
     @FXML private Label planetName;
     @FXML private Button saveGame;
+    @FXML private Button shipYard;
     
     /**
      * Customizes text on homes screen based on player and planet names
@@ -66,7 +67,11 @@ public class HomeScreenController extends SceneController implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }   
+    
+    @FXML protected void goToShipYardScreen() {
+        mainControl.goToShipYardScreen();
+    }
     
     @FXML public void goToOverwrite() {
         mainControl.goToOverwriteScreen();        

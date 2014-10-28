@@ -43,26 +43,31 @@ public class ShipYardScreenController extends SceneController implements Initial
         int currFuel = player.getShip().getTank().getFuelAmount();
         int maxFuel = player.getShip().getTank().getMaxFuel();
         if (currFuel == maxFuel) {
-            fuelInc.disarm();
-            fillTank.disarm();
+            fuelInc.setText("Fuel tank is full");
+            fillTank.setText("Fuel tank is full");
+            fuelInc.setDisable(true);
+            fillTank.setDisable(true);
         } else if ((maxFuel - currFuel) == 1) {
             fuelInc.setText("Add 1 fuel: ₪" + player.getShip().getType().fuelCost());
+            fillTank.setText("Fill entire tank: ₪" + ((maxFuel - currFuel) * player.getShip().getType().fuelCost()));
         } else {
             fuelInc.setText("Add 2 fuel: ₪" + (2 * player.getShip().getType().fuelCost()));
+            fillTank.setText("Fill entire tank: ₪" + ((maxFuel - currFuel) * player.getShip().getType().fuelCost()));
         }
         fillTank.setText("Fill entire tank: ₪" + ((maxFuel - currFuel) * player.getShip().getType().fuelCost()));
         int currStrength = player.getShip().getHullStrength();
         int maxStrength = player.getShip().getMaxHullStrength();
         if (currStrength == maxStrength) {
-            fix10.disarm();
-            repairAll.disarm();
+            System.out.println("equal each other hull");
+            fix10.setText("No damage");
+            repairAll.setText("No damage");
+            fix10.setDisable(true);
+            repairAll.setDisable(true);
         }
-        //fix this - add money
         int tenPercent = maxStrength / 10;
         fix10.setText("Fix hull 10%: ₪" + (player.getShip().getType().repairCost() * tenPercent));
         repairAll.setText("Repair all damage: ₪" + player.getShip().getType().repairCost());
-        //fix this - add number
-        numShips.setText("___ ships are for sale");
+        numShips.setText("Ships are for sale");
     }
     
     @FXML void increaseFuel() {
@@ -106,6 +111,10 @@ public class ShipYardScreenController extends SceneController implements Initial
                 .remove((player.getShip().getType().repairCost() * fuelDiff));
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
+    }
+    
+    @FXML protected void goToShipMarketScreen() {
+        mainControl.goToShipMarketd();
     }
     
     /**

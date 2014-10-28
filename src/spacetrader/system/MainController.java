@@ -182,7 +182,7 @@ public class MainController {
         HomeScreenController control;
         control = (HomeScreenController) changeScene("/spacetrader/planets/HomeScreen.fxml", stage);
         control.setMainControl(this);
-        //control.setUpHomeScreen(planet);
+        control.setUpHomeScreen(planet);
     }
     /**
      * Transitions the game screen to the First Screen.
@@ -290,7 +290,7 @@ public class MainController {
     public void goToShipYardScreen() {
         stage.setTitle("Welcome to the Ship Yard!");        
         ShipYardScreenController control;
-        control = (ShipYardScreenController) changeScene("/spacetrader/shipyard/ShipYardScreen.fxml", stage);
+        control = (ShipYardScreenController) changeScene("/spacetrader/ships/ShipYardScreen.fxml", stage);
         control.setMainControl(this);
         control.setUpShipYardScreen(game.getPlayer());
     }
