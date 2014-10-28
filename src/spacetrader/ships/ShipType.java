@@ -2,7 +2,11 @@ package spacetrader.ships;
 
 //type, cargoBay, weaponSlots, shieldSlots, gadgetSlots, crew;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import spacetrader.planets.TechLevel;
+import static spacetrader.planets.TechLevel.values;
 
 //fuel, fuelCost, hullStrength, size;
 //minTechLevel, price, repairCost;
@@ -43,7 +47,7 @@ public enum ShipType {
                     50, 3,   -1, -1, 0),
     HORNET      ("Hornet", 20, 3, 2, 1, 2,
                     16, 15, 150, 3,
-                    TechLevel.POST_INDUSTRIAL, 100000, 2,
+                    TechLevel.POST_INDUSTRIAL, 100, 2,
                     200, 6,   2, 3, 1),
     GRASSHOPPER ("Grasshopper", 30, 2, 2, 3, 3,
                     15, 15, 150, 3,
@@ -65,6 +69,9 @@ public enum ShipType {
     private final int price, repairCost; //repair-cost: cost of repairing 1 point of hull strength
     private final int bounty, occurrence; //occurence: percentage of the ships you meet
     private final int police, pirate, trader; //min strength required for a police/pirate/trader to have this ship
+    public static final List<ShipType> VALUES =
+        Collections.unmodifiableList(Arrays.asList(values()));
+    public static final int SIZE = VALUES.size();
 
     ShipType(String type,
             int cargoBay,

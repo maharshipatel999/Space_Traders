@@ -14,8 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import spacetrader.ships.FuelTank;
 import spacetrader.Player;
+import spacetrader.planets.Planet;
+import spacetrader.ships.FuelTank;
 
 /**
  * FXML Controller class
@@ -33,11 +34,14 @@ public class ShipYardScreenController extends SceneController implements Initial
     @FXML private Button repairAll;
     @FXML private Label numShips;
     @FXML private Button saleShips;
+    @FXML private Button backToHomeScreen;
     
     private Player player;
+    private Planet planet;
     
     public void setUpShipYardScreen(Player player) {
         this.player = player;
+        this.planet = player.getLocation();
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
         int currFuel = player.getShip().getTank().getFuelAmount();
@@ -114,7 +118,11 @@ public class ShipYardScreenController extends SceneController implements Initial
     }
     
     @FXML protected void goToShipMarketScreen() {
-        mainControl.goToShipMarketd();
+        mainControl.goToShipMarket();
+    }
+    
+    @FXML protected void goBackToHomeScreen() {
+        mainControl.goToHomeScreen(planet);
     }
     
     /**

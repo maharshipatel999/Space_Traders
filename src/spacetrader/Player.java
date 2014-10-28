@@ -53,6 +53,10 @@ public class Player extends Trader implements Serializable {
         return ship;
     }
     
+    public void setShip(PlayerShip ship) {
+        this.ship = ship;
+    }
+    
     public Planet getLocation() {
         return this.location;
     }
@@ -120,10 +124,6 @@ public class Player extends Trader implements Serializable {
      */
     public int getCurrentWorth() {
         return wallet.getCredits() - debt + ship.currentShipPrice();
-    }
-    
-    public void setShip(PlayerShip ship) {
-        this.ship = ship;
     }
 
     public void payInterest() {
