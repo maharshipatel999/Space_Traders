@@ -136,6 +136,7 @@ public class MainController {
         control = (WelcomeScreenController) changeScene("/spacetrader/WelcomeScreen.fxml", stage);
         control.setMainControl(this);
     }
+ 
     
     /**
      * Transitions the game screen to the Character Dialog.
@@ -144,6 +145,20 @@ public class MainController {
         CharacterDialogController control;
         control = (CharacterDialogController) changeScene("/spacetrader/CharacterDialog.fxml", stage);
         control.setMainControl(this);
+    }
+
+     /**
+     * Transitions the game screen to the Shipyard.
+     */
+    public void goToShipyard() {
+        //MAHARSHI MUST iMPLEMENT
+    }
+
+     /**
+     * Transitions the game screen to the Ship Market.
+     */
+    public void goToShipMarketd() {
+        //MAHARSHI MUST iMPLEMENT
     }
     
     /**
@@ -270,6 +285,14 @@ public class MainController {
         control = (ReloadGameScreenController) changeScene("/spacetrader/persistence/ReloadGameScreen.fxml", stage);
         control.setMainControl(this);
         control.setUpReloadScreen(game);
+    }
+    
+    public void goToShipYardScreen() {
+        stage.setTitle("Welcome to the Ship Yard!");        
+        ShipYardScreenController control;
+        control = (ShipYardScreenController) changeScene("/spacetrader/ships/ShipYardScreen.fxml", stage);
+        control.setMainControl(this);
+        control.setUpShipYardScreen(game.getPlayer());
     }
     
     public void displayAlertMessage(String alertTitle, String alert) {

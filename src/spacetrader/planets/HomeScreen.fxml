@@ -72,7 +72,7 @@
                   <Insets />
                </GridPane.margin>
             </VBox>
-            <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="121.0" prefWidth="192.0" text="Go to Shipyard" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Button fx:id="shipYard" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToShipYardScreen" prefHeight="121.0" prefWidth="192.0" text="Go to Shipyard" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <graphic>
                   <ImageView fitHeight="89.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
                      <image>
