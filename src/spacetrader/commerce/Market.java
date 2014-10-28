@@ -58,6 +58,7 @@ public class Market implements Serializable {
             Random rand = new Random();
 
             int buyPrice = appxPrices.get(good);
+            int sellPrice = -1;
             if (buyPrice >= 0) {
                 //check if there is a priceIncreaseEvent
                 //each trade good has a PriceIncreaseEvent, so we don't need to check if its none
@@ -69,19 +70,19 @@ public class Market implements Serializable {
                 int variance2 = rand.nextInt(good.variance() + 1);
                 
                 buyPrice += variance1 - variance2;
-            }
             
-            int sellPrice = buyPrice;
-            
-            //adjust for intermediary if player is a criminal
-            if (player.getPoliceRecord().ordinal() < PoliceRecord.DUBIOUS.ordinal()) {
-                sellPrice *= 0.9;
-            }
-            
-            // BuyPrice = SellPrice + 1 to 12% (depending on trader skill (minimum is 1, max 12))
-            buyPrice *= 1.03 + ((SkillList.MAX_SKILL - player.getEffectiveSkill(Skill.TRADER)) / 100);
-            if (buyPrice <= sellPrice) {
-                buyPrice = sellPrice + 1;
+                sellPrice = buyPrice;
+
+                //adjust for intermediary if player is a criminal
+                if (player.getPoliceRecord().ordinal() < PoliceRecord.DUBIOUS.ordinal()) {
+                    sellPrice *= 0.9;
+                }
+
+                // BuyPrice = SellPrice + 1 to 12% (depending on trader skill (minimum is 1, max 12))
+                buyPrice *= 1.03 + ((SkillList.MAX_SKILL - player.getEffectiveSkill(Skill.TRADER)) / 100.0);
+                if (buyPrice <= sellPrice) {
+                    buyPrice = sellPrice + 1;
+                }
             }
             
             buyPrices.put(good, buyPrice);
@@ -98,9 +99,9 @@ public class Market implements Serializable {
         for (TradeGood good : TradeGood.values()) {
             int appxPrice = good.price();
 
-            if ((good == TradeGood.FIREARMS && !planet.getPoliticalSystem().firearmsOK() ||
-                    good == TradeGood.NARCOTICS && !planet.getPoliticalSystem().drugsOK() ||
-                    planet.getLevel().ordinal() < good.minProduceLevel())) {
+            if (((good == TradeGood.FIREARMS && !planet.getPoliticalSystem().firearmsOK()) ||
+                    (good == TradeGood.NARCOTICS && !planet.getPoliticalSystem().drugsOK() ||
+                    planet.getLevel().ordinal() < good.minProduceLevel()))) {
                 appxPrice = -1;
             } else {
                 appxPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
@@ -111,10 +112,10 @@ public class Market implements Serializable {
                 }
                 
                 //high trader activity decreases the price
-                appxPrice *= (100 - (2 * planet.getPoliticalSystem().strengthTraders())) / 100;
+                appxPrice *= (100 - (2 * planet.getPoliticalSystem().strengthTraders())) / 100.0;
                 
                 //large systems have high production which decreases prices
-                appxPrice *= (100 - planet.getSize()) / 100;
+                appxPrice *= (100 - planet.getSize()) / 100.0;
                 
                 
                 //checks the resource of the planet and applies a price accordingly
@@ -162,7 +163,9 @@ public class Market implements Serializable {
            if (quantity < 0) {
                quantity = 0;
            }
-           
+           if (appxPrices.get(good) < 0) {
+               quantity = -1;
+           }
            stock.addItem(good, quantity, 0);
         }
     }
