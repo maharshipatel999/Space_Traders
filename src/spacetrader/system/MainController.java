@@ -158,7 +158,7 @@ public class MainController {
      * Transitions the game screen to the Ship Market.
      */
     public void goToShipMarket() {
-        if (game.getPlayer().getLocation().getLevel().ordinal() >= 1) {
+        if (game.getPlayer().getLocation().getLevel().ordinal() >= 5) {
             stage.setTitle("Welcome to the Ship Market!");        
             ShipMarketController control;
             control = (ShipMarketController) changeScene("/spacetrader/ships/ShipMarket.fxml", stage);

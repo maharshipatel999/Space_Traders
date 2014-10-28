@@ -143,5 +143,6 @@
             <Insets bottom="10.0" left="10.0" />
          </padding>
       </GridPane>
+      <Button layoutX="34.0" layoutY="12.0" mnemonicParsing="false" onAction="#goBackToShipYardScreen" prefHeight="28.0" prefWidth="70.0" text="Back" />
    </children>
 </AnchorPane>

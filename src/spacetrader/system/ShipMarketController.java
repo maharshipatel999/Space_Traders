@@ -48,6 +48,10 @@ public class ShipMarketController extends SceneController implements Initializab
         currentlySelectedShip = 0;
     }
     
+    /**
+     * Sets up the ship market
+     * @param player the player object we are dealing with
+     */
     public void setUpShipMarketScreen(Player player) {
         this.player = player;
         this.planet = player.getLocation();
@@ -71,6 +75,10 @@ public class ShipMarketController extends SceneController implements Initializab
         }
     }
     
+    /**
+     * Processes the event where a ship is selected
+     * @param event mouse click on radio buttton
+     */
     @FXML protected void selectShip(ActionEvent event) {
         RadioButton src = (RadioButton) event.getSource();
         int counter = 0;
@@ -94,10 +102,18 @@ public class ShipMarketController extends SceneController implements Initializab
     }
     */
     
+    /**
+     * Processes the event where the user wants to buy the currently selected ship
+     * @param event mouse click on buy button
+     */
     @FXML protected void processBuyShip(ActionEvent event) {
         int costOfPurchase = shipTypes[currentlySelectedShip].price() - playerShipSellingPrice;
         if (player.getWallet().getCredits() >= costOfPurchase) {
-            player.getWallet().setCredits(costOfPurchase);
+            if (costOfPurchase < 0) {
+                player.getWallet().add(-costOfPurchase);
+            } else {
+                player.getWallet().remove(costOfPurchase);
+            }
             Cargo oldCargo = player.getShip().getCargo();
             player.setShip(new PlayerShip(shipTypes[currentlySelectedShip]));
             player.getShip().getCargo().addCargoContents(oldCargo);
@@ -105,6 +121,10 @@ public class ShipMarketController extends SceneController implements Initializab
         } else {
             mainControl.displayAlertMessage("Acquire More Cash!", "You do not have enough credits to purchase this ship!");
         }
+    }
+    
+    @FXML protected void goBackToShipYardScreen()  {
+        mainControl.goToShipYardScreen(this.planet);
     }
     
 }
