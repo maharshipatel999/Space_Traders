@@ -99,9 +99,11 @@ public class Cargo implements Serializable {
         this.tradeGoods.put(tradeGood, currQuantity - quantity);
         this.count -= quantity;
         //adjust cost of this trade good
-        int costPerGood = this.costOfGoods.get(tradeGood) / quantity;
-        int newCost = this.costOfGoods.get(tradeGood) - (quantity * costPerGood);
-        this.costOfGoods.put(tradeGood, newCost);
+        if (quantity != 0) {
+            int costPerGood = this.costOfGoods.get(tradeGood) / quantity;
+            int newCost = this.costOfGoods.get(tradeGood) - (quantity * costPerGood);
+            this.costOfGoods.put(tradeGood, newCost);
+        }
         if (tradeGoods.get(tradeGood) == 0) {
             costOfGoods.put(tradeGood, 0);
         }
