@@ -266,7 +266,6 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 
                 //add wormholes
                 if (planet.getWormhole() != null) {
-                    System.out.println("hello");
                     Circle planetWormholeIcon = new Circle(planetX + PLANET_RADIUS + 2, planetY + PLANET_RADIUS + 2,
                             5, getUnselectedPlanetColor(planet));
                     planetWormholeIcon.setFill(Color.YELLOW);

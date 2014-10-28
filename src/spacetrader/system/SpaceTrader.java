@@ -30,6 +30,15 @@ public class SpaceTrader extends Application {
         mainControl.goToWelcomeScreen();
     }
 
+    
+    /**
+     * Gets the main controller of the game
+     * @return the main controller of this game
+     */
+    public MainController getMainController() {
+        return this.mainControl;
+    }
+    
     /**
      * Gets the universe for this game.
      * 

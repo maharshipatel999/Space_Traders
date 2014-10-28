@@ -157,8 +157,16 @@ public class MainController {
      /**
      * Transitions the game screen to the Ship Market.
      */
-    public void goToShipMarketd() {
-        //MAHARSHI MUST iMPLEMENT
+    public void goToShipMarket() {
+        if (game.getPlayer().getLocation().getLevel().ordinal() >= 1) {
+            stage.setTitle("Welcome to the Ship Market!");        
+            ShipMarketController control;
+            control = (ShipMarketController) changeScene("/spacetrader/ships/ShipMarket.fxml", stage);
+            control.setMainControl(this);
+            control.setUpShipMarketScreen(game.getPlayer());
+        } else {
+            displayAlertMessage("Attention!", "This planet is not advanced enough to have a Ship Market.");
+        }
     }
     
     /**
@@ -287,11 +295,12 @@ public class MainController {
         control.setUpReloadScreen(game);
     }
     
-    public void goToShipYardScreen() {
+    public void goToShipYardScreen(Planet planet) {
         stage.setTitle("Welcome to the Ship Yard!");        
         ShipYardScreenController control;
         control = (ShipYardScreenController) changeScene("/spacetrader/ships/ShipYardScreen.fxml", stage);
         control.setMainControl(this);
+        game.getPlayer().setLocation(planet);
         control.setUpShipYardScreen(game.getPlayer());
     }
     

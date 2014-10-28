@@ -54,6 +54,7 @@
                   <Insets top="17.0" />
                </GridPane.margin>
             </Label>
+            <Button fx:id="backToHomeScreen" mnemonicParsing="false" onAction="#goBackToHomeScreen" prefHeight="25.0" prefWidth="76.0" text="Back" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>

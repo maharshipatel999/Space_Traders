@@ -8,10 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="spacetrader.ships.ShipyardController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.ShipMarketController">
    <children>
-      <RadioButton fx:id="beetleRadioButton" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" />
+      <RadioButton fx:id="beetleRadioButton" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#selectShip" />
       <ImageView fx:id="beetleImage" fitHeight="43.0" fitWidth="31.0" layoutX="70.0" layoutY="35.0">
          <image>
             <Image url="@../../resources/images/ship_sprites/beetle.png" />
@@ -22,13 +21,13 @@
             <Image url="@../../resources/images/ship_sprites/bumblebee.png" />
          </image>
       </ImageView>
-      <RadioButton fx:id="bumblebeeRadioButton" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" />
+      <RadioButton fx:id="bumblebeeRadioButton" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" onAction="#selectShip" />
       <ImageView fx:id="fireflyImage" fitHeight="35.0" fitWidth="31.0" layoutX="70.0" layoutY="107.0">
          <image>
             <Image url="@../../resources/images/ship_sprites/firefly.png" />
          </image>
       </ImageView>
-      <RadioButton fx:id="fireflyRadioButton" layoutX="14.0" layoutY="115.0" mnemonicParsing="false" />
+      <RadioButton fx:id="fireflyRadioButton" layoutX="14.0" layoutY="115.0" mnemonicParsing="false" onAction="#selectShip" />
       <ImageView fx:id="fleaImage" fitHeight="35.0" fitWidth="31.0" layoutX="70.0" layoutY="145.0">
          <image>
             <Image url="@../../resources/images/ship_sprites/flea.png" />
@@ -64,13 +63,13 @@
             <Image url="@../../resources/images/ship_sprites/wasp.png" />
          </image>
       </ImageView>
-      <RadioButton fx:id="fleaRadioButton" layoutX="14.0" layoutY="153.0" mnemonicParsing="false" />
-      <RadioButton fx:id="gnatRadioButton" layoutX="14.0" layoutY="188.0" mnemonicParsing="false" />
-      <RadioButton fx:id="grasshopperRadioButton" layoutX="14.0" layoutY="223.0" mnemonicParsing="false" />
-      <RadioButton fx:id="hornetRadioButton" layoutX="14.0" layoutY="258.0" mnemonicParsing="false" />
-      <RadioButton fx:id="mosquitoRadioButton" layoutX="14.0" layoutY="293.0" mnemonicParsing="false" />
-      <RadioButton fx:id="termiteRadioButton" layoutX="14.0" layoutY="328.0" mnemonicParsing="false" />
-      <RadioButton fx:id="waspRadioButton" layoutX="14.0" layoutY="363.0" mnemonicParsing="false" />
+      <RadioButton fx:id="fleaRadioButton" layoutX="14.0" layoutY="153.0" mnemonicParsing="false" onAction="#selectShip" />
+      <RadioButton fx:id="gnatRadioButton" layoutX="14.0" layoutY="188.0" mnemonicParsing="false" onAction="#selectShip" />
+      <RadioButton fx:id="grasshopperRadioButton" layoutX="14.0" layoutY="223.0" mnemonicParsing="false" onAction="#selectShip" />
+      <RadioButton fx:id="hornetRadioButton" layoutX="14.0" layoutY="258.0" mnemonicParsing="false" onAction="#selectShip" />
+      <RadioButton fx:id="mosquitoRadioButton" layoutX="14.0" layoutY="293.0" mnemonicParsing="false" onAction="#selectShip" />
+      <RadioButton fx:id="termiteRadioButton" layoutX="14.0" layoutY="328.0" mnemonicParsing="false" onAction="#selectShip" />
+      <RadioButton fx:id="waspRadioButton" layoutX="14.0" layoutY="363.0" mnemonicParsing="false" onAction="#selectShip" />
       <Label fx:id="beetletext" layoutX="133.0" layoutY="48.0" text="Beetle" />
       <Label fx:id="bumblebeetext" layoutX="133.0" layoutY="84.0" text="Bumblebee" />
       <Label fx:id="fireflytext" layoutX="133.0" layoutY="118.0" text="Firefly" />
@@ -86,34 +85,34 @@
             <Font name="Britannic Bold" size="24.0" />
          </font>
       </Text>
-      <Label fx:id="beetlePrice" layoutX="234.0" layoutY="42.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="bumblebeePrice" layoutX="234.0" layoutY="78.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="fireflyPrice" layoutX="234.0" layoutY="118.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="fleaPrice" layoutX="234.0" layoutY="156.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="gnatPrice" layoutX="234.0" layoutY="191.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="grasshopperPrice" layoutX="234.0" layoutY="228.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="hornetPrice" layoutX="234.0" layoutY="263.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="mosquitoPrice" layoutX="234.0" layoutY="298.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="termitePrice" layoutX="234.0" layoutY="333.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="waspPrice" layoutX="234.0" layoutY="368.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Text layoutX="409.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Funds:" textAlignment="CENTER" wrappingWidth="106.86328125">
+      <Label fx:id="beetlePrice" layoutX="234.0" layoutY="42.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="bumblebeePrice" layoutX="234.0" layoutY="78.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="fireflyPrice" layoutX="234.0" layoutY="118.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="fleaPrice" layoutX="234.0" layoutY="156.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="gnatPrice" layoutX="234.0" layoutY="191.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="grasshopperPrice" layoutX="234.0" layoutY="228.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="hornetPrice" layoutX="234.0" layoutY="263.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="mosquitoPrice" layoutX="234.0" layoutY="298.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="termitePrice" layoutX="234.0" layoutY="333.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="waspPrice" layoutX="234.0" layoutY="368.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Text layoutX="393.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Funds:" textAlignment="CENTER" wrappingWidth="106.86328125">
          <font>
             <Font name="Britannic Bold" size="24.0" />
          </font>
       </Text>
-      <Text layoutX="409.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" textAlignment="CENTER" wrappingWidth="106.86328125">
+      <Text layoutX="393.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" textAlignment="CENTER" wrappingWidth="106.86328125">
          <font>
             <Font name="Britannic Bold" size="24.0" />
          </font>
       </Text>
-      <Label fx:id="fleaPrice1" layoutX="509.0" layoutY="272.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Label fx:id="fleaPrice2" layoutX="509.0" layoutY="302.0" prefHeight="21.0" prefWidth="43.0" text="₪0" />
-      <Button fx:id="newGameButton" layoutX="434.0" layoutY="342.0" mnemonicParsing="false" onAction="#startNewGame" prefHeight="21.0" prefWidth="107.0" text="BUY">
+      <Label fx:id="playerFunds" layoutX="494.0" layoutY="271.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Label fx:id="shipPrice" layoutX="494.0" layoutY="301.0" prefHeight="21.0" prefWidth="100.0" text="₪0" />
+      <Button fx:id="buyShipButton" layoutX="437.0" layoutY="344.0" mnemonicParsing="false" onAction="#processBuyShip" prefHeight="21.0" prefWidth="107.0" text="BUY">
          <font>
             <Font name="Copperplate Gothic Bold" size="20.0" />
          </font>
       </Button>
-      <ImageView fitHeight="157.0" fitWidth="251.0" layoutX="284.0" layoutY="57.0">
+      <ImageView fitHeight="144.0" fitWidth="229.0" layoutX="348.0" layoutY="61.0">
          <image>
             <Image url="@../../resources/images/swagspaceshipimage.png" />
          </image>
