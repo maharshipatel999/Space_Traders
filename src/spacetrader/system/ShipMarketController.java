@@ -80,28 +80,26 @@ public class ShipMarketController extends SceneController implements Initializab
         
         for (Node node : shipGrid.getChildren()) {
             Integer column = GridPane.getColumnIndex(node);
-            Integer row = GridPane.getRowIndex(node);
-            if (column != null && row != null) {
-                if (planet.getLevel().ordinal() < shipTypes[row].minTechLevel().ordinal()) {
-                    node.setVisible(false);
-                } else if (column == 2) {
-                    Tooltip shipToolTip = new Tooltip();
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/ships/ShipInfoPane.fxml"));
-                    try {
-                        Pane pane = loader.load();
-                        ((ShipInfoPaneController) loader.getController()).setShipType(shipTypes[row]);
-                        shipToolTip.setGraphic(pane);
-                    } catch (IOException e) {
-                        Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
-                    }
-                    Tooltip.install(node, shipToolTip);
-                }
+            if (column == null){ 
+                column = 0;
             }
-        }
-        
-        for (int i = 0; i < shipTypes.length; i++) {
-            if (planet.getLevel().ordinal() < shipTypes[i].minTechLevel().ordinal()) {
-                shipsButtons[i].setVisible(false);
+            Integer row = GridPane.getRowIndex(node);
+            if (row == null) { 
+                row = 0;
+            }
+            if (planet.getLevel().ordinal() < shipTypes[row].minTechLevel().ordinal()) {
+                node.setVisible(false);
+            } else if (column == 2) {
+                Tooltip shipToolTip = new Tooltip();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/ships/ShipInfoPane.fxml"));
+                try {
+                    Pane pane = loader.load();
+                    ((ShipInfoPaneController) loader.getController()).setShipType(shipTypes[row]);
+                    shipToolTip.setGraphic(pane);
+                } catch (IOException e) {
+                    Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
+                }
+                Tooltip.install(node, shipToolTip);
             }
         }
         

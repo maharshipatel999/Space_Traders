@@ -33,7 +33,7 @@
             <Font name="Copperplate Gothic Bold" size="20.0" />
          </font>
       </Button>
-      <ImageView fx:id="largeShipImage" fitHeight="84.0" fitWidth="84.0" layoutX="394.0" layoutY="66.0" preserveRatio="true">
+      <ImageView fx:id="largeShipImage" fitHeight="82.0" fitWidth="100.0" layoutX="394.0" layoutY="66.0" preserveRatio="true">
          <image>
             <Image url="@../../resources/images/ship_sprites/flea.png" />
          </image>

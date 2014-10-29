@@ -6,22 +6,29 @@
 
 package spacetrader.system;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import spacetrader.Player;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.TradeGood;
 import spacetrader.ships.PlayerShip;
+import spacetrader.ships.ShipType;
 import spacetrader.travel.PirateEncounter;
 import spacetrader.travel.PoliceEncounter;
 import spacetrader.travel.TraderEncounter;
@@ -119,6 +126,7 @@ public class StartScreenController extends SceneController implements Initializa
         choices.add("Show Police Encounter");
         choices.add("Show Pirate Encounter");
         choices.add("Show Trader Encounter");
+        choices.add("Show Ship Info");
 
         Optional<String> response = Dialogs.create()
                 .owner(startStage)
@@ -145,6 +153,18 @@ public class StartScreenController extends SceneController implements Initializa
                     break;
                 case "Show Trader Encounter":
                     mainControl.goToEncounterScreen(new TraderEncounter(player));
+                    break;
+                case "Show Ship Info":
+                    Stage stage = new Stage();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/ships/ShipInfoPane.fxml"));
+                    try {
+                        Pane pane = loader.load();
+                        stage.setScene(new Scene(pane));
+                        ((ShipInfoPaneController) loader.getController()).setShipType(ShipType.FLEA);
+                    } catch (IOException e) {
+                        Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                    stage.show();
                     break;
             }
         }
