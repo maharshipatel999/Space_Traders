@@ -30,6 +30,7 @@ import spacetrader.commerce.PriceIncreaseEvent;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
+import spacetrader.ships.ShipType;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.RandomEvent;
@@ -148,17 +149,10 @@ public class MainController {
     }
 
      /**
-     * Transitions the game screen to the Shipyard.
-     */
-    public void goToShipyard() {
-        //MAHARSHI MUST iMPLEMENT
-    }
-
-     /**
      * Transitions the game screen to the Ship Market.
      */
     public void goToShipMarket() {
-        if (game.getPlayer().getLocation().getLevel().ordinal() >= 5) {
+        if (game.getPlayer().getLocation().getLevel().ordinal() >= ShipType.FLEA.minTechLevel().ordinal()) {
             stage.setTitle("Welcome to the Ship Market!");        
             ShipMarketController control;
             control = (ShipMarketController) changeScene("/spacetrader/ships/ShipMarket.fxml", stage);
@@ -295,12 +289,11 @@ public class MainController {
         control.setUpReloadScreen(game);
     }
     
-    public void goToShipYardScreen(Planet planet) {
+    public void goToShipYardScreen() {
         stage.setTitle("Welcome to the Ship Yard!");        
         ShipYardScreenController control;
         control = (ShipYardScreenController) changeScene("/spacetrader/ships/ShipYardScreen.fxml", stage);
         control.setMainControl(this);
-        game.getPlayer().setLocation(planet);
         control.setUpShipYardScreen(game.getPlayer());
     }
     

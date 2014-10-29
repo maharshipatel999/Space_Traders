@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -176,12 +177,22 @@ public class SpaceMapScreenController extends SceneController implements Initial
          * Constructor.
          */
         public MapPane() {
+            this.setCursor(Cursor.OPEN_HAND);
             addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
+                this.setCursor(Cursor.CLOSED_HAND);
                 //remember initial mouse cursor coordinates and node position
                 dragContext.mouseX = event.getSceneX();
                 dragContext.mouseY = event.getSceneY();
                 dragContext.x = this.getTranslateX();
                 dragContext.y = this.getTranslateY();
+            });
+            
+            addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, (event) -> {
+                this.setCursor(Cursor.OPEN_HAND);
+            });
+            
+            addEventHandler(MouseEvent.MOUSE_RELEASED, (event) -> {
+                this.setCursor(Cursor.OPEN_HAND);
             });
             
             addEventHandler(MouseEvent.MOUSE_DRAGGED, (event) -> {
@@ -250,19 +261,34 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 Circle planetIcon = new Circle(planetX, planetY, PLANET_RADIUS, getUnselectedPlanetColor(planet));
                 planetIcons.put(planet, planetIcon);
                 if (planet != currentPlanet) {
-                    planetIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) ->
-                        {
-                            if (selectedPlanet == null) {
-                                showPlanetInfo(planet);
-                                planetIcon.setFill(Color.RED);
-                            } else if (planet != selectedPlanet) {
-                                showPlanetInfo(planet);
-                                planetIcon.setFill(Color.RED);
-                                planetIcons.get(selectedPlanet).setFill(getUnselectedPlanetColor(selectedPlanet));
-                            }
-                            selectedPlanet = planet;
-                        });
+                    planetIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
+                        this.setCursor(Cursor.HAND);
+                        if (selectedPlanet == null) {
+                            showPlanetInfo(planet);
+                            planetIcon.setFill(Color.RED);
+                        } else if (planet != selectedPlanet) {
+                            showPlanetInfo(planet);
+                            planetIcon.setFill(Color.RED);
+                            planetIcons.get(selectedPlanet).setFill(getUnselectedPlanetColor(selectedPlanet));
+                        }
+                        selectedPlanet = planet;
+                        event.consume();
+                    });
                 }
+                
+                //So that after you click on a planet, the cursor is still a pointing hand
+                planetIcon.addEventHandler(MouseEvent.MOUSE_RELEASED, (event) -> {
+                    this.setCursor(Cursor.HAND);
+                    event.consume();
+                });
+                
+                planetIcon.addEventHandler(MouseEvent.MOUSE_ENTERED, (event) -> {
+                    this.setCursor(Cursor.HAND);
+                });
+                        
+                planetIcon.addEventHandler(MouseEvent.MOUSE_EXITED, (event) -> {
+                    this.setCursor(Cursor.OPEN_HAND);
+                });
                 
                 //add wormholes
                 if (planet.getWormhole() != null) {

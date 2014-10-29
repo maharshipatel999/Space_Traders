@@ -70,7 +70,7 @@ public class HomeScreenController extends SceneController implements Initializab
     }   
     
     @FXML protected void goToShipYardScreen() {
-        mainControl.goToShipYardScreen(planet);
+        mainControl.goToShipYardScreen();
     }
     
     @FXML public void goToOverwrite() {

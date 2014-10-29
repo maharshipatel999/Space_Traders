@@ -33,12 +33,12 @@
             <Font name="Copperplate Gothic Bold" size="20.0" />
          </font>
       </Button>
-      <ImageView fitHeight="144.0" fitWidth="229.0" layoutX="348.0" layoutY="61.0">
+      <ImageView fx:id="largeShipImage" fitHeight="84.0" fitWidth="84.0" layoutX="394.0" layoutY="66.0" preserveRatio="true">
          <image>
-            <Image url="@../../resources/images/swagspaceshipimage.png" />
+            <Image url="@../../resources/images/ship_sprites/flea.png" />
          </image>
       </ImageView>
-      <GridPane layoutX="22.0" layoutY="28.0" prefHeight="345.0" prefWidth="332.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="45.0">
+      <GridPane fx:id="shipGrid" layoutX="22.0" layoutY="28.0" prefHeight="345.0" prefWidth="332.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="45.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="10.0" prefWidth="46.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="64.0" />
@@ -58,7 +58,13 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="fleaText" text="Flea" GridPane.columnIndex="2" />
+            <Label fx:id="fleaText" text="Flea" GridPane.columnIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <ImageView fx:id="fleaImage" fitHeight="35.0" fitWidth="31.0" GridPane.columnIndex="1">
                <image>
                   <Image url="@../../resources/images/ship_sprites/flea.png" />
@@ -66,7 +72,13 @@
             </ImageView>
             <Label fx:id="fleaPrice" prefHeight="21.0" prefWidth="100.0" text="₪0" GridPane.columnIndex="3" />
             <RadioButton fx:id="fleaRadioButton" mnemonicParsing="false" onAction="#selectShip" />
-            <Label fx:id="gnatText" text="Gnat" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="gnatText" text="Gnat" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="gnatPrice" prefHeight="21.0" prefWidth="100.0" text="₪0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <ImageView fx:id="gnatImage" fitHeight="35.0" fitWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
@@ -74,7 +86,13 @@
                </image>
             </ImageView>
             <RadioButton fx:id="gnatRadioButton" mnemonicParsing="false" onAction="#selectShip" GridPane.rowIndex="1" />
-            <Label fx:id="fireflytext" text="Firefly" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="fireflytext" text="Firefly" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="fireflyPrice" prefHeight="21.0" prefWidth="100.0" text="₪0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <ImageView fx:id="fireflyImage" fitHeight="35.0" fitWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <image>
@@ -82,7 +100,13 @@
                </image>
             </ImageView>
             <RadioButton fx:id="fireflyRadioButton" mnemonicParsing="false" onAction="#selectShip" GridPane.rowIndex="2" />
-            <Label fx:id="mosquitoText" text="Mosquito" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="mosquitoText" text="Mosquito" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="mosquitoPrice" prefHeight="21.0" prefWidth="100.0" text="₪0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <ImageView fx:id="mosquitoImage" fitHeight="35.0" fitWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <image>
@@ -90,7 +114,13 @@
                </image>
             </ImageView>
             <RadioButton fx:id="mosquitoRadioButton" mnemonicParsing="false" onAction="#selectShip" GridPane.rowIndex="3" />
-            <Label fx:id="bumblebeetext" text="Bumblebee" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="bumblebeetext" text="Bumblebee" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <ImageView fx:id="bumblebeeImage" fitHeight="29.0" fitWidth="21.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <image>
                   <Image url="@../../resources/images/ship_sprites/bumblebee.png" />
@@ -103,10 +133,22 @@
                   <Image url="@../../resources/images/ship_sprites/beetle.png" />
                </image>
             </ImageView>
-            <Label fx:id="beetletext" text="Beetle" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label fx:id="beetletext" text="Beetle" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="beetlePrice" prefHeight="21.0" prefWidth="100.0" text="₪0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
             <RadioButton fx:id="beetleRadioButton" mnemonicParsing="false" onAction="#selectShip" GridPane.rowIndex="5" />
-            <Label fx:id="hornetText" text="Hornet" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label fx:id="hornetText" text="Hornet" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="hornetPrice" prefHeight="21.0" prefWidth="100.0" text="₪0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
             <ImageView fx:id="hornetImage" fitHeight="35.0" fitWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <image>
@@ -120,9 +162,21 @@
                   <Image url="@../../resources/images/ship_sprites/grasshopper.png" />
                </image>
             </ImageView>
-            <Label fx:id="grasshopperText" text="Grasshopper" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label fx:id="grasshopperText" text="Grasshopper" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="grasshopperPrice" prefHeight="21.0" prefWidth="100.0" text="₪0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-            <Label fx:id="termiteText" text="Termite" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Label fx:id="termiteText" text="Termite" GridPane.columnIndex="2" GridPane.rowIndex="8">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <ImageView fx:id="termiteImage" fitHeight="35.0" fitWidth="31.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <image>
                   <Image url="@../../resources/images/ship_sprites/termite.png" />
@@ -136,7 +190,13 @@
                   <Image url="@../../resources/images/ship_sprites/wasp.png" />
                </image>
             </ImageView>
-            <Label fx:id="waspText" text="Wasp" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+            <Label fx:id="waspText" text="Wasp" GridPane.columnIndex="2" GridPane.rowIndex="9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <Label fx:id="waspPrice" prefHeight="21.0" prefWidth="100.0" text="₪0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
          </children>
          <padding>
