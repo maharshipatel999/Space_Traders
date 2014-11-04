@@ -40,11 +40,21 @@ public class ShipInfoPaneController implements Initializable {
         // TODO
     }    
     public void setShipType(ShipType ship) {
-        nameText.setText(ship.name());
-        sizeText.setText(""+ ship.size());
-        cargoSlotsText.setText(""+ ship.cargoBay());
-        fuelCapacityText.setText(""+ ship.fuel());
-        hullStrengthText.setText(""+ ship.hullStrength());
+        nameText.setText(ship.name().toString());
+        String size = "Small";
+        switch (ship.size()) {
+            case 0: size = "Small";
+                    break;
+            case 1: size = "Medium";
+                    break;
+            case 2: size = "Large";
+                    break;
+            case 3: size = "Huge";
+        }
+        sizeText.setText("" + size);
+        cargoSlotsText.setText("" + ship.cargoBay());
+        fuelCapacityText.setText("" + ship.fuel());
+        hullStrengthText.setText("" + ship.hullStrength());
         weaponSlotsText.setText("" + ship.weaponSlots());
         shieldSlotsText.setText("" + ship.shieldSlots());
         gadgetSlotsText.setText("" + ship.gadgetSlots());

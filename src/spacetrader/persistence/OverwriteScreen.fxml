@@ -54,6 +54,9 @@
                <font>
                   <Font name="Copperplate Gothic Bold" size="20.0" />
                </font>
+               <tooltip>
+                  <Tooltip text="Overwrite first game file" />
+               </tooltip>
             </Button>
             <Button fx:id="player2" mnemonicParsing="false" onAction="#overwritePlayer2" text="Game 2">
                <font>
@@ -74,6 +77,9 @@
          <font>
             <Font size="23.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
    </children>
 </AnchorPane>
