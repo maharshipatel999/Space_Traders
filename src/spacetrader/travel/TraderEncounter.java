@@ -11,7 +11,7 @@ import spacetrader.planets.PoliticalSystem;
 import spacetrader.ships.ShipType;
 
 /**
- * Represents an ecnounter with a trader.
+ * Represents an encounter with a trader.
  * @author Caleb
  */
 public class TraderEncounter extends Encounter {
