@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import spacetrader.Player;
 import spacetrader.planets.Planet;
+import spacetrader.planets.TechLevel;
 import spacetrader.ships.FuelTank;
 
 /**
@@ -122,7 +123,10 @@ public class ShipYardScreenController extends SceneController implements Initial
     }
     
     @FXML protected void goToEquipmentScreen() {
-        mainControl.goToEquipmentMarket();
+        if(planet.getLevel().equals(TechLevel.AGRICULTURE) || planet.getLevel().equals(TechLevel.PRE_AGRICULTURE))
+            mainControl.displayAlertMessage("UNDER CONSTRUCTION", "Equipment Market Unavailable. Planet has not yet achieved a high enough tech level to offer Equipment Goods.");
+        else 
+            mainControl.goToEquipmentMarket();
     }
     
     @FXML protected void goBackToHomeScreen() {
