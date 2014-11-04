@@ -43,15 +43,53 @@
                   <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Weapons" GridPane.columnIndex="1" />
                   <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Shield" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Gadgets" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label fx:id="weapon1Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="wp1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="weapon2Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="wp2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label fx:id="weapon3Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="wp3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label fx:id="shield1Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="shld1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label fx:id="shield2Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="shld2" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label fx:id="gadget1Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="gdgt1" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label fx:id="gadget2Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="gdgt2" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Label fx:id="gadget3Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="gdgt3" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                  <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="---blank---" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="weapon2Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="wp2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                  </StackPane>
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="weapon3Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="wp3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </StackPane>
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="shield1Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="shld1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                     </children>
+                  </StackPane>
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="shield2Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="shld2" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                     </children>
+                  </StackPane>
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="9">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="gadget1Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="gdgt1" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                     </children>
+                  </StackPane>
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="10">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="gadget2Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="gdgt2" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                     </children>
+                  </StackPane>
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="11">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="gadget3Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="gdgt3" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                     </children>
+                  </StackPane>
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="12">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="---blank---" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                     </children>
+                  </StackPane>
                   <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="20.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
@@ -61,7 +99,18 @@
                   <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER" />
                   <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="20.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                  <Label fx:id="shield3Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="shld3" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <StackPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="shield3Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="shld3" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
+                        <Label fx:id="weapon1Text" alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="wp1" />
+                     </children>
+                  </StackPane>
                </children>
             </GridPane>
          </children>
