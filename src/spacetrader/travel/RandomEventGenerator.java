@@ -19,7 +19,7 @@ import spacetrader.system.MainController;
  */ 
 public class RandomEventGenerator {
     
-    private Universe universe;
+    private final Universe universe;
     private final Random random = new Random();
     private final ArrayList<RandomEvent> events = new ArrayList();
     private final int MAX_HULL_QUANTITY = 50;
@@ -28,7 +28,7 @@ public class RandomEventGenerator {
     private final int MAX_WALLET_QUANTITY = 300;
     private final int MIN_WALLET_QUANTITY = 10;
     
-    private final int RANDOM_EVENT_CHANCE = 100;
+    private final int RANDOM_EVENT_CHANCE = 15;
     
     /**
      * Creates a new Random Event Generator and fills a list of all the possible random events.

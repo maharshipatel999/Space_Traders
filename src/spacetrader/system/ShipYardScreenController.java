@@ -14,8 +14,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import spacetrader.ships.FuelTank;
+import javafx.scene.text.Text;
 import spacetrader.Player;
+import spacetrader.ships.FuelTank;
+import spacetrader.ships.ShipType;
 
 /**
  * FXML Controller class
@@ -34,8 +36,31 @@ public class ShipYardScreenController extends SceneController implements Initial
     @FXML private Label numShips;
     @FXML private Button saleShips;
     @FXML private Button backButton;
-    
+    @FXML private Text escapePodText;
+    @FXML private Button buyEscapePodButton;
     private Player player;
+    
+    
+       public void setUpShipYardScreen(Player player) {
+        this.player = player;
+        int amount = player.getWallet().getCredits();
+        walletAmt.setText("Wallet: ₪" + amount);
+        updateFuel();
+        updateHull();
+        setFuelButtons();
+        setHullButtons();
+        if (player.getCredits() < 2000) {
+             escapePodText.setText("You need at least 2000 ₪ to buy an escape pod");
+             buyEscapePodButton.setDisable(true);
+        }
+        
+        if (player.getLocation().getLevel().ordinal() < ShipType.FLEA.minTechLevel().ordinal()) {
+            numShips.setText("This planet's tech level is too low.");
+            saleShips.setDisable(true);
+        } else {
+            numShips.setText("Ships are for sale");
+        }
+    }
     
     private void updateFuel() {
         int currFuel = player.getShip().getTank().getFuelAmount();
@@ -80,18 +105,6 @@ public class ShipYardScreenController extends SceneController implements Initial
             repairAll.setText("Repair all damage: ₪" + player.getShip().getType().repairCost());
         }
     }
-    
-    public void setUpShipYardScreen(Player player) {
-        this.player = player;
-        int amount = player.getWallet().getCredits();
-        walletAmt.setText("Wallet: ₪" + amount);
-        updateFuel();
-        updateHull();
-        setFuelButtons();
-        setHullButtons();
-        numShips.setText("Ships are for sale");
-    }
-    
     @FXML void increaseFuel() {
         if (fuelInc.getText().startsWith("Add 1 fuel")) {
             player.getShip().getTank().addFuel(1);
@@ -148,10 +161,12 @@ public class ShipYardScreenController extends SceneController implements Initial
         mainControl.goToShipMarket();
     }
     
-    @FXML protected void goToHomeScreen() {
+    @FXML protected void goBackToHomeScreen() {
         mainControl.goToHomeScreen(player.getLocation());
     }
-    
+    @FXML protected void buyEscapePod() {
+        player.getShip().setEscapePod();
+    }
     /**
      * Initializes the controller class.
      */

@@ -19,11 +19,13 @@ public class PlayerShip extends SpaceShip {
     
     private final ArrayList<Mercenary> crew;
     private final SkillList crewSkills;
+    private boolean hasEscapePod;
     
     public PlayerShip(ShipType type) {
         super(type);
         this.crew = new ArrayList<>();
         this.crewSkills = new SkillList();
+        hasEscapePod = false;
     }
     
     /**
@@ -66,6 +68,9 @@ public class PlayerShip extends SpaceShip {
     
     public int getCrewSkill(Skill type) {
         return crewSkills.getSkill(type);
+    }
+    public void setEscapePod() {
+        hasEscapePod = true;
     }
     
     private void calculateHighestCrewSkills() {
