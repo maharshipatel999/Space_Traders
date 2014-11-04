@@ -18,6 +18,7 @@ public class EquipmentSlots<T> implements Serializable {
     
     private ArrayList<T> list;
     private int numSlots;
+    int size;
     
     /**
      * Creates new Equipments with a given initial capacity.
@@ -26,6 +27,7 @@ public class EquipmentSlots<T> implements Serializable {
     public EquipmentSlots(int numSlots) {
         this.list = new ArrayList<T>();
         this.numSlots = numSlots;
+        size = 0;
     }
 
     /**
@@ -38,8 +40,23 @@ public class EquipmentSlots<T> implements Serializable {
             throw new SlotsAreFullException();
         } else {
             list.add(item);
+            size = size + 1;
         }
     }
+ 
+    /**
+     * Removes an item to the next open slot.
+     * @param item the equipment to add to a slot.
+     */
+    public void removeItem(T item) {
+        if (isEmpty()) {
+            throw new SlotsAreFullException();
+        } else {
+            list.remove(item);
+            size = size - 1;
+        }
+    }
+    
     
     /**
      * Gets the item at a slot specified by its index.
@@ -47,7 +64,7 @@ public class EquipmentSlots<T> implements Serializable {
      * @return the item at the given index
      */
     public T getItem(int index) {
-        if (index > 0 && index < list.size()) {
+        if (index >= 0 && index < list.size()) {
             return list.get(index);
         } else {
             throw new IndexOutOfBoundsException("Index is out legal range");
@@ -88,7 +105,7 @@ public class EquipmentSlots<T> implements Serializable {
      * @return the amount of filled slots.
      */
     public int getNumFilledSlots() {
-        return list.size();
+        return size;
     }
     
     /**
@@ -104,7 +121,15 @@ public class EquipmentSlots<T> implements Serializable {
      * @return true if every slot is full, otherwise false
      */
     public boolean isFull() {
-        return list.size() >= numSlots;
+        return size >= numSlots;
+    }
+    
+    /**
+     * Determines if arrayList is empty
+     * @return whether arrayList Empty or not
+     */
+    public boolean isEmpty() {
+        return size == 0;
     }
     
     /**

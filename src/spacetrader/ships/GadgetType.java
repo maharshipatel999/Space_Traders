@@ -29,4 +29,9 @@ public enum GadgetType {
         this.price = price;
         this.name = name;
     }
+    
+
+    public int price() {
+        return price;
+    }
 }

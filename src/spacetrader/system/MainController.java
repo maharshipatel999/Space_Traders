@@ -152,11 +152,27 @@ public class MainController {
      * Transitions the game screen to the Ship Market.
      */
     public void goToShipMarket() {
-        stage.setTitle("Welcome to the Ship Market!"); 
-        ShipMarketController control;
-        control = (ShipMarketController) changeScene("/spacetrader/ships/ShipMarket.fxml", stage);
+        if (game.getPlayer().getLocation().getLevel().ordinal() >= ShipType.FLEA.minTechLevel().ordinal()) {
+            stage.setTitle("Welcome to the Ship Market!");        
+            ShipMarketController control;
+            control = (ShipMarketController) changeScene("/spacetrader/ships/ShipMarket.fxml", stage);
+            control.setMainControl(this);
+            control.setUpShipMarketScreen(game.getPlayer());
+        } else {
+            displayAlertMessage("Attention!", "This planet is not advanced enough to have a Ship Market.");
+        }
+    }
+    
+    /*
+    * transitions to equipment screen
+    */
+    public void goToEquipmentMarket() {
+        stage.setTitle("Welcome to the Equipment Market!");        
+        GadgetScreenController control;
+        control = (GadgetScreenController) changeScene("/spacetrader/ships/GadgetScreen.fxml", stage);
         control.setMainControl(this);
-        control.setUpShipMarketScreen(game.getPlayer());
+        control.setUpEquipmentMarketScreen(game.getPlayer());
+         
     }
     
     /**

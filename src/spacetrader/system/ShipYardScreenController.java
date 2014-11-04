@@ -8,14 +8,15 @@ package spacetrader.system;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import spacetrader.Player;
+import spacetrader.planets.Planet;
 import spacetrader.ships.FuelTank;
-import spacetrader.ships.ShipType;
 
 /**
  * FXML Controller class
@@ -33,50 +34,16 @@ public class ShipYardScreenController extends SceneController implements Initial
     @FXML private Button repairAll;
     @FXML private Label numShips;
     @FXML private Button saleShips;
-    @FXML private Button backButton;
-    @FXML private Label escapePodText;
-    @FXML private Button buyEscapePodButton;
-    
-    @FXML private Label fuelAmount;
-    @FXML private Label hullAmount;
+    @FXML private Button backToHomeScreen;
     
     private Player player;
+    private Planet planet;
     
-    
-       public void setUpShipYardScreen(Player player) {
+    public void setUpShipYardScreen(Player player) {
         this.player = player;
+        this.planet = player.getLocation();
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
-        updateFuel();
-        updateHull();
-        setFuelButtons();
-        setHullButtons();
-        if (player.getCredits() < 2000) {
-             escapePodText.setText("You need at least ₪2000 to buy an escape pod");
-             buyEscapePodButton.setDisable(true);
-        } else {
-            escapePodText.setText("An escape pod is for sale!");
-        }
-        
-        if (player.getLocation().getLevel().ordinal() < ShipType.FLEA.minTechLevel().ordinal()) {
-            numShips.setText("This planet's tech level is too low.");
-            saleShips.setDisable(true);
-        } else {
-            numShips.setText("Ships are for sale!");
-        }
-        
-        fuelAmount.setText(player.getShip().getTank().getFuelAmount() + "/" + player.getShip().getTank().getMaxFuel());
-        hullAmount.setText((100.0 * player.getShip().getHullStrength() / (double) player.getShip().getMaxHullStrength()) + "%");
-    }
-    
-    private void updateFuel() {
-        int currFuel = player.getShip().getTank().getFuelAmount();
-        int maxFuel = player.getShip().getTank().getMaxFuel();
-        fuelProgress.setProgress((double) currFuel / (double) maxFuel);
-        fuelAmount.setText(player.getShip().getTank().getFuelAmount() + "/" + player.getShip().getTank().getMaxFuel());
-    }
-    
-    private void setFuelButtons() {
         int currFuel = player.getShip().getTank().getFuelAmount();
         int maxFuel = player.getShip().getTank().getMaxFuel();
         if (currFuel == maxFuel) {
@@ -91,29 +58,22 @@ public class ShipYardScreenController extends SceneController implements Initial
             fuelInc.setText("Add 2 fuel: ₪" + (2 * player.getShip().getType().fuelCost()));
             fillTank.setText("Fill entire tank: ₪" + ((maxFuel - currFuel) * player.getShip().getType().fuelCost()));
         }
-    }
-    
-    private void updateHull() {
-        int currStrength = player.getShip().getHullStrength();
-        int maxStrength = player.getShip().getMaxHullStrength();
-        hullProgress.setProgress((double) currStrength / (double) maxStrength);
-        hullAmount.setText((100.0 * player.getShip().getHullStrength() / (double) player.getShip().getMaxHullStrength()) + "%");
-    }
-    
-    private void setHullButtons() {
+        fillTank.setText("Fill entire tank: ₪" + ((maxFuel - currFuel) * player.getShip().getType().fuelCost()));
         int currStrength = player.getShip().getHullStrength();
         int maxStrength = player.getShip().getMaxHullStrength();
         if (currStrength == maxStrength) {
+            System.out.println("equal each other hull");
             fix10.setText("No damage");
             repairAll.setText("No damage");
             fix10.setDisable(true);
             repairAll.setDisable(true);
-        } else {
-            int tenPercent = maxStrength / 10;
-            fix10.setText("Fix hull 10%: ₪" + (player.getShip().getType().repairCost() * tenPercent));
-            repairAll.setText("Repair all damage: ₪" + player.getShip().getType().repairCost());
         }
+        int tenPercent = maxStrength / 10;
+        fix10.setText("Fix hull 10%: ₪" + (player.getShip().getType().repairCost() * tenPercent));
+        repairAll.setText("Repair all damage: ₪" + player.getShip().getType().repairCost());
+        numShips.setText("Ships are for sale");
     }
+    
     @FXML void increaseFuel() {
         if (fuelInc.getText().startsWith("Add 1 fuel")) {
             player.getShip().getTank().addFuel(1);
@@ -123,8 +83,6 @@ public class ShipYardScreenController extends SceneController implements Initial
         player.getWallet().remove(2 * player.getShip().getType().fuelCost());
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
-        setFuelButtons();
-        updateFuel();
     }
     
     @FXML void increaseToMaxFuel() {
@@ -135,8 +93,6 @@ public class ShipYardScreenController extends SceneController implements Initial
                 .remove(fuelDiff * player.getShip().getType().fuelCost());
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
-        setFuelButtons();
-        updateFuel();
     }
     
     @FXML void increaseHullStrength() {
@@ -148,34 +104,31 @@ public class ShipYardScreenController extends SceneController implements Initial
                 .remove((player.getShip().getType().repairCost() * tenPercent));
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
-        setHullButtons();
-        updateHull();
     }
     
     @FXML void increaseToMaxHullStrength() {
         int maxStrength = player.getShip().getMaxHullStrength();
         int currStrength = player.getShip().getHullStrength();
         int fuelDiff = maxStrength - currStrength;
-        int percent = fuelDiff / 10;
         player.getShip().setHullStrength(maxStrength);
         player.getWallet()
-                .remove((player.getShip().getType().repairCost() * percent));
+                .remove((player.getShip().getType().repairCost() * fuelDiff));
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
-        setHullButtons();
-        updateHull();
     }
     
     @FXML protected void goToShipMarketScreen() {
         mainControl.goToShipMarket();
     }
     
+    @FXML protected void goToEquipmentScreen() {
+        mainControl.goToEquipmentMarket();
+    }
+    
     @FXML protected void goBackToHomeScreen() {
-        mainControl.goToHomeScreen(player.getLocation());
+        mainControl.goToHomeScreen(planet);
     }
-    @FXML protected void buyEscapePod() {
-        player.getShip().setEscapePod();
-    }
+    
     /**
      * Initializes the controller class.
      */
