@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * Describes all possible Reputation a Player can hold
  * @author Caleb
  */
 public enum Reputation {
@@ -32,11 +32,20 @@ public enum Reputation {
             = Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
 
+    /**
+     * Instantiates new Reputation 
+     * @param name name of the Reputation
+     * @param minRep minimum Reputation
+     */
     private Reputation(String name, int minRep) {
         this.name = name;
         this.minRep = minRep;
     }
 
+    /**
+     * Returns String representation of Reputation
+     * @return String representation of Player
+     */
     @Override
     public String toString() {
         return name;

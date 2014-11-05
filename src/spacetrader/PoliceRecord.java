@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  *
+ * Class with all possible Police Records 
+ * 
  * @author Caleb
  */
 public enum PoliceRecord {
@@ -38,6 +40,10 @@ public enum PoliceRecord {
         this.minScore = minScore;
     }
 
+    /**
+     * get specific name of Police Record
+     * @return return specific name of Police Record
+     */
     @Override
     public String toString() {
         return name;
