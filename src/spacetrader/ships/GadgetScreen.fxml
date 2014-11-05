@@ -40,9 +40,18 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Weapons" GridPane.columnIndex="1" />
-                  <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Shield" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Gadgets" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Weapons" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Shield" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="Gadgets" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <StackPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b2b2b2" height="37.0" stroke="BLACK" strokeType="INSIDE" width="170.0" />
@@ -90,7 +99,10 @@
                   </StackPane>
                   <StackPane GridPane.columnIndex="1" GridPane.rowIndex="12">
                      <children>
-                        <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="ACCOUNT FUNDS:" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                        <Label alignment="CENTER" prefHeight="62.0" prefWidth="230.0" text="ACCOUNT FUNDS:" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font></Label>
                      </children>
                   </StackPane>
                   <RadioButton fx:id="weapon2RBCurrentInventory" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="20.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
@@ -127,20 +139,32 @@
             </Label>
             <GridPane layoutX="230.0" prefHeight="555.0" prefWidth="230.0">
                <children>
-                  <Label alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Weapons" GridPane.columnIndex="1" />
-                  <Label alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Shields" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Gadgets" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Weapons" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Shields" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Gadgets" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <Label fx:id="pulseLaserBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Pulse Laser" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="beamLaserBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Beam Laser" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label fx:id="militaryLaserBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Military Laser" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label fx:id="energyShieldBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Energy Shield" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label fx:id="reflectiveShieldBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Reflective Shield" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Label fx:id="extraCargoBaysBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="5 Extra Cargo Bays" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label fx:id="navigatingSystemBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Navigating System" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label fx:id="autoRepairSystemBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Auto-Repair System" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <Label fx:id="autoRepairSystemBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Auto-Repair System" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label fx:id="navigatingSystemBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Navigating System" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                   <Label fx:id="targetingSystemBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Targeting System" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                   <Label fx:id="cloakingDeviceBuy" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="Cloaking Device" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                  <Label fx:id="funds" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="---blank---" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <Label fx:id="funds" alignment="CENTER" layoutX="230.0" prefHeight="62.0" prefWidth="230.0" text="---blank---" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font></Label>
                   <RadioButton fx:id="pulseLaserRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <RadioButton fx:id="beamLaserRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <RadioButton fx:id="militaryLaserRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
@@ -151,8 +175,8 @@
                      </GridPane.margin>
                   </RadioButton>
                   <RadioButton fx:id="extraCargoBaysRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
-                  <RadioButton fx:id="navigatingSystemRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
-                  <RadioButton fx:id="autoRepairSystemRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
+                  <RadioButton fx:id="autoRepairSystemRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                  <RadioButton fx:id="navigatingSystemRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
                   <RadioButton fx:id="targetingSystemRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER" />
                   <RadioButton fx:id="cloakingDeviceRBBuy" mnemonicParsing="false" onAction="#selectEquipment" prefHeight="18.0" prefWidth="19.0" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.valignment="CENTER" />
                </children>

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.persistence;
 
 import java.io.BufferedInputStream;
@@ -26,8 +25,8 @@ import java.util.List;
  * @author nkaru_000
  */
 public class SerializableUtil {
-    
-    public static void serialize(Object object, String fileName) throws 
+
+    public static void serialize(Object object, String fileName) throws
             FileNotFoundException, IOException {
         OutputStream fileOutput = new FileOutputStream(fileName);
         OutputStream buffer = new BufferedOutputStream(fileOutput);
@@ -36,8 +35,8 @@ public class SerializableUtil {
         objOutput.close();
         fileOutput.close();
     }
-    
-    public static Object deserialize(String fileName) throws 
+
+    public static Object deserialize(String fileName) throws
             IOException, ClassNotFoundException {
         InputStream fileInput = new FileInputStream(fileName);
         InputStream buffer = new BufferedInputStream(fileInput);

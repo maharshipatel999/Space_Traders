@@ -64,6 +64,11 @@
                </GridPane.margin>
             </Label>
             <Button fx:id="saleShips1" mnemonicParsing="false" onAction="#goToEquipmentScreen" prefHeight="25.0" prefWidth="237.0" text="Buy/Sell" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="walletAmt" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>

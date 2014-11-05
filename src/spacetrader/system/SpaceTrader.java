@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import javafx.application.Application;
@@ -12,36 +11,36 @@ import spacetrader.Player;
 import spacetrader.Universe;
 
 /**
- * This class keeps references to the game's Universe and Player,
- * as well as the Main Controller.
- * 
+ * This class keeps references to the game's Universe and Player, as well as the
+ * Main Controller.
+ *
  * @author nkaru_000, Caleb Stokols
  */
 public class SpaceTrader extends Application {
-    
+
     private Universe universe;
     private Player player;
     private MainController mainControl;
     private int days;
-    
+
     @Override
     public void start(Stage primaryStage) {
         mainControl = new MainController(this, primaryStage);
         mainControl.goToWelcomeScreen();
     }
 
-    
     /**
      * Gets the main controller of the game
+     *
      * @return the main controller of this game
      */
     public MainController getMainController() {
         return this.mainControl;
     }
-    
+
     /**
      * Gets the universe for this game.
-     * 
+     *
      * @return this game's universe
      */
     public Universe getUniverse() {
@@ -50,7 +49,7 @@ public class SpaceTrader extends Application {
 
     /**
      * Sets the universe for this game.
-     * 
+     *
      * @param universe this game's universe, cannot be null
      */
     public void setUniverse(Universe universe) {
@@ -62,7 +61,7 @@ public class SpaceTrader extends Application {
 
     /**
      * Gets the main player of this game.
-     * 
+     *
      * @return this game's player
      */
     public Player getPlayer() {
@@ -71,7 +70,7 @@ public class SpaceTrader extends Application {
 
     /**
      * Sets the main player of this game.
-     * 
+     *
      * @param player this game's player, cannot be null
      */
     public void setPlayer(Player player) {
@@ -88,7 +87,7 @@ public class SpaceTrader extends Application {
     public void increaseDays() {
         days++;
     }
-    
+
     /**
      * @param args the command line arguments
      */

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader;
 
 import spacetrader.planets.Planet;
@@ -18,49 +17,49 @@ import spacetrader.commerce.Wallet;
  * @author Seth
  */
 public class Player extends Trader implements Serializable {
-    
+
     private int debt = 0; // Current Debt
     private int policeKills = 0; // Number of police ships killed
     private int traderKills = 0; // Number of trader ships killed
     private int pirateKills = 0; // Number of pirate ships killed
     private int policeRecordScore = 0; // 0 = Clean record
     private int reputationScore = 0; // 0 = Harmless
-    
+
     private final Wallet wallet;
     private PlayerShip ship;
     private Planet location;
-    
+
     public Player(String name, int pilot, int fighter, int trader, int engineer, int investor) {
         super(name, pilot, fighter, trader, engineer, investor);
-        
+
         wallet = new Wallet();
         ship = new PlayerShip(ShipType.GNAT);
     }
-    
+
     public int getEffectiveSkill(Skill type) {
         return Math.max(getSkill(type), ship.getCrewSkill(type));
     }
-    
+
     public int getCredits() {
         return wallet.getCredits();
     }
-    
+
     public Wallet getWallet() {
         return wallet;
     }
-    
+
     public PlayerShip getShip() {
         return ship;
     }
-    
+
     public void setShip(PlayerShip ship) {
         this.ship = ship;
     }
-    
+
     public Planet getLocation() {
         return this.location;
     }
-    
+
     public void setLocation(Planet planet) {
         this.location = planet;
     }
@@ -96,11 +95,11 @@ public class Player extends Trader implements Serializable {
     public void increasePirateKills() {
         pirateKills++;
     }
-    
+
     public int getPoliceRecordScore() {
         return policeRecordScore;
     }
-    
+
     public void setPoliceRecordScore(int score) {
         policeRecordScore = score;
     }
@@ -108,18 +107,20 @@ public class Player extends Trader implements Serializable {
     public int getReputationScore() {
         return reputationScore;
     }
-    
+
     public PoliceRecord getPoliceRecord() {
         return PoliceRecord.getPoliceRecord(policeRecordScore);
     }
-    
+
     public Reputation getReputation() {
         return Reputation.getReputation(reputationScore);
     }
-    
+
     /**
-     * Calculates the player's currrent worth. This is determined by the amount of money you own
-     * minus the money you owe. It also considers the value of your spaceship and all the things in it.
+     * Calculates the player's currrent worth. This is determined by the amount
+     * of money you own minus the money you owe. It also considers the value of
+     * your spaceship and all the things in it.
+     *
      * @return the player's current worth
      */
     public int getCurrentWorth() {
@@ -127,11 +128,11 @@ public class Player extends Trader implements Serializable {
     }
 
     public void payInterest() {
-	int interest;
+        int interest;
 
-	if (debt > 0) {
+        if (debt > 0) {
             interest = Math.max(1, debt / 10);
             wallet.removeForcefully(interest);
-	}
+        }
     }
 }

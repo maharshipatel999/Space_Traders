@@ -20,17 +20,17 @@ import spacetrader.commerce.PriceIncreaseEvent;
 public class Planet implements Serializable {
 
     private final Random rand = new Random();
-    private final String[] activity =
-    {
-        "Absent",
-        "Minimal",
-        "Few",
-        "Some",
-        "Moderate",
-        "Many",
-        "Abundant",
-        "Swarms"
-    };
+    private final String[] activity
+            = {
+                "Absent",
+                "Minimal",
+                "Few",
+                "Some",
+                "Moderate",
+                "Many",
+                "Abundant",
+                "Swarms"
+            };
 
     private final String name;
     private final Point location;
@@ -84,20 +84,21 @@ public class Planet implements Serializable {
     public PoliticalSystem getPoliticalSystem() {
         return this.politSys;
     }
-    
+
     /**
      * Returns the size of this planet, a value between 0 and 4.
+     *
      * @return this planet's size
      */
     public int getSize() {
         return size;
     }
-    
+
     public void setPriceIncEvent(PriceIncreaseEvent priceIncEvent) {
         this.priceIncEvent = priceIncEvent;
         this.setPriceIncDuration(PriceIncreaseEvent.setRandomPriceIncDuration());
     }
-    
+
     public void setRandomPriceIncEvent() {
         this.priceIncEvent = PriceIncreaseEvent.getRandomPriceEvent();
         this.setPriceIncDuration(PriceIncreaseEvent.setRandomPriceIncDuration());
@@ -106,11 +107,11 @@ public class Planet implements Serializable {
     public int getPriceIncDuration() {
         return this.priceIncDuration;
     }
-    
+
     public void setPriceIncDuration(int priceIncDuration) {
         this.priceIncDuration = priceIncDuration;
     }
-    
+
     public PriceIncreaseEvent getPriceIncEvent() {
         return this.priceIncEvent;
     }
@@ -122,19 +123,19 @@ public class Planet implements Serializable {
     public boolean isVisited() {
         return visited;
     }
-    
+
     public void setVisited() {
         visited = true;
     }
-    
+
     public Wormhole getWormhole() {
         return this.wormhole;
     }
-    
+
     public void setWormhole(Wormhole wormhole) {
         this.wormhole = wormhole;
     }
-    
+
     private int calculateStrengthOfPolice(PoliceRecord record) {
         int strength = politSys.strengthPolice();
         if (record.ordinal() < PoliceRecord.VILLAIN.ordinal()) {
@@ -142,30 +143,34 @@ public class Planet implements Serializable {
         } else if (record.ordinal() < PoliceRecord.CRIMINAL.ordinal()) {
             strength *= 2;
         }
-        
+
         return strength;
     }
-    
+
     /**
      * Determine the amount of police that will be on the planet
-     * @return description of how many police can be expected to be on the planet
+     *
+     * @return description of how many police can be expected to be on the
+     * planet
      */
     //I just used completely random numbers. This needs to be actually calculated.
     public String expectedAmountOfPolice() {
-        double policeVariable =  Math.random() * 21; //SHOULDNT BE RANDOM
-        
+        double policeVariable = Math.random() * 21; //SHOULDNT BE RANDOM
+
         int activityIndex = (int) policeVariable / activity.length;
         return activity[activityIndex];
     }
 
     /**
      * Determine the amount of pirates that will be on the planet
-     * @return description of how many pirates can be expected to be on the planet
+     *
+     * @return description of how many pirates can be expected to be on the
+     * planet
      */
     //I just used completely random numbers. This needs to be actually calculated.
     public String expectedAmountOfPirates() {
         double pirateVariable = Math.random() * 21; //SHOULDNT BE RANDOM
-        
+
         int activityIndex = (int) pirateVariable / activity.length;
         return activity[activityIndex];
     }

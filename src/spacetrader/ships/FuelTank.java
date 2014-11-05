@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.ships;
 
 import java.io.Serializable;
@@ -14,37 +13,41 @@ import spacetrader.exceptions.InsufficientFuelException;
  * @author Caleb
  */
 public class FuelTank implements Serializable {
-    
+
     private int fuel;
     private int maxFuel;
-    
+
     /**
      * Creates a new fuel tank with a max fuel amount.
+     *
      * @param maxFuel the max fuel amount for this tank.
      */
     public FuelTank(int maxFuel) {
         this.maxFuel = maxFuel;
         this.fuel = maxFuel;
     }
-    
+
     /**
      * Gets the current remaining amount of fuel.
+     *
      * @return this fueltank's current fuel amount
      */
     public int getFuelAmount() {
         return fuel;
     }
-    
+
     /**
      * Gets the max amount of fuel this tank can hold.
+     *
      * @return the maximum capacity of this fueltank
      */
     public int getMaxFuel() {
         return maxFuel;
     }
-    
+
     /**
      * Adds a specified amount of fuel to this tank.
+     *
      * @param fuelAmount the amount of fuel to add
      */
     public void addFuel(int fuelAmount) {
@@ -53,10 +56,11 @@ public class FuelTank implements Serializable {
             fuel = maxFuel;
         }
     }
-    
+
     /**
-     * Removes a specified amount of fuel from this tank.
-     * Throws an exception if fuelAmount is too large.
+     * Removes a specified amount of fuel from this tank. Throws an exception if
+     * fuelAmount is too large.
+     *
      * @param fuelAmount the amount of fuel to remove
      */
     public void removeFuel(int fuelAmount) {
@@ -65,17 +69,19 @@ public class FuelTank implements Serializable {
         }
         fuel -= fuelAmount;
     }
-    
+
     /**
      * Increases the max fuel of this tank by a specified amount.
+     *
      * @param amount how much to increase the max fuel by
      */
     public void increaseMaxFuel(int amount) {
         maxFuel += amount;
     }
-    
+
     /**
      * Decreases the max fuel of this tank by a specified amount
+     *
      * @param amount how much to decrease the max fuel by
      */
     public void decreaseMaxFuel(int amount) {

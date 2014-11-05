@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.net.URL;
@@ -28,44 +27,58 @@ import spacetrader.commerce.TradeGood;
  * @author Caleb
  */
 public class MapDetailController implements Initializable {
-  
-    @FXML private Text planetName;
-    @FXML private Text planetLevel;
-    @FXML private Text planetGovt;
-    @FXML private Text policePresence;
-    @FXML private Text piratePresence;
-    @FXML private Text planetResources;
-    @FXML private Text outOfRangeText;
-    @FXML private VBox planetInformation;
-    @FXML private VBox averagePriceList;
-    @FXML private HBox priceDisplayButtons;
-    @FXML private ToggleGroup prices;
-    @FXML private Button warpButton;
-    @FXML private Label appxWaterPrice, appxFursPrice, appxFoodPrice, appxOrePrice, appxGamesPrice,
+
+    @FXML
+    private Text planetName;
+    @FXML
+    private Text planetLevel;
+    @FXML
+    private Text planetGovt;
+    @FXML
+    private Text policePresence;
+    @FXML
+    private Text piratePresence;
+    @FXML
+    private Text planetResources;
+    @FXML
+    private Text outOfRangeText;
+    @FXML
+    private VBox planetInformation;
+    @FXML
+    private VBox averagePriceList;
+    @FXML
+    private HBox priceDisplayButtons;
+    @FXML
+    private ToggleGroup prices;
+    @FXML
+    private Button warpButton;
+    @FXML
+    private Label appxWaterPrice, appxFursPrice, appxFoodPrice, appxOrePrice, appxGamesPrice,
             appxFirearmsPrice, appxMedicinePrice, appxMachinesPrice, appxNarcoticsPrice, appxRobotsPrice;
-    
+
     private Label[] appxPricesLabels;
-    
+
     private SpaceMapScreenController mapControl;
     private Planet selectedPlanet;
     private boolean showAbsolutePrices;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         showAbsolutePrices = true;
     }
-    
+
     /**
      * Gives this controller a reference to the SpaceMapScreenController.
+     *
      * @param mapControl the map controller
      */
     public void setMapControl(SpaceMapScreenController mapControl) {
         this.mapControl = mapControl;
     }
-    
+
     /**
      * Fills in the sidebar with information from the planet selected
+     *
      * @param planet the selected planet
      */
     public void setPlanetInfo(Planet planet) {
@@ -75,24 +88,24 @@ public class MapDetailController implements Initializable {
         planetGovt.setText(planet.getPoliticalSystem().type());
         policePresence.setText(planet.expectedAmountOfPolice());
         piratePresence.setText(planet.expectedAmountOfPirates());
-        
-        this.appxPricesLabels = new Label[] { appxWaterPrice, appxFursPrice, appxFoodPrice,
-                appxOrePrice, appxGamesPrice, appxFirearmsPrice, appxMedicinePrice,
-                appxMachinesPrice,appxNarcoticsPrice, appxRobotsPrice };
-        
+
+        this.appxPricesLabels = new Label[]{appxWaterPrice, appxFursPrice, appxFoodPrice,
+            appxOrePrice, appxGamesPrice, appxFirearmsPrice, appxMedicinePrice,
+            appxMachinesPrice, appxNarcoticsPrice, appxRobotsPrice};
+
         if (planet.isVisited()) {
             planetResources.setText(planet.getResource().type());
         } else {
             planetResources.setText("Unknown");
         }
-        
+
         if (mapControl.isInRangeOf(planet)) {
             averagePriceList.setDisable(false);
             priceDisplayButtons.setDisable(false);
             warpButton.setDisable(false);
             planetInformation.getChildren().remove(outOfRangeText);
             setApproximatePrices();
-            
+
         } else {
             averagePriceList.setDisable(true);
             priceDisplayButtons.setDisable(true);
@@ -102,16 +115,16 @@ public class MapDetailController implements Initializable {
             }
             hideApproximatePrices();
         }
-        
-        
+
     }
-    
+
     public void hideApproximatePrices() {
         for (int i = 0; i < TradeGood.values().length; i++) {
             appxPricesLabels[i].setText("-----");
-            changeFont(appxPricesLabels[i], false);        } 
+            changeFont(appxPricesLabels[i], false);
+        }
     }
-    
+
     /**
      * Sets approximate prices of each good in map detail sidebar
      */
@@ -141,9 +154,10 @@ public class MapDetailController implements Initializable {
             }
         }
     }
-    
+
     /**
      * Sets the font bold if isBold is true, otherwise the font is normal
+     *
      * @param isBold true if the font should be bold
      */
     private void changeFont(Label text, boolean isBold) {
@@ -152,26 +166,30 @@ public class MapDetailController implements Initializable {
         FontWeight style = isBold ? FontWeight.BOLD : FontWeight.NORMAL;
         text.setFont(Font.font(fontFamily, style, fontSize));
     }
-    
-    @FXML protected void absolutePressed(ActionEvent event) {
+
+    @FXML
+    protected void absolutePressed(ActionEvent event) {
         if (!showAbsolutePrices) {
             showAbsolutePrices = true;
             setApproximatePrices();
         }
     }
-    
-    @FXML protected void relativePressed(ActionEvent event) {
+
+    @FXML
+    protected void relativePressed(ActionEvent event) {
         if (showAbsolutePrices) {
             showAbsolutePrices = false;
             setApproximatePrices();
         }
     }
-    
+
     /**
      * Warps the player to the selected planet
+     *
      * @param event the event to occue
      */
-    @FXML protected void warpToPlanet(ActionEvent event) {
+    @FXML
+    protected void warpToPlanet(ActionEvent event) {
         mapControl.travelToPlanet();
     }
 }

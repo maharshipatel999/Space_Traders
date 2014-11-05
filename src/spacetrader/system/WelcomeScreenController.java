@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.net.URL;
@@ -20,15 +19,19 @@ import spacetrader.Player;
  * @author Caleb
  */
 public class WelcomeScreenController extends SceneController implements Initializable {
-    
-    @FXML private Button easterEgg;
-    @FXML private Button reloadButton;
-    
-    @FXML protected void startNewGame(ActionEvent event) {
+
+    @FXML
+    private Button easterEgg;
+    @FXML
+    private Button reloadButton;
+
+    @FXML
+    protected void startNewGame(ActionEvent event) {
         mainControl.goToPlayerConfigScreen();
     }
-         
-    @FXML protected void reloadGame(ActionEvent event) {
+
+    @FXML
+    protected void reloadGame(ActionEvent event) {
         mainControl.goToReloadScreen();
     }
 
@@ -36,10 +39,11 @@ public class WelcomeScreenController extends SceneController implements Initiali
     public void initialize(URL location, ResourceBundle resources) {
         easterEgg.setOpacity(0);
     }
-    
+
     //This is for testing purposes only. Allows tester to jump ahead
     //to FirstScreen with default character configuration.
-    @FXML protected void layEggs(ActionEvent event) {
+    @FXML
+    protected void layEggs(ActionEvent event) {
         Player player = new Player("LubMaster", 3, 3, 3, 3, 3);
         mainControl.setUpGame(player);
     }

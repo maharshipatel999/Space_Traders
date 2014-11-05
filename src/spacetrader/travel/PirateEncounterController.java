@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.travel;
 
 import java.net.URL;
@@ -25,16 +24,19 @@ public class PirateEncounterController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
-    @FXML protected void attackPressed() {
-        
+
+    @FXML
+    protected void attackPressed() {
+
     }
-    
-    @FXML protected void surrenderPressed() {
-        
+
+    @FXML
+    protected void surrenderPressed() {
+
     }
-    
-    @FXML protected void fleePressed() {
-        
+
+    @FXML
+    protected void fleePressed() {
+
     }
 }

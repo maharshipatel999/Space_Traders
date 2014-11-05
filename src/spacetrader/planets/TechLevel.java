@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.planets;
 
 import java.util.Arrays;
@@ -16,6 +15,7 @@ import java.util.Random;
  * @author Caleb Stokols
  */
 public enum TechLevel {
+
     PRE_AGRICULTURE("Pre-Agriculture"),
     AGRICULTURE("Agriculture"),
     MEDIEVAL("Medieval"),
@@ -24,27 +24,28 @@ public enum TechLevel {
     INDUSTRIAL("Industrial"),
     POST_INDUSTRIAL("Post-Industrial"),
     HI_TECH("High Tech");
-    
-    private static final List<TechLevel> VALUES =
-        Collections.unmodifiableList(Arrays.asList(values()));
+
+    private static final List<TechLevel> VALUES
+            = Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
     private final String type;
-    
+
     TechLevel(String type) {
         this.type = type;
     }
-    
+
     /**
-     *  Gets a random Tech Level
-     *  @return the tech level being assigned
+     * Gets a random Tech Level
+     *
+     * @return the tech level being assigned
      */
     public static TechLevel getRandomTechLevel() {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
-    
+
     public String type() {
         return type;
     }
-            
+
 }

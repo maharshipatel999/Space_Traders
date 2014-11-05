@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.net.URL;
@@ -24,14 +23,19 @@ import spacetrader.commerce.PriceIncreaseEvent;
 public class HomeScreenController extends SceneController implements Initializable {
 
     private Planet planet;
-    
-    @FXML private Button marketPlaceButton;
-    @FXML private Label planetName;
-    @FXML private Button saveGame;
-    @FXML private Button shipYard;
-    
+
+    @FXML
+    private Button marketPlaceButton;
+    @FXML
+    private Label planetName;
+    @FXML
+    private Button saveGame;
+    @FXML
+    private Button shipYard;
+
     /**
      * Customizes text on homes screen based on player and planet names
+     *
      * @param planet planet that player is currently on
      */
     public void setUpHomeScreen(Planet planet) {
@@ -41,39 +45,45 @@ public class HomeScreenController extends SceneController implements Initializab
         if (planet.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
             description += "\n\nThis planet is currently suffering an abdormality:\n" + planet.getPriceIncEvent().desc();
         }
-        
+
         planetName.setText(description);
     }
-    
+
     /**
      * Changes scene to planet's marketplace
+     *
      * @param event mouseclick on marketplace button
      */
-    @FXML protected void goToMarket(ActionEvent event) {
+    @FXML
+    protected void goToMarket(ActionEvent event) {
         mainControl.goToMarketScreen(planet);
     }
-    
+
     /**
      * Changes scene to space map
+     *
      * @param event mouseclick on travel button
      */
-    @FXML protected void goToSpace(ActionEvent event) {
+    @FXML
+    protected void goToSpace(ActionEvent event) {
         mainControl.goToSpaceMapScreen(planet);
     }
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }   
-    
-    @FXML protected void goToShipYardScreen() {
+    }
+
+    @FXML
+    protected void goToShipYardScreen() {
         mainControl.goToShipYardScreen();
     }
-    
-    @FXML public void goToOverwrite() {
-        mainControl.goToOverwriteScreen();        
+
+    @FXML
+    public void goToOverwrite() {
+        mainControl.goToOverwriteScreen();
     }
 }

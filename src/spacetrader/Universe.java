@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader;
 
 import java.awt.Point;
@@ -23,36 +22,36 @@ import spacetrader.planets.Wormhole;
  * @author maharshipatel999, Caleb Stokols
  */
 public class Universe implements Serializable {
-    
+
     private final Random rand = new Random();
-    
+
     public static final int WIDTH = 150;
     public static final int HEIGHT = 110;
     private static final int PLANET_MAX_AMOUNT = 120;
     private static final int PLANET_MIN_AMOUNT = 100;
     private static final int MIN_DISTANCE = 5;
-    
+
     private final ArrayList<Planet> planets;
     private final Set<String> planetNames = new HashSet<>();
     private final Set<Point> planetLocations = new HashSet<>(100);
     private final ArrayList<Planet> wormholePlanets;
-    
+
     /**
-     * Creates the Universe with a semi-randomly chosen amount of Planets.
-     * Each planet has a randomly chosen name and randomly chosen location.
+     * Creates the Universe with a semi-randomly chosen amount of Planets. Each
+     * planet has a randomly chosen name and randomly chosen location.
      */
     public Universe() {
         int planetAmount = rand.nextInt(PLANET_MAX_AMOUNT - PLANET_MIN_AMOUNT) + PLANET_MIN_AMOUNT;
         planets = new ArrayList<>(planetAmount);
-        
+
         //Add Home Planet
         Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
-            TechLevel.AGRICULTURE , Resource.NONE ,PoliticalSystem.DEMOCRACY);
+                TechLevel.AGRICULTURE, Resource.NONE, PoliticalSystem.DEMOCRACY);
         homePlanet.setRandomPriceIncEvent();
         planets.add(homePlanet);
         planetNames.add(homePlanet.getName());
         planetLocations.add(homePlanet.getLocation());
-        
+
         //Create all the planets!
         for (int i = 0; i < planetAmount; i++) {
             //pick random name
@@ -61,20 +60,20 @@ public class Universe implements Serializable {
                 name = generateRandomName();
             } while (planetNames.contains(name));
             planetNames.add(name);
-            
+
             //pick random location
-            Point location; 
+            Point location;
             do {
                 location = generateRandomLocation();
             } while (planetLocations.contains(location) || !isIsolated(location));
             planetLocations.add(location);
-            
+
             //create planet
             Planet planet = new Planet(name, location);
             planet.setRandomPriceIncEvent();
             planets.add(planet);
         }
-        
+
         //assign wormholes
         wormholePlanets = new ArrayList<>(9);
         for (int i = 1; i <= 3; i++) {
@@ -92,9 +91,9 @@ public class Universe implements Serializable {
                         break;
                     }
                 }
-            }       
+            }
         }
-        for (int i = 0; i < wormholePlanets.size(); i ++) {
+        for (int i = 0; i < wormholePlanets.size(); i++) {
             int destInt;
             do {
                 destInt = rand.nextInt(9);
@@ -103,9 +102,10 @@ public class Universe implements Serializable {
             wormholePlanets.get(i).setWormhole(curHole);
         }
     }
-    
+
     /**
-     * Finds the planet with the specified name. 
+     * Finds the planet with the specified name.
+     *
      * @param name the name of the planet to find
      * @return the planet with the specified name, or null if not found.
      */
@@ -119,22 +119,23 @@ public class Universe implements Serializable {
         }
         return null;
     }
-    
-    
+
     private boolean isIsolated(Point point) {
         for (Point p : planetLocations) {
             if (point.distance(p.getX(), p.getY()) < MIN_DISTANCE) {
                 return false;
-                }
             }
+        }
         return true;
     }
-    
+
     public void updatePriceEvent(Planet p) {
-         p.setRandomPriceIncEvent();
+        p.setRandomPriceIncEvent();
     }
+
     /**
      * Gets a list of all the planets in the universe.
+     *
      * @return list of all planets in universe
      */
     public ArrayList<Planet> getPlanets() {
@@ -144,18 +145,19 @@ public class Universe implements Serializable {
     public static double distanceBetweenPlanets(Planet p1, Planet p2) {
         return Point.distance(p1.getLocation().getX(), p1.getLocation().getY(), p2.getLocation().getX(), p2.getLocation().getY());
     }
-    
-    
+
     /**
-     * Creates a new random point between MAX_LOC (exclusive) and MIN_LOC (inclusive).
-     * @return a new random point. 
+     * Creates a new random point between MAX_LOC (exclusive) and MIN_LOC
+     * (inclusive).
+     *
+     * @return a new random point.
      */
     private Point generateRandomLocation() {
         int x = rand.nextInt(WIDTH);
         int y = rand.nextInt(HEIGHT);
         return new Point(x, y);
     }
-    
+
     /**
      * Creates a random name for a planet. Names can start with a Greek letter
      * and/or end with a single-digit number.
@@ -176,33 +178,32 @@ public class Universe implements Serializable {
             's', 't', 'v', 'w', 'x', 'y', 'z'
         };
         final String[] vowels = {
-            "a", "e", "i", "o", "u", "ou", "ee", "ow", "aw", "oy", "ea", 
+            "a", "e", "i", "o", "u", "ou", "ee", "ow", "aw", "oy", "ea",
             "eye", "eu", "oa", "ai", "ie", "aye", "oo", "ii", "io", "ia", "uo",
             "oe", "eo"};
-        final String[] jprefix = { "j", "sj", "jr", "jw" };
-        
+        final String[] jprefix = {"j", "sj", "jr", "jw"};
+
         //if (rand.nextInt(100) < 30) {
         //        name += "s";
         //}
-        
         final int NUMBER_SUFFIX_PROBABILITY = 50;
         final int GREEK_SUFFIX_PROBABILITY = 45;
-        
+
         final int CLUSTER_MAX_1 = 2; //the max and min length for each consonant cluster
         final int CLUSTER_MIN_1 = 0;
-        
+
         final int CLUSTER_MAX_2 = 2;
         final int CLUSTER_MIN_2 = 1;
-        
+
         final int CLUSTER_MAX_3 = 2;
         final int CLUSTER_MIN_3 = 0;
-        
+
         final int J_PREFIX_PROBABILITY = 5; //probability that prefix will have a j in it
         final int SECOND_SYLLABLE_PROBABILITY = 80;
         final int THIRD_SYLLABLE_PROBABILITY = 6;
-        
+
         String name = "";
-        
+
         //First Consonant Cluster
         int clusterLength = rand.nextInt(CLUSTER_MAX_1 - CLUSTER_MIN_1) + CLUSTER_MIN_1;
         if (clusterLength > 0) {
@@ -217,14 +218,14 @@ public class Universe implements Serializable {
         }
         //First Vowel Cluster
         name += vowels[rand.nextInt(vowels.length)];
-        
+
         //Second Consonant Cluster
         clusterLength = rand.nextInt(CLUSTER_MAX_2 - CLUSTER_MIN_2) + CLUSTER_MIN_2;
         for (int i = 0; i < clusterLength; i++) {
             int ltrIndex = rand.nextInt(letters.length);
             name += letters[ltrIndex];
         }
-        
+
         //Second Syllable
         if (rand.nextInt(100) < SECOND_SYLLABLE_PROBABILITY) {
             clusterLength = rand.nextInt(CLUSTER_MAX_3 - CLUSTER_MIN_3) + CLUSTER_MIN_3;
@@ -242,10 +243,10 @@ public class Universe implements Serializable {
                 name += vowels[rand.nextInt(vowels.length)];
             }
         }
-        
+
         //extra single digit number
         if (rand.nextInt(100) < NUMBER_SUFFIX_PROBABILITY) {
-                name += " " + (rand.nextInt(8) + 1);
+            name += " " + (rand.nextInt(8) + 1);
         }
 
         //uppercase the first letter of name
@@ -257,7 +258,7 @@ public class Universe implements Serializable {
         if (rand.nextInt(400) < 1) {
             name = "Lubstown,USA";
         }
-        
+
         return name;
     }
 }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.travel;
 
 import spacetrader.Player;
@@ -13,10 +12,11 @@ import spacetrader.ships.ShipType;
 
 /**
  * Represents an encounter with the police.
+ *
  * @author Caleb
  */
 public class PoliceEncounter extends Encounter {
-    
+
     public static final int ATTACK_POLICE_SCORE = -3;
     public static final int KILL_POLICE_SCORE = -6;
     public static final int ATTACK_TRADER_SCORE = -2;
@@ -27,25 +27,28 @@ public class PoliceEncounter extends Encounter {
     public static final int PLUNDER_PIRATE_SCORE = -1;
     public static final int TRAFFICKING = -1;
     public static final int FLEE_FROM_INSPECTION = -2;
-    
+
     private static final int MINIMUM_FINE_AMOUNT = 100;
     private static final int MAXIMUM_FINE_AMOUNT = 10000;
     private static final int FINE_DECREASE = 4 * 10;
     private static final int FINE_ROUND = 50;
-    
+
     /**
      * Creates a new police encounter.
+     *
      * @param player the player of the game
      */
     public PoliceEncounter(Player player) {
         super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml");
     }
-    
+
     /**
      * Determines if the player is carrying illegal goods. If he is, fines him
      * and takes the illegal goods. If not, the player is free to go. Updates
      * the player's police record accordingly.
-     * @return true if the player was caught carrying illegal goods, false otherwise
+     *
+     * @return true if the player was caught carrying illegal goods, false
+     * otherwise
      */
     public boolean inspectPlayer() {
         //determine if player is carrying illegal goods
@@ -60,7 +63,7 @@ public class PoliceEncounter extends Encounter {
             fine = Math.max(fine, MINIMUM_FINE_AMOUNT);
 
             getPlayer().getWallet().removeForcefully(fine);
-            
+
             //remove the illegal goods
             getPlayer().getShip().getCargo().clearItem(TradeGood.FIREARMS);
             getPlayer().getShip().getCargo().clearItem(TradeGood.NARCOTICS);
@@ -75,9 +78,11 @@ public class PoliceEncounter extends Encounter {
             return false;
         }
     }
-    
+
     /**
-     * Calculates the amount of bribe, police on the player's planet will ask for.
+     * Calculates the amount of bribe, police on the player's planet will ask
+     * for.
+     *
      * @return the bribe the police are asking for
      */
     public int calculcateBribe() {
@@ -85,7 +90,7 @@ public class PoliceEncounter extends Encounter {
         bribe /= 10 + (10 * getPlayer().getLocation().getPoliticalSystem().bribeLevel()); //This should be the destination planet, not the current planet.
         return bribe;
     }
-    
+
     @Override
     public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
         return type.police() < 0 || politics.strengthPolice() < type.police();

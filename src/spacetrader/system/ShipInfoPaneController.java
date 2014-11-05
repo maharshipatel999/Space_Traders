@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.net.URL;
@@ -21,35 +20,51 @@ import spacetrader.ships.ShipType;
  * @author Seth
  */
 public class ShipInfoPaneController implements Initializable {
-    
-    @FXML private Text nameText;
-    @FXML private Text sizeText;
-    @FXML private Text cargoSlotsText;
-    @FXML private Text fuelCapacityText;
-    @FXML private Text hullStrengthText;
-    @FXML private Text weaponSlotsText;
-    @FXML private Text shieldSlotsText;
-    @FXML private Text gadgetSlotsText;
-    @FXML private Text crewQuartersText;
-    @FXML private ImageView shipImage;
+
+    @FXML
+    private Text nameText;
+    @FXML
+    private Text sizeText;
+    @FXML
+    private Text cargoSlotsText;
+    @FXML
+    private Text fuelCapacityText;
+    @FXML
+    private Text hullStrengthText;
+    @FXML
+    private Text weaponSlotsText;
+    @FXML
+    private Text shieldSlotsText;
+    @FXML
+    private Text gadgetSlotsText;
+    @FXML
+    private Text crewQuartersText;
+    @FXML
+    private ImageView shipImage;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
+
     public void setShipType(ShipType ship) {
         nameText.setText(ship.name().toString());
         String size = "Small";
         switch (ship.size()) {
-            case 0: size = "Small";
-                    break;
-            case 1: size = "Medium";
-                    break;
-            case 2: size = "Large";
-                    break;
-            case 3: size = "Huge";
+            case 0:
+                size = "Small";
+                break;
+            case 1:
+                size = "Medium";
+                break;
+            case 2:
+                size = "Large";
+                break;
+            case 3:
+                size = "Huge";
         }
         sizeText.setText("" + size);
         cargoSlotsText.setText("" + ship.cargoBay());

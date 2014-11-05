@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.net.URL;
@@ -26,20 +25,30 @@ import spacetrader.ships.FuelTank;
  */
 public class ShipYardScreenController extends SceneController implements Initializable {
 
-    @FXML private Label walletAmt;
-    @FXML private ProgressBar fuelProgress;
-    @FXML private Button fuelInc;
-    @FXML private Button fillTank;
-    @FXML private ProgressBar hullProgress;
-    @FXML private Button fix10;
-    @FXML private Button repairAll;
-    @FXML private Label numShips;
-    @FXML private Button saleShips;
-    @FXML private Button backToHomeScreen;
-    
+    @FXML
+    private Label walletAmt;
+    @FXML
+    private ProgressBar fuelProgress;
+    @FXML
+    private Button fuelInc;
+    @FXML
+    private Button fillTank;
+    @FXML
+    private ProgressBar hullProgress;
+    @FXML
+    private Button fix10;
+    @FXML
+    private Button repairAll;
+    @FXML
+    private Label numShips;
+    @FXML
+    private Button saleShips;
+    @FXML
+    private Button backToHomeScreen;
+
     private Player player;
     private Planet planet;
-    
+
     public void setUpShipYardScreen(Player player) {
         this.player = player;
         this.planet = player.getLocation();
@@ -74,8 +83,9 @@ public class ShipYardScreenController extends SceneController implements Initial
         repairAll.setText("Repair all damage: ₪" + player.getShip().getType().repairCost());
         numShips.setText("Ships are for sale");
     }
-    
-    @FXML void increaseFuel() {
+
+    @FXML
+    void increaseFuel() {
         if (fuelInc.getText().startsWith("Add 1 fuel")) {
             player.getShip().getTank().addFuel(1);
             player.getWallet().remove(player.getShip().getType().fuelCost());
@@ -85,8 +95,9 @@ public class ShipYardScreenController extends SceneController implements Initial
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
     }
-    
-    @FXML void increaseToMaxFuel() {
+
+    @FXML
+    void increaseToMaxFuel() {
         FuelTank tank = player.getShip().getTank();
         int fuelDiff = tank.getMaxFuel() - tank.getFuelAmount();
         tank.addFuel(fuelDiff);
@@ -95,8 +106,9 @@ public class ShipYardScreenController extends SceneController implements Initial
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
     }
-    
-    @FXML void increaseHullStrength() {
+
+    @FXML
+    void increaseHullStrength() {
         int maxStrength = player.getShip().getMaxHullStrength();
         int tenPercent = maxStrength / 10;
         int currStrength = player.getShip().getHullStrength();
@@ -106,8 +118,9 @@ public class ShipYardScreenController extends SceneController implements Initial
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
     }
-    
-    @FXML void increaseToMaxHullStrength() {
+
+    @FXML
+    void increaseToMaxHullStrength() {
         int maxStrength = player.getShip().getMaxHullStrength();
         int currStrength = player.getShip().getHullStrength();
         int fuelDiff = maxStrength - currStrength;
@@ -117,29 +130,32 @@ public class ShipYardScreenController extends SceneController implements Initial
         int amount = player.getWallet().getCredits();
         walletAmt.setText("Wallet: ₪" + amount);
     }
-    
-    @FXML protected void goToShipMarketScreen() {
+
+    @FXML
+    protected void goToShipMarketScreen() {
         mainControl.goToShipMarket();
     }
-    
-    @FXML protected void goToEquipmentScreen() {
-        if(planet.getLevel().equals(TechLevel.AGRICULTURE) || planet.getLevel().equals(TechLevel.PRE_AGRICULTURE))
+
+    @FXML
+    protected void goToEquipmentScreen() {
+        if (planet.getLevel().equals(TechLevel.AGRICULTURE) || planet.getLevel().equals(TechLevel.PRE_AGRICULTURE)) {
             mainControl.displayAlertMessage("UNDER CONSTRUCTION", "Equipment Market Unavailable. Planet has not yet achieved a high enough tech level to offer Equipment Goods.");
-        else 
+        } else {
             mainControl.goToEquipmentMarket();
+        }
     }
-    
-    @FXML protected void goBackToHomeScreen() {
+
+    @FXML
+    protected void goBackToHomeScreen() {
         mainControl.goToHomeScreen(planet);
     }
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
-    
-    
+
+    }
+
 }
