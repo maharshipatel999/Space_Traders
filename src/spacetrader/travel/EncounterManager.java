@@ -64,6 +64,10 @@ public class EncounterManager {
         //figure this out with an algorithm
     }
 
+    /**
+     * Creates a police encounter
+     * @return Specific Police Encounter
+     */
     private Encounter createPoliceEncounter() {
         PoliceEncounter encounter = new PoliceEncounter(player);
 
@@ -78,6 +82,10 @@ public class EncounterManager {
         return encounter;
     }
 
+    /**
+     * Creates a pirate encounter
+     * @return Specific Pirate Encounter
+     */
     private Encounter createPirateEncounter() {
         PirateEncounter encounter = new PirateEncounter(player);
 
@@ -90,6 +98,10 @@ public class EncounterManager {
         return encounter;
     }
 
+    /**
+     * Creates a trader encounter
+     * @return Specific Trader Encounter
+     */
     private Encounter createTraderEncounter() {
         TraderEncounter encounter = new TraderEncounter(player);
         int tries = 1;
@@ -101,10 +113,10 @@ public class EncounterManager {
     /**
      * Creates the space ship for the opponent
      *
-     * @param encounter
-     * @param tries
-     * @param lowestShipType
-     * @return
+     * @param encounter Encounter during space travel
+     * @param tries number tries to pick up a ship for opponent
+     * @param lowestShipType weakest ship type
+     * @return SpaceShip to use for opponent
      */
     private SpaceShip createShip(Encounter encounter, int tries, ShipType lowestShipType) {
         ShipType[] shipTypes = ShipType.values();

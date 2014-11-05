@@ -23,7 +23,9 @@ public class ChangeWalletEvent extends RandomEvent {
         }
     }
     // FIX: MIGHT THROW EXCEPTION
-
+    /**
+     * adds or removes money from Player's wallet depending on quantity change
+     */
     @Override
     public void doEvent() {
         if (quantityChange > 0) {

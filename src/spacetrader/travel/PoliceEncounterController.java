@@ -32,6 +32,10 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         // TODO
     }
 
+    /**
+     * Initiates Player attack sequence (Attack Pressed) 
+     * @param e Event that is being processed
+     */
     @FXML
     protected void attackPressed(ActionEvent e) {
         if (!encounter.getPlayer().getShip().isCarryingIllegalGoods()) {
@@ -59,6 +63,10 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         mainControl.goBackToWarpScreen();
     }
 
+    /**
+     * Handles event where Player flees when Flee Button is pressed.
+     * @param e Event that is being processed
+     */
     @FXML
     protected void fleePressed(ActionEvent e) {
         if (!encounter.getPlayer().getShip().isCarryingIllegalGoods()) {
@@ -69,6 +77,10 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         infoText.setText("You try to flee!");
     }
 
+    /**
+     * Initiates Bribe Sequence for Player when ActionEvent Occurs
+     * @param e specific ActionEvent that occurred
+     */
     @FXML
     protected void bribePressed(ActionEvent e) {
         if (!encounter.getPlayer().getShip().isCarryingIllegalGoods()) {

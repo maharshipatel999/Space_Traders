@@ -36,7 +36,7 @@ public class ChangeHullEvent extends RandomEvent {
     }
 
     /**
-     * Sets hullstrength to hullstreth + quantity change
+     * Sets hullstrength to hullstrength + quantity change
      */
     @Override
     public void doEvent() {

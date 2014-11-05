@@ -25,7 +25,7 @@ public class ChangeLocationEvent extends RandomEvent {
      * @param player
      * @param message
      * @param quantityChange
-     * @param planet
+     * @param planet 
      * @param mainControl
      */
     public ChangeLocationEvent(Player player, String message, int quantityChange, Planet planet, MainController mainControl) {

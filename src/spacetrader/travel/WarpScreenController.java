@@ -32,9 +32,7 @@ public class WarpScreenController extends SceneController implements Initializab
 
     @FXML
     private AnchorPane warpPane;
-
     private Planet destinationPlanet;
-
     public int travelRemaining;
     public EncounterManager encounters;
 
@@ -63,8 +61,10 @@ public class WarpScreenController extends SceneController implements Initializab
         mainControl.takeTurn(destinationPlanet, (int) Universe.distanceBetweenPlanets(source, destination));
     }
 
+    /**
+     * Continues travel sequence for Player where he or she left off
+     */
     public void continueTraveling() {
-        //continue from where we left off
     }
 
     /**

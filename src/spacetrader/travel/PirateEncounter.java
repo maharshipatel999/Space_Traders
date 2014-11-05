@@ -25,6 +25,14 @@ public class PirateEncounter extends Encounter {
         super(player, "/spacetrader/travel/PirateEncounterScreen.fxml");
     }
 
+    /**
+     * Checks to see if Pirate Ship can be used based on the type of police and
+     * strength of Pirates in specific area
+     *
+     * @param type Type of Ship
+     * @param politics Political System of specific planet
+     * @return whether or not Pirate Ship Type is legal
+     */
     @Override
     public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
         return type.pirate() < 0 || politics.strengthPirates() < type.pirate();

@@ -25,6 +25,12 @@ public class TraderEncounter extends Encounter {
         super(player, "/spacetrader/travel/TraderEncounterScreen.fxml");
     }
 
+    /**
+     * Checks to see if the specific Trader Ship is legal in current Planet
+     * @param type Type of Ship
+     * @param politics Politics of current Planet
+     * @return Whether Trader Ship is legal
+     */
     @Override
     public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
         return type.trader() < 0 || politics.strengthTraders() < type.trader();

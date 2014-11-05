@@ -91,6 +91,14 @@ public class PoliceEncounter extends Encounter {
         return bribe;
     }
 
+    /**
+     * Checks to see if Police Ship can be used based on the type of police and
+     * strength of Police in specific area
+     *
+     * @param type Type of Ship
+     * @param politics Political System of specific planet
+     * @return whether or not Police Ship Type is legal
+     */
     @Override
     public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
         return type.police() < 0 || politics.strengthPolice() < type.police();
