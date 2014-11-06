@@ -42,6 +42,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             if (!getPlayerConfirmation()) {
                 return;
             }
+            
         }
         infoText.setText("You attack!");
     }

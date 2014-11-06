@@ -23,6 +23,7 @@ import spacetrader.ships.Weapon;
 import spacetrader.ships.Gadget;
 import spacetrader.planets.TechLevel;
 import javafx.scene.control.RadioButton;
+import spacetrader.exceptions.TooManyRadioButtonsCheckedException;
 import javafx.scene.image.Image;
 
 /**
@@ -419,13 +420,25 @@ public class GadgetScreenController extends SceneController implements Initializ
         charge.setText("N/A");
     }
 
-    private RadioButton getCheckedRadioButton() {
+    private void setRadioButtons(RadioButton[] r) {
+        for(int i  = 0; i < r.length; i++) {
+            allBuySellButtons[i] = r[i]; 
+        }
+    }
+    
+    private RadioButton getCheckedRadioButton () {
+        RadioButton r = null;
+        int counter = 0;
         for (RadioButton button : allBuySellButtons) {
             if (button.isSelected()) {
-                return button;
+                r =  button;
+                counter++;
             }
         }
-        return null;
+        if(counter > 1) { 
+            throw new TooManyRadioButtonsCheckedException("Too Many Radio Buttons Checked");
+        }
+        return r;
     }
 
     @FXML

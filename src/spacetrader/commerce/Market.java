@@ -67,7 +67,6 @@ public class Market implements Serializable {
                 if (planet.getPriceIncEvent() == good.incEvent()) {
                     buyPrice = (int) (buyPrice * 1.5);
                 }
-
                 int variance1 = rand.nextInt(good.variance() + 1);
                 int variance2 = rand.nextInt(good.variance() + 1);
 
