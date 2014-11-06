@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
@@ -9,23 +11,45 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="371.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.ShipYardScreenController">
+<AnchorPane id="AnchorPane" prefHeight="436.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.ShipYardScreenController">
    <children>
-      <GridPane layoutX="121.0" layoutY="57.0" prefHeight="400.0" prefWidth="600.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane prefHeight="400.0" prefWidth="600.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="10.0" prefWidth="181.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="248.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="171.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="217.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="397.0" minWidth="10.0" prefWidth="383.0" />
+            <ColumnConstraints />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="121.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="121.0" minHeight="45.0" prefHeight="63.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="128.0" minHeight="45.0" prefHeight="60.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="202.0" minHeight="2.0" prefHeight="48.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="221.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="221.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="128.0" minHeight="45.0" prefHeight="61.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="202.0" minHeight="2.0" prefHeight="52.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="221.0" minHeight="7.0" prefHeight="47.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="221.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="221.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+            <Label fx:id="hullStatus" prefHeight="26.0" prefWidth="370.0" text="Hull Status" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="3.0" left="20.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="fuelStatus" prefHeight="26.0" prefWidth="369.0" text="Fuel Status" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="3.0" left="20.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e4e4" height="174.0" stroke="BLACK" strokeType="INSIDE" width="586.0" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="7.0" top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
             <Label fx:id="walletAmt" text="Label" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets left="10.0" top="10.0" />
@@ -38,18 +62,24 @@
                   <Insets bottom="3.0" />
                </GridPane.margin>
             </Line>
-            <Button fx:id="fuelInc" mnemonicParsing="false" onAction="#increaseFuel" prefHeight="25.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="fillTank" mnemonicParsing="false" onAction="#increaseToMaxFuel" prefHeight="25.0" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
+            <HBox alignment="BOTTOM_CENTER" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="incFuelButton" mnemonicParsing="false" onAction="#increaseFuel" prefHeight="25.0" text="Increase Full" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="maxFuelButton" mnemonicParsing="false" onAction="#increaseToMaxFuel" prefHeight="25.0" text="Fill Tank">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
             <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <StackPane GridPane.rowIndex="2">
                <children>
-                  <ProgressBar fx:id="hullProgress" prefHeight="28.0" prefWidth="132.0" progress="0.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" StackPane.alignment="BOTTOM_CENTER">
+                  <ProgressBar fx:id="hullProgress" prefHeight="30.0" prefWidth="132.0" progress="0.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" StackPane.alignment="BOTTOM_CENTER">
                      <GridPane.margin>
                         <Insets bottom="3.0" />
                      </GridPane.margin>
@@ -57,9 +87,9 @@
                         <Insets bottom="3.0" />
                      </StackPane.margin>
                   </ProgressBar>
-                  <Label fx:id="hullAmount" alignment="CENTER" text="0%" textAlignment="CENTER" StackPane.alignment="BOTTOM_CENTER">
+                  <Label fx:id="hullAmountLabel" alignment="CENTER" text="0%" textAlignment="CENTER" StackPane.alignment="BOTTOM_CENTER">
                      <StackPane.margin>
-                        <Insets bottom="6.0" />
+                        <Insets bottom="8.0" />
                      </StackPane.margin>
                   </Label>
                   <Label text="Hull Strength" StackPane.alignment="TOP_CENTER">
@@ -72,14 +102,20 @@
                   </Label>
                </children>
             </StackPane>
-            <Button fx:id="fix10" mnemonicParsing="false" onAction="#increaseHullStrength" prefHeight="25.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="repairAll" mnemonicParsing="false" onAction="#increaseToMaxHullStrength" prefHeight="25.0" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
+            <HBox alignment="BOTTOM_CENTER" prefHeight="60.0" prefWidth="310.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="incHullButton" mnemonicParsing="false" onAction="#increaseHullStrength" prefHeight="25.0" text="Fix Hull" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="maxHullButton" mnemonicParsing="false" onAction="#increaseToMaxHullStrength" prefHeight="25.0" text="Fill Entire Hull">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
             <Line endY="-10.0" startY="10.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="3.0" />
@@ -92,19 +128,19 @@
                <GridPane.margin>
                   <Insets top="10.0" />
                </GridPane.margin></Button>
-            <Label fx:id="numShips" prefHeight="21.0" prefWidth="598.0" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+            <Label fx:id="shipDesc" prefHeight="21.0" prefWidth="598.0" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="5.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="backToHomeScreen" mnemonicParsing="false" onAction="#goBackToHomeScreen" prefHeight="25.0" prefWidth="76.0" text="Back" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+            <Button fx:id="backToHomeScreen" mnemonicParsing="false" onAction="#goBackToHomeScreen" prefHeight="25.0" prefWidth="76.0" text="Back" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" />
                </GridPane.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button fx:id="buyEscapePodButton" alignment="CENTER" mnemonicParsing="false" onAction="#buyEscapePod" text="Buy Escape Pod" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+            <Button fx:id="buyEscapePodButton" alignment="CENTER" mnemonicParsing="false" onAction="#buyEscapePod" text="Buy Escape Pod" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -112,26 +148,26 @@
                   <Insets />
                </GridPane.margin>
             </Button>
-            <Label fx:id="escapePodText" alignment="BOTTOM_LEFT" prefHeight="21.0" prefWidth="429.0" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+            <Label fx:id="escapePodText" alignment="BOTTOM_LEFT" prefHeight="21.0" prefWidth="429.0" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="5.0" />
                </GridPane.margin>
             </Label>
-            <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" GridPane.valignment="TOP">
+            <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" GridPane.valignment="TOP">
                <GridPane.margin>
-                  <Insets />
+                  <Insets top="20.0" />
                </GridPane.margin>
             </Separator>
             <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <ProgressBar fx:id="fuelProgress" prefHeight="28.0" prefWidth="132.0" progress="0.0" StackPane.alignment="BOTTOM_CENTER">
+                  <ProgressBar fx:id="fuelProgress" prefHeight="30.0" prefWidth="132.0" progress="0.0" StackPane.alignment="BOTTOM_CENTER">
                      <StackPane.margin>
                         <Insets bottom="3.0" />
                      </StackPane.margin>
                   </ProgressBar>
-                  <Label fx:id="fuelAmount" alignment="CENTER" text="0/20" textAlignment="CENTER" StackPane.alignment="BOTTOM_CENTER">
+                  <Label fx:id="fuelAmountLabel" alignment="CENTER" text="0/20" textAlignment="CENTER" StackPane.alignment="BOTTOM_CENTER">
                      <StackPane.margin>
-                        <Insets bottom="6.0" />
+                        <Insets bottom="8.0" />
                      </StackPane.margin>
                   </Label>
                   <Label text="Fuel Tank" StackPane.alignment="TOP_CENTER">
@@ -145,11 +181,24 @@
                </children>
             </StackPane>
             <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The Shipyard!" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Shipyard" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="21.0" />
                </font>
             </Text>
+            <Button fx:id="saleEquipment" alignment="CENTER" mnemonicParsing="false" onAction="#goToEquipmentScreen" prefHeight="31.0" text="View Equipment for Sale" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Label fx:id="equipmentDesc" prefHeight="21.0" prefWidth="598.0" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="5.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </children>

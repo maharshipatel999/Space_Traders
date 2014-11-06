@@ -20,13 +20,25 @@ public enum GadgetType {
     TARGETING          (TechLevel.POST_INDUSTRIAL, 9000, "Targeting System"),
     CLOAK              (TechLevel.HI_TECH, 20000, "Cloaking Device");
     
-    private TechLevel minTechLevel;
-    private int price;
-    private String name;
+    private final TechLevel minTechLevel;
+    private final int price;
+    private final String name;
     
     private GadgetType(TechLevel minTechLevel, int price, String name) {
         this.minTechLevel = minTechLevel;
         this.price = price;
         this.name = name;
+    }
+    
+    public TechLevel minTechLevel() {
+        return minTechLevel;
+    }
+    
+    public int price() {
+        return price;
+    }
+    
+    public String toString() {
+        return name;
     }
 }

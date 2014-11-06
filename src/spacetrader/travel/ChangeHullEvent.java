@@ -21,15 +21,16 @@ public class ChangeHullEvent extends RandomEvent {
      */
     public ChangeHullEvent(Player player, String message, int quantityChange) {
         super(player, message, quantityChange);
-        
+        this.message += "\n\n";
         if (quantityChange > 0) {
             if (player.getShip().getHullStrength() + quantityChange >= player.getShip().getMaxHullStrength()) {
-                this.message += "\n\n" + "Your ship was completely repaired!";
+                this.quantityChange = player.getShip().getMaxHullStrength() - player.getShip().getHullStrength();
+                this.message += "Your ship was completely repaired!";
             } else {
-                this.message += "\n\n" + quantityChange + " repairs were done on your ship!";
+                this.message += quantityChange + " repairs were done on your ship!";
             }
         } else {
-            this.message += "\n\n" + "Your hull received " + Math.abs(quantityChange) + " damage.";
+            this.message += "Your hull received " + Math.abs(quantityChange) + " damage.";
         }
     }
     /**

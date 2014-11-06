@@ -14,6 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import spacetrader.Player;
+import spacetrader.exceptions.InsufficientFundsException;
+import spacetrader.planets.Planet;
+import spacetrader.planets.TechLevel;
 import spacetrader.ships.FuelTank;
 import spacetrader.ships.ShipType;
 
@@ -25,145 +28,211 @@ import spacetrader.ships.ShipType;
 public class ShipYardScreenController extends SceneController implements Initializable {
 
     @FXML private Label walletAmt;
+    
+    @FXML private Label fuelAmountLabel;
     @FXML private ProgressBar fuelProgress;
-    @FXML private Button fuelInc;
-    @FXML private Button fillTank;
+    @FXML private Button incFuelButton;
+    @FXML private Button maxFuelButton;
+    @FXML private Label fuelStatus;
+    
+    @FXML private Label hullAmountLabel;
     @FXML private ProgressBar hullProgress;
-    @FXML private Button fix10;
-    @FXML private Button repairAll;
-    @FXML private Label numShips;
+    @FXML private Button incHullButton;
+    @FXML private Button maxHullButton;
+    @FXML private Label hullStatus;
+
+    @FXML private Label shipDesc;
+    @FXML private Label equipmentDesc;
     @FXML private Button saleShips;
-    @FXML private Button backButton;
+    @FXML private Button saleEquipment;
     @FXML private Label escapePodText;
     @FXML private Button buyEscapePodButton;
     
-    @FXML private Label fuelAmount;
-    @FXML private Label hullAmount;
-    
+    @FXML private Button backButton;
+
     private Player player;
-    
+    private Planet planet;
     
        public void setUpShipYardScreen(Player player) {
         this.player = player;
+        this.planet = player.getLocation();
         int amount = player.getWallet().getCredits();
+        
         walletAmt.setText("Wallet: ₪" + amount);
-        updateFuel();
-        updateHull();
+        updateFuelBar();
+        updateHullBar();
         setFuelButtons();
         setHullButtons();
+        
+        maxFuelButton.requestFocus(); //Makes it the default button on the screen.
+        
+        //Determine if this planet sells ships, equipment, or escape pods.
+        if (player.getLocation().getLevel().ordinal() < ShipType.FLEA.minTechLevel().ordinal()) {
+            shipDesc.setText("There are no ships for sale.");
+            saleShips.setDisable(true);
+        } else {
+            shipDesc.setText("There are several ships currently avaible for purchase!");
+        }
+        
+        if (planet.getLevel().equals(TechLevel.AGRICULTURE) || planet.getLevel().equals(TechLevel.PRE_AGRICULTURE)) {
+            equipmentDesc.setText("This planet does not sell ship equipment.");
+            saleEquipment.setDisable(true);
+        } else {
+            equipmentDesc.setText("There are several equipment available for purchase!");
+        }
+        
         if (player.getCredits() < 2000) {
              escapePodText.setText("You need at least ₪2000 to buy an escape pod");
              buyEscapePodButton.setDisable(true);
         } else {
             escapePodText.setText("An escape pod is for sale!");
         }
-        
-        if (player.getLocation().getLevel().ordinal() < ShipType.FLEA.minTechLevel().ordinal()) {
-            numShips.setText("This planet's tech level is too low.");
-            saleShips.setDisable(true);
-        } else {
-            numShips.setText("Ships are for sale!");
-        }
-        
-        fuelAmount.setText(player.getShip().getTank().getFuelAmount() + "/" + player.getShip().getTank().getMaxFuel());
-        hullAmount.setText((100.0 * player.getShip().getHullStrength() / (double) player.getShip().getMaxHullStrength()) + "%");
     }
     
-    private void updateFuel() {
+    /**
+    * Updates the fuel progress bar.
+    */
+    private void updateFuelBar() {
         int currFuel = player.getShip().getTank().getFuelAmount();
         int maxFuel = player.getShip().getTank().getMaxFuel();
-        fuelProgress.setProgress((double) currFuel / (double) maxFuel);
-        fuelAmount.setText(player.getShip().getTank().getFuelAmount() + "/" + player.getShip().getTank().getMaxFuel());
+        fuelProgress.setProgress((double) currFuel / maxFuel);
+        fuelAmountLabel.setText(currFuel + "/" + maxFuel);
     }
     
+    /**
+     * Updates the hull strength progress bar.
+     */
+    private void updateHullBar() {
+        double currStrength = player.getShip().getHullStrength();
+        double maxStrength = player.getShip().getMaxHullStrength();
+        hullProgress.setProgress(currStrength / maxStrength);
+        hullAmountLabel.setText((100.0 * currStrength / maxStrength) + "%");
+    }
+    
+    /**
+     * Updates the buttons for buying fuel.
+     */
     private void setFuelButtons() {
         int currFuel = player.getShip().getTank().getFuelAmount();
         int maxFuel = player.getShip().getTank().getMaxFuel();
+        int fuelCost = player.getShip().getType().fuelCost();
+        
+        //Disable the player's ability to buy fuel if their fuel tank is full.
         if (currFuel == maxFuel) {
-            fuelInc.setText("Fuel tank is full");
-            fillTank.setText("Fuel tank is full");
-            fuelInc.setDisable(true);
-            fillTank.setDisable(true);
-        } else if ((maxFuel - currFuel) == 1) {
-            fuelInc.setText("Add 1 fuel: ₪" + player.getShip().getType().fuelCost());
-            fillTank.setText("Fill entire tank: ₪" + ((maxFuel - currFuel) * player.getShip().getType().fuelCost()));
+            fuelStatus.setVisible(true);
+            fuelStatus.setText("Fuel Tank is completely full!");
+            incFuelButton.setVisible(false);
+            maxFuelButton.setVisible(false);
         } else {
-            fuelInc.setText("Add 2 fuel: ₪" + (2 * player.getShip().getType().fuelCost()));
-            fillTank.setText("Fill entire tank: ₪" + ((maxFuel - currFuel) * player.getShip().getType().fuelCost()));
+            fuelStatus.setVisible(false);
+            incFuelButton.setVisible(true);
+            maxFuelButton.setVisible(true);
+            
+            maxFuelButton.setText("Fill Entire Tank: ₪" + ((maxFuel - currFuel) * fuelCost));
+            int refillAmt = (maxFuel - currFuel == 1) ? 1 : 2;
+            incFuelButton.setText("Buy " + refillAmt + " Unit" + (refillAmt > 1 ? "s" : "") + " of Fuel: ₪" + refillAmt * fuelCost);
         }
     }
     
-    private void updateHull() {
-        int currStrength = player.getShip().getHullStrength();
-        int maxStrength = player.getShip().getMaxHullStrength();
-        hullProgress.setProgress((double) currStrength / (double) maxStrength);
-        hullAmount.setText((100.0 * player.getShip().getHullStrength() / (double) player.getShip().getMaxHullStrength()) + "%");
-    }
-    
+    /**
+     * Updates the buttons for fixing the hull.
+     */
     private void setHullButtons() {
-        int currStrength = player.getShip().getHullStrength();
-        int maxStrength = player.getShip().getMaxHullStrength();
-        if (currStrength == maxStrength) {
-            fix10.setText("No damage");
-            repairAll.setText("No damage");
-            fix10.setDisable(true);
-            repairAll.setDisable(true);
+        int currHull = player.getShip().getHullStrength();
+        int maxHull = player.getShip().getMaxHullStrength();
+        int repairCost = player.getShip().getType().repairCost();
+        
+        //Disable the player's ability to repair the ship if their hull is completely fixed.
+        if (currHull == maxHull) {
+            hullStatus.setVisible(true);
+            hullStatus.setText("Your ship's hull strength is completely fixed!");
+            incHullButton.setVisible(false);
+            maxHullButton.setVisible(false);
         } else {
-            int tenPercent = maxStrength / 10;
-            fix10.setText("Fix hull 10%: ₪" + (player.getShip().getType().repairCost() * tenPercent));
-            repairAll.setText("Repair all damage: ₪" + player.getShip().getType().repairCost());
+            fuelStatus.setVisible(false);
+            incFuelButton.setVisible(true);
+            maxFuelButton.setVisible(true);
+            
+            maxHullButton.setText("Repair All Damage: ₪" + ((maxHull - currHull) * repairCost));
+            
+            double damageFraction = (maxHull - currHull) / (double) maxHull;
+            int repairAmount = (damageFraction >= .10) ? (maxHull / 10) : (maxHull - currHull);
+            incHullButton.setText("Repair " + ((repairAmount / maxHull) * 100) + "% of Hull: ₪" + (repairAmount * repairCost));
         }
-    }
-    @FXML void increaseFuel() {
-        if (fuelInc.getText().startsWith("Add 1 fuel")) {
-            player.getShip().getTank().addFuel(1);
-            player.getWallet().remove(player.getShip().getType().fuelCost());
-        }
-        player.getShip().getTank().addFuel(2);
-        player.getWallet().remove(2 * player.getShip().getType().fuelCost());
-        int amount = player.getWallet().getCredits();
-        walletAmt.setText("Wallet: ₪" + amount);
-        setFuelButtons();
-        updateFuel();
     }
     
+    /**
+     * Adds 1 or 2 more fuel to the player's tank.
+     */
+    @FXML void increaseFuel() {
+        int fuelAmount = (incFuelButton.getText().contains("1")) ? 1 : 2;
+        buyFuel(fuelAmount);
+    }
+    
+    /**
+     * Completely fills the player's tank.
+     */
     @FXML void increaseToMaxFuel() {
         FuelTank tank = player.getShip().getTank();
         int fuelDiff = tank.getMaxFuel() - tank.getFuelAmount();
-        tank.addFuel(fuelDiff);
-        player.getWallet()
-                .remove(fuelDiff * player.getShip().getType().fuelCost());
-        int amount = player.getWallet().getCredits();
-        walletAmt.setText("Wallet: ₪" + amount);
-        setFuelButtons();
-        updateFuel();
+        buyFuel(fuelDiff);
+    }
+    
+    /**
+     * Adds more fuel to the player's tank and removes the appropriate amount
+     * of money from the player's wallet. If the player does not have enough money,
+     * it will display an alert message.
+     */
+    private void buyFuel(int fuelAmount) {
+        try {
+            int fuelCost = player.getShip().getType().repairCost();
+
+            //Update Player's Wallet and Ship's Fuel Tank
+            player.getWallet().remove(fuelAmount * fuelCost); //This can throw an InsufficientFundsException
+            player.getShip().getTank().addFuel(fuelAmount);
+            
+            //Update ShipYardScreen
+            int amount = player.getWallet().getCredits();
+            walletAmt.setText("Wallet: ₪" + amount);
+            updateFuelBar();
+            setFuelButtons();
+        } catch (InsufficientFundsException e) {
+            mainControl.displayAlertMessage("Insufficient Funds", "You do not have enough money to buy more fuel!");
+        }
     }
     
     @FXML void increaseHullStrength() {
-        int maxStrength = player.getShip().getMaxHullStrength();
-        int tenPercent = maxStrength / 10;
-        int currStrength = player.getShip().getHullStrength();
-        player.getShip().setHullStrength(currStrength + tenPercent);
-        player.getWallet()
-                .remove((player.getShip().getType().repairCost() * tenPercent));
-        int amount = player.getWallet().getCredits();
-        walletAmt.setText("Wallet: ₪" + amount);
-        setHullButtons();
-        updateHull();
+        int maxHull = player.getShip().getMaxHullStrength();
+        int currHull = player.getShip().getHullStrength();
+        double damageFraction = (maxHull - currHull) / (double) maxHull;
+        int repairAmount = (damageFraction >= .10) ? (maxHull / 10) : (maxHull - currHull);
+        repairHull(repairAmount);
     }
     
     @FXML void increaseToMaxHullStrength() {
         int maxStrength = player.getShip().getMaxHullStrength();
         int currStrength = player.getShip().getHullStrength();
-        int fuelDiff = maxStrength - currStrength;
-        int percent = fuelDiff / 10;
-        player.getShip().setHullStrength(maxStrength);
-        player.getWallet()
-                .remove((player.getShip().getType().repairCost() * percent));
-        int amount = player.getWallet().getCredits();
-        walletAmt.setText("Wallet: ₪" + amount);
-        setHullButtons();
-        updateHull();
+        int hullDifference = maxStrength - currStrength;
+        repairHull(hullDifference);
+    }
+    
+    private void repairHull(int hullAmount) {
+        try {
+            int repairCost = player.getShip().getType().repairCost();
+
+            //Update Player's Wallet and Ship's Hull Strength
+            int currStrength = player.getShip().getHullStrength();
+            player.getWallet().remove(hullAmount * repairCost); //This can throw an InsufficientFundsException
+            player.getShip().setHullStrength(currStrength + hullAmount);
+
+            //Update ShipYardScreen
+            int amount = player.getWallet().getCredits();
+            walletAmt.setText("Wallet: ₪" + amount);
+            updateHullBar();
+            setHullButtons();
+        } catch (InsufficientFundsException e) {
+            mainControl.displayAlertMessage("Insufficient Funds", "You do not have enough money to buy more fuel!");
+        }
     }
     
     @FXML protected void goToShipMarketScreen() {
@@ -173,16 +242,20 @@ public class ShipYardScreenController extends SceneController implements Initial
     @FXML protected void goBackToHomeScreen() {
         mainControl.goToHomeScreen(player.getLocation());
     }
+    
     @FXML protected void buyEscapePod() {
         player.getShip().setEscapePod();
     }
+    
+    @FXML protected void goToEquipmentScreen() {
+        //mainControl.goToEquipmentMarket();
+    }
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
-    
-    
+    } 
 }
