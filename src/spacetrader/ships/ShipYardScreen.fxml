@@ -34,7 +34,7 @@
                   <Insets bottom="3.0" left="20.0" />
                </GridPane.margin>
                <font>
-                  <Font size="17.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
             <Label fx:id="fuelStatus" prefHeight="26.0" prefWidth="369.0" text="Fuel Status" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
@@ -42,7 +42,7 @@
                   <Insets bottom="3.0" left="20.0" />
                </GridPane.margin>
                <font>
-                  <Font size="17.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e4e4" height="174.0" stroke="BLACK" strokeType="INSIDE" width="586.0" GridPane.rowIndex="4">
@@ -52,10 +52,13 @@
             </Rectangle>
             <Label fx:id="walletAmt" text="Label" GridPane.valignment="TOP">
                <GridPane.margin>
-                  <Insets bottom="3.0" />
+                  <Insets left="10.0" top="6.0" />
                </GridPane.margin>
-            </ProgressBar>
-            <Line endY="-10.0" startY="10.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Line endY="-10.0" startY="10.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="3.0" />
                </GridPane.margin>
@@ -133,7 +136,7 @@
             </Label>
             <Button fx:id="backToHomeScreen" mnemonicParsing="false" onAction="#goBackToHomeScreen" prefHeight="25.0" prefWidth="76.0" text="Back" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets top="17.0" />
+                  <Insets bottom="10.0" left="10.0" />
                </GridPane.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -179,9 +182,9 @@
                </children>
             </StackPane>
             <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Shipyard" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Shipyard" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
-                  <Font size="18.0" />
+                  <Font size="23.0" />
                </font>
             </Text>
             <Button fx:id="saleEquipment" alignment="CENTER" mnemonicParsing="false" onAction="#goToEquipmentScreen" prefHeight="31.0" text="View Equipment for Sale" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">

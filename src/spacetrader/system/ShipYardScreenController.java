@@ -239,6 +239,11 @@ public class ShipYardScreenController extends SceneController implements Initial
     protected void goToShipMarketScreen() {
         mainControl.goToShipMarket();
     }
+    
+    @FXML
+    protected void goBackToHomeScreen() {
+        mainControl.goToHomeScreen(player.getLocation());
+    }
 
     @FXML
     protected void goToEquipmentScreen() {
