@@ -421,21 +421,21 @@ public class GadgetScreenController extends SceneController implements Initializ
     }
 
     private void setRadioButtons(RadioButton[] r) {
-        for(int i  = 0; i < r.length; i++) {
-            allBuySellButtons[i] = r[i]; 
+        for (int i = 0; i < r.length; i++) {
+            allBuySellButtons[i] = r[i];
         }
     }
-    
-    private RadioButton getCheckedRadioButton () {
+
+    private RadioButton getCheckedRadioButton() {
         RadioButton r = null;
         int counter = 0;
         for (RadioButton button : allBuySellButtons) {
             if (button.isSelected()) {
-                r =  button;
+                r = button;
                 counter++;
             }
         }
-        if(counter > 1) { 
+        if (counter > 1) {
             throw new TooManyRadioButtonsCheckedException("Too Many Radio Buttons Checked");
         }
         return r;
