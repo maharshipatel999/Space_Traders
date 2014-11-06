@@ -8,6 +8,7 @@ package spacetrader.ships;
 import java.io.Serializable;
 import java.util.ArrayList;
 import spacetrader.exceptions.SlotsAreFullException;
+import spacetrader.exceptions.SlotsAreEmptyException;
 
 /**
  * Represents a container for ship equipment. This is backed by an ArraylList.
@@ -53,7 +54,7 @@ public class EquipmentSlots<T> implements Serializable {
      */
     public void removeItem(T item) {
         if (isEmpty()) {
-            throw new SlotsAreFullException();
+            throw new SlotsAreEmptyException();
         } else {
             list.remove(0);
             size = size - 1;
@@ -67,7 +68,7 @@ public class EquipmentSlots<T> implements Serializable {
      * @return the item at the given index
      */
     public T getItem(int index) {
-        if (index >= 0 && index < list.size()) {
+        if (isFull()) {
             return list.get(index);
         } else {
             throw new IndexOutOfBoundsException("Index is out legal range");
