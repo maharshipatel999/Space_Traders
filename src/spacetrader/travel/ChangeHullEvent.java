@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.travel;
 
 import spacetrader.Player;
 
 /**
  * Represents a random event that changes the player's hull
+ *
  * @author Seth
  */
 public class ChangeHullEvent extends RandomEvent {
+
     /**
      * Constructor for ChangeHullEvent
+     *
      * @param player
      * @param message
-     * @param quantityChange 
+     * @param quantityChange
      */
     public ChangeHullEvent(Player player, String message, int quantityChange) {
         super(player, message, quantityChange);
@@ -33,8 +35,9 @@ public class ChangeHullEvent extends RandomEvent {
             this.message += "Your hull received " + Math.abs(quantityChange) + " damage.";
         }
     }
+
     /**
-     * Sets hullstrength to hullstreth + quantity change
+     * Sets hullstrength to hullstrength + quantity change
      */
     @Override
     public void doEvent() {

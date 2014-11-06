@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.net.URL;
@@ -208,8 +207,9 @@ public class ShipYardScreenController extends SceneController implements Initial
         int repairAmount = (damageFraction >= .10) ? (maxHull / 10) : (maxHull - currHull);
         repairHull(repairAmount);
     }
-    
-    @FXML void increaseToMaxHullStrength() {
+
+    @FXML
+    void increaseToMaxHullStrength() {
         int maxStrength = player.getShip().getMaxHullStrength();
         int currStrength = player.getShip().getHullStrength();
         int hullDifference = maxStrength - currStrength;
@@ -234,21 +234,23 @@ public class ShipYardScreenController extends SceneController implements Initial
             mainControl.displayAlertMessage("Insufficient Funds", "You do not have enough money to buy more fuel!");
         }
     }
-    
-    @FXML protected void goToShipMarketScreen() {
+
+    @FXML
+    protected void goToShipMarketScreen() {
         mainControl.goToShipMarket();
     }
-    
-    @FXML protected void goBackToHomeScreen() {
-        mainControl.goToHomeScreen(player.getLocation());
+
+    @FXML
+    protected void goToEquipmentScreen() {
+        if (planet.getLevel().equals(TechLevel.AGRICULTURE) || planet.getLevel().equals(TechLevel.PRE_AGRICULTURE)) {
+            mainControl.displayAlertMessage("UNDER CONSTRUCTION", "Equipment Market Unavailable. Planet has not yet achieved a high enough tech level to offer Equipment Goods.");
+        } else {
+            mainControl.goToEquipmentMarket();
+        }
     }
     
     @FXML protected void buyEscapePod() {
         player.getShip().setEscapePod();
-    }
-    
-    @FXML protected void goToEquipmentScreen() {
-        //mainControl.goToEquipmentMarket();
     }
     
     /**
