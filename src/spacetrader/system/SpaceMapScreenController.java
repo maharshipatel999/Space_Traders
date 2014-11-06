@@ -82,7 +82,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
         fuelRemaingText.setText("Fuel Remaining : " + fuelAmount + "/" + maxFuelAmount);
         planetMap.addPlanets(planets);
 
-        mapScreen.setDividerPosition((planetInfo.getPrefWidth()) / mapScreen.getWidth());
+        mapScreen.setDividerPosition((planetInfo.getPrefWidth()) / mapScreen.getPrefWidth());
 
         centerOnPlanet(currentPlanet);
     }
@@ -138,13 +138,13 @@ public class SpaceMapScreenController extends SceneController implements Initial
         double planetX = planetMap.planetIcons.get(planet).getCenterX();
         double planetY = planetMap.planetIcons.get(planet).getCenterY();
 
-        double translateX = -1 * planetX + (mapScreen.getWidth() / 2);
+        double translateX = -1 * planetX + (mapScreen.getPrefWidth() / 2);
         double translateY = -1 * planetY + (mapScreen.getHeight() / 2);
 
         if (translateX > 0) {
             translateX = 0;
-        } else if (translateX < (mapScreen.getWidth() - planetMap.background.getWidth())) {
-            translateX = mapScreen.getWidth() - planetMap.background.getWidth();
+        } else if (translateX < (mapScreen.getPrefWidth() - planetMap.background.getWidth())) {
+            translateX = mapScreen.getPrefWidth() - planetMap.background.getWidth();
         }
         if (translateY > 0) {
             translateY = 0;
@@ -209,7 +209,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 double tempY = dragContext.y + event.getSceneY() - dragContext.mouseY;
 
                 //Set the positon of mapSpace Pane after
-                if (tempX <= 0 && tempX >= (mapScreen.getWidth() - background.getWidth())) {
+                if (tempX <= 0 && tempX >= (mapScreen.getPrefWidth() - background.getWidth())) {
                     dragContext.x = tempX;
                     this.setTranslateX(dragContext.x);
                 }

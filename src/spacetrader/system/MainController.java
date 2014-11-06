@@ -13,7 +13,6 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -29,7 +28,6 @@ import spacetrader.commerce.PriceIncreaseEvent;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
-import spacetrader.ships.ShipType;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.RandomEvent;
@@ -130,53 +128,7 @@ public class MainController {
             displayAlertMessage("Special Event!", event.getMessage());
         }
     }
-
-    /**
-     * Transitions the game screen to the Welcome Screen.
-     */
-    public void goToWelcomeScreen() {
-        stage.setTitle("Space Traders!");
-        WelcomeScreenController control;
-        control = (WelcomeScreenController) changeScene("/spacetrader/WelcomeScreen.fxml", stage);
-        control.setMainControl(this);
-    }
-
-    /**
-     * Transitions the game screen to the Character Dialog.
-     */
-    public void goToPlayerConfigScreen() {
-        CharacterDialogController control;
-        control = (CharacterDialogController) changeScene("/spacetrader/CharacterDialog.fxml", stage);
-        control.setMainControl(this);
-    }
-
-    /**
-     * Transitions the game screen to the Ship Market.
-     */
-    public void goToShipMarket() {
-        if (game.getPlayer().getLocation().getLevel().ordinal() >= ShipType.FLEA.minTechLevel().ordinal()) {
-            stage.setTitle("Welcome to the Ship Market!");
-            ShipMarketController control;
-            control = (ShipMarketController) changeScene("/spacetrader/ships/ShipMarket.fxml", stage);
-            control.setMainControl(this);
-            control.setUpShipMarketScreen(game.getPlayer());
-        } else {
-            displayAlertMessage("Attention!", "This planet is not advanced enough to have a Ship Market.");
-        }
-    }
-
-    /*
-     * transitions to equipment screen
-     */
-    public void goToEquipmentMarket() {
-        stage.setTitle("Welcome to the Equipment Market!");
-        GadgetScreenController control;
-        control = (GadgetScreenController) changeScene("/spacetrader/ships/GadgetScreen.fxml", stage);
-        control.setMainControl(this);
-        control.setUpEquipmentMarketScreen(game.getPlayer());
-
-    }
-
+    
     /**
      * Takes care of the actual act of going to a planet. Things that happens
      * every time you go to a planet from a different planet should be put here.
@@ -191,6 +143,59 @@ public class MainController {
     }
 
     /**
+     * Creates a Scene from an fxml file, and then returns the Scene's
+     * SceneController.
+     *
+     * @param fxmlScene the name of the fxml file that holds the new scene
+     * @param myStage the value of myStage
+     * @return the corresponding Controller of the fxml file
+     */
+    private SceneController extractControllerFromFXML(String fxmlScene, Stage myStage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlScene));
+        try {
+            Scene theScene = new Scene(loader.load());
+            SceneController controller = loader.getController();
+            controller.setScene(theScene);
+            controller.setMainControl(this);
+            return controller;
+        } catch (IOException e) {
+            Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+    
+    /**
+     * Gives the mainController access to this MainController. Sets the Stage's
+     * scene to this Controller's scene. Shows the scene.
+     * 
+     * @param control a SceneController
+     */
+    public void setUpControllerAndStage(SceneController control) {
+        
+        
+    }
+    
+    /**
+     * Transitions the game screen to the Welcome Screen.
+     */
+    public void goToWelcomeScreen() {
+        stage.setTitle("Space Traders!");
+        WelcomeScreenController control;
+        control = (WelcomeScreenController) extractControllerFromFXML("/spacetrader/WelcomeScreen.fxml", stage);
+        stage.setScene(control.getScene());
+        stage.show();
+    }
+
+    /**
+     * Transitions the game screen to the Character Dialog.
+     */
+    public void goToPlayerConfigScreen() {
+        CharacterDialogController control;
+        control = (CharacterDialogController) extractControllerFromFXML("/spacetrader/CharacterDialog.fxml", stage);
+        stage.setScene(control.getScene());
+    }
+    
+    /**
      * Transitions the game screen to the First Screen. Does not do anything
      * extra.
      *
@@ -198,9 +203,9 @@ public class MainController {
      */
     public void goToHomeScreen(Planet planet) {
         HomeScreenController control;
-        control = (HomeScreenController) changeScene("/spacetrader/planets/HomeScreen.fxml", stage);
-        control.setMainControl(this);
+        control = (HomeScreenController) extractControllerFromFXML("/spacetrader/planets/HomeScreen.fxml", stage);
         control.setUpHomeScreen(planet);
+        stage.setScene(control.getScene());        
     }
 
     /**
@@ -211,37 +216,42 @@ public class MainController {
     public void goToMarketScreen(Planet planet) {
         stage.setTitle("Welcome to the Market!");
         MarketScreenController control;
-        control = (MarketScreenController) changeScene("/spacetrader/commerce/MarketScreen.fxml", stage);
-        control.setMainControl(this);
+        control = (MarketScreenController) extractControllerFromFXML("/spacetrader/commerce/MarketScreen.fxml", stage);
         control.setUpMarketScreen(planet, game.getPlayer());
+        stage.setScene(control.getScene());
     }
-
+    
+    public void goToShipYardScreen() {
+        stage.setTitle("Welcome to the Ship Yard!");
+        ShipYardScreenController control;
+        control = (ShipYardScreenController) extractControllerFromFXML("/spacetrader/ships/ShipYardScreen.fxml", stage);
+        control.setUpShipYardScreen(game.getPlayer());
+        stage.setScene(control.getScene());
+    }
+    
     /**
-     * Transitions the game screen to the Warp Screen
-     *
-     * @param source the planet we are on
-     * @param dest the planet we are going to
+     * Transitions the game screen to the Ship Market.
      */
-    public void goToWarpScreen(Planet source, Planet dest) {
-        stage.setTitle("Traveling to " + dest.getName());
-        warpScreenControl = (WarpScreenController) changeScene("/spacetrader/travel/WarpScreen.fxml", stage);
-        warpScreenControl.setMainControl(this);
-        warpScreenControl.travel(source, dest);
-        warpScreenScene = stage.getScene();
+    public void goToShipMarket() {
+        stage.setTitle("Welcome to the Ship Market!");
+        ShipMarketController control;
+        control = (ShipMarketController) extractControllerFromFXML("/spacetrader/ships/ShipMarket.fxml", stage);
+        control.setUpShipMarketScreen(game.getPlayer());
+        stage.setScene(control.getScene());
     }
 
-    /**
-     * Goes back to a warp screen that was already in progress
+    /*
+     * Transitions to equipment screen
      */
-    public void goBackToWarpScreen() {
-        if (warpScreenControl == null) { //this is only for testing purposes
-            goToWarpScreen(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets().get(10));
-        }
+    public void goToEquipmentMarket() {
+        stage.setTitle("Welcome to the Equipment Market!");
+        GadgetScreenController control;
+        control = (GadgetScreenController) extractControllerFromFXML("/spacetrader/ships/GadgetScreen.fxml", stage);
+        control.setUpEquipmentMarketScreen(game.getPlayer());
+        stage.setScene(control.getScene());
 
-        stage.setScene(warpScreenScene);
-        warpScreenControl.continueTraveling();
     }
-
+    
     /**
      * Transitions the game screen to the Space Map Screen.
      *
@@ -250,11 +260,35 @@ public class MainController {
     public void goToSpaceMapScreen(Planet planet) {
         stage.setTitle("Space Map!");
         SpaceMapScreenController control;
-        control = (SpaceMapScreenController) changeScene("/spacetrader/SpaceMapScreen.fxml", stage);
-        control.setMainControl(this);
+        control = (SpaceMapScreenController) extractControllerFromFXML("/spacetrader/SpaceMapScreen.fxml", stage);
         control.setUpMap(game.getPlayer(), planet, game.getUniverse().getPlanets());
+        stage.setScene(control.getScene());
+    }
+    
+    /**
+     * Transitions the game screen to the Warp Screen.
+     *
+     * @param source the planet we are on
+     * @param dest the planet we are going to
+     */
+    public void goToWarpScreen(Planet source, Planet dest) {
+        stage.setTitle("Traveling to " + dest.getName());
+        this.warpScreenControl = (WarpScreenController) extractControllerFromFXML("/spacetrader/travel/WarpScreen.fxml", stage);
+        stage.setScene(this.warpScreenControl.getScene());
+        this.warpScreenControl.travel(source, dest);
     }
 
+    /**
+     * Goes back to a warp screen that was already in progress
+     */
+    public void goBackToWarpScreen() {
+        if (this.warpScreenControl == null) { //this is only for testing purposes
+            goToWarpScreen(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets().get(10));
+        }
+        stage.setScene(this.warpScreenControl.getScene());
+        this.warpScreenControl.continueTraveling();
+    }
+    
     /**
      * Transitions to the encounter screen corresponding with the specified
      * encounter
@@ -264,9 +298,9 @@ public class MainController {
     public void goToEncounterScreen(Encounter encounter) {
         stage.setTitle("Space Encounter!");
         EncounterScreenController control;
-        control = (EncounterScreenController) changeScene(encounter.getFXMLScene(), stage);
-        control.setMainControl(this);
+        control = (EncounterScreenController) extractControllerFromFXML(encounter.getFXMLScene(), stage);
         control.setEncounter(encounter);
+        stage.setScene(control.getScene());
     }
 
     /**
@@ -274,48 +308,30 @@ public class MainController {
      */
     public final void goToStartScreen() {
         Stage startStage = new Stage();
-        startStage.initOwner(stage);
-        //startStage.setAlwaysOnTop(true);
-        startStage.initModality(Modality.WINDOW_MODAL);
         startStage.setTitle("Start Screen!");
+        startStage.initOwner(stage);
+        startStage.initModality(Modality.WINDOW_MODAL);
 
         StartScreenController control;
-        control = (StartScreenController) changeScene("/spacetrader/StartScreen.fxml", startStage);
-        control.setMainControl(this);
+        control = (StartScreenController) extractControllerFromFXML("/spacetrader/StartScreen.fxml", startStage);
         control.setUpPlayerStats(game.getPlayer(), startStage, this);
-
-        /* FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlScene));
-         try {
-         scene = new Scene(loader.load());
-         } catch (IOException e) {
-         Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
-         }
-         myStage.show();
-         return loader.getController();*/
+        startStage.setScene(control.getScene());
     }
 
     public void goToOverwriteScreen() {
         stage.setTitle("Save Game!");
         OverwriteScreenController control;
-        control = (OverwriteScreenController) changeScene("/spacetrader/persistence/OverwriteScreen.fxml", stage);
-        control.setMainControl(this);
+        control = (OverwriteScreenController) extractControllerFromFXML("/spacetrader/persistence/OverwriteScreen.fxml", stage);
         control.setUpSaveScreen(game);
+        stage.setScene(control.getScene());
     }
 
     public void goToReloadScreen() {
         stage.setTitle("Reload Game!");
         ReloadGameScreenController control;
-        control = (ReloadGameScreenController) changeScene("/spacetrader/persistence/ReloadGameScreen.fxml", stage);
-        control.setMainControl(this);
+        control = (ReloadGameScreenController) extractControllerFromFXML("/spacetrader/persistence/ReloadGameScreen.fxml", stage);
         control.setUpReloadScreen(game);
-    }
-
-    public void goToShipYardScreen() {
-        stage.setTitle("Welcome to the Ship Yard!");
-        ShipYardScreenController control;
-        control = (ShipYardScreenController) changeScene("/spacetrader/ships/ShipYardScreen.fxml", stage);
-        control.setMainControl(this);
-        control.setUpShipYardScreen(game.getPlayer());
+        stage.setScene(control.getScene());
     }
 
     public void displayAlertMessage(String alertTitle, String alert) {
@@ -380,25 +396,6 @@ public class MainController {
                 goToHomeScreen(game.getPlayer().getLocation());
             }
         });
-
         displayProgess(progressTitle, saveService);
-    }
-
-    /**
-     * Changes the current scene to the scene specified by fxmlScene.
-     *
-     * @param fxmlScene the name of the fxml file that holds the new scene
-     * @param myStage the value of myStage
-     * @return the corresponding Controller of the fxml file
-     */
-    private Initializable changeScene(String fxmlScene, Stage myStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlScene));
-        try {
-            myStage.setScene(new Scene(loader.load()));
-        } catch (IOException e) {
-            Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
-        }
-        myStage.show();
-        return loader.getController();
     }
 }

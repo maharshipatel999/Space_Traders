@@ -52,19 +52,25 @@ public class ShipInfoPaneController implements Initializable {
 
     public void setShipType(ShipType ship) {
         nameText.setText(ship.name().toString());
-        String size = "Small";
+        String size;
         switch (ship.size()) {
             case 0:
-                size = "Small";
+                size = "Tiny";
                 break;
             case 1:
-                size = "Medium";
+                size = "Small";
                 break;
             case 2:
-                size = "Large";
+                size = "Medium";
                 break;
             case 3:
+                size = "Large";
+                break;
+            case 4:
                 size = "Huge";
+                break;
+            default:
+                size = "NA";
         }
         sizeText.setText("" + size);
         cargoSlotsText.setText("" + ship.cargoBay());

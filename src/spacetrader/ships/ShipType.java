@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import spacetrader.planets.TechLevel;
-import static spacetrader.planets.TechLevel.values;
 
 //fuel, fuelCost, hullStrength, size;
 //minTechLevel, price, repairCost;
@@ -45,7 +44,7 @@ public enum ShipType {
             50, 3, -1, -1, 0),
     HORNET("Hornet", 20, 3, 2, 1, 2,
             16, 15, 150, 3,
-            TechLevel.POST_INDUSTRIAL, 100, 2,
+            TechLevel.POST_INDUSTRIAL, 100000, 2,
             200, 6, 2, 3, 1),
     GRASSHOPPER("Grasshopper", 30, 2, 2, 3, 3,
             15, 15, 150, 3,

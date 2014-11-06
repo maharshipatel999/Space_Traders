@@ -5,6 +5,8 @@
  */
 package spacetrader.system;
 
+import javafx.scene.Scene;
+
 /**
  *
  * @author Caleb
@@ -12,6 +14,7 @@ package spacetrader.system;
 public abstract class SceneController {
 
     protected MainController mainControl;
+    private Scene rootScene;
 
     /**
      * Gives this controller a reference to the MainController.
@@ -20,5 +23,21 @@ public abstract class SceneController {
      */
     public void setMainControl(MainController mainControl) {
         this.mainControl = mainControl;
+    }
+    
+    /**
+     * Gets the Scene associated with this controller.
+     * @param scene the scene for this Controller
+     */
+    public void setScene(Scene scene) {
+        this.rootScene = scene;
+    }
+    
+    /**
+     * Gets the Scene associated with this controller.
+     * @return this Controller's Scene
+     */
+    public Scene getScene() {
+        return rootScene;
     }
 }

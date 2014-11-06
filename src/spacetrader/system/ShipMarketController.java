@@ -13,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.controlsfx.control.action.Action;
@@ -43,7 +42,6 @@ public class ShipMarketController extends SceneController implements Initializab
     @FXML
     private GridPane shipGrid;
     @FXML
-    private ImageView largeShipImage;
 
     private ShipType[] shipTypes;
     private RadioButton[] shipsButtons;
@@ -81,7 +79,6 @@ public class ShipMarketController extends SceneController implements Initializab
         prices = new Label[]{fleaPrice, gnatPrice, fireflyPrice, mosquitoPrice, bumblebeePrice, beetlePrice,
             hornetPrice, grasshopperPrice, termitePrice, waspPrice};
 
-        //largeShipImage.setImage(new Image(shipTypes[selectedShip].spriteFile()));
         this.playerShipSellingPrice = player.getShip().currentShipPriceWithoutCargo();
 
         for (Node node : shipGrid.getChildren()) {
@@ -127,7 +124,7 @@ public class ShipMarketController extends SceneController implements Initializab
     /**
      * Processes the event where a ship is selected
      *
-     * @param event mouse click on radio buttton
+     * @param event mouse click on radio button
      */
     @FXML
     protected void selectShip(ActionEvent event) {
