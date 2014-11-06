@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.io.IOException;
@@ -39,32 +38,50 @@ import spacetrader.travel.TraderEncounter;
  * @author Caleb
  */
 public class StartScreenController extends SceneController implements Initializable {
- 
-    @FXML private Label playerName;
-    @FXML private Label playerMoney;
-    @FXML private Label playerPoliceRecord;
-    @FXML private Label playerRep;
-    @FXML private Label playerTotalKills;
-    @FXML private Label playerPilot;
-    @FXML private Label playerTrader;
-    @FXML private Label playerFighter;
-    @FXML private Label playerEngineer;
-    @FXML private Label playerInvestor;
-    
-    @FXML private Label cargoSlots;
-    @FXML private GridPane inventory;
-    
-    @FXML private Label shipType;
-    @FXML private Label shipFuel;
-    @FXML private Label shipHull;
-    @FXML private Label shipWeaponSlots;
-    @FXML private Label shipShieldSlots;
-    @FXML private Label shipGadgetSlots;
-    
+
+    @FXML
+    private Label playerName;
+    @FXML
+    private Label playerMoney;
+    @FXML
+    private Label playerPoliceRecord;
+    @FXML
+    private Label playerRep;
+    @FXML
+    private Label playerTotalKills;
+    @FXML
+    private Label playerPilot;
+    @FXML
+    private Label playerTrader;
+    @FXML
+    private Label playerFighter;
+    @FXML
+    private Label playerEngineer;
+    @FXML
+    private Label playerInvestor;
+
+    @FXML
+    private Label cargoSlots;
+    @FXML
+    private GridPane inventory;
+
+    @FXML
+    private Label shipType;
+    @FXML
+    private Label shipFuel;
+    @FXML
+    private Label shipHull;
+    @FXML
+    private Label shipWeaponSlots;
+    @FXML
+    private Label shipShieldSlots;
+    @FXML
+    private Label shipGadgetSlots;
+
     private Player player;
     private Stage startStage;
     private MainController mainControl;
-    
+
     /**
      * Initializes the controller class.
      */
@@ -72,9 +89,10 @@ public class StartScreenController extends SceneController implements Initializa
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
+
     /**
      * Display all the player's current information onto the Start Screen.
+     *
      * @param player the player who's stats should be displayed
      * @param myStage the window which should display the start screen
      */
@@ -83,7 +101,7 @@ public class StartScreenController extends SceneController implements Initializa
         this.player = player;
         this.mainControl = mainControl;
         PlayerShip ship = player.getShip();
-        
+
         playerName.setText(player.getName());
         playerMoney.setText("₪" + player.getWallet().getCredits());
         playerRep.setText(player.getReputation().toString());
@@ -94,17 +112,16 @@ public class StartScreenController extends SceneController implements Initializa
         playerTrader.setText("" + player.getSkill(Skill.TRADER));
         playerEngineer.setText("" + player.getSkill(Skill.ENGINEER));
         playerInvestor.setText("" + player.getSkill(Skill.INVESTOR));
-        
+
         shipType.setText("" + ship.getType().toString());
         shipFuel.setText(ship.getTank().getFuelAmount() + "/" + ship.getTank().getMaxFuel());
         shipHull.setText(ship.getHullStrength() + "/" + ship.getMaxHullStrength());
         shipWeaponSlots.setText(ship.getWeapons().getNumFilledSlots() + "/" + ship.getType().weaponSlots());
         shipShieldSlots.setText(ship.getShields().getNumFilledSlots() + "/" + ship.getType().shieldSlots());
         shipGadgetSlots.setText(ship.getGadgets().getNumFilledSlots() + "/" + ship.getType().gadgetSlots());
-        
-        
+
         cargoSlots.setText(ship.getCargo().getCount() + "/" + ship.getCargo().getMaxCapacity());
-        
+
         List<TradeGood> tradeGoodList = ship.getCargo().getTradeGoods();
         for (int i = 0; i < tradeGoodList.size(); i++) {
             TradeGood good = tradeGoodList.get(i);
@@ -114,12 +131,14 @@ public class StartScreenController extends SceneController implements Initializa
             }
         }
     }
-    
-    @FXML protected void closeWindow(ActionEvent event) {
+
+    @FXML
+    protected void closeWindow(ActionEvent event) {
         startStage.close();
     }
-    
-    @FXML protected void enableCheats(ActionEvent event) {
+
+    @FXML
+    protected void enableCheats(ActionEvent event) {
         List<String> choices = new ArrayList<>();
         choices.add("Increase Fuel");
         choices.add("Get Money!");
@@ -169,5 +188,5 @@ public class StartScreenController extends SceneController implements Initializa
             }
         }
     }
-    
+
 }

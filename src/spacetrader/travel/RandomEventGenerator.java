@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.travel;
 
 import java.util.ArrayList;
@@ -15,23 +14,26 @@ import spacetrader.system.MainController;
 
 /**
  * A utility class for creating random events.
+ *
  * @author Seth
- */ 
+ */
 public class RandomEventGenerator {
-    
+
     private final Universe universe;
     private final Random random = new Random();
     private final ArrayList<RandomEvent> events = new ArrayList();
     private final int MAX_HULL_QUANTITY = 50;
     private final int MIN_HULL_QUANTITY = 10;
-    
+
     private final int MAX_WALLET_QUANTITY = 300;
     private final int MIN_WALLET_QUANTITY = 10;
-    
+
     private final int RANDOM_EVENT_CHANCE = 15;
-    
+
     /**
-     * Creates a new Random Event Generator and fills a list of all the possible random events.
+     * Creates a new Random Event Generator and fills a list of all the possible
+     * random events.
+     *
      * @param player the player of the game
      * @param universe the game's universe
      * @param mainControl the main controller
@@ -40,10 +42,10 @@ public class RandomEventGenerator {
         this.universe = universe;
         events.add(new ChangeLocationEvent(player, "A giant space worm ate you and spat you out at a distant planet.", -1 * getRandomHullQuantity(), getRandomPlanet(), mainControl));
         events.add(new ChangeLocationEvent(player, "Your ship had a warp drive malfuntion and you found yourself at a distant planet.", 0, getRandomPlanet(), mainControl));
-        events.add(new ChangeLocationEvent(player, "You stayed up too late watching your favorite soap opera, \"Lightyears Of Our Life\", and fell asleep at the helm. You now find youself at a distant planet.", 0 , getRandomPlanet(), mainControl));
-        events.add(new ChangeLocationEvent(player, "Your stupid crewmate slipped on a banana peel and accidentally sat on the hyperdrive taking you to a distant planet.", 0 , getRandomPlanet(), mainControl));
+        events.add(new ChangeLocationEvent(player, "You stayed up too late watching your favorite soap opera, \"Lightyears Of Our Life\", and fell asleep at the helm. You now find youself at a distant planet.", 0, getRandomPlanet(), mainControl));
+        events.add(new ChangeLocationEvent(player, "Your stupid crewmate slipped on a banana peel and accidentally sat on the hyperdrive taking you to a distant planet.", 0, getRandomPlanet(), mainControl));
         events.add(new ChangeHullEvent(player, "Your ship was invaded by metal-eating space termites causing damage to your hull.", -1 * getRandomHullQuantity()));
-        events.add(new ChangeHullEvent(player, "Your ship passed through an asteroid field and was pelted by a barrage of space rocks causing damage to your hull.",-1 * getRandomHullQuantity()));
+        events.add(new ChangeHullEvent(player, "Your ship passed through an asteroid field and was pelted by a barrage of space rocks causing damage to your hull.", -1 * getRandomHullQuantity()));
         events.add(new ChangeHullEvent(player, "The scretchy hitchhiker you picked up last week went on a rampage causing damage to your hull.", -1 * getRandomHullQuantity()));
         events.add(new ChangeHullEvent(player, "One of your crewmates burned popcorn causing the sprinklers go off creating a short circuit creating a fire in the hull.", -1 * getRandomHullQuantity()));
         events.add(new ChangeHullEvent(player, "Radiation from a nearby star caused damage to your hull.", -1 * getRandomHullQuantity()));
@@ -89,6 +91,7 @@ public class RandomEventGenerator {
 
     /**
      * Generates a random amount for the hull to be damaged or repaired.
+     *
      * @return a random amount of hull strength
      */
     private int getRandomHullQuantity() {
@@ -97,6 +100,7 @@ public class RandomEventGenerator {
 
     /**
      * Generates a random amount to remove or add to the player's wallet.
+     *
      * @return a random amount of money
      */
     private int getRandomWalletQuantity() {
@@ -105,6 +109,7 @@ public class RandomEventGenerator {
 
     /**
      * Gets a random planet in the universe for the player to transport to.
+     *
      * @return a random planet
      */
     private Planet getRandomPlanet() {
@@ -115,6 +120,7 @@ public class RandomEventGenerator {
 
     /**
      * Gets a new random event.
+     *
      * @return a random event.
      */
     public RandomEvent getRandomEvent() {
@@ -123,6 +129,7 @@ public class RandomEventGenerator {
 
     /**
      * Determines if an event should occur.
+     *
      * @return true if an event should occur, false otherwise.
      */
     public boolean eventOccurs() {

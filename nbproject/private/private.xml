@@ -3,18 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/system/SpaceMapScreenController.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/travel/Encounter.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/travel/PoliceEncounter.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/travel/RandomEventGenerator.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/system/MainController.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/travel/EncounterManager.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/ShipType.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/PoliceRecord.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/Player.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/travel/TraderEncounter.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/system/MapDetailController.java</file>
-            <file>file:/C:/Users/Caleb/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/travel/PirateEncounter.java</file>
+            <file>file:/C:/Users/Tejas/Documents/NetBeansProjects/CS-2340-Fall-2014/src/spacetrader/Player.java</file>
         </group>
     </open-files>
 </project-private>

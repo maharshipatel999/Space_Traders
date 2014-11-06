@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.travel;
 
 import java.net.URL;
@@ -26,26 +25,28 @@ import spacetrader.system.SceneController;
  */
 public class WarpScreenController extends SceneController implements Initializable {
 
-    @FXML private Text destinationText;
-    @FXML private ImageView shipSprite;
-    
-    @FXML private AnchorPane warpPane;
+    @FXML
+    private Text destinationText;
+    @FXML
+    private ImageView shipSprite;
 
+    @FXML
+    private AnchorPane warpPane;
     private Planet destinationPlanet;
-    
     public int travelRemaining;
     public EncounterManager encounters;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
 
     /**
      * Travels from one planet to another.
+     *
      * @param source the planet we are at
      * @param destination the planet we are going to
      */
@@ -56,22 +57,24 @@ public class WarpScreenController extends SceneController implements Initializab
         } catch (InterruptedException ex) {
             Logger.getLogger(WarpScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         mainControl.takeTurn(destinationPlanet, (int) Universe.distanceBetweenPlanets(source, destination));
     }
-    
+
+    /**
+     * Continues travel sequence for Player where he or she left off
+     */
     public void continueTraveling() {
-        //continue from where we left off
     }
-    
+
     /**
      * Shows travel animation screen for a short period of time.
      */
     private void animateShip() {
         /*TranslateTransition tt = new TranslateTransition(Duration.millis(30000), shipSprite);
-        final float TRANSLATE_FACTOR = 300f;
-        tt.setByX(5.005f * TRANSLATE_FACTOR);
-        tt.setByY(-1f * TRANSLATE_FACTOR);
-        tt.play();*/
+         final float TRANSLATE_FACTOR = 300f;
+         tt.setByX(5.005f * TRANSLATE_FACTOR);
+         tt.setByY(-1f * TRANSLATE_FACTOR);
+         tt.play();*/
     }
 }

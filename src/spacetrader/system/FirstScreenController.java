@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.net.URL;
@@ -25,9 +24,10 @@ import spacetrader.Universe;
 public class FirstScreenController extends SceneController implements Initializable {
 
     private Universe universe;
-    
-    @FXML private TextArea spaceInformation;
-    
+
+    @FXML
+    private TextArea spaceInformation;
+
     /**
      * Initializes the controller class.
      */
@@ -35,16 +35,18 @@ public class FirstScreenController extends SceneController implements Initializa
     public void initialize(URL url, ResourceBundle rb) {
         //TODO
     }
-    
-    @FXML protected void goToMarket(ActionEvent event) {
+
+    @FXML
+    protected void goToMarket(ActionEvent event) {
         //Pick a random planet to start off game
         ArrayList<Planet> planets = universe.getPlanets();
         Random rand = new Random();
         mainControl.goToMarketScreen(planets.get(rand.nextInt(planets.size())));
     }
-    
+
     /**
      * Displays every Planet in the TextArea
+     *
      * @param universe the universe who's planets should be displayed
      * @param playerName the name of the game's player
      */

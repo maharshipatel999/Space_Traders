@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.commerce;
 
 import java.io.Serializable;
@@ -22,15 +21,16 @@ import spacetrader.planets.Resource;
  * @author Caleb
  */
 public class Market implements Serializable {
-    
+
     private Planet planet;
     private Map<TradeGood, Integer> sellPrices;
     private Map<TradeGood, Integer> buyPrices;
     private Map<TradeGood, Integer> appxPrices;
     private Cargo stock;
-    
+
     /**
      * Constructor
+     *
      * @param planet the planet to be assigned an instance of Market
      * @param player
      */
@@ -40,20 +40,22 @@ public class Market implements Serializable {
         sellPrices = new HashMap<>();
         buyPrices = new HashMap<>();
         appxPrices = new HashMap<>();
-        
+
         setApproximatePrices();
         setMarketStock();
     }
-    
+
     /**
-     * Sets the Map sell/buy prices so that each TradeGood maps to its sell/buy price on this planet.
-     * Price is equal to (the base price) + (incPerLevel * (Planet Tech Level - minProduceLevel)) + (variance).
-     * If a good is not sold on this planet, its price is -1.
+     * Sets the Map sell/buy prices so that each TradeGood maps to its sell/buy
+     * price on this planet. Price is equal to (the base price) + (incPerLevel *
+     * (Planet Tech Level - minProduceLevel)) + (variance). If a good is not
+     * sold on this planet, its price is -1.
+     *
      * @param player
      */
     public void setAllPrices(Player player) {
         setApproximatePrices();
-        
+
         for (TradeGood good : TradeGood.values()) {
             Random rand = new Random();
 
@@ -65,12 +67,11 @@ public class Market implements Serializable {
                 if (planet.getPriceIncEvent() == good.incEvent()) {
                     buyPrice = (int) (buyPrice * 1.5);
                 }
-                
                 int variance1 = rand.nextInt(good.variance() + 1);
                 int variance2 = rand.nextInt(good.variance() + 1);
-                
+
                 buyPrice += variance1 - variance2;
-            
+
                 sellPrice = buyPrice;
 
                 //adjust for intermediary if player is a criminal
@@ -84,40 +85,39 @@ public class Market implements Serializable {
                     buyPrice = sellPrice + 1;
                 }
             }
-            
+
             buyPrices.put(good, buyPrice);
             sellPrices.put(good, sellPrice);
         }
     }
-    
+
     /**
-     * Sets the approximate price for each TradeGood, which will be used
-     * in the space map to aid the user in determining which planet he/she
-     * should travel to.
+     * Sets the approximate price for each TradeGood, which will be used in the
+     * space map to aid the user in determining which planet he/she should
+     * travel to.
      */
     private void setApproximatePrices() {
         for (TradeGood good : TradeGood.values()) {
             int appxPrice = good.price();
 
-            if (((good == TradeGood.FIREARMS && !planet.getPoliticalSystem().firearmsOK()) ||
-                    (good == TradeGood.NARCOTICS && !planet.getPoliticalSystem().drugsOK() ||
-                    planet.getLevel().ordinal() < good.minProduceLevel()))) {
+            if (((good == TradeGood.FIREARMS && !planet.getPoliticalSystem().firearmsOK())
+                    || (good == TradeGood.NARCOTICS && !planet.getPoliticalSystem().drugsOK()
+                    || planet.getLevel().ordinal() < good.minProduceLevel()))) {
                 appxPrice = -1;
             } else {
                 appxPrice += good.incPerLevel() * (planet.getLevel().ordinal() - good.minProduceLevel());
-                
+
                 //if the good is highly wanted, increase the price
                 if (good == planet.getPoliticalSystem().wanted()) {
                     appxPrice *= (4.0 / 3);
                 }
-                
+
                 //high trader activity decreases the price
                 appxPrice *= (100 - (2 * planet.getPoliticalSystem().strengthTraders())) / 100.0;
-                
+
                 //large systems have high production which decreases prices
                 appxPrice *= (100 - planet.getSize()) / 100.0;
-                
-                
+
                 //checks the resource of the planet and applies a price accordingly
                 if (planet.isVisited()) {
                     if ((planet.getResource() == good.highCondition()) && good.highCondition() != Resource.NONE) {
@@ -130,12 +130,10 @@ public class Market implements Serializable {
             appxPrices.put(good, appxPrice);
         }
     }
-    
-    
+
     /**
-     * Creates a stock of all the goods sold on this Planet.
-     * If the price of a good is greater than zero, it will be added
-     * to the market's stock.
+     * Creates a stock of all the goods sold on this Planet. If the price of a
+     * good is greater than zero, it will be added to the market's stock.
      */
     private void setMarketStock() {
         Random rand = new Random();
@@ -155,61 +153,68 @@ public class Market implements Serializable {
                 quantity = (quantity * 3) / 4;
             }
             //when there is a price increase event, the quantity should be very low
-            if (planet.getPriceIncEvent() == good.incEvent())
+            if (planet.getPriceIncEvent() == good.incEvent()) {
                 quantity /= 5;
+            }
 
-           quantity -= rand.nextInt(10) + rand.nextInt(10);
-           
-           if (quantity < 0) {
-               quantity = 0;
-           }
-           if (appxPrices.get(good) < 0) {
-               quantity = -1;
-           }
-           stock.addItem(good, quantity, 0);
+            quantity -= rand.nextInt(10) + rand.nextInt(10);
+
+            if (quantity < 0) {
+                quantity = 0;
+            }
+            if (appxPrices.get(good) < 0) {
+                quantity = -1;
+            }
+            stock.addItem(good, quantity, 0);
         }
     }
+
     /**
      * Gets the selling price of a specific TradeGood.
+     *
      * @param good the TradeGood to find the price off
      * @return the price of a good on this planet.
      */
     public int getSellPrice(TradeGood good) {
         return sellPrices.get(good);
     }
-    
+
     /**
      * Gets the buying price of a specific TradeGood.
+     *
      * @param good the TradeGood to find the price off
      * @return the price of a good on this planet.
      */
     public int getBuyPrice(TradeGood good) {
         return buyPrices.get(good);
     }
-    
+
     /**
      * Gets the approximate price of a specific TradeGood.
+     *
      * @param good the TradeGood to find the price off
      * @return the price of a good on this planet.
      */
     public int getAppxPrice(TradeGood good) {
         return appxPrices.get(good);
     }
-    
+
     /**
      * Gets the current stock of the Market.
+     *
      * @return the market's stock
      */
     public Cargo getStock() {
         return stock;
     }
-    
+
     /**
      * Gets the planet this Market is assigned to
+     *
      * @return the planet
      */
     public Planet getPlanet() {
         return planet;
     }
-    
+
 }

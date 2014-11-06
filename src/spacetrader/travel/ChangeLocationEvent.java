@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.travel;
 
 import spacetrader.planets.Planet;
@@ -12,20 +11,22 @@ import spacetrader.system.MainController;
 
 /**
  * Represents a random event that changes the player's location
+ *
  * @author Seth
  */
 public class ChangeLocationEvent extends RandomEvent {
-    
+
     private Planet planet;
     private MainController mainControl;
-    
+
     /**
-     * constructor for ChangeLocationEvent 
+     * constructor for ChangeLocationEvent
+     *
      * @param player
      * @param message
      * @param quantityChange
      * @param planet 
-     * @param mainControl 
+     * @param mainControl
      */
     public ChangeLocationEvent(Player player, String message, int quantityChange, Planet planet, MainController mainControl) {
         super(player, message, quantityChange);
@@ -33,10 +34,10 @@ public class ChangeLocationEvent extends RandomEvent {
         this.planet = planet;
         this.mainControl = mainControl;
     }
+
     /**
-     * override doEvent method in Random event
-     * sets player's location to new planet
-     * changes hull strength
+     * override doEvent method in Random event sets player's location to new
+     * planet changes hull strength
      */
     @Override
     public void doEvent() {
