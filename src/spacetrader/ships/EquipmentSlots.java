@@ -27,7 +27,7 @@ public class EquipmentSlots<T> implements Serializable {
      * @param numSlots the initial number of slots
      */
     public EquipmentSlots(int numSlots) {
-        this.list = new ArrayList<T>();
+        this.list = new ArrayList<>();
         this.numSlots = numSlots;
         size = 0;
     }
@@ -74,6 +74,15 @@ public class EquipmentSlots<T> implements Serializable {
             throw new IndexOutOfBoundsException("Index is out legal range");
         }
     }
+    
+    /**
+     * Determines if these EquipmentSlots contains the specified item.
+     * @param item the item that is being searched for
+     * @return true if this EquipmentSlots contains this item.
+     */
+    public boolean contains(T item) {
+        return list.contains(item);
+    }
 
     /**
      * Replaces a item in a slot specified by its index.
@@ -86,7 +95,7 @@ public class EquipmentSlots<T> implements Serializable {
             list.remove(index);
             list.add(index, item);
         } else {
-            throw new IndexOutOfBoundsException("Index is out legal range");
+            throw new IndexOutOfBoundsException("Index is out of legal range");
         }
 
     }

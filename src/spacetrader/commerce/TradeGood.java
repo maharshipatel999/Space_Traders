@@ -5,6 +5,10 @@
  */
 package spacetrader.commerce;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 import spacetrader.planets.Resource;
 import spacetrader.planets.TechLevel;
 
@@ -45,12 +49,17 @@ public enum TradeGood {
             PriceIncreaseEvent.LACK_OF_WORKERS, Resource.NONE, Resource.NONE,
             TechLevel.HI_TECH, 6, 4);
 
-    private String type;
-    private int price, incPerLevel, variance, minTraderPrice, maxTraderPrice, roundoff; //roundoff: roundoff price for trade in orbit
-    private PriceIncreaseEvent incEvent;
-    private Resource lowCondition, highCondition;
-    private TechLevel bestLevel;
-    private int minProduceLevel, minUseLevel;
+    private final String type;
+    private final int price, incPerLevel, variance, minTraderPrice, maxTraderPrice, roundoff; //roundoff: roundoff price for trade in orbit
+    private final PriceIncreaseEvent incEvent;
+    private final Resource lowCondition, highCondition;
+    private final TechLevel bestLevel;
+    private final int minProduceLevel, minUseLevel;
+    
+    private static final List<TradeGood> VALUES
+            = Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
 
     private TradeGood(String type,
             int price,
@@ -131,5 +140,13 @@ public enum TradeGood {
 
     public int minUseLevel() {
         return minUseLevel;
+    }
+    
+    /**
+     * Gets a random TradeGood. 
+     * @return a TradeGood determined at random
+     */
+    public static TradeGood getRandomTradeGood() {
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

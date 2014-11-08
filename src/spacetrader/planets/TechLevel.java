@@ -16,14 +16,14 @@ import java.util.Random;
  */
 public enum TechLevel {
 
-    PRE_AGRICULTURE("Pre-Agriculture"),
-    AGRICULTURE("Agriculture"),
-    MEDIEVAL("Medieval"),
-    RENAISSANCE("Renaissance"),
-    EARLY_INDUSTRIAL("Early-Industrial"),
-    INDUSTRIAL("Industrial"),
-    POST_INDUSTRIAL("Post-Industrial"),
-    HI_TECH("High Tech");
+    PRE_AGRICULTURE     ("Pre-Agriculture"),
+    AGRICULTURE         ("Agriculture"),
+    MEDIEVAL            ("Medieval"),
+    RENAISSANCE         ("Renaissance"),
+    EARLY_INDUSTRIAL    ("Early-Industrial"),
+    INDUSTRIAL          ("Industrial"),
+    POST_INDUSTRIAL     ("Post-Industrial"),
+    HI_TECH             ("High Tech");
 
     private static final List<TechLevel> VALUES
             = Collections.unmodifiableList(Arrays.asList(values()));

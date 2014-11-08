@@ -30,7 +30,7 @@ public class SpaceShip implements Serializable {
     public SpaceShip(ShipType type) {
         this.type = type;
         this.cargo = new Cargo(type.cargoBay());
-        this.tank = new FuelTank(type.fuel() + 10); //added fuel for testing
+        this.tank = new FuelTank(type.fuel());
         this.weapons = new EquipmentSlots<>(type.weaponSlots());
         this.shields = new EquipmentSlots<>(type.shieldSlots());
         this.gadgets = new EquipmentSlots<>(type.gadgetSlots());

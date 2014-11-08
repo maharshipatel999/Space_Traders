@@ -12,11 +12,11 @@ package spacetrader.ships;
 public class Shield {
 
     private ShieldType type;
-    private int powerRemaining;
+    private int health;
 
     public Shield(ShieldType type) {
         this.type = type;
-        powerRemaining = type.power();
+        this.health = type.power();
     }
 
     /**
@@ -33,8 +33,16 @@ public class Shield {
      *
      * @return the shield's defense
      */
-    public int getPowerRemaining() {
-        return type.power();
+    public int getHealth() {
+        return health;
+    }
+    
+    /**
+     * Sets the power remaining of this shield.
+     * @param health the power remaining
+     */
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public ShieldType getType() {
