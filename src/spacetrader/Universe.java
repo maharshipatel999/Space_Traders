@@ -83,12 +83,14 @@ public class Universe implements Serializable {
                 double h1 = ((double) (i - 1) / 3) * HEIGHT;
                 double h2 = ((double) i / 3) * HEIGHT;
                 //System.out.println(w1 + " " + w2 + " " + h1 + " " + h2);
-                for (Planet planet : planets) {
-                    double planetX = planet.getLocation().getX();
-                    double planetY = planet.getLocation().getY();
+                boolean setinal = true;
+                while (setinal) {
+                    Planet randPlanet = planets.get(rand.nextInt(planets.size()));
+                    double planetX = randPlanet.getLocation().getX();
+                    double planetY = randPlanet.getLocation().getY();
                     if (planetX > w1 && planetX < w2 && planetY > h1 && planetY < h2) {
-                        wormholePlanets.add(planet);
-                        break;
+                        wormholePlanets.add(randPlanet);
+                        setinal = false;
                     }
                 }
             }
