@@ -103,7 +103,7 @@ public class TraderEncounter extends Encounter {
      * @return Whether Trader Ship is legal
      */
     @Override
-    public boolean isLegalShipType(ShipType type) {
+    public boolean isIllegalShipType(ShipType type) {
         return type.trader() < 0 || traderStrength < type.trader();
     }
     

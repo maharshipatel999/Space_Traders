@@ -118,7 +118,7 @@ public class PoliceEncounter extends Encounter {
      * @return whether or not Police Ship Type is legal
      */
     @Override
-    public boolean isLegalShipType(ShipType type) {
+    public boolean isIllegalShipType(ShipType type) {
         return type.police() < 0 || policeStrength < type.police();
     }
 

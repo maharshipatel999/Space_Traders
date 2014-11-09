@@ -25,11 +25,11 @@ public class EncounterManager {
 
     private static final Random rand = new Random();
 
-    private Queue<Encounter> encounters;
+    private final Queue<Encounter> encounters;
     private final int numTotalEncounters;
 
-    private Player player;
-    private Planet destination;
+    private final Player player;
+    private final Planet destination;
 
     private boolean raided = false;
     private boolean inspected = false;

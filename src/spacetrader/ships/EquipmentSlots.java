@@ -166,7 +166,7 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
 
     @Override
     public String toString() {
-        String toString = "Slots (" + numSlots + "): ";
+        String toString = "(" + size + "/" + numSlots + "): ";
         for (T item : list) {
             toString += item.toString() + ", ";
         }

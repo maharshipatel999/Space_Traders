@@ -80,7 +80,12 @@ public class MainController {
         game.setPlayer(player);
         changePlayerLocation(game.getUniverse().getPlanet("Pallet"));
     }
-    
+
+    /**
+     * 
+     * @param source
+     * @param destination 
+     */
     public void arriveAtPlanet(Planet source, Planet destination) {
         //processes time aspect of price increase events
         for (Planet planet : game.getUniverse().getPlanets()) {

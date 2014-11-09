@@ -7,8 +7,6 @@ package spacetrader.travel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -61,17 +59,17 @@ public class WarpScreenController extends SceneController implements Initializab
     public void setUpWarping(Planet source, Planet destination, Player player) {
         this.destinationPlanet = destination;
         
-        EncounterManager encounters = new EncounterManager(source, destination, player.getShip(), player);
+        encounters = new EncounterManager(source, destination, player.getShip(), player);
         
         while (encounters.getEncountersRemaining() > 0) {
-            System.out.println(encounters.getNextEncounter() + "\n");
+            mainControl.displayAlertMessage("Encounter!", encounters.getNextEncounter() + "\n");
         }
         
-        try {
+        /*try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(WarpScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
         mainControl.arriveAtPlanet(source, destination);
     }

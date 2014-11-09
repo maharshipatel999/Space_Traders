@@ -95,7 +95,7 @@ public abstract class Encounter {
      * @param type
      * @return true if its legal
      */
-    protected abstract boolean isLegalShipType(ShipType type);
+    protected abstract boolean isIllegalShipType(ShipType type);
 
     /**
      * Determines if the opponent can see the player.
@@ -139,7 +139,7 @@ public abstract class Encounter {
             int index;
             do {
                 index = Tools.pickIndexFromWeightedList(shipDistribution);
-            } while (!this.isLegalShipType(shipTypes[index]));
+            } while (this.isIllegalShipType(shipTypes[index]));
 
             bestShipIndex = Math.max(bestShipIndex, index); //if this chosen ship is stronger than the opponent's current ship, replace it
         }

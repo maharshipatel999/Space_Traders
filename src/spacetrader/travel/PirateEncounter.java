@@ -70,7 +70,7 @@ public class PirateEncounter extends Encounter {
      * @return whether or not Pirate Ship Type is legal
      */
     @Override
-    public boolean isLegalShipType(ShipType type) {
+    public boolean isIllegalShipType(ShipType type) {
         return type.pirate() < 0 || pirateStrength < type.pirate();
     }
     

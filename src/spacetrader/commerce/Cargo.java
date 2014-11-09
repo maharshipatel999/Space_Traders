@@ -269,9 +269,8 @@ public class Cargo implements Serializable {
         for (TradeGood good : TradeGood.values()) {
             toString += good + ": " + tradeGoods.get(good) + ", ";
             goodCount++;
-            if (goodCount == 4) {
+            if (goodCount == 4 || goodCount == 7) {
                 toString += "\n";
-                goodCount = 0;
             }
         }
         return toString;

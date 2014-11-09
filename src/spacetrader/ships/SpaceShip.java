@@ -225,9 +225,9 @@ public class SpaceShip implements Serializable {
         toString += "Fuel: " + tank.getFuelAmount() + "/" + tank.getMaxFuel() + "\n";
         toString += "Huel Strength: " + hullStrength + "/" + maxHullStrength + "\n";
         toString += cargo + "\n";
-        toString += "-Weapons-\n" + weapons + "\n";
-        toString += "-Shields-\n" + shields + "\n";
-        toString += "-Gadgets-\n" + gadgets;
+        toString += "-Weapons " + weapons + "\n";
+        toString += "-Shields " + shields + "\n";
+        toString += "-Gadgets " + gadgets;
         
         return toString;
     }
