@@ -7,17 +7,19 @@ package spacetrader.ships;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import spacetrader.exceptions.SlotsAreFullException;
+import java.util.Iterator;
 import spacetrader.exceptions.SlotsAreEmptyException;
+import spacetrader.exceptions.SlotsAreFullException;
 
 /**
  * Represents a container for ship equipment. This is backed by an ArraylList.
  *
  * @author Caleb Stokols
+ * @param <T>
  */
-public class EquipmentSlots<T> implements Serializable {
+public class EquipmentSlots<T extends Equipment> implements Serializable, Iterable<T> {
 
-    private ArrayList<T> list;
+    private final ArrayList<T> list;
     private int numSlots;
     int size;
 
@@ -155,5 +157,19 @@ public class EquipmentSlots<T> implements Serializable {
      */
     public void clear() {
         list.clear();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return list.iterator();
+    }
+
+    @Override
+    public String toString() {
+        String toString = "Slots (" + numSlots + "): ";
+        for (T item : list) {
+            toString += item.toString() + ", ";
+        }
+        return toString;
     }
 }

@@ -9,7 +9,7 @@ package spacetrader.ships;
  *
  * @author Caleb
  */
-public class Shield {
+public class Shield extends Equipment {
 
     private ShieldType type;
     private int health;
@@ -19,11 +19,7 @@ public class Shield {
         this.health = type.power();
     }
 
-    /**
-     * Gets the name of this shield.
-     *
-     * @return this shield's name
-     */
+    @Override
     public String getName() {
         return type.toString();
     }
@@ -47,5 +43,10 @@ public class Shield {
 
     public ShieldType getType() {
         return type;
+    }
+    
+    @Override
+    public String toString() {
+        return type.toString();
     }
 }

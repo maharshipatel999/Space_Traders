@@ -23,6 +23,8 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import spacetrader.Player;
 import spacetrader.PoliceRecord;
+import spacetrader.SkillList.Skill;
+import static spacetrader.Tools.rand;
 import spacetrader.Universe;
 import spacetrader.commerce.PriceIncreaseEvent;
 import spacetrader.persistence.OverwriteScreenController;
@@ -76,7 +78,39 @@ public class MainController {
     public void setUpGame(Player player) {
         game.setUniverse(new Universe());
         game.setPlayer(player);
-        travelToPlanet(game.getUniverse().getPlanet("Pallet"));
+        changePlayerLocation(game.getUniverse().getPlanet("Pallet"));
+    }
+    
+    public void arriveAtPlanet(Planet source, Planet destination) {
+        //processes time aspect of price increase events
+        for (Planet planet : game.getUniverse().getPlanets()) {
+            if (planet.getPriceIncDuration() > 0) {
+                planet.setPriceIncDuration(planet.getPriceIncDuration() - 1);
+            } else {
+                planet.setRandomPriceIncEvent();
+            }
+        }
+        game.increaseDays();
+
+        //The player autofixes their ship depending on their engineer skill
+        int engineerRepairs = rand.nextInt(game.getPlayer().getEffectiveSkill(Skill.ENGINEER));
+        int currentHull = game.getPlayer().getShip().getHullStrength();
+        game.getPlayer().getShip().setHullStrength(currentHull + engineerRepairs);
+
+        
+        changePlayerLocation(destination);
+        if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
+            displayAlertMessage("Notice!", destination.getPriceIncEvent().desc());
+        }
+        if (eventGenerator == null) {
+            eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);
+        }
+
+        if (eventGenerator.eventOccurs()) {
+            RandomEvent event = eventGenerator.getRandomEvent();
+            event.doEvent();
+            displayAlertMessage("Special Event!", event.getMessage());
+        }
     }
 
     /**
@@ -92,41 +126,27 @@ public class MainController {
      * @param destination which planet the player is traveling to
      * @param distance which planet the player is leaving
      */
-    public void takeTurn(Planet destination, int distance) {
-        //processes time aspect of price increase events
-        for (Planet planet : game.getUniverse().getPlanets()) {
-            if (planet.getPriceIncDuration() > 0) {
-                planet.setPriceIncDuration(planet.getPriceIncDuration() - 1);
-            } else {
-                planet.setRandomPriceIncEvent();
-            }
+    public void departFromPlanet(Planet source, Planet destination) {
+        Player player = game.getPlayer();
+        destination.getMarket().setAllPrices(game.getPlayer());
+        
+        //Decrease police record score if very high
+        if (game.getDays() % 3 == 0 && player.getPoliceRecord().compareTo(PoliceRecord.CLEAN) > 0) {
+            int newRecord = player.getPoliceRecordScore() - 1;
+            player.setPoliceRecordScore(newRecord);
         }
-        game.increaseDays();
-
-        //adjust police record score
-        if (game.getDays() % 3 == 0 && game.getPlayer().getPoliceRecord().ordinal() > PoliceRecord.CLEAN.ordinal()) {
-            int newRecord = game.getPlayer().getPoliceRecordScore() - 1;
-            game.getPlayer().setPoliceRecordScore(newRecord);
+        
+        //Increase police record score if very low
+        if (game.getPlayer().getPoliceRecord().compareTo(PoliceRecord.DUBIOUS) < 0) {
+            int newRecord = player.getPoliceRecordScore() + 1;
+            player.setPoliceRecordScore(newRecord);
         }
-        if (game.getPlayer().getPoliceRecord().ordinal() < PoliceRecord.DUBIOUS.ordinal()) {
-            int newRecord = game.getPlayer().getPoliceRecordScore() + 1;
-            game.getPlayer().setPoliceRecordScore(newRecord);
-        }
-
-        game.getPlayer().getShip().getTank().removeFuel(distance);
-        travelToPlanet(destination);
-        if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayAlertMessage("Notice!", destination.getPriceIncEvent().desc());
-        }
-        if (eventGenerator == null) {
-            eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);
-        }
-
-        if (eventGenerator.eventOccurs()) {
-            RandomEvent event = eventGenerator.getRandomEvent();
-            event.doEvent();
-            displayAlertMessage("Special Event!", event.getMessage());
-        }
+        
+        //Deduct fuel
+        int distance = (int) Universe.distanceBetweenPlanets(source, destination);
+        player.getShip().getTank().removeFuel(distance);
+        
+        goToWarpScreen(source, destination);
     }
     
     /**
@@ -135,7 +155,7 @@ public class MainController {
      *
      * @param destination
      */
-    public void travelToPlanet(Planet destination) {
+    public void changePlayerLocation(Planet destination) {
         game.getPlayer().setLocation(destination);
         destination.setVisited();
         destination.getMarket().setAllPrices(game.getPlayer());
@@ -275,7 +295,7 @@ public class MainController {
         stage.setTitle("Traveling to " + dest.getName());
         this.warpScreenControl = (WarpScreenController) extractControllerFromFXML("/spacetrader/travel/WarpScreen.fxml", stage);
         stage.setScene(this.warpScreenControl.getScene());
-        this.warpScreenControl.travel(source, dest);
+        this.warpScreenControl.setUpWarping(source, dest, game.getPlayer());
     }
 
     /**
@@ -286,7 +306,7 @@ public class MainController {
             goToWarpScreen(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets().get(10));
         }
         stage.setScene(this.warpScreenControl.getScene());
-        this.warpScreenControl.continueTraveling();
+        this.warpScreenControl.continueTraveling(game.getPlayer());
     }
     
     /**

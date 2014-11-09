@@ -6,7 +6,11 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
-import spacetrader.planets.PoliticalSystem;
+import spacetrader.SkillList.Skill;
+import spacetrader.Tools;
+import spacetrader.ships.Gadget;
+import spacetrader.ships.GadgetType;
+import spacetrader.ships.OpponentShip;
 import spacetrader.ships.ShipType;
 import spacetrader.ships.SpaceShip;
 
@@ -17,9 +21,14 @@ import spacetrader.ships.SpaceShip;
  */
 public abstract class Encounter {
 
-    private Player player;
+    public static enum State {
+        IGNORE, FLEE, ATTACK, INSPECTION, BUY, SELL;
+    }
+    
+    private final Player player;
+    private final String encounterScene;
     private SpaceShip opponent;
-    private String encounterScene;
+    protected State state;
 
     /**
      * Creates a new Encounter. Encounters have a player, and an fxmlscene.
@@ -30,6 +39,7 @@ public abstract class Encounter {
     public Encounter(Player player, String fxmlScene) {
         this.player = player;
         this.encounterScene = fxmlScene;
+        this.state = State.IGNORE; //defaults to ignore
     }
 
     /**
@@ -37,7 +47,7 @@ public abstract class Encounter {
      *
      * @return the encounter's player
      */
-    public Player getPlayer() {
+    protected Player getPlayer() {
         return player;
     }
 
@@ -70,11 +80,80 @@ public abstract class Encounter {
     }
 
     /**
+     * Gets the state of this encounter.
+     * 
+     * @return this encounter's state
+     */
+    public State getState() {
+        return state;
+    }
+
+    /**
      * Determines if this encounter allows the opponent to have the specified
      * type of space ship.
      *
-     * @param <error>
+     * @param type
      * @return true if its legal
      */
-    public abstract boolean isLegalShipType(ShipType type, PoliticalSystem system);
+    protected abstract boolean isLegalShipType(ShipType type);
+
+    /**
+     * Determines if the opponent can see the player.
+     * @return true if the player is cloaked
+     */
+    public boolean playerIsCloaked() {
+        return player.getShip().getGadgets().contains(new Gadget(GadgetType.CLOAK))
+                && player.getEffectiveSkill(Skill.ENGINEER) > opponent.getCrewSkill(Skill.ENGINEER);
+    }
+
+    /**
+     * Determines if the player can see the opponent.
+     * @return true if the player is cloaked
+     */
+    public boolean opponentIsCloaked() {
+        return opponent.getGadgets().contains(new Gadget(GadgetType.CLOAK))
+                && opponent.getCrewSkill(Skill.ENGINEER) > player.getEffectiveSkill(Skill.ENGINEER);
+    }
+
+    /**
+     * Creates the space ship for the opponent
+     *
+     * @param tries number tries to pick up a ship for opponent
+     * @param lowestShipType weakest ship type
+     * @param cargoModifier
+     * @return SpaceShip to use for opponent
+     */
+    protected SpaceShip createShip(int tries, ShipType lowestShipType, double cargoModifier) {
+        ShipType[] shipTypes = ShipType.values();
+
+        int[] shipDistribution = new int[shipTypes.length];
+        for (int i = 0; i < shipTypes.length; i++) {
+            shipDistribution[i] = shipTypes[i].occurrence();
+        }
+
+        //Pick a ship for the opponent "tries" number of times. The strongest one will be used.
+        int bestShipIndex = lowestShipType.ordinal();
+        for (int i = 0; i < tries; i++) {
+
+            //Keep picking a ship until you get one that is legal for the current situation
+            int index;
+            do {
+                index = Tools.pickIndexFromWeightedList(shipDistribution);
+            } while (!this.isLegalShipType(shipTypes[index]));
+
+            bestShipIndex = Math.max(bestShipIndex, index); //if this chosen ship is stronger than the opponent's current ship, replace it
+        }
+        
+        //If the player has more money, the opponent's difficulty increases
+        int opponentDifficulty = Math.max(1, (player.getCurrentWorth() / 150000)); //should be at least 1
+        
+        //Instantiate the Opponent's Ship
+        OpponentShip opponentShip = new OpponentShip(shipTypes[bestShipIndex], opponentDifficulty, cargoModifier);
+        return opponentShip;
+    }
+    
+    @Override
+    public String toString() {
+        return "State: " + state + "\n" + opponent;
+    }
 }

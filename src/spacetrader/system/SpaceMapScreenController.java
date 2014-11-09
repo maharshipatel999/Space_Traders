@@ -102,7 +102,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
      * Goes to the warp screen traveling to the selected planet.
      */
     public void travelToPlanet() {
-        mainControl.goToWarpScreen(this.currentPlanet, planetMap.selectedPlanet);
+        mainControl.departFromPlanet(this.currentPlanet, planetMap.selectedPlanet);
     }
 
     /**

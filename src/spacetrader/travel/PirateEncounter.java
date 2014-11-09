@@ -6,7 +6,8 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
-import spacetrader.planets.PoliticalSystem;
+import spacetrader.Reputation;
+import static spacetrader.Tools.rand;
 import spacetrader.ships.ShipType;
 
 /**
@@ -16,13 +17,49 @@ import spacetrader.ships.ShipType;
  */
 public class PirateEncounter extends Encounter {
 
+    private final int pirateStrength;
+    
     /**
      * Creates a new pirate encounter.
      *
      * @param player the player of the game
+     * @param pirateStrength
      */
-    public PirateEncounter(Player player) {
+    public PirateEncounter(Player player, int pirateStrength) {
         super(player, "/spacetrader/travel/PirateEncounterScreen.fxml");
+        this.pirateStrength = pirateStrength;
+        
+        //pirates are strong if the player is worth more
+        int tries = 1 + player.getCurrentWorth() / 100000;
+        double cargoModifier = 0.5;
+        
+        this.setOpponent(createShip(tries, ShipType.GNAT, cargoModifier));
+        determineState();
+    }
+
+    /**
+     * Determines the state of this encounter randomly, based on players
+     * current statistics.
+     */
+    public final void determineState() { 
+        if (playerIsCloaked()) {
+            return; //by default, state is ignore
+        }
+        
+        final boolean strongEnemyShip = (getOpponent().getType().compareTo(ShipType.GRASSHOPPER) >= 0);
+        final boolean playerShipIsWorse =
+                getPlayer().getShip().getType().compareTo(getOpponent().getType()) < 0;
+        
+        final int randomScore = rand.nextInt(Reputation.ELITE.minRep());
+        final int attackingProbability =
+                (getPlayer().getReputationScore() * 4) / (1 + getOpponent().getType().ordinal());
+        
+        // Pirates will mostly attack, but they are cowardly: if your rep is too high, they tend to flee
+        if (strongEnemyShip || playerShipIsWorse || (randomScore > attackingProbability)) {
+            state = State.ATTACK;
+        } else {
+            state = State.FLEE;
+        }
     }
 
     /**
@@ -30,11 +67,15 @@ public class PirateEncounter extends Encounter {
      * strength of Pirates in specific area
      *
      * @param type Type of Ship
-     * @param politics Political System of specific planet
      * @return whether or not Pirate Ship Type is legal
      */
     @Override
-    public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
-        return type.pirate() < 0 || politics.strengthPirates() < type.pirate();
+    public boolean isLegalShipType(ShipType type) {
+        return type.pirate() < 0 || pirateStrength < type.pirate();
+    }
+    
+    @Override
+    public String toString() {
+        return "-Pirate Encounter-\n" + super.toString();
     }
 }

@@ -261,4 +261,19 @@ public class Cargo implements Serializable {
         }
         return goods;
     }
+    
+    @Override
+    public String toString() {
+        String toString = "-Cargo Contents- (" + count + "/" + maxCapacity + ")\n";
+        int goodCount = 0;
+        for (TradeGood good : TradeGood.values()) {
+            toString += good + ": " + tradeGoods.get(good) + ", ";
+            goodCount++;
+            if (goodCount == 4) {
+                toString += "\n";
+                goodCount = 0;
+            }
+        }
+        return toString;
+    }
 }

@@ -6,8 +6,10 @@
 package spacetrader.travel;
 
 import spacetrader.Player;
+import spacetrader.PoliceRecord;
+import spacetrader.Reputation;
+import static spacetrader.Tools.rand;
 import spacetrader.commerce.TradeGood;
-import spacetrader.planets.PoliticalSystem;
 import spacetrader.ships.ShipType;
 
 /**
@@ -32,14 +34,92 @@ public class PoliceEncounter extends Encounter {
     private static final int MAXIMUM_FINE_AMOUNT = 10000;
     private static final int FINE_DECREASE = 4 * 10;
     private static final int FINE_ROUND = 50;
+    
+    
+    private static final double BAD_RECORD_CHANCE_OF_INSPECT = 1;
+    private static final double CLEAN_RECORD_CHANCE_OF_INSPECT = .10;
+    private static final double LAWFUL_RECORD_CHANCE_OF_INSPECT = .025; 
 
+    private final int policeStrength;
+    
     /**
      * Creates a new police encounter.
      *
      * @param player the player of the game
      */
-    public PoliceEncounter(Player player) {
+    public PoliceEncounter(Player player, int policeStrength) {
         super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml");
+        this.policeStrength = policeStrength;
+        
+        int tries = 1;
+        if (player.getPoliceRecord().compareTo(PoliceRecord.CRIMINAL) < 0) {
+            tries = 3;
+        } else if (player.getPoliceRecord().compareTo(PoliceRecord.VILLAIN) < 0) {
+            tries = 5;
+        }
+        double cargoModifer = 0; //police should not have any cargo
+
+        this.setOpponent(createShip(tries, ShipType.GNAT, cargoModifer));
+        this.determineState();
+    }
+    
+    /**
+     * Determines the state of this encounter randomly, based on players
+     * current statistics.
+     */
+    public final void determineState() {
+        if (playerIsCloaked()) {
+            return; //by default, state is ignore
+        }
+        final PoliceRecord playerRecord = getPlayer().getPoliceRecord();
+        final boolean playerShipIsWorse =
+                getPlayer().getShip().getType().compareTo(getOpponent().getType()) < 0;
+        final boolean hasAverageRep =
+                getPlayer().getReputation().compareTo(Reputation.AVERAGE) < 0;
+        final int randomScore = rand.nextInt(Reputation.ELITE.minRep());
+        final int attackingProbability =
+                getPlayer().getReputationScore() / (1 + getOpponent().getType().ordinal());
+
+        double chanceOfInspection = 0;
+
+        if (playerRecord.ordinal() < PoliceRecord.DUBIOUS.ordinal()) {
+            //If you're a criminal, the police will tend to attack
+            if (!opponentIsCloaked() && getOpponent().getTotalWeaponStrength() <= 0) {
+                state = State.FLEE;
+            }
+            if (hasAverageRep || randomScore > attackingProbability) {
+                state = State.ATTACK;
+            } else if (!opponentIsCloaked()) {
+                state = State.FLEE;
+            }
+
+            // if you're suddenly stuck in a lousy ship, Police won't flee even if you have a fearsome reputation.
+            if (state == State.FLEE && playerShipIsWorse) {
+                state = State.ATTACK;
+            }
+        } else if (playerRecord.ordinal() < PoliceRecord.CLEAN.ordinal()) {
+            chanceOfInspection = BAD_RECORD_CHANCE_OF_INSPECT;
+        } else if (playerRecord.ordinal() < PoliceRecord.LAWFUL.ordinal()) {
+            chanceOfInspection = CLEAN_RECORD_CHANCE_OF_INSPECT;
+        } else {
+            chanceOfInspection = LAWFUL_RECORD_CHANCE_OF_INSPECT;
+        }
+        
+        if (rand.nextDouble() < chanceOfInspection) {
+            state = State.INSPECTION;
+        } 
+    }
+
+    /**
+     * Checks to see if Police Ship can be used based on the type of police and
+     * strength of Police in specific area
+     *
+     * @param type Type of Ship
+     * @return whether or not Police Ship Type is legal
+     */
+    @Override
+    public boolean isLegalShipType(ShipType type) {
+        return type.police() < 0 || policeStrength < type.police();
     }
 
     /**
@@ -91,16 +171,8 @@ public class PoliceEncounter extends Encounter {
         return bribe;
     }
 
-    /**
-     * Checks to see if Police Ship can be used based on the type of police and
-     * strength of Police in specific area
-     *
-     * @param type Type of Ship
-     * @param politics Political System of specific planet
-     * @return whether or not Police Ship Type is legal
-     */
     @Override
-    public boolean isLegalShipType(ShipType type, PoliticalSystem politics) {
-        return type.police() < 0 || politics.strengthPolice() < type.police();
+    public String toString() {
+        return "-Police Encounter-\n" + super.toString();
     }
 }

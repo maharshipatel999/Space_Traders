@@ -9,7 +9,7 @@ package spacetrader.ships;
  *
  * @author nkaru_000
  */
-public class Weapon {
+public class Weapon extends Equipment {
 
     private WeaponType type;
 
@@ -17,16 +17,21 @@ public class Weapon {
         this.type = type;
     }
 
-    /**
-     * Gets the name of this shield.
-     *
-     * @return this weapons's name
-     */
+    @Override
     public String getName() {
         return type.toString();
+    }
+    
+    public int getPower() {
+        return type.power();
     }
 
     public WeaponType getType() {
         return type;
+    }
+    
+    @Override
+    public String toString() {
+        return type.toString();
     }
 }

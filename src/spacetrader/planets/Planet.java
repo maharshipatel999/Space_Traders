@@ -136,7 +136,7 @@ public class Planet implements Serializable {
         this.wormhole = wormhole;
     }
 
-    private int calculateStrengthOfPolice(PoliceRecord record) {
+    public int calculateStrengthOfPolice(PoliceRecord record) {
         int strength = politSys.strengthPolice();
         if (record.ordinal() < PoliceRecord.VILLAIN.ordinal()) {
             strength *= 3;

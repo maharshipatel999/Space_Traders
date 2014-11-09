@@ -6,7 +6,10 @@
 package spacetrader.ships;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import spacetrader.Mercenary;
 import spacetrader.Player;
+import spacetrader.SkillList;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.TradeGood;
@@ -23,6 +26,8 @@ public class SpaceShip implements Serializable {
     private final EquipmentSlots<Weapon> weapons;
     private final EquipmentSlots<Shield> shields;
     private final EquipmentSlots<Gadget> gadgets;
+    private final ArrayList<Mercenary> crew;
+    private final SkillList crewSkills;
 
     private int maxHullStrength;
     private int hullStrength;
@@ -34,6 +39,8 @@ public class SpaceShip implements Serializable {
         this.weapons = new EquipmentSlots<>(type.weaponSlots());
         this.shields = new EquipmentSlots<>(type.shieldSlots());
         this.gadgets = new EquipmentSlots<>(type.gadgetSlots());
+        this.crew = new ArrayList<>();
+        this.crewSkills = new SkillList();
 
         this.maxHullStrength = type.hullStrength();
         this.hullStrength = maxHullStrength;
@@ -73,7 +80,24 @@ public class SpaceShip implements Serializable {
 
     public void setHullStrength(int hullStrength) {
         this.hullStrength = hullStrength;
+        if (hullStrength > maxHullStrength) {
+            hullStrength = maxHullStrength;
+        }
     }
+
+    /**
+     * Calculates the total weapon strength of this ship which is the sum
+     * of the power of each weapon on this ship
+     * @return the total weapon strength of this ship.
+     */
+    public int getTotalWeaponStrength() {
+        int total = 0;
+        for (Weapon weapon : weapons) {
+            total += weapon.getPower();
+        }
+        return total;
+    }
+    
 
     /**
      * Determines if this ship is carrying firearms or narcotics.
@@ -137,6 +161,75 @@ public class SpaceShip implements Serializable {
      */
     public int currentShipPrice() {
         return currentShipPriceWithoutCargo() + cargo.getCostOfAllGoods();
+    }
+    
+    /**
+     * Adds a mercenary to this ship's crew if there is still room on this ship.
+     *
+     * @param trader the Mercenary to add to this ship's crew
+     * @return true if there is space for the mercenary, false otherwise
+     */
+    public boolean hireMercenary(Mercenary trader) {
+        boolean hired = false;
+        if (crew.size() < getType().crew()) {
+            crew.add(trader);
+            hired = true;
+            calculateHighestCrewSkills();
+        }
+        return hired;
+    }
+
+    /**
+     * Removes a mercenary from this ship's crew if he is on the ship.
+     *
+     * @param trader the Mercenary to remove from this ship's crew
+     * @return true if the mercenary was able to be removed, false otherwise
+     */
+    public boolean fireMercenary(Mercenary trader) {
+        boolean fired = false;
+        if (crew.contains(trader)) {
+            crew.remove(trader);
+            fired = true;
+            calculateHighestCrewSkills();
+        }
+        return fired;
+    }
+
+    /**
+     * Returns a new array of this ship's crew.
+     *
+     * @return an array of this ship's crew
+     */
+    public Mercenary[] getCrew() {
+        return crew.toArray(new Mercenary[crew.size()]);
+    }
+
+    public int getCrewSkill(Skill type) {
+        return crewSkills.getSkill(type);
+    }
+
+    
+
+    private void calculateHighestCrewSkills() {
+        for (Mercenary person : crew) {
+            for (Skill type : Skill.values()) {
+                int highestValue = Math.max(person.getSkill(type), crewSkills.getSkill(type));
+                crewSkills.setSkill(type, highestValue);
+            }
+        }
+    }
+    
+    @Override
+    public String toString() {
+        String toString = "Ship Type: " + type.toString() + "\n";
+        toString += "Fuel: " + tank.getFuelAmount() + "/" + tank.getMaxFuel() + "\n";
+        toString += "Huel Strength: " + hullStrength + "/" + maxHullStrength + "\n";
+        toString += cargo + "\n";
+        toString += "-Weapons-\n" + weapons + "\n";
+        toString += "-Shields-\n" + shields + "\n";
+        toString += "-Gadgets-\n" + gadgets;
+        
+        return toString;
     }
 
 }

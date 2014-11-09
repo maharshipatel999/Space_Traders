@@ -28,9 +28,6 @@ import spacetrader.SkillList.Skill;
 import spacetrader.commerce.TradeGood;
 import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
-import spacetrader.travel.PirateEncounter;
-import spacetrader.travel.PoliceEncounter;
-import spacetrader.travel.TraderEncounter;
 
 /**
  * FXML Controller class
@@ -142,9 +139,9 @@ public class StartScreenController extends SceneController implements Initializa
         List<String> choices = new ArrayList<>();
         choices.add("Increase Fuel");
         choices.add("Get Money!");
-        choices.add("Show Police Encounter");
-        choices.add("Show Pirate Encounter");
-        choices.add("Show Trader Encounter");
+        //choices.add("Show Police Encounter");
+        //choices.add("Show Pirate Encounter");
+        //choices.add("Show Trader Encounter");
         choices.add("Show Ship Info");
 
         Optional<String> response = Dialogs.create()
@@ -164,15 +161,15 @@ public class StartScreenController extends SceneController implements Initializa
                 case "Get Money!":
                     player.getWallet().add(10000);
                     break;
-                case "Show Police Encounter":
-                    mainControl.goToEncounterScreen(new PoliceEncounter(player));
+                /*case "Show Police Encounter":
+                    mainControl.goToEncounterScreen(new PoliceEncounter(player, universe.getPlanet("Pallet").getPoliticalSystem().getStrengthOfTraders()));
                     break;
                 case "Show Pirate Encounter":
                     mainControl.goToEncounterScreen(new PirateEncounter(player));
                     break;
                 case "Show Trader Encounter":
                     mainControl.goToEncounterScreen(new TraderEncounter(player));
-                    break;
+                    break;*/
                 case "Show Ship Info":
                     Stage stage = new Stage();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/ships/ShipInfoPane.fxml"));

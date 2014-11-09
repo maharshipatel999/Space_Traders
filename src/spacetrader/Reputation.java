@@ -15,15 +15,15 @@ import java.util.List;
  */
 public enum Reputation {
 
-    HARMLESS("Harmless", 0),
-    MOSTLY_HARMLESS("Mostly Harmless", 10),
-    POOR("Poor", 20),
-    AVERAGE("Average", 40),
-    ABOVE_AVERAGE("Above Average", 80),
-    COMPETENT("Competent", 150),
-    DANGEROUS("Dangerous", 300),
-    DEADLY("Deadly", 600),
-    ELITE("Elite", 1500);
+    HARMLESS        ("Harmless",        0),
+    MOSTLY_HARMLESS ("Mostly Harmless", 10),
+    POOR            ("Poor",            20),
+    AVERAGE         ("Average",         40),
+    ABOVE_AVERAGE   ("Above Average",   80),
+    COMPETENT       ("Competent",       150),
+    DANGEROUS       ("Dangerous",       300),
+    DEADLY          ("Deadly",          600),
+    ELITE           ("Elite",           1500);
 
     private final String name;
     private final int minRep;
@@ -49,6 +49,10 @@ public enum Reputation {
     @Override
     public String toString() {
         return name;
+    }
+
+    public int minRep() {
+        return minRep;
     }
 
     /**

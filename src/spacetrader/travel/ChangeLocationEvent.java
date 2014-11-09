@@ -42,6 +42,6 @@ public class ChangeLocationEvent extends RandomEvent {
     @Override
     public void doEvent() {
         player.getShip().setHullStrength(player.getShip().getHullStrength() + quantityChange);
-        mainControl.travelToPlanet(planet);
+        mainControl.changePlayerLocation(planet);
     }
 }
