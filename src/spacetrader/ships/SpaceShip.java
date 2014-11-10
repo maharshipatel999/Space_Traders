@@ -78,10 +78,10 @@ public class SpaceShip implements Serializable {
         return hullStrength;
     }
 
-    public void setHullStrength(int hullStrength) {
-        this.hullStrength = hullStrength;
-        if (hullStrength > maxHullStrength) {
-            hullStrength = maxHullStrength;
+    public void setHullStrength(int newHull) {
+        this.hullStrength = newHull;
+        if (this.hullStrength > maxHullStrength) {
+            this.hullStrength = maxHullStrength;
         }
     }
 
