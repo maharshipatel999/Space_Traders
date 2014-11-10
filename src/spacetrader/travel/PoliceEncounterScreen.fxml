@@ -46,21 +46,33 @@
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button layoutX="128.0" layoutY="143.0" mnemonicParsing="false" onAction="#fleePressed" prefHeight="31.0" prefWidth="100.0" text="Flee" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="170.0">
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button layoutX="95.0" layoutY="45.0" mnemonicParsing="false" onAction="#attackPressed" prefHeight="31.0" prefWidth="100.0" text="Attack" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="170.0">
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button layoutX="195.0" layoutY="112.0" mnemonicParsing="false" onAction="#bribePressed" prefHeight="31.0" prefWidth="100.0" text="Bribe" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </AnchorPane>

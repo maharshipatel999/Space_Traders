@@ -169,11 +169,17 @@
                         <Insets />
                      </opaqueInsets>
                   </GridPane>
-                  <Button mnemonicParsing="false" onAction="#enableCheats" text="CHEAT" />
+                  <Button mnemonicParsing="false" onAction="#enableCheats" text="CHEAT">
+                     <cursor>
+                        <Cursor fx:constant="CROSSHAIR" />
+                     </cursor></Button>
                </children>
             </FlowPane>
          </center>
       </BorderPane>
-      <Button mnemonicParsing="false" onAction="#closeWindow" prefHeight="31.0" prefWidth="72.0" text="Exit" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button mnemonicParsing="false" onAction="#closeWindow" prefHeight="31.0" prefWidth="72.0" text="Exit" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

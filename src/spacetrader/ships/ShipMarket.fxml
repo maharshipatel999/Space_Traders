@@ -32,6 +32,9 @@
          <font>
             <Font name="Copperplate Gothic Bold" size="20.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <ImageView fx:id="largeShipImage" fitHeight="127.0" fitWidth="289.0" layoutX="308.0" layoutY="78.0" preserveRatio="true">
          <image>
@@ -203,7 +206,10 @@
             <Insets bottom="10.0" left="10.0" />
          </padding>
       </GridPane>
-      <Button layoutX="102.0" layoutY="393.0" mnemonicParsing="false" onAction="#goBackToShipYardScreen" prefHeight="28.0" prefWidth="70.0" text="Back" AnchorPane.leftAnchor="102.0" AnchorPane.topAnchor="393.0" />
+      <Button layoutX="102.0" layoutY="393.0" mnemonicParsing="false" onAction="#goBackToShipYardScreen" prefHeight="28.0" prefWidth="70.0" text="Back" AnchorPane.leftAnchor="102.0" AnchorPane.topAnchor="393.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Separator layoutX="299.0" layoutY="261.0" prefHeight="3.0" prefWidth="302.0" />
       <Separator layoutX="300.0" layoutY="353.0" prefHeight="3.0" prefWidth="302.0" />
       <Label layoutX="337.0" layoutY="369.0" prefHeight="48.0" prefWidth="229.0" text="Hover over ship name for more information about that ship!" wrapText="true" />

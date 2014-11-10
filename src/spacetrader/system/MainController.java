@@ -103,7 +103,7 @@ public class MainController {
         
         changePlayerLocation(destination);
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayAlertMessage("Notice!", destination.getPriceIncEvent().desc());
+            displayAlertMessage("Notice!",  destination.getName() + " is currently " + destination.getPriceIncEvent().desc().toLowerCase());
         }
         if (eventGenerator == null) {
             eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);

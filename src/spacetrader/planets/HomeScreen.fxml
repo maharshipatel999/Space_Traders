@@ -110,6 +110,9 @@
                      <image>
                         <Image url="@../../resources/images/spaceship_icon.png" />
                      </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </graphic>
                <opaqueInsets>
@@ -135,6 +138,9 @@
                <GridPane.margin>
                   <Insets left="80.0" top="28.0" />
                </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="saveGame" mnemonicParsing="false" onAction="#goToOverwrite" text="Save game" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>

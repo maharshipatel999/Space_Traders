@@ -22,16 +22,25 @@
                <font>
                   <Font name="Copperplate Gothic Bold" size="20.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="game2" mnemonicParsing="false" onAction="#reloadGame2" text="Game 2">
                <font>
                   <Font name="Copperplate Gothic Bold" size="20.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="game3" mnemonicParsing="false" onAction="#reloadGame3" text="Game 3">
                <font>
                   <Font name="Copperplate Gothic Bold" size="20.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
          <opaqueInsets>

@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
 import spacetrader.Player;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.planets.Planet;
@@ -79,10 +81,16 @@ public class ShipYardScreenController extends SceneController implements Initial
         } else {
             equipmentDesc.setText("There are several equipment available for purchase!");
         }
-        
-        if (player.getCredits() < 2000) {
-             escapePodText.setText("You need at least ₪2000 to buy an escape pod");
-             buyEscapePodButton.setDisable(true);
+        updateEscapePodText();
+    }
+
+    private void updateEscapePodText() {
+        if (player.getShip().hasEscapePod()) {
+            escapePodText.setText("Your ship already has an escape pod.");
+            buyEscapePodButton.setDisable(true);
+        } else if (player.getCredits() < 2000) {
+            escapePodText.setText("You need at least ₪2000 to buy an escape pod");
+            buyEscapePodButton.setDisable(true);
         } else {
             escapePodText.setText("An escape pod is for sale!");
         }
@@ -255,7 +263,13 @@ public class ShipYardScreenController extends SceneController implements Initial
     }
     
     @FXML protected void buyEscapePod() {
-        player.getShip().setEscapePod();
+         String escapePodMessage = "Are you sure you want to buy an escape pod for ₪2000?";
+        Action response = mainControl.displayYesNoComfirmation("Ship Purchase Confirmation", null, escapePodMessage);
+            if (response == Dialog.Actions.YES) {
+                player.getShip().setEscapePod();
+                mainControl.displayAlertMessage("Transaction Successful", "You successfully bought a new escape pod!");
+                updateEscapePodText();
+            }
     }
     
     /**
