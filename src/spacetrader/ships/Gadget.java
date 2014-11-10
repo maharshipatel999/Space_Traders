@@ -19,7 +19,7 @@ public class Gadget extends Equipment {
 
     @Override
     public String getName() {
-        return type.name();
+        return type.toString();
     }
 
     public GadgetType getType() {

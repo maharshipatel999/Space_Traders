@@ -49,6 +49,21 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
         }
     }
 
+    
+    
+    public void removeItemOfSameType(T item) {
+        T listItem = null;
+            for(int i = 0; i < list.size(); i++) {
+                if(item.equals(list.get(i))) {
+                listItem = list.get(i);
+                break;
+                }   
+            }
+            if(item != null) {
+                removeItem(listItem);
+            }
+    }
+    
     /**
      * Removes an item to the next open slot.
      *
@@ -58,7 +73,7 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
         if (isEmpty()) {
             throw new SlotsAreEmptyException();
         } else {
-            list.remove(0);
+            list.remove(item);
             size = size - 1;
         }
     }

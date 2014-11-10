@@ -22,6 +22,7 @@ public class Weapon extends Equipment {
         return type.toString();
     }
     
+    
     public int getPower() {
         return type.power();
     }

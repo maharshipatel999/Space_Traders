@@ -472,20 +472,22 @@ public class GadgetScreenController extends SceneController implements Initializ
             if (type.getText().equals("GADGET") && buy) {
 
                 if (!ship.getGadgets().isFull()) {
-                    if (name.getText().equals("EXTRA_CARGO")) {
+                    if (name.getText().equals("5 Extra Cargo Bays")) {
                         player.getShip().getGadgets().addItem(new Gadget(GadgetType.EXTRA_CARGO));
                         player.getShip().getCargo().increaseCapacity();
+                        System.out.println("Name: " + ship.getGadgets().getItem(0).getName());
+
                         bought = true;
-                    } else if (name.getText().equals("AUTO_REPAIR")) {
+                    } else if (name.getText().equals("Auto-Repair System")) {
                         player.getShip().getGadgets().addItem(new Gadget(GadgetType.AUTO_REPAIR));
                         bought = true;
-                    } else if (name.getText().equals("TARGETING")) {
+                    } else if (name.getText().equals("Targeting System")) {
                         player.getShip().getGadgets().addItem(new Gadget(GadgetType.TARGETING));
                         bought = true;
-                    } else if (name.getText().equals("CLOAK")) {
+                    } else if (name.getText().equals("Cloaking Device")) {
                         player.getShip().getGadgets().addItem(new Gadget(GadgetType.CLOAK));
                         bought = true;
-                    } else {
+                    } else if (name.getText().equals("Navigating System")) {
                         player.getShip().getGadgets().addItem(new Gadget(GadgetType.NAVIGATION));
                         bought = true;
                     }
@@ -565,34 +567,34 @@ public class GadgetScreenController extends SceneController implements Initializ
             boolean sold = false;
             if (type.getText().equals("GADGET")) {
 
-                if (name.getText().equals("EXTRA_CARGO")) {
-                    player.getShip().getGadgets().removeItem(new Gadget(GadgetType.EXTRA_CARGO));
+                if (name.getText().equals("5 Extra Cargo Bays")) {
+                    player.getShip().getGadgets().removeItemOfSameType(new Gadget(GadgetType.EXTRA_CARGO));
                     player.getShip().getCargo().decreaseCapacity();
 
-                } else if (name.getText().equals("AUTO_REPAIR")) {
-                    player.getShip().getGadgets().removeItem(new Gadget(GadgetType.AUTO_REPAIR));
-                } else if (name.getText().equals("TARGETING")) {
-                    player.getShip().getGadgets().removeItem(new Gadget(GadgetType.TARGETING));
-                } else if (name.getText().equals("CLOAK")) {
-                    player.getShip().getGadgets().removeItem(new Gadget(GadgetType.CLOAK));
-                } else if (name.getText().equals("NAVIGATION")) {
-                    player.getShip().getGadgets().removeItem(new Gadget(GadgetType.NAVIGATION));
+                } else if (name.getText().equals("Auto-Repair System")) {
+                    player.getShip().getGadgets().removeItemOfSameType(new Gadget(GadgetType.AUTO_REPAIR));
+                } else if (name.getText().equals("Targeting System")) {
+                    player.getShip().getGadgets().removeItemOfSameType(new Gadget(GadgetType.TARGETING));
+                } else if (name.getText().equals("Cloaking Device")) {
+                    player.getShip().getGadgets().removeItemOfSameType(new Gadget(GadgetType.CLOAK));
+                } else if (name.getText().equals("Navigating System")) {
+                    player.getShip().getGadgets().removeItemOfSameType(new Gadget(GadgetType.NAVIGATION));
                 }
                 sold = true;
             } else if (type.getText().equals("WEAPON")) {
                 if (name.getText().equals("Pulse laser")) {
-                    player.getShip().getWeapons().removeItem(new Weapon(WeaponType.PULSE));
+                    player.getShip().getWeapons().removeItemOfSameType(new Weapon(WeaponType.PULSE));
                 } else if (name.getText().equals("Beam laser")) {
-                    player.getShip().getWeapons().removeItem(new Weapon(WeaponType.BEAM));
+                    player.getShip().getWeapons().removeItemOfSameType(new Weapon(WeaponType.BEAM));
                 } else if (name.getText().equals("Military laser")) {
-                    player.getShip().getWeapons().removeItem(new Weapon(WeaponType.MILITARY));
+                    player.getShip().getWeapons().removeItemOfSameType(new Weapon(WeaponType.MILITARY));
                 }
                 sold = true;
             } else if (type.getText().equals("SHIELD")) {
                 if (name.getText().equals("Energy shield")) {
-                    player.getShip().getShields().removeItem(new Shield(ShieldType.ENERGY));
+                    player.getShip().getShields().removeItemOfSameType(new Shield(ShieldType.ENERGY));
                 } else if (name.getText().equals("Reflective shield")) {
-                    player.getShip().getShields().removeItem(new Shield(ShieldType.REFLECTIVE));
+                    player.getShip().getShields().removeItemOfSameType(new Shield(ShieldType.REFLECTIVE));
                 }
                 sold = true;
             }
@@ -675,6 +677,7 @@ public class GadgetScreenController extends SceneController implements Initializ
             weapon1RBCurrentInventory.setVisible(false);
             weapon1Text.setVisible(false);
         }
+        
 
         if (numShieldSlots == 3) {
             if (numShieldSlotsFilled == 3) {
@@ -775,6 +778,7 @@ public class GadgetScreenController extends SceneController implements Initializ
             gadget1RBCurrentInventory.setVisible(false);
             gadget1Text.setVisible(false);
         }
+        
     }
 
 }
