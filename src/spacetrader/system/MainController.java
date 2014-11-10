@@ -14,8 +14,6 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
@@ -60,13 +58,13 @@ public class MainController {
         this.game = game;
         this.stage = stage;
 
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-            if (game.getUniverse() != null) {
-                if (event.getCode() == KeyCode.ESCAPE) {
-                    goToStartScreen();
-                }
-            }
-        });
+        //stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+        //    if (game.getUniverse() != null) {
+        //        if (event.getCode() == KeyCode.ESCAPE) {
+        //            goToStartScreen();
+        //        }
+        //    }
+        //});
     }
 
     /**
@@ -341,6 +339,7 @@ public class MainController {
         control = (StartScreenController) extractControllerFromFXML("/spacetrader/StartScreen.fxml", startStage);
         control.setUpPlayerStats(game.getPlayer(), startStage, this);
         startStage.setScene(control.getScene());
+        startStage.show();
     }
 
     public void goToOverwriteScreen() {

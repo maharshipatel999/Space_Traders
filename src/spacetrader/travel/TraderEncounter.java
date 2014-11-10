@@ -28,11 +28,12 @@ public class TraderEncounter extends Encounter {
      * Creates a new TraderEncounter
      *
      * @param player the player of the game
+     * @param clicks
      * @param traderStrength
      * @param destinationMarket
      */
-    public TraderEncounter(Player player, int traderStrength, Market destinationMarket) {
-        super(player, "/spacetrader/travel/TraderEncounterScreen.fxml");
+    public TraderEncounter(Player player, int clicks, int traderStrength, Market destinationMarket) {
+        super(player, "/spacetrader/travel/TraderEncounterScreen.fxml", clicks, "Trader");
         this.traderStrength = traderStrength;
         this.destinationMarket = destinationMarket;
         

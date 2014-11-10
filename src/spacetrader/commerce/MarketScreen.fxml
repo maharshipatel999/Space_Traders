@@ -32,16 +32,6 @@
                               <Font name="Eras Demi ITC" size="21.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="31.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="31.0" prefWidth="21.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </Button>
                         <TextField fx:id="numBuy0" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Label fx:id="priceBuy0" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
@@ -126,24 +116,22 @@
                               <Font name="Eras Demi ITC" size="21.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                         <TextField fx:id="numBuy1" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         <TextField fx:id="numBuy2" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                         <TextField fx:id="numBuy3" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
@@ -264,15 +252,177 @@
                         <Label fx:id="cost6" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                         <Label fx:id="cost9" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
                         <Label fx:id="cost8" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                        <Button layoutX="362.0" layoutY="201.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="362.0" layoutY="201.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="362.0" layoutY="201.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="362.0" layoutY="201.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="362.0" layoutY="201.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="362.0" layoutY="201.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="362.0" layoutY="201.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="362.0" layoutY="201.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="358.0" layoutY="426.0" mnemonicParsing="false" onAction="#increaseBuyQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="321.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBuyQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="70.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="99.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="50.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="67.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="0.0" prefWidth="32.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="39.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="72.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="0.0" prefWidth="40.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="21.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="84.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -317,15 +467,29 @@
                               <Font name="Eras Demi ITC" size="21.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                         <TextField fx:id="numSell0" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Label fx:id="priceSell0" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
@@ -432,24 +596,62 @@
                               <Font name="Eras Demi ITC" size="21.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                         <TextField fx:id="numSell1" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                         <TextField fx:id="numSell2" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                         <TextField fx:id="numSell3" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
@@ -518,15 +720,114 @@
                         <Label fx:id="revenue7" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                         <Label fx:id="revenue8" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
                         <Label fx:id="revenue9" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_433_minus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/glyphicons_432_plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="70.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="99.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="50.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="67.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="32.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="39.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="72.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="40.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="21.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="84.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

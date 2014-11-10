@@ -23,10 +23,11 @@ public class PirateEncounter extends Encounter {
      * Creates a new pirate encounter.
      *
      * @param player the player of the game
+     * @param clicks
      * @param pirateStrength
      */
-    public PirateEncounter(Player player, int pirateStrength) {
-        super(player, "/spacetrader/travel/PirateEncounterScreen.fxml");
+    public PirateEncounter(Player player, int clicks, int pirateStrength) {
+        super(player, "/spacetrader/travel/PirateEncounterScreen.fxml", clicks, "Pirate");
         this.pirateStrength = pirateStrength;
         
         //pirates are strong if the player is worth more

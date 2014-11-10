@@ -27,18 +27,24 @@ public abstract class Encounter {
     
     private final Player player;
     private final String encounterScene;
+    private final String encounterName;
     private SpaceShip opponent;
     protected State state;
+    protected int clicksFromDest;
 
     /**
      * Creates a new Encounter. Encounters have a player, and an fxmlscene.
      *
      * @param player the player of the game
      * @param fxmlScene the scene which should be displayed with this encounter.
+     * @param clicksFromDest distance from destination
+     * @param encounterName the name of the opponent you're encountering
      */
-    public Encounter(Player player, String fxmlScene) {
+    public Encounter(Player player, String fxmlScene, int clicksFromDest, String encounterName) {
         this.player = player;
         this.encounterScene = fxmlScene;
+        this.clicksFromDest = clicksFromDest;
+        this.encounterName = encounterName;
         this.state = State.IGNORE; //defaults to ignore
     }
 
@@ -86,6 +92,27 @@ public abstract class Encounter {
      */
     public State getState() {
         return state;
+    }
+    
+    /**
+     * Gets the name of this encounter.
+     * @return this encounter's name
+     */
+    public String getName() {
+        return encounterName;
+    }
+    
+    /**
+     * Gets the distance from the destination of this encounters.
+     * @return how many clicks from the destination this encounter occurs
+     */
+    public int getClicksFromDest() {
+        return clicksFromDest;
+    }
+    
+    public String getIgnoreMessage(String destination) {
+        return String.format("A %s %s is spotted %d clicks from your destination, %s!\n\nIt ignores you.",
+                 encounterName.toLowerCase(), opponent.getType().toString(), clicksFromDest, destination);
     }
 
     /**

@@ -5,6 +5,8 @@
  */
 package spacetrader.system;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 
 /**
@@ -39,5 +41,10 @@ public abstract class SceneController {
      */
     public Scene getScene() {
         return rootScene;
+    }
+    
+    @FXML
+    protected void openStartScreen(ActionEvent event) {
+        mainControl.goToStartScreen();
     }
 }

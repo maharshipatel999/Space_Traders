@@ -68,11 +68,11 @@ public class EncounterManager {
             
             Encounter encounter = null;
             if (index == 0) {
-                encounter = createPoliceEncounter();
+                encounter = createPoliceEncounter(TOTAL_CLICKS - i);
             } else if (index == 1) {
-                encounter = createPirateEncounter();
+                encounter = createPirateEncounter(TOTAL_CLICKS - i);
             } else if (index == 2) {
-                encounter = createTraderEncounter();
+                encounter = createTraderEncounter(TOTAL_CLICKS - i);
             }
             
             if (encounter != null) {
@@ -94,9 +94,9 @@ public class EncounterManager {
      *
      * @return Specific Police Encounter
      */
-    private Encounter createPoliceEncounter() {
+    private Encounter createPoliceEncounter(int clicks) {
         int police = destination.getPoliticalSystem().strengthPolice();
-        PoliceEncounter encounter = new PoliceEncounter(player, police);
+        PoliceEncounter encounter = new PoliceEncounter(player, clicks, police);
 
         if (encounter.getState() == State.INSPECTION && inspected) {
             return null;
@@ -110,9 +110,9 @@ public class EncounterManager {
      *
      * @return Specific Pirate Encounter
      */
-    private Encounter createPirateEncounter() {
+    private Encounter createPirateEncounter(int clicks) {
         int pirates = destination.getPoliticalSystem().strengthPirates();
-        return new PirateEncounter(player, pirates);
+        return new PirateEncounter(player, clicks, pirates);
     }
 
     /**
@@ -120,9 +120,9 @@ public class EncounterManager {
      *
      * @return Specific Trader Encounter
      */
-    private Encounter createTraderEncounter() {
+    private Encounter createTraderEncounter(int clicks) {
         int traders = destination.getPoliticalSystem().strengthTraders();
-        return new TraderEncounter(player, traders, destination.getMarket());
+        return new TraderEncounter(player, clicks, traders, destination.getMarket());
     }
     
     /**

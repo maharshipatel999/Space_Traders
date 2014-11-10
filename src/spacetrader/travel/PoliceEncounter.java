@@ -46,9 +46,11 @@ public class PoliceEncounter extends Encounter {
      * Creates a new police encounter.
      *
      * @param player the player of the game
+     * @param clicks
+     * @param policeStrength
      */
-    public PoliceEncounter(Player player, int policeStrength) {
-        super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml");
+    public PoliceEncounter(Player player, int clicks, int policeStrength) {
+        super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml", clicks, "Police");
         this.policeStrength = policeStrength;
         
         int tries = 1;

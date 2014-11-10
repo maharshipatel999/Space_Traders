@@ -460,5 +460,4 @@ public class MarketScreenController extends SceneController implements Initializ
     protected void goBack(ActionEvent event) {
         mainControl.goToHomeScreen(player.getLocation());
     }
-
 }

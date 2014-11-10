@@ -7,6 +7,8 @@ package spacetrader.travel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -62,16 +64,31 @@ public class WarpScreenController extends SceneController implements Initializab
         encounters = new EncounterManager(source, destination, player.getShip(), player);
         
         while (encounters.getEncountersRemaining() > 0) {
-            mainControl.displayAlertMessage("Encounter!", encounters.getNextEncounter() + "\n");
+            pauseScreen();
+            Encounter encounter = encounters.getNextEncounter();
+            
+            if (encounter.getState() == Encounter.State.IGNORE) {
+                String alertTitle = "Uneventful " + encounter.getName() + " Encounter!";
+                String message = encounter.getIgnoreMessage(destination.getName());
+                mainControl.displayAlertMessage(alertTitle, message);
+            } else {
+                mainControl.displayAlertMessage("Encounter!", encounter + "\n");
+            }
+            
+            
         }
         
-        /*try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(WarpScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        pauseScreen();
         
         mainControl.arriveAtPlanet(source, destination);
+    }
+    
+    private void pauseScreen() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(WarpScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

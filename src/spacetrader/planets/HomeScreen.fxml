@@ -128,7 +128,15 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="saveGame" mnemonicParsing="false" onAction="#goToOverwrite" prefHeight="29.0" prefWidth="112.0" text="Save game" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#openStartScreen" text="View Player Information" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="15.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="80.0" top="28.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="saveGame" mnemonicParsing="false" onAction="#goToOverwrite" text="Save game" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Copperplate Gothic Bold" size="15.0" />
                </font>
