@@ -163,7 +163,7 @@ public class Market implements Serializable {
                 quantity = 0;
             }
             if (appxPrices.get(good) < 0) {
-                quantity = -1;
+                quantity = 0;
             }
             stock.addItem(good, quantity, 0);
         }

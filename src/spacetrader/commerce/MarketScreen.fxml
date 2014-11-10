@@ -11,52 +11,52 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="686.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MarketScreenController">
+<BorderPane prefHeight="686.0" prefWidth="682.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MarketScreenController">
    <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="502.0" prefWidth="584.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab fx:id="buyTab" onSelectionChanged="#buyTabChanged" text="BUY ITEMS">
                <content>
-                  <GridPane fx:id="buyGrid" hgap="5.0" prefHeight="206.0" prefWidth="357.0">
+                  <GridPane fx:id="buyGrid" hgap="5.0" prefHeight="454.0" prefWidth="584.0">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="42.0" text="Good" GridPane.columnIndex="1">
+                        <Label prefHeight="17.0" prefWidth="42.0" text="Good" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
                         <Label fx:id="goodBuy0" text="Water" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="31.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="31.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="31.0" prefWidth="21.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="31.0" prefWidth="21.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <TextField fx:id="numBuy0" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label fx:id="priceBuy0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="numBuy0" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="priceBuy0" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label prefHeight="21.0" prefWidth="99.0" text="Quantity" GridPane.columnIndex="3" />
-                        <Label prefHeight="17.0" prefWidth="63.0" text="Price" GridPane.columnIndex="2">
+                        <Label text="Quantity" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                        <Label text="Price" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                            <GridPane.margin>
-                              <Insets left="15.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
                         <Label fx:id="goodBuy1" text="Furs" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
@@ -64,7 +64,7 @@
                         </Label>
                         <Label fx:id="goodBuy2" text="Food" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
@@ -72,7 +72,7 @@
                         </Label>
                         <Label fx:id="goodBuy3" text="Ore" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
@@ -80,7 +80,7 @@
                         </Label>
                         <Label fx:id="goodBuy4" text="Games" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
@@ -88,7 +88,7 @@
                         </Label>
                         <Label fx:id="goodBuy5" text="Firearms" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
@@ -96,7 +96,7 @@
                         </Label>
                         <Label fx:id="goodBuy6" text="Medicine" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
@@ -104,7 +104,7 @@
                         </Label>
                         <Label fx:id="goodBuy7" text="Machines" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
@@ -112,7 +112,7 @@
                         </Label>
                         <Label fx:id="goodBuy8" text="Narcotics" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
@@ -120,159 +120,159 @@
                         </Label>
                         <Label fx:id="goodBuy9" text="Robots" GridPane.columnIndex="1" GridPane.rowIndex="10">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="Eras Demi ITC" size="21.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="10" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-                        <TextField fx:id="numBuy1" prefHeight="25.0" prefWidth="50.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <TextField fx:id="numBuy2" prefHeight="31.0" prefWidth="80.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <TextField fx:id="numBuy3" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <TextField fx:id="numBuy4" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <TextField fx:id="numBuy5" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <TextField fx:id="numBuy6" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-                        <TextField fx:id="numBuy7" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-                        <TextField fx:id="numBuy8" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-                        <TextField fx:id="numBuy9" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-                        <Label fx:id="priceBuy1" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                        <Button mnemonicParsing="false" onAction="#increaseBuyQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <Button mnemonicParsing="false" onAction="#decreaseBuyQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <TextField fx:id="numBuy1" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <TextField fx:id="numBuy2" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <TextField fx:id="numBuy3" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <TextField fx:id="numBuy4" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                        <TextField fx:id="numBuy5" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                        <TextField fx:id="numBuy6" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                        <TextField fx:id="numBuy7" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                        <TextField fx:id="numBuy8" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                        <TextField fx:id="numBuy9" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                        <Label fx:id="priceBuy1" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceBuy2" text="0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <Label fx:id="priceBuy2" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceBuy3" text="0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <Label fx:id="priceBuy3" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceBuy4" text="0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                        <Label fx:id="priceBuy4" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceBuy5" text="0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                        <Label fx:id="priceBuy5" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceBuy6" text="0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                        <Label fx:id="priceBuy6" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceBuy7" text="0" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                        <Label fx:id="priceBuy7" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceBuy8" text="0" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                        <Label fx:id="priceBuy8" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceBuy9" text="0" GridPane.columnIndex="2" GridPane.rowIndex="10">
+                        <Label fx:id="priceBuy9" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label prefHeight="15.0" prefWidth="67.0" text="Stock">
+                        <Label prefHeight="15.0" text="Stock" GridPane.halignment="CENTER">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock0" text="0" GridPane.rowIndex="1">
+                        <Label fx:id="stock0" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock2" text="0" GridPane.rowIndex="3">
+                        <Label fx:id="stock2" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock3" text="0" GridPane.rowIndex="4">
+                        <Label fx:id="stock3" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock4" text="0" GridPane.rowIndex="5">
+                        <Label fx:id="stock4" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock5" text="0" GridPane.rowIndex="6">
+                        <Label fx:id="stock5" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock6" text="0" GridPane.rowIndex="7">
+                        <Label fx:id="stock6" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock7" text="0" GridPane.rowIndex="8">
+                        <Label fx:id="stock7" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock8" text="0" GridPane.rowIndex="9">
+                        <Label fx:id="stock8" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="9">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock9" text="0" GridPane.rowIndex="10">
+                        <Label fx:id="stock9" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="10">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="stock1" text="0" GridPane.rowIndex="2">
+                        <Label fx:id="stock1" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Cost" GridPane.columnIndex="6" />
-                        <Label fx:id="cost2" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                        <Label fx:id="cost1" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                        <Label fx:id="cost4" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                        <Label fx:id="cost3" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                        <Label fx:id="cost0" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                        <Label fx:id="cost5" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                        <Label fx:id="cost7" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-                        <Label fx:id="cost6" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-                        <Label fx:id="cost9" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
-                        <Label fx:id="cost8" prefHeight="21.0" prefWidth="43.0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+                        <Label text="Cost" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
+                        <Label fx:id="cost2" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="cost1" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="cost4" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Label fx:id="cost3" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="cost0" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="cost5" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <Label fx:id="cost7" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <Label fx:id="cost6" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <Label fx:id="cost9" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <Label fx:id="cost8" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="79.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="108.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="77.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="75.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="0.0" prefWidth="34.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="74.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.0" minWidth="10.0" prefWidth="72.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="70.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="99.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="67.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="0.0" prefWidth="32.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="39.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="72.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -294,9 +294,9 @@
                <content>
                   <GridPane fx:id="sellGrid" hgap="5.0" prefHeight="206.0" prefWidth="357.0">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="107.0" text="Inventory">
+                        <Label text="Inventory" GridPane.halignment="CENTER">
                            <GridPane.margin>
-                              <Insets left="5.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
                         <Label prefHeight="17.0" prefWidth="42.0" text="Good" GridPane.columnIndex="1">
@@ -304,9 +304,9 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory0" text="0" GridPane.rowIndex="1">
+                        <Label fx:id="inventory0" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
                         <Label fx:id="goodSell0" text="Water" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -317,71 +317,74 @@
                               <Font name="Eras Demi ITC" size="21.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <TextField fx:id="numSell0" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label fx:id="priceSell0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="numSell0" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="priceSell0" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label prefHeight="21.0" prefWidth="111.0" text="Quantity" GridPane.columnIndex="3" />
-                        <Label prefHeight="17.0" prefWidth="33.0" text="Price" GridPane.columnIndex="2">
+                        <Label text="Quantity" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                            <GridPane.margin>
-                              <Insets left="15.0" />
+                              <Insets />
+                           </GridPane.margin></Label>
+                        <Label prefHeight="17.0" prefWidth="33.0" text="Price" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <GridPane.margin>
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory1" text="0" GridPane.rowIndex="2">
+                        <Label fx:id="inventory1" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory2" text="0" GridPane.rowIndex="3">
+                        <Label fx:id="inventory2" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory3" text="0" GridPane.rowIndex="4">
+                        <Label fx:id="inventory3" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory4" text="0" GridPane.rowIndex="5">
+                        <Label fx:id="inventory4" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory5" text="0" GridPane.rowIndex="6">
+                        <Label fx:id="inventory5" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory6" text="0" GridPane.rowIndex="7">
+                        <Label fx:id="inventory6" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory7" text="0" GridPane.rowIndex="8">
+                        <Label fx:id="inventory7" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory8" text="0" GridPane.rowIndex="9">
+                        <Label fx:id="inventory8" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="9">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="inventory9" text="0" GridPane.rowIndex="10">
+                        <Label fx:id="inventory9" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="10">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
                         <Label fx:id="goodSell1" text="Furs" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -429,98 +432,101 @@
                               <Font name="Eras Demi ITC" size="21.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" prefHeight="25.0" prefWidth="31.0" text="^" GridPane.columnIndex="5" GridPane.rowIndex="10" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" prefHeight="25.0" prefWidth="28.0" text="v" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-                        <TextField fx:id="numSell1" prefHeight="25.0" prefWidth="50.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <TextField fx:id="numSell2" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <TextField fx:id="numSell3" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <TextField fx:id="numSell4" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <TextField fx:id="numSell4" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <TextField fx:id="numSell6" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-                        <TextField fx:id="numSell7" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-                        <TextField fx:id="numSell8" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-                        <TextField fx:id="numSell9" prefHeight="25.0" prefWidth="30.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-                        <Label fx:id="priceSell1" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                        <Button mnemonicParsing="false" onAction="#increaseSellQuantity" text="^" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                        <Button mnemonicParsing="false" onAction="#decreaseSellQuantity" text="v" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <TextField fx:id="numSell1" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <TextField fx:id="numSell2" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <TextField fx:id="numSell3" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <TextField fx:id="numSell4" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <TextField fx:id="numSell4" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <TextField fx:id="numSell6" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <TextField fx:id="numSell7" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <TextField fx:id="numSell8" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                        <TextField fx:id="numSell9" alignment="CENTER" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <Label fx:id="priceSell1" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceSell2" text="0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <Label fx:id="priceSell2" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceSell3" text="0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <Label fx:id="priceSell3" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceSell4" text="0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                        <Label fx:id="priceSell4" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceSell5" text="0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                        <Label fx:id="priceSell5" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceSell6" text="0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                        <Label fx:id="priceSell6" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceSell7" text="0" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                        <Label fx:id="priceSell7" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceSell8" text="0" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                        <Label fx:id="priceSell8" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="priceSell9" text="0" GridPane.columnIndex="2" GridPane.rowIndex="10">
+                        <Label fx:id="priceSell9" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Revenue" GridPane.columnIndex="6" />
-                        <Label fx:id="revenue0" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                        <Label fx:id="revenue1" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                        <Label fx:id="revenue2" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                        <Label fx:id="revenue3" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                        <Label fx:id="revenue4" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                        <Label fx:id="revenue5" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                        <Label fx:id="revenue6" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-                        <Label fx:id="revenue7" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-                        <Label fx:id="revenue8" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
-                        <Label fx:id="revenue9" text="₪0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
+                        <Label text="Revenue" GridPane.columnIndex="6" GridPane.halignment="CENTER">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></Label>
+                        <Label fx:id="revenue0" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="revenue1" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="revenue2" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="revenue3" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="revenue4" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                        <Label fx:id="revenue5" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <Label fx:id="revenue6" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                        <Label fx:id="revenue7" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <Label fx:id="revenue8" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                        <Label fx:id="revenue9" text="₪0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="86.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="101.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="58.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="62.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="29.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="42.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="77.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="70.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="99.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="67.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="32.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="39.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="72.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -668,33 +674,33 @@
                   </Label>
                   <Separator prefWidth="200.0">
                      <VBox.margin>
-                        <Insets top="80.0" />
+                        <Insets top="40.0" />
                      </VBox.margin>
                   </Separator>
-                  <HBox prefHeight="47.0" prefWidth="201.0">
+                  <VBox>
                      <children>
                         <Label prefHeight="30.0" prefWidth="112.0" text="Cargo Slots:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="cargoSlots" text="15">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
+                        <Label fx:id="cargoSlots" text="0/15">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
                      </children>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
+                  </VBox>
+                  <Separator prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></Separator>
                   <Label prefHeight="30.0" prefWidth="176.0" text="Special Events:">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="priceEvent" prefHeight="32.0" prefWidth="196.0" text="None" wrapText="true">
+                  <Label fx:id="priceEvent" alignment="TOP_LEFT" prefHeight="92.0" prefWidth="196.0" text="None" wrapText="true">
                      <font>
                         <Font size="17.0" />
                      </font>

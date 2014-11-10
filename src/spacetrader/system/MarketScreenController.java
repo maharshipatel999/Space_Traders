@@ -155,7 +155,7 @@ public class MarketScreenController extends SceneController implements Initializ
         planetLevel.setText(planet.getLevel().type());
         planetResource.setText(planet.getResource().type());
         playerFunds.setText("₪" + player.getWallet().getCredits());
-        cargoSlots.setText("" + player.getShip().getCargo().getMaxCapacity());
+        cargoSlots.setText(player.getShip().getCargo().getCount() + "/" + player.getShip().getCargo().getMaxCapacity());
         priceEvent.setText(planet.getPriceIncEvent().desc());
         updateNetBalance();
         viewIsInitialized = true;
@@ -351,6 +351,8 @@ public class MarketScreenController extends SceneController implements Initializ
      */
     private void updateNetBalance() {
         moneyRemaining.setText(cashier.getRemainingBalance() + " credits");
+        cargoSlots.setText(player.getShip().getCargo().getCount() + "/" + player.getShip().getCargo().getMaxCapacity());
+
     }
 
     /**
