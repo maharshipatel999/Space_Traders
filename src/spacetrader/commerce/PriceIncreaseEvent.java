@@ -27,17 +27,22 @@ public enum PriceIncreaseEvent {
             = Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
+    static int maxRandomPrice = 5;
+    static int maxRandomPriceDuration = 10;
 
     /**
      * Creates a price increase event with description.
+     *
      * @param desc Description of PriceIncreaseEvent
      */
-    PriceIncreaseEvent(String desc) {
+    PriceIncreaseEvent(final String desc) {
         this.desc = desc;
+
     }
 
     /**
-     * gets description of specific Price Increase Event
+     * gets description of specific Price Increase Event.
+     *
      * @return description of PriceIncreaseEvent
      */
     public String desc() {
@@ -53,7 +58,7 @@ public enum PriceIncreaseEvent {
      * @return PriceIncreaseEvent - the event that occurs
      */
     public static PriceIncreaseEvent getRandomPriceEvent() {
-        int maxRandomPrice = 5;
+
         int probOfNone = RANDOM.nextInt(maxRandomPrice);
         if (probOfNone % (maxRandomPrice - 1) == 1) {
             return VALUES.get(RANDOM.nextInt(SIZE - 1));
@@ -69,7 +74,6 @@ public enum PriceIncreaseEvent {
      * @return int - the length of the event
      */
     public static int setRandomPriceIncDuration() {
-        int maxRandomPriceDuration = 10;
         return RANDOM.nextInt(maxRandomPriceDuration) + 1;
     }
 

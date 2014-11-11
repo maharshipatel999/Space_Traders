@@ -14,13 +14,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import spacetrader.ships.EquipmentSlots;
 import spacetrader.ships.Equipment;
-import spacetrader.exceptions.*;
+import spacetrader.exceptions.SlotsAreEmptyException;
+import spacetrader.exceptions.SlotsAreFullException;
 import spacetrader.ships.Gadget;
 import spacetrader.ships.GadgetType;
 
 /**
  *
- * @author Tejas Tests both addItem and removeItemOfSameType
+ * @author Tejas Tests both addItem and removeItemOfSameType.
  */
 public class addItemTester {
 
@@ -53,7 +54,7 @@ public class addItemTester {
     // The methods must be annotated with annotation @Test. For example:
     //
     /**
-     * Tests addition of one item addItem method
+     * Tests addition of one item addItem method.
      * Tests subtraction of one item removeItem method
      */
     @Test
@@ -64,7 +65,7 @@ public class addItemTester {
     }
 
     /**
-     * Test add two
+     * Test add two.
      */
     @Test
     public void addTwo() {
@@ -75,7 +76,7 @@ public class addItemTester {
     }
 
     /**
-     * Test add three
+     * Test add three.
      */
     @Test
     public void addToFill() {
@@ -87,7 +88,7 @@ public class addItemTester {
     }
 
     /**
-     * Test Exception for Adding
+     * Test Exception for Adding.
      */
     @Test(expected = SlotsAreFullException.class)
     public void throwExceptionAdd() {
@@ -98,7 +99,7 @@ public class addItemTester {
     }
 
     /**
-     * Test empty
+     * Test empty.
      */
     @Test
     public void checkEmpty() {
@@ -107,7 +108,7 @@ public class addItemTester {
     }
 
     /**
-     * Test Exception for Removing
+     * Test Exception for Removing.
      */
     @Test(expected = SlotsAreEmptyException.class)
     public void throwExceptionRemove() {
@@ -115,7 +116,7 @@ public class addItemTester {
     }
  
     /**
-     * Add then remove one. Should work
+     * Add then remove one. Should work.
      */
     @Test
     public void addAndRemove() {
