@@ -53,9 +53,6 @@ public class Wallet implements Serializable {
     /**
      * Removes a specified amount of money from this wallet.
      *
-     * @throws IllegalArgumentException if withdrawal is negative.
-     * @throws InsufficientFundsException if the player does not have enough
-     * money
      * @param withdrawal the amount of money to remove
      */
     public void remove(int withdrawal) {
@@ -144,10 +141,18 @@ public class Wallet implements Serializable {
         }
     }
     
+    /**
+     * sets insurance cost in wallet.
+     * @param cost cost of insurance
+     */
     public void setInsuranceCost(int cost) {
         this.insuranceCost = cost;
     }
     
+    /**
+     * gets insurance cost from wallet.
+     * @return insurance cost
+     */
     public int getInsuranceCost() {
         return this.insuranceCost;
     }
