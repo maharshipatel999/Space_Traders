@@ -19,6 +19,7 @@ import spacetrader.commerce.Wallet;
 public class Player extends Trader implements Serializable {
 
     private int debt = 0; // Current Debt
+    private int insuranceCost = 0;
     private int policeKills = 0; // Number of police ships killed
     private int traderKills = 0; // Number of trader ships killed
     private int pirateKills = 0; // Number of pirate ships killed
@@ -203,7 +204,7 @@ public class Player extends Trader implements Serializable {
     }
 
     /**
-     * Calculates the player's currrent worth. This is determined by the amount
+     * Calculates the player's current worth. This is determined by the amount
      * of money you own minus the money you owe. It also considers the value of
      * your spaceship and all the things in it.
      *
@@ -211,6 +212,14 @@ public class Player extends Trader implements Serializable {
      */
     public int getCurrentWorth() {
         return wallet.getCredits() - debt + ship.currentShipPrice();
+    }
+    
+    public void setInsuranceCost(int cost) {
+        this.insuranceCost = cost;
+    }
+    
+    public int getInsuranceCost() {
+        return this.insuranceCost;
     }
 
     /**
@@ -222,6 +231,16 @@ public class Player extends Trader implements Serializable {
         if (debt > 0) {
             interest = Math.max(1, debt / 10);
             wallet.removeForcefully(interest);
+        }
+    }
+    
+    public void payInsuranceCost() {
+        if ((insuranceCost > 0)) {
+            if (wallet.getCredits() > insuranceCost) {
+                wallet.remove(insuranceCost);
+            } else {
+                wallet.removeForcefully(insuranceCost);
+            }
         }
     }
 }
