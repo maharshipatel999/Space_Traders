@@ -45,12 +45,26 @@ public class Planet implements Serializable {
 
     private boolean visited;
 
+    /**
+     * Constructor for Planet
+     *
+     * @param name - name of planet
+     * @param location - location of planet
+     */
     public Planet(String name, Point location) {
         this(name, location, TechLevel.getRandomTechLevel(),
                 Resource.getRandomResource(),
                 PoliticalSystem.getRandomPoliticalSystem());
     }
 
+    /**
+     *
+     * @param name - name of planet
+     * @param location - locations of planet
+     * @param level - tech level of planet
+     * @param resource - main resource of planet
+     * @param politSys - political system of planet
+     */
     public Planet(String name, Point location, TechLevel level,
             Resource resource, PoliticalSystem politSys) {
         this.name = name;
@@ -65,22 +79,47 @@ public class Planet implements Serializable {
         this.visited = false;
     }
 
+    /**
+     * gets the name of the planet
+     *
+     * @return the name of the planet
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * gets locations
+     *
+     * @return location of the planet
+     */
     public Point getLocation() {
         return this.location;
     }
 
+    /**
+     * get tech level of planet
+     *
+     * @return the tech level of planet
+     */
     public TechLevel getLevel() {
         return this.level;
     }
 
+    /**
+     * get resource
+     *
+     * @return resource of the planet
+     */
     public Resource getResource() {
         return this.resource;
     }
 
+    /**
+     * get political system
+     *
+     * @return political system
+     */
     public PoliticalSystem getPoliticalSystem() {
         return this.politSys;
     }
@@ -94,48 +133,100 @@ public class Planet implements Serializable {
         return size;
     }
 
+    /**
+     * set the price increase event
+     *
+     * @param priceIncEvent - price increase event for a planet
+     */
     public void setPriceIncEvent(PriceIncreaseEvent priceIncEvent) {
         this.priceIncEvent = priceIncEvent;
         this.setPriceIncDuration(PriceIncreaseEvent.setRandomPriceIncDuration());
     }
 
+    /**
+     * Set random price increase event
+     */
     public void setRandomPriceIncEvent() {
         this.priceIncEvent = PriceIncreaseEvent.getRandomPriceEvent();
         this.setPriceIncDuration(PriceIncreaseEvent.setRandomPriceIncDuration());
     }
 
+    /**
+     * get price increase event duration
+     *
+     * @return price increase event duration
+     */
     public int getPriceIncDuration() {
         return this.priceIncDuration;
     }
 
+    /**
+     * set price increase event duration
+     *
+     * @param priceIncDuration - the duration of a price increase event
+     */
     public void setPriceIncDuration(int priceIncDuration) {
         this.priceIncDuration = priceIncDuration;
     }
 
+    /**
+     * get price increase event
+     *
+     * @return price increase event
+     */
     public PriceIncreaseEvent getPriceIncEvent() {
         return this.priceIncEvent;
     }
 
+    /**
+     * get market
+     *
+     * @return market
+     */
     public Market getMarket() {
         return market;
     }
 
+    /**
+     * check if planet has been vis
+     *
+     * @return if a planet has been visted
+     */
     public boolean isVisited() {
         return visited;
     }
 
+    /**
+     * set visited for planet
+     */
     public void setVisited() {
         visited = true;
     }
 
+    /**
+     * get wormhole for a planet
+     *
+     * @return wormhole for planet
+     */
     public Wormhole getWormhole() {
         return this.wormhole;
     }
 
+    /**
+     * set wormhole for planet
+     *
+     * @param wormhole - the wormhole of a planet
+     */
     public void setWormhole(Wormhole wormhole) {
         this.wormhole = wormhole;
     }
 
+    /**
+     * Calculate strength of police
+     *
+     * @param record - player's police record
+     * @return the strength of the police
+     */
     public int calculateStrengthOfPolice(PoliceRecord record) {
         int strength = politSys.strengthPolice();
         if (record.ordinal() < PoliceRecord.VILLAIN.ordinal()) {

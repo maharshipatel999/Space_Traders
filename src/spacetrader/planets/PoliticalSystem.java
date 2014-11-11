@@ -7,6 +7,7 @@ import java.util.Random;
 import spacetrader.commerce.TradeGood;
 
 /**
+ * political systems
  *
  * @author Caleb Stokols
  */
@@ -71,46 +72,101 @@ public enum PoliticalSystem {
         this.wanted = wanted;
     }
 
+    /**
+     * get type
+     *
+     * @return type of political system
+     */
     public String type() {
         return type;
     }
 
+    /**
+     * get reaction illegal
+     *
+     * @return reaction illegal
+     */
     public int reactionIllegal() {
         return reactionIllegal;
     }
 
+    /**
+     * get strength of police
+     *
+     * @return strength of police
+     */
     public int strengthPolice() {
         return strengthPolice;
     }
 
+    /**
+     * strength of pirates
+     *
+     * @return strength of pirates
+     */
     public int strengthPirates() {
         return strengthPirates;
     }
 
+    /**
+     * get strength of traders
+     *
+     * @return strength of traders
+     */
     public int strengthTraders() {
         return strengthTraders;
     }
 
+    /**
+     * get min tech level
+     *
+     * @return min tech lever
+     */
     public TechLevel minTechLevel() {
         return minTechLevel;
     }
 
+    /**
+     * get max tech level
+     *
+     * @return max tech level
+     */
     public TechLevel maxTechLevel() {
         return maxTechLevel;
     }
 
+    /**
+     * get bribe level
+     *
+     * @return bribe level
+     */
     public int bribeLevel() {
         return bribeLevel;
     }
 
+    /**
+     * true if drugs are permitted false if not
+     *
+     * @return true / false
+     */
     public boolean drugsOK() {
         return drugsOK;
     }
 
+    /**
+     * true if firearms permitted false if not
+     *
+     * @return true / false
+     */
     public boolean firearmsOK() {
         return firearmsOK;
     }
 
+    /**
+     * get wanted
+     *
+     * @return wanted
+     */
     public TradeGood wanted() {
         return wanted;
     }
