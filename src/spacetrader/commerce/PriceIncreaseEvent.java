@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * + *
- * + * @author Seth +
+ * PriceIncreaseEvent class. Has all events that increase Price
+ *
+ * @author Seth
  */
 public enum PriceIncreaseEvent {
 
@@ -27,10 +28,18 @@ public enum PriceIncreaseEvent {
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
 
+    /**
+     * Creates a price increase event with description.
+     * @param desc Description of PriceIncreaseEvent
+     */
     PriceIncreaseEvent(String desc) {
         this.desc = desc;
     }
 
+    /**
+     * gets description of specific Price Increase Event
+     * @return description of PriceIncreaseEvent
+     */
     public String desc() {
         return desc;
     }
@@ -44,8 +53,9 @@ public enum PriceIncreaseEvent {
      * @return PriceIncreaseEvent - the event that occurs
      */
     public static PriceIncreaseEvent getRandomPriceEvent() {
-        int probOfNone = RANDOM.nextInt(5);
-        if (probOfNone % 4 == 1) {
+        int maxRandomPrice = 5;
+        int probOfNone = RANDOM.nextInt(maxRandomPrice);
+        if (probOfNone % (maxRandomPrice - 1) == 1) {
             return VALUES.get(RANDOM.nextInt(SIZE - 1));
         } else {
             return PriceIncreaseEvent.NONE;
@@ -59,7 +69,8 @@ public enum PriceIncreaseEvent {
      * @return int - the length of the event
      */
     public static int setRandomPriceIncDuration() {
-        return RANDOM.nextInt(10) + 1;
+        int maxRandomPriceDuration = 10;
+        return RANDOM.nextInt(maxRandomPriceDuration) + 1;
     }
 
 }

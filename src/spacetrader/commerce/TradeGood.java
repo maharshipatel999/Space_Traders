@@ -62,7 +62,7 @@ public enum TradeGood {
     private static final Random RANDOM = new Random();
 
     /**
-     * Creates a new Trade Good
+     * Creates a new Trade Good.
      *
      * @param type type of trade good
      * @param price price of trade good
@@ -108,7 +108,7 @@ public enum TradeGood {
     }
 
     /**
-     * gets type of Trade Good
+     * gets type of Trade Good.
      *
      * @return type of Trade Good
      */
@@ -117,7 +117,7 @@ public enum TradeGood {
     }
 
     /**
-     * returns price of Trade Good
+     * returns price of Trade Good.
      *
      * @return price of Trade Good
      */
@@ -126,7 +126,7 @@ public enum TradeGood {
     }
 
     /**
-     * returns value of increase in Price per level
+     * returns value of increase in Price per level.
      *
      * @return increase in Price per level
      */
@@ -135,7 +135,7 @@ public enum TradeGood {
     }
 
     /**
-     * returns variance of price of TradeGood
+     * returns variance of price of TradeGood.
      *
      * @return variance of price of TradeGood
      */
@@ -144,7 +144,7 @@ public enum TradeGood {
     }
 
     /**
-     * returns minimum price Trader will sell for
+     * returns minimum price Trader will sell for.
      *
      * @return min. price trader will sell for
      */
@@ -153,7 +153,7 @@ public enum TradeGood {
     }
 
     /**
-     * returns maximum price Trader will sell for
+     * returns maximum price Trader will sell for.
      *
      * @return max. price trader will sell for
      */
@@ -162,7 +162,7 @@ public enum TradeGood {
     }
 
     /**
-     * returns round-off of the TradeGood
+     * returns round-off of the TradeGood.
      *
      * @return round-off of TradeGood
      */
@@ -171,7 +171,7 @@ public enum TradeGood {
     }
 
     /**
-     * Specific PriceIncreaseEvent associated with TradeGood
+     * Specific PriceIncreaseEvent associated with TradeGood.
      *
      * @return PriceIncreaseEvent associated with TradeGood
      */
@@ -180,7 +180,7 @@ public enum TradeGood {
     }
 
     /**
-     * gets resource condition for if TradeGood low in quantity
+     * gets resource condition for if TradeGood low in quantity.
      *
      * @return resource condition associated with when TradeGood is low in
      * quantity
@@ -190,7 +190,7 @@ public enum TradeGood {
     }
 
     /**
-     * gets resource condition for if specific TradeGood is high in quantity
+     * gets resource condition for if specific TradeGood is high in quantity.
      *
      * @return TradeGood is high in quantity
      */
@@ -199,7 +199,7 @@ public enum TradeGood {
     }
 
     /**
-     * gets specific TechLevel at minimum that this TradeGood is available at
+     * gets specific TechLevel at minimum that this TradeGood is available at.
      *
      * @return lowest tech level that this item is available at
      */
@@ -208,7 +208,7 @@ public enum TradeGood {
     }
 
     /**
-     * minimum Produce level of Trade Good
+     * minimum Produce level of Trade Good.
      *
      * @return min. Produce level of Trade Good
      */
@@ -217,7 +217,7 @@ public enum TradeGood {
     }
 
     /**
-     * gets minimum Use Level of Trade Good
+     * gets minimum Use Level of Trade Good.
      *
      * @return min. use level of Trade Good
      */
