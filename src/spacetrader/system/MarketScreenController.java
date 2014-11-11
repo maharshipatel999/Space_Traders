@@ -458,6 +458,6 @@ public class MarketScreenController extends SceneController implements Initializ
      */
     @FXML
     protected void goBack(ActionEvent event) {
-        mainControl.goToHomeScreen(player.getLocation());
+        mainControl.goToHomeScreen(player, player.getLocation());
     }
 }

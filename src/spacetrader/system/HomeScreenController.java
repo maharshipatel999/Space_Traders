@@ -12,8 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import spacetrader.planets.Planet;
+import spacetrader.Player;
 import spacetrader.commerce.PriceIncreaseEvent;
+import spacetrader.planets.Planet;
 
 /**
  * FXML Controller class
@@ -23,6 +24,7 @@ import spacetrader.commerce.PriceIncreaseEvent;
 public class HomeScreenController extends SceneController implements Initializable {
 
     private Planet planet;
+    private Player player;
 
     @FXML
     private Button marketPlaceButton;
@@ -32,14 +34,21 @@ public class HomeScreenController extends SceneController implements Initializab
     private Button saveGame;
     @FXML
     private Button shipYard;
+    @FXML 
+    private Button bankButton;
 
     /**
      * Customizes text on homes screen based on player and planet names
      *
      * @param planet planet that player is currently on
      */
-    public void setUpHomeScreen(Planet planet) {
+    public void setUpHomeScreen(Player player, Planet planet) {
         this.planet = planet;
+        this.player = player; 
+        
+        player.payInsuranceCost();
+        player.payInterest();
+        
         String description = String.format("%s\n\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
                 planet.getName(), planet.getLocation().x, planet.getLocation().y, planet.getLevel().type(), planet.getPoliticalSystem().type(), planet.getResource().type());
         if (planet.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
@@ -85,5 +94,10 @@ public class HomeScreenController extends SceneController implements Initializab
     @FXML
     public void goToOverwrite() {
         mainControl.goToOverwriteScreen();
+    }
+    
+    @FXML
+    public void goToFinanceScreen() {
+        mainControl.goToFinanceScreen(planet);
     }
 }

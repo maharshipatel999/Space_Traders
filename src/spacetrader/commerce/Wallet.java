@@ -17,6 +17,7 @@ public class Wallet implements Serializable {
 
     private int credits;
     private int debt;
+    private int insuranceCost;
 
     /**
      * Creates a new wallet with 1000 credits and 0 debt.
@@ -136,10 +137,18 @@ public class Wallet implements Serializable {
      */
     public void decreaseDebt(int removal) {
         if (removal < 0) {
-            throw new IllegalArgumentException("Cannot add remove negative debt");
+            throw new IllegalArgumentException("Cannot remove negative debt");
         } else {
             credits -= removal;
             credits = (credits < 0) ? 0 : credits;
         }
+    }
+    
+    public void setInsuranceCost(int cost) {
+        this.insuranceCost = cost;
+    }
+    
+    public int getInsuranceCost() {
+        return this.insuranceCost;
     }
 }

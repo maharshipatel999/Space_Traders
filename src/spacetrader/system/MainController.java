@@ -162,7 +162,7 @@ public class MainController {
         game.getPlayer().setLocation(destination);
         destination.setVisited();
         destination.getMarket().setAllPrices(game.getPlayer());
-        goToHomeScreen(destination);
+        goToHomeScreen(game.getPlayer(), destination);
     }
 
     /**
@@ -224,10 +224,10 @@ public class MainController {
      *
      * @param planet the planet who's home screen we should view
      */
-    public void goToHomeScreen(Planet planet) {
+    public void goToHomeScreen(Player player, Planet planet) {
         HomeScreenController control;
         control = (HomeScreenController) extractControllerFromFXML("/spacetrader/planets/HomeScreen.fxml", stage);
-        control.setUpHomeScreen(planet);
+        control.setUpHomeScreen(player, planet);
         stage.setScene(control.getScene());        
     }
 
@@ -357,6 +357,14 @@ public class MainController {
         control.setUpReloadScreen(game);
         stage.setScene(control.getScene());
     }
+    
+    public void goToFinanceScreen(Planet planet) {
+        stage.setTitle("Welcome to Bank of " + planet.getName() + "!");
+        FinanceScreenController control;
+        control = (FinanceScreenController) extractControllerFromFXML("/spacetrader/commerce/FinanceScreen.fxml", stage);
+        control.setUpFinanceScreen(game.getPlayer());
+        stage.setScene(control.getScene());
+    }
 
     public void displayAlertMessage(String alertTitle, String alert) {
         Dialogs.create()
@@ -417,7 +425,7 @@ public class MainController {
         saveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent e) {
-                goToHomeScreen(game.getPlayer().getLocation());
+                goToHomeScreen(game.getPlayer(), game.getPlayer().getLocation());
             }
         });
         displayProgess(progressTitle, saveService);

@@ -47,7 +47,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="123.0" prefWidth="193.0" text="Go to Stockmarket" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Button fx:id="bankButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToFinanceScreen" prefHeight="123.0" prefWidth="193.0" text="Go to Bank" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <graphic>
                   <ImageView fitHeight="89.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                      <image>

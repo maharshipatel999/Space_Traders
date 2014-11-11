@@ -250,7 +250,7 @@ public class ShipYardScreenController extends SceneController implements Initial
     
     @FXML
     protected void goBackToHomeScreen() {
-        mainControl.goToHomeScreen(player.getLocation());
+        mainControl.goToHomeScreen(player, player.getLocation());
     }
 
     @FXML

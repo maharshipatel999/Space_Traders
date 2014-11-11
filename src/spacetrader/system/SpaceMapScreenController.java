@@ -52,6 +52,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
     private Pane planetInfo;
 
     protected Planet currentPlanet;
+    private Player player;
     private int fuelAmount;
     private int maxFuelAmount;
 
@@ -81,6 +82,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
      * @param planets the planets this map will display.
      */
     public void setUpMap(Player player, Planet currentPlanet, ArrayList<Planet> planets) {
+        this.player = player;
         this.currentPlanet = currentPlanet;
         this.fuelAmount = player.getShip().getTank().getFuelAmount();
         this.maxFuelAmount = player.getShip().getTank().getMaxFuel();
@@ -133,7 +135,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
 
     @FXML
     protected void backToPlanet(ActionEvent event) {
-        mainControl.goToHomeScreen(currentPlanet);
+        mainControl.goToHomeScreen(player, currentPlanet);
     }
 
     /**
