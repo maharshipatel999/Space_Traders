@@ -23,7 +23,7 @@ public enum ShieldType {
     private final int chance;
 
     /**
-     * Creates an enumeration value of ShieldType
+     * Creates an enumeration value of ShieldType.
      *
      * @param type the type of this type
      * @param power the power of this type
@@ -31,7 +31,8 @@ public enum ShieldType {
      * @param minTechLevel the minimum TechLevel required to use this type
      * @param chance the probability this type will do something
      */
-    private ShieldType(String type, int power, int price, TechLevel minTechLevel, int chance) {
+    private ShieldType(String type, int power, int price,
+            TechLevel minTechLevel, int chance) {
         this.type = type;
         this.power = power;
         this.price = price;
@@ -40,7 +41,7 @@ public enum ShieldType {
     }
 
     /**
-     * Gets the power of this type
+     * Gets the power of this type.
      *
      * @return the power
      */
@@ -49,7 +50,7 @@ public enum ShieldType {
     }
 
     /**
-     * Gets the price of this type
+     * Gets the price of this type.
      *
      * @return how much this type costs
      */
@@ -58,7 +59,7 @@ public enum ShieldType {
     }
 
     /**
-     * Gets the minTechLevel of this type
+     * Gets the minTechLevel of this type.
      *
      * @return the minTechLevel required to use this type
      */
@@ -67,7 +68,7 @@ public enum ShieldType {
     }
 
     /**
-     * Gets the chance instance variable of this type
+     * Gets the chance instance variable of this type.
      *
      * @return the chance this type will do something
      */
@@ -76,7 +77,7 @@ public enum ShieldType {
     }
 
     /**
-     * the string representation of this object
+     * the string representation of this object.
      *
      * @return the String name of this type
      */

@@ -15,7 +15,7 @@ public class Shield extends Equipment {
     private int health;
 
     /**
-     * Creates a Shield object
+     * Creates a Shield object.
      *
      * @param type the type of shield this object will be
      */
@@ -25,7 +25,7 @@ public class Shield extends Equipment {
     }
 
     /**
-     * Gets the name of this Shield
+     * Gets the name of this Shield.
      *
      * @return the name of the this Object's ShieldType
      */
@@ -53,7 +53,7 @@ public class Shield extends Equipment {
     }
 
     /**
-     * Gets the type of this Shield
+     * Gets the type of this Shield.
      *
      * @return The type of this shield
      */
@@ -62,7 +62,7 @@ public class Shield extends Equipment {
     }
 
     /**
-     * Returns a string representation of this object
+     * Returns a string representation of this object.
      *
      * @return the string format of this object
      */

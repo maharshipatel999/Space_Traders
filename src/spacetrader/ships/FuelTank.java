@@ -80,7 +80,7 @@ public class FuelTank implements Serializable {
     }
 
     /**
-     * Decreases the max fuel of this tank by a specified amount
+     * Decreases the max fuel of this tank by a specified amount.
      *
      * @param amount how much to decrease the max fuel by
      */

@@ -14,7 +14,7 @@ public class Gadget extends Equipment {
     private GadgetType type;
 
     /**
-     * Creates a new Gadget with a type
+     * Creates a new Gadget with a type.
      *
      * @param type the type of this gadget
      */
@@ -23,7 +23,7 @@ public class Gadget extends Equipment {
     }
 
     /**
-     * Gets the name of this Gadget
+     * Gets the name of this Gadget.
      *
      * @return the name of this Gadget
      */
@@ -33,7 +33,7 @@ public class Gadget extends Equipment {
     }
 
     /**
-     * Gets the type of this Gadget
+     * Gets the type of this Gadget.
      *
      * @return the type of this Gadget
      */
@@ -42,7 +42,7 @@ public class Gadget extends Equipment {
     }
 
     /**
-     * Gets the string representation of this object
+     * Gets the string representation of this object.
      *
      * @return the string of this Gadget
      */

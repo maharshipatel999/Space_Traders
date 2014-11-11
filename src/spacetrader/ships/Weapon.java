@@ -14,7 +14,7 @@ public class Weapon extends Equipment {
     private WeaponType type;
 
     /**
-     * Creates an instance of Weapon
+     * Creates an instance of Weapon.
      *
      * @param type the type of weapon to be created
      */
@@ -23,7 +23,7 @@ public class Weapon extends Equipment {
     }
 
     /**
-     * Gets the name of this weapon
+     * Gets the name of this weapon.
      *
      * @return the name of this weapon's type
      */
@@ -33,7 +33,7 @@ public class Weapon extends Equipment {
     }
 
     /**
-     * Gets the power of this weapon
+     * Gets the power of this weapon.
      *
      * @return the power of this weapon's type
      */
@@ -42,7 +42,7 @@ public class Weapon extends Equipment {
     }
 
     /**
-     * Gets the type of this weapon
+     * Gets the type of this weapon.
      *
      * @return the type of this instance
      */
@@ -51,7 +51,7 @@ public class Weapon extends Equipment {
     }
 
     /**
-     * Gets a String representation of this object
+     * Gets a String representation of this object.
      *
      * @return the String version of this instance
      */

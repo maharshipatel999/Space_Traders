@@ -12,7 +12,7 @@ public class PirateShip {
     private String shipType;
 
     /**
-     * Creates an instance of a PirateShip
+     * Creates an instance of a PirateShip.
      *
      * @param reputation the reputation of the pirate, which influences how
      * difficult this pirate will be
@@ -20,7 +20,8 @@ public class PirateShip {
      * @param health the health of this pirate
      * @param pirateCargo the cargo this pirate holds
      */
-    public PirateShip(int reputation, int attack, int health, ArrayList<String> pirateCargo) {
+    public PirateShip(int reputation, int attack, int health,
+            ArrayList<String> pirateCargo) {
         this.reputation = reputation;
         this.attack = attack;
         this.health = health;
@@ -29,7 +30,7 @@ public class PirateShip {
     }
 
     /**
-     * Gets the reputation of this pirate
+     * Gets the reputation of this pirate.
      *
      * @return the reputation instance variable
      */
@@ -38,7 +39,7 @@ public class PirateShip {
     }
 
     /**
-     * Gets the attack of this pirate
+     * Gets the attack of this pirate.
      *
      * @return the attack instance variable
      */
@@ -47,7 +48,7 @@ public class PirateShip {
     }
 
     /**
-     * Gets the health of this pirate
+     * Gets the health of this pirate.
      *
      * @return the health instance variable
      */
@@ -56,7 +57,7 @@ public class PirateShip {
     }
 
     /**
-     * Gets the cargo of this pirate
+     * Gets the cargo of this pirate.
      *
      * @return an ArrayList of the Cargo this pirate holds
      */
@@ -65,7 +66,7 @@ public class PirateShip {
     }
 
     /**
-     * Decrease the amount of health this pirate has
+     * Decrease the amount of health this pirate has.
      *
      * @param hitpoints the amount of health to lose
      */
@@ -74,7 +75,7 @@ public class PirateShip {
     }
 
     /**
-     * Determines if this pirate ship should attack or flee
+     * Determines if this pirate ship should attack or flee.
      *
      * @param ship the ship that we are facing
      * @return Fight if true, Flee if false

@@ -61,17 +61,21 @@ public enum ShipType {
 
     private final String type;
     private final int cargoBay, weaponSlots, shieldSlots, gadgetSlots, crew;
-    private final int fuel, fuelCost, hullStrength, size; //size: determines how easy it is to hit this ship
+    //size: determines how easy it is to hit this ship
+    private final int fuel, fuelCost, hullStrength, size;
     private final TechLevel minTechLevel;
-    private final int price, repairCost; //repair-cost: cost of repairing 1 point of hull strength
-    private final int bounty, occurrence; //occurence: percentage of the ships you meet
-    private final int police, pirate, trader; //min strength required for a police/pirate/trader to have this ship
+    //repair-cost: cost of repairing 1 point of hull strength
+    private final int price, repairCost;
+    //occurence: percentage of the ships you meet
+    private final int bounty, occurrence;
+    //min strength required for a police/pirate/trader to have this ship
+    private final int police, pirate, trader;
     public static final List<ShipType> VALUES
             = Collections.unmodifiableList(Arrays.asList(values()));
     public static final int SIZE = VALUES.size();
 
     /**
-     * Creates an enumeration value of ShipType
+     * Creates an enumeration value of ShipType.
      *
      * @param type the type of this ship
      * @param cargoBay the amount of cargo this ship can hold
@@ -132,7 +136,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the String representation of this object
+     * Gets the String representation of this object.
      *
      * @return the String of the type of this object
      */
@@ -142,16 +146,16 @@ public enum ShipType {
     }
 
     /**
-     * Gets the amount of cargo this ship type can hold
+     * Gets the amount of cargo this ship type can hold.
      *
-     * @return
+     * @return the cargo of the ship
      */
     public int cargoBay() {
         return cargoBay;
     }
 
     /**
-     * Gets the amount of weapons slots this ship had
+     * Gets the amount of weapons slots this ship had.
      *
      * @return number of weapon slots
      */
@@ -160,7 +164,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the amount of shield slots this ship has
+     * Gets the amount of shield slots this ship has.
      *
      * @return number of shield slots
      */
@@ -169,7 +173,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the amount of gadget slots this ship has
+     * Gets the amount of gadget slots this ship has.
      *
      * @return number of gadget slots
      */
@@ -178,7 +182,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the number of crew this ship can have
+     * Gets the number of crew this ship can have.
      *
      * @return number of crew
      */
@@ -187,7 +191,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the amount of fuel this ship can have
+     * Gets the amount of fuel this ship can have.
      *
      * @return amount of fuel
      */
@@ -196,7 +200,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the cost of fuel for this ship
+     * Gets the cost of fuel for this ship.
      *
      * @return cost of fuel
      */
@@ -205,7 +209,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the hull strength of this ship
+     * Gets the hull strength of this ship.
      *
      * @return hull strength of this ship
      */
@@ -214,7 +218,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the size of this ship
+     * Gets the size of this ship.
      *
      * @return size of this ship
      */
@@ -223,7 +227,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the minimum TechLevel to buy this ship type
+     * Gets the minimum TechLevel to buy this ship type.
      *
      * @return minTechLevel instance variable of this ship type
      */
@@ -232,7 +236,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the price of this ship type
+     * Gets the price of this ship type.
      *
      * @return price of this ship type
      */
@@ -241,7 +245,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the cost to repair this ship
+     * Gets the cost to repair this ship.
      *
      * @return cost of repair
      */
@@ -250,7 +254,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the bounty value of this ship
+     * Gets the bounty value of this ship.
      *
      * @return bounty value
      */
@@ -259,7 +263,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the probability this ship has of running into other ships
+     * Gets the probability this ship has of running into other ships.
      *
      * @return occurrence instance variable
      */
@@ -268,7 +272,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the min strength a police needs to have this type
+     * Gets the min strength a police needs to have this type.
      *
      * @return min strength for a police
      */
@@ -277,7 +281,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the min strength a pirate needs to have this type
+     * Gets the min strength a pirate needs to have this type.
      *
      * @return min strength for a pirate
      */
@@ -286,7 +290,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the min strength a trader needs to have this type
+     * Gets the min strength a trader needs to have this type.
      *
      * @return min strength for a trader
      */
@@ -295,12 +299,13 @@ public enum ShipType {
     }
 
     /**
-     * Gets the image of this ship
+     * Gets the image of this ship.
      *
      * @return the String of where the image of this ship type is located
      */
     public String spriteFile() {
-        String fileName = Character.toLowerCase(type.charAt(0)) + type.substring(1);
+        String fileName = Character.toLowerCase(type.charAt(0)) +
+                type.substring(1);
         fileName = "/resources/images/ship_sprites/" + fileName + ".png";
         return fileName;
     }

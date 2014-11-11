@@ -19,7 +19,7 @@ public abstract class Equipment {
     public abstract String getName();
 
     /**
-     * Checks if these two items are equal to each other
+     * Checks if these two items are equal to each other.
      *
      * @param o the other item
      * @return true or false depending on equivalence
@@ -35,7 +35,7 @@ public abstract class Equipment {
     }
 
     /**
-     * Generates a hash code for this object
+     * Generates a hash code for this object.
      *
      * @return the hash code of this object
      */

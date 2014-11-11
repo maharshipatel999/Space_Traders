@@ -14,7 +14,7 @@ public class PlayerShip extends SpaceShip {
     private boolean hasEscapePod;
 
     /**
-     * Creates a PlayerShip
+     * Creates a PlayerShip.
      *
      * @param type The type of ship that will be the Player's ship
      */
@@ -25,14 +25,14 @@ public class PlayerShip extends SpaceShip {
     }
 
     /**
-     * Sets the Player's ship to have an escape pod
+     * Sets the Player's ship to have an escape pod.
      */
     public void setEscapePod() {
         hasEscapePod = true;
     }
 
     /**
-     * Checks if the Player's ship has an escape pod
+     * Checks if the Player's ship has an escape pod.
      *
      * @return the value of hasEscapePod
      */

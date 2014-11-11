@@ -24,7 +24,7 @@ public enum WeaponType {
     private final int chance;
 
     /**
-     * Creates an enumeration value of WeaponType
+     * Creates an enumeration value of WeaponType.
      *
      * @param type the type of this instance
      * @param power the power of this instance
@@ -32,7 +32,8 @@ public enum WeaponType {
      * @param minTechLevel the min TechLevel required to buy this type
      * @param chance The probability this type will do something
      */
-    private WeaponType(String type, int power, int price, TechLevel minTechLevel, int chance) {
+    private WeaponType(String type, int power, int price,
+            TechLevel minTechLevel, int chance) {
         this.type = type;
         this.power = power;
         this.price = price;
@@ -41,7 +42,7 @@ public enum WeaponType {
     }
 
     /**
-     * Gets the power of this type
+     * Gets the power of this type.
      *
      * @return the power
      */
@@ -50,7 +51,7 @@ public enum WeaponType {
     }
 
     /**
-     * Gets the price of this type
+     * Gets the price of this type.
      *
      * @return the price of this type
      */
@@ -59,7 +60,7 @@ public enum WeaponType {
     }
 
     /**
-     * Gets the minTechLevel of this type
+     * Gets the minTechLevel of this type.
      *
      * @return the minTechLevel needed to buy this type
      */
@@ -68,7 +69,7 @@ public enum WeaponType {
     }
 
     /**
-     * Gets the probability this type will do something
+     * Gets the probability this type will do something.
      *
      * @return the chance instance variable of this type
      */
@@ -77,7 +78,7 @@ public enum WeaponType {
     }
 
     /**
-     * Gets the String representation of this object
+     * Gets the String representation of this object.
      *
      * @return the String format of this instance
      */
