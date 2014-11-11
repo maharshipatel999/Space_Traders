@@ -16,6 +16,7 @@ public class Shield extends Equipment {
 
     /**
      * Creates a Shield object
+     *
      * @param type the type of shield this object will be
      */
     public Shield(ShieldType type) {
@@ -25,6 +26,7 @@ public class Shield extends Equipment {
 
     /**
      * Gets the name of this Shield
+     *
      * @return the name of the this Object's ShieldType
      */
     @Override
@@ -52,6 +54,7 @@ public class Shield extends Equipment {
 
     /**
      * Gets the type of this Shield
+     *
      * @return The type of this shield
      */
     public ShieldType getType() {
@@ -60,6 +63,7 @@ public class Shield extends Equipment {
 
     /**
      * Returns a string representation of this object
+     *
      * @return the string format of this object
      */
     @Override

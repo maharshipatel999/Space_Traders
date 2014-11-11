@@ -25,7 +25,7 @@ public enum GadgetType {
     private final String name;
 
     /**
-     * Creates a GadgetType
+     * Creates an enumeration value of GadgetType
      *
      * @param minTechLevel the minTechLevel this gadget type can be used on
      * @param price the price of this gadget type

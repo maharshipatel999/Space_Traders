@@ -70,6 +70,28 @@ public enum ShipType {
             = Collections.unmodifiableList(Arrays.asList(values()));
     public static final int SIZE = VALUES.size();
 
+    /**
+     * Creates an enumeration value of ShipType
+     *
+     * @param type the type of this ship
+     * @param cargoBay the amount of cargo this ship can hold
+     * @param weaponSlots the amount of weapon slots this ship has
+     * @param shieldSlots the amount of shield slots this ship has
+     * @param gadgetSlots the amount of gadget slots this ship has
+     * @param crew the amount of crew members this ship has
+     * @param fuel the amount of fuel this ship holds
+     * @param fuelCost the cost of fuel for this ship
+     * @param hullStrength the strength of this ship's hull
+     * @param size the relative size of this ship
+     * @param minTechLevel the min TechLevel to buy this ship
+     * @param price the cost to buy this ship
+     * @param repairCost the cost to repair this ship
+     * @param bounty the bounty value of this ship
+     * @param occurrence the probability this ship has to meet other ships
+     * @param police the min strength a police needs to have this type
+     * @param pirate the min strength a pirate needs to have this type
+     * @param trader the min strength a trader needs to have this type
+     */
     ShipType(String type,
             int cargoBay,
             int weaponSlots,
@@ -109,79 +131,174 @@ public enum ShipType {
 
     }
 
+    /**
+     * Gets the String representation of this object
+     *
+     * @return the String of the type of this object
+     */
     @Override
     public String toString() {
         return type;
     }
 
+    /**
+     * Gets the amount of cargo this ship type can hold
+     *
+     * @return
+     */
     public int cargoBay() {
         return cargoBay;
     }
 
+    /**
+     * Gets the amount of weapons slots this ship had
+     *
+     * @return number of weapon slots
+     */
     public int weaponSlots() {
         return weaponSlots;
     }
 
+    /**
+     * Gets the amount of shield slots this ship has
+     *
+     * @return number of shield slots
+     */
     public int shieldSlots() {
         return shieldSlots;
     }
 
+    /**
+     * Gets the amount of gadget slots this ship has
+     *
+     * @return number of gadget slots
+     */
     public int gadgetSlots() {
         return gadgetSlots;
     }
 
+    /**
+     * Gets the number of crew this ship can have
+     *
+     * @return number of crew
+     */
     public int crew() {
         return crew;
     }
 
+    /**
+     * Gets the amount of fuel this ship can have
+     *
+     * @return amount of fuel
+     */
     public int fuel() {
         return fuel;
     }
 
+    /**
+     * Gets the cost of fuel for this ship
+     *
+     * @return cost of fuel
+     */
     public int fuelCost() {
         return fuelCost;
     }
 
+    /**
+     * Gets the hull strength of this ship
+     *
+     * @return hull strength of this ship
+     */
     public int hullStrength() {
         return hullStrength;
     }
 
+    /**
+     * Gets the size of this ship
+     *
+     * @return size of this ship
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Gets the minimum TechLevel to buy this ship type
+     *
+     * @return minTechLevel instance variable of this ship type
+     */
     public TechLevel minTechLevel() {
         return minTechLevel;
     }
 
+    /**
+     * Gets the price of this ship type
+     *
+     * @return price of this ship type
+     */
     public int price() {
         return price;
     }
 
+    /**
+     * Gets the cost to repair this ship
+     *
+     * @return cost of repair
+     */
     public int repairCost() {
         return repairCost;
     }
 
+    /**
+     * Gets the bounty value of this ship
+     *
+     * @return bounty value
+     */
     public int bounty() {
         return bounty;
     }
 
+    /**
+     * Gets the probability this ship has of running into other ships
+     *
+     * @return occurrence instance variable
+     */
     public int occurrence() {
         return occurrence;
     }
 
+    /**
+     * Gets the min strength a police needs to have this type
+     *
+     * @return min strength for a police
+     */
     public int police() {
         return police;
     }
 
+    /**
+     * Gets the min strength a pirate needs to have this type
+     *
+     * @return min strength for a pirate
+     */
     public int pirate() {
         return pirate;
     }
 
+    /**
+     * Gets the min strength a trader needs to have this type
+     *
+     * @return min strength for a trader
+     */
     public int trader() {
         return trader;
     }
 
+    /**
+     * Gets the image of this ship
+     *
+     * @return the String of where the image of this ship type is located
+     */
     public String spriteFile() {
         String fileName = Character.toLowerCase(type.charAt(0)) + type.substring(1);
         fileName = "/resources/images/ship_sprites/" + fileName + ".png";

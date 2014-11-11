@@ -32,6 +32,11 @@ public class SpaceShip implements Serializable {
     private int maxHullStrength;
     private int hullStrength;
 
+    /**
+     * Creates an instance of SpaceShip with a specified type
+     *
+     * @param type the type of ship to create
+     */
     public SpaceShip(ShipType type) {
         this.type = type;
         this.cargo = new Cargo(type.cargoBay());
@@ -46,38 +51,83 @@ public class SpaceShip implements Serializable {
         this.hullStrength = maxHullStrength;
     }
 
+    /**
+     * Gets the cargo of this ship
+     *
+     * @return the cargo of this instance
+     */
     public Cargo getCargo() {
         return cargo;
     }
 
+    /**
+     * Gets the fuel tank of this ship
+     *
+     * @return the fuel tank of this instance
+     */
     public FuelTank getTank() {
         return tank;
     }
 
+    /**
+     * Gets the this ship's type
+     *
+     * @return this ship's ShipType
+     */
     public ShipType getType() {
         return type;
     }
 
+    /**
+     * Gets the weapons of this ship
+     *
+     * @return this ship's weapon slots
+     */
     public EquipmentSlots<Weapon> getWeapons() {
         return weapons;
     }
 
+    /**
+     * Gets the shields of this ship
+     *
+     * @return this ship's shields slots
+     */
     public EquipmentSlots<Shield> getShields() {
         return shields;
     }
 
+    /**
+     * Gets the gadgets of this ship
+     *
+     * @return this ship's gadgets slots
+     */
     public EquipmentSlots<Gadget> getGadgets() {
         return gadgets;
     }
 
+    /**
+     * Gets this ship's max hull strength
+     *
+     * @return the max hull strength of this ship
+     */
     public int getMaxHullStrength() {
         return maxHullStrength;
     }
 
+    /**
+     * Gets the current hull strength of this ship
+     *
+     * @return the hull strength of this instance
+     */
     public int getHullStrength() {
         return hullStrength;
     }
 
+    /**
+     * Sets the hull strength of this ship
+     *
+     * @param newHull the new hull strength
+     */
     public void setHullStrength(int newHull) {
         this.hullStrength = newHull;
         if (this.hullStrength > maxHullStrength) {
@@ -204,10 +254,19 @@ public class SpaceShip implements Serializable {
         return crew.toArray(new Mercenary[crew.size()]);
     }
 
+    /**
+     * Gets the skill of this ship's crew
+     *
+     * @param type the type of skill we want to look at
+     * @return the specific skill of this crew
+     */
     public int getCrewSkill(Skill type) {
         return crewSkills.getSkill(type);
     }
 
+    /**
+     * Gets the highest skills of the crew
+     */
     private void calculateHighestCrewSkills() {
         for (Mercenary person : crew) {
             for (Skill type : Skill.values()) {
@@ -217,6 +276,11 @@ public class SpaceShip implements Serializable {
         }
     }
 
+    /**
+     * Returns a String representation of this object
+     *
+     * @return the string format of this instance
+     */
     @Override
     public String toString() {
         String toString = "Ship Type: " + type.toString() + "\n";
@@ -226,7 +290,6 @@ public class SpaceShip implements Serializable {
         toString += "-Weapons " + weapons + "\n";
         toString += "-Shields " + shields + "\n";
         toString += "-Gadgets " + gadgets;
-
         return toString;
     }
 

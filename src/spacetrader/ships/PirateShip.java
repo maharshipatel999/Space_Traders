@@ -30,6 +30,7 @@ public class PirateShip {
 
     /**
      * Gets the reputation of this pirate
+     *
      * @return the reputation instance variable
      */
     public int getReputation() {
@@ -38,6 +39,7 @@ public class PirateShip {
 
     /**
      * Gets the attack of this pirate
+     *
      * @return the attack instance variable
      */
     public int getAttack() {
@@ -46,6 +48,7 @@ public class PirateShip {
 
     /**
      * Gets the health of this pirate
+     *
      * @return the health instance variable
      */
     public int getHealth() {
@@ -54,6 +57,7 @@ public class PirateShip {
 
     /**
      * Gets the cargo of this pirate
+     *
      * @return an ArrayList of the Cargo this pirate holds
      */
     public ArrayList<String> getPirateCargo() {
@@ -62,6 +66,7 @@ public class PirateShip {
 
     /**
      * Decrease the amount of health this pirate has
+     *
      * @param hitpoints the amount of health to lose
      */
     public void loseHealth(int hitpoints) {
@@ -70,6 +75,7 @@ public class PirateShip {
 
     /**
      * Determines if this pirate ship should attack or flee
+     *
      * @param ship the ship that we are facing
      * @return Fight if true, Flee if false
      */
