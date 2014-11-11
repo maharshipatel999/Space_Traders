@@ -12,7 +12,7 @@ package spacetrader.exceptions;
 public class SlotsAreEmptyException extends RuntimeException {
 
     /**
-     * default constructor to instantiate SlotsAreEmptyException
+     * default constructor to instantiate SlotsAreEmptyException.
      */
     public SlotsAreEmptyException() {
     }
