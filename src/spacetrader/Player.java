@@ -252,6 +252,9 @@ public class Player extends Trader implements Serializable {
         }
     }
     
+    /**
+     * Pays daily cost of insurance
+     */
     public void payInsuranceCost() {
         if ((insuranceCost > 0)) {
             if (wallet.getCredits() > insuranceCost) {

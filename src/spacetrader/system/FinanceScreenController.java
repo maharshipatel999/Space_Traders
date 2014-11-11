@@ -45,6 +45,12 @@ public class FinanceScreenController extends SceneController implements Initiali
     private Player player;
     private Planet planet;
 
+    /**
+     * Sets up the finance screen for this planet. Shows options for loans and
+     * insurance
+     *
+     * @param player the user, who uses this bank
+     */
     @FXML
     public void setUpFinanceScreen(Player player) {
         this.player = player;
@@ -65,6 +71,10 @@ public class FinanceScreenController extends SceneController implements Initiali
         }
     }
 
+    /**
+     * Allows player to buy loan of amount 1 - 1000. Updates wallet and debt
+     *
+     */
     @FXML
     private void buyLoan() {
         int loan = Integer.parseInt(loanAmt.getText());
@@ -74,6 +84,9 @@ public class FinanceScreenController extends SceneController implements Initiali
         debt.setText("₪" + player.getDebt());
     }
 
+    /**
+     * Allows player to pay loan. Updates wallet and sets debt to 0.
+     */
     @FXML
     private void payLoan() {
         player.getWallet().remove(player.getDebt());
@@ -82,13 +95,19 @@ public class FinanceScreenController extends SceneController implements Initiali
         debt.setText("₪" + player.getDebt());
     }
 
+    /**
+     * Allows player to buy insurance. Sets insurance daily cost
+     */
     @FXML
     private void buyInsurance() {
         int val = player.getShip().currentShipPriceWithoutCargo();
         int cost = val / 1000;
         player.setInsuranceCost(cost);
     }
-    
+
+    /**
+     * Changes screen back to home screen
+     */
     @FXML
     protected void goBackToHomeScreen() {
         mainControl.goToHomeScreen(player, player.getLocation());
