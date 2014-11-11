@@ -55,12 +55,29 @@ public enum TradeGood {
     private final Resource lowCondition, highCondition;
     private final TechLevel bestLevel;
     private final int minProduceLevel, minUseLevel;
-    
+
     private static final List<TradeGood> VALUES
             = Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
 
+    /**
+     * Creates a new Trade Good
+     *
+     * @param type type of trade good
+     * @param price price of trade good
+     * @param incPerLevel increase in price per level
+     * @param variance variance in price
+     * @param minTraderPrice minimum price to sell for
+     * @param maxTraderPrice maximum price to sell product for
+     * @param roundoff roundoff of price
+     * @param incEvent PriceIncreaseEvent of this Trade Good
+     * @param lowCondition Resource condition if Trade Good low quantity
+     * @param highCondition Resource condition if Trade Good high quantity
+     * @param bestLevel Tech Level of Planet
+     * @param minProduceLevel minimum Produce Level of Trade Good
+     * @param minUseLevel minimum usage level of Trade Good
+     */
     private TradeGood(String type,
             int price,
             int incPerLevel,
@@ -90,60 +107,127 @@ public enum TradeGood {
         this.minUseLevel = minUseLevel;
     }
 
+    /**
+     * gets type of Trade Good
+     *
+     * @return type of Trade Good
+     */
     public String type() {
         return type;
     }
 
+    /**
+     * returns price of Trade Good
+     *
+     * @return price of Trade Good
+     */
     public int price() {
         return price;
     }
 
+    /**
+     * returns value of increase in Price per level
+     *
+     * @return increase in Price per level
+     */
     public int incPerLevel() {
         return incPerLevel;
     }
 
+    /**
+     * returns variance of price of TradeGood
+     *
+     * @return variance of price of TradeGood
+     */
     public int variance() {
         return variance;
     }
 
+    /**
+     * returns minimum price Trader will sell for
+     *
+     * @return min. price trader will sell for
+     */
     public int minTraderPrice() {
         return minTraderPrice;
     }
 
+    /**
+     * returns maximum price Trader will sell for
+     *
+     * @return max. price trader will sell for
+     */
     public int maxTraderPrice() {
         return maxTraderPrice;
     }
 
+    /**
+     * returns round-off of the TradeGood
+     *
+     * @return round-off of TradeGood
+     */
     public int roundoff() {
         return roundoff;
     }
 
+    /**
+     * Specific PriceIncreaseEvent associated with TradeGood
+     *
+     * @return PriceIncreaseEvent associated with TradeGood
+     */
     public PriceIncreaseEvent incEvent() {
         return incEvent;
     }
 
+    /**
+     * gets resource condition for if TradeGood low in quantity
+     *
+     * @return resource condition associated with when TradeGood is low in
+     * quantity
+     */
     public Resource lowCondition() {
         return lowCondition;
     }
 
+    /**
+     * gets resource condition for if specific TradeGood is high in quantity
+     *
+     * @return TradeGood is high in quantity
+     */
     public Resource highCondition() {
         return highCondition;
     }
 
+    /**
+     * gets specific TechLevel at minimum that this TradeGood is available at
+     *
+     * @return lowest tech level that this item is available at
+     */
     public TechLevel bestLevel() {
         return bestLevel;
     }
 
+    /**
+     * minimum Produce level of Trade Good
+     *
+     * @return min. Produce level of Trade Good
+     */
     public int minProduceLevel() {
         return minProduceLevel;
     }
 
+    /**
+     * gets minimum Use Level of Trade Good
+     *
+     * @return min. use level of Trade Good
+     */
     public int minUseLevel() {
         return minUseLevel;
     }
-    
+
     /**
-     * Gets a random TradeGood. 
+     * gets a random TradeGood.
+     *
      * @return a TradeGood determined at random
      */
     public static TradeGood getRandomTradeGood() {
