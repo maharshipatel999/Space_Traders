@@ -10,149 +10,155 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="297.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.ShipInfoPaneController">
-   <children>
-      <VBox prefHeight="500.0" prefWidth="308.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox prefHeight="3.0" prefWidth="285.0" spacing="5.0">
-               <children>
-                  <ImageView fx:id="shipImage" pickOnBounds="true" preserveRatio="true" />
-                  <VBox prefHeight="55.0" prefWidth="100.0">
-                     <children>
-                        <HBox prefHeight="52.0" prefWidth="100.0">
-                           <children>
-                              <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="nameText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Text>
-                           </children>
+    <children>
+        <VBox prefHeight="500.0" prefWidth="308.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox prefHeight="3.0" prefWidth="285.0" spacing="5.0">
+                    <children>
+                        <ImageView fx:id="shipImage" pickOnBounds="true" preserveRatio="true" />
+                        <VBox prefHeight="55.0" prefWidth="100.0">
+                            <children>
+                                <HBox prefHeight="52.0" prefWidth="100.0">
+                                    <children>
+                                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Text>
+                                        <Text fx:id="nameText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
+                                    <children>
+                                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Size:">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Text>
+                                        <Text fx:id="sizeText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <HBox prefHeight="9.0" prefWidth="285.0" spacing="5.0">
+                    <children>
+                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Cargo Slots:">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="cargoSlotsText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </HBox>
+                <HBox prefHeight="8.0" prefWidth="285.0" spacing="5.0">
+                    <children>
+                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Fuel Capacity:">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="fuelCapacityText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </HBox>
+                <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
+                    <children>
+                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Hull Strength:">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="hullStrengthText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </HBox>
+                <VBox prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
+                            <children>
+                                <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Weapon Slots:">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Text>
+                                <Text fx:id="weaponSlotsText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Text>
+                            </children>
                         </HBox>
                         <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
-                           <children>
-                              <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Size:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="sizeText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Text>
-                           </children>
+                            <children>
+                                <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Shield Slots:">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Text>
+                                <Text fx:id="shieldSlotsText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Text>
+                            </children>
                         </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="9.0" prefWidth="285.0" spacing="5.0">
-               <children>
-                  <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Cargo Slots:">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Text>
-                  <Text fx:id="cargoSlotsText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Text>
-               </children>
-            </HBox>
-            <HBox prefHeight="8.0" prefWidth="285.0" spacing="5.0">
-               <children>
-                  <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Fuel Capacity:">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Text>
-                  <Text fx:id="fuelCapacityText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Text>
-               </children>
-            </HBox>
-            <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
-               <children>
-                  <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Hull Strength:">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Text>
-                  <Text fx:id="hullStrengthText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Text>
-               </children>
-            </HBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
-                     <children>
-                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Weapon Slots:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="weaponSlotsText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
-                     <children>
-                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Shield Slots:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="shieldSlotsText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
-                     <children>
-                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Gadget Slots:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="gadgetSlotsText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
-                     <children>
-                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Crew Quarters:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="crewQuartersText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </VBox>
-         </children>
-         <padding>
-            <Insets left="15.0" top="10.0" />
-         </padding>
-      </VBox>
-   </children>
+                        <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
+                            <children>
+                                <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Gadget Slots:">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Text>
+                                <Text fx:id="gadgetSlotsText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Text>
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="0.0" prefWidth="285.0" spacing="5.0">
+                            <children>
+                                <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Crew Quarters:">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Text>
+                                <Text fx:id="crewQuartersText" fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Text>
+                            </children>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </VBox>
+            </children>
+            <padding>
+                <Insets left="15.0" top="10.0" />
+            </padding>
+        </VBox>
+    </children>
 </AnchorPane>

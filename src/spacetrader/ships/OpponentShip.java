@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.ships;
 
 import java.util.ArrayList;
@@ -14,24 +13,25 @@ import spacetrader.commerce.Cargo;
 import spacetrader.commerce.TradeGood;
 
 /**
- * Represents an opponent ship that the player would fight in an encounter.
- * Has a randomly determined equipment, cargo, current hull strength, and crew.
- * 
+ * Represents an opponent ship that the player would fight in an encounter. Has
+ * a randomly determined equipment, cargo, current hull strength, and crew.
+ *
  * @author Caleb Stokols
  */
 public class OpponentShip extends SpaceShip {
-    
+
     /**
-     * Creates an opponent ship and randomly gives it an assortment of equipment, 
-     * cargo, and crew. Its hull strength is diminished a random amount as well.
-     * 
+     * Creates an opponent ship and randomly gives it an assortment of
+     * equipment, cargo, and crew. Its hull strength is diminished a random
+     * amount as well.
+     *
      * @param type
      * @param difficulty determines # of attempts to select powerful equipment
      * @param cargoModifier affects the # of cargo slots to fill
      */
     public OpponentShip(ShipType type, int difficulty, double cargoModifier) {
         super(type);
-        
+
         //Add Gadgets
         for (Gadget gadget : determineShipGadgets(difficulty)) {
             getGadgets().addItem(gadget);
@@ -44,7 +44,7 @@ public class OpponentShip extends SpaceShip {
         for (Shield shield : determineShipShields(difficulty)) {
             getShields().addItem(shield);
         }
-        
+
         //Add Crew
         for (Mercenary mercenary : getRandomCrew()) {
             this.hireMercenary(mercenary);
@@ -53,14 +53,14 @@ public class OpponentShip extends SpaceShip {
         //Add Cargo
         int quantity = (int) (numCargoSlotsFilled() * cargoModifier);
         getCargo().addCargoContents(getRandomCargo(quantity));
-        
+
         //Set Hull Strength (must be called after shields have been added)
         setHullStrength(getRandomHullStrength());
     }
 
     /**
      * Randomly selects equipment based on the various probabilities of each.
-     * 
+     *
      * @param slotsToFill the number of equipment which to select
      * @param tries the number of attempts to pick more powerful equipment
      * @param itemDistribution the relative likelihood of each equipment
@@ -81,10 +81,10 @@ public class OpponentShip extends SpaceShip {
         }
         return equipmentIndices;
     }
-    
+
     /**
      * Determines which gadgets to add to this ship.
-     * 
+     *
      * @param tries the number of attempts to pick more powerful gadgets
      * @return a list of Gadgets
      */
@@ -123,11 +123,10 @@ public class OpponentShip extends SpaceShip {
 
         return gadgetEquipment;
     }
-    
-    
+
     /**
      * Determines which weapons to add to this ship.
-     * 
+     *
      * @param tries the number of attempts to pick more powerful weapons
      * @return a list of Weapons
      */
@@ -161,10 +160,10 @@ public class OpponentShip extends SpaceShip {
         return weapons;
 
     }
-    
+
     /**
      * Determines which shields to add to this ship.
-     * 
+     *
      * @param tries the number of attempts to pick more powerful shields
      * @return a list of Shields
      */
@@ -228,7 +227,7 @@ public class OpponentShip extends SpaceShip {
             return 0; //if number of cargo bays is less than 5, amount of cargo is zero
         }
     }
-    
+
     /**
      * Returns a Cargo filled with a specified quantity of random TradeGoods.
      *
@@ -249,10 +248,10 @@ public class OpponentShip extends SpaceShip {
         }
         return cargo;
     }
-    
+
     /**
      * Gets a random current hull strength for this ship.
-     * 
+     *
      * @return a current hull strength for this ship
      */
     private int getRandomHullStrength() {
@@ -273,10 +272,10 @@ public class OpponentShip extends SpaceShip {
 
         return currHull;
     }
-    
+
     /**
      * Chooses a random crew for this ship.
-     * 
+     *
      * @return a list of Mercenaries
      */
     private ArrayList<Mercenary> getRandomCrew() {
@@ -301,5 +300,5 @@ public class OpponentShip extends SpaceShip {
 
         return crew;
     }
-    
+
 }

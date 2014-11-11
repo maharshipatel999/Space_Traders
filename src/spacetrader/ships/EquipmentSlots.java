@@ -49,21 +49,24 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
         }
     }
 
-    
-    
+    /**
+     * removes an item of the same type from the equipment slot
+     *
+     * @param item the item to be removed
+     */
     public void removeItemOfSameType(T item) {
         T listItem = null;
-            for(int i = 0; i < list.size(); i++) {
-                if(item.equals(list.get(i))) {
+        for (int i = 0; i < list.size(); i++) {
+            if (item.equals(list.get(i))) {
                 listItem = list.get(i);
                 break;
-                }   
             }
-            if(item != null) {
-                removeItem(listItem);
-            }
+        }
+        if (item != null) {
+            removeItem(listItem);
+        }
     }
-    
+
     /**
      * Removes an item to the next open slot.
      *
@@ -91,9 +94,10 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
             throw new IndexOutOfBoundsException("Index is out legal range");
         }
     }
-    
+
     /**
      * Determines if these EquipmentSlots contains the specified item.
+     *
      * @param item the item that is being searched for
      * @return true if this EquipmentSlots contains this item.
      */
@@ -174,11 +178,21 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
         list.clear();
     }
 
+    /**
+     * Gets an iterator over the equipment slots
+     *
+     * @return the iterator over equipment
+     */
     @Override
     public Iterator<T> iterator() {
         return list.iterator();
     }
 
+    /**
+     * Generates string representation of this object
+     *
+     * @return the equipment slots string
+     */
     @Override
     public String toString() {
         String toString = "(" + size + "/" + numSlots + "): ";

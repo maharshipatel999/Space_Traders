@@ -14,19 +14,36 @@ public class Wormhole {
     private Planet source;
     private Planet destination;
 
+    /**
+     * constructor for wormhole
+     *
+     * @param src - source planet
+     * @param dest - destination planet
+     */
     public Wormhole(Planet src, Planet dest) {
         source = src;
         destination = dest;
     }
 
+    /**
+     * get source planet
+     *
+     * @return source planet
+     */
     public Planet getSource() {
         return this.source;
     }
 
+    /**
+     * get destination planet
+     *
+     * @return destination planet
+     */
     public Planet getDestination() {
         return this.destination;
     }
 
+    @Override
     public String toString() {
         return "Wormhole " + this.source.getLocation() + " " + this.destination.getLocation();
     }

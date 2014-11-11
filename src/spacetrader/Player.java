@@ -29,11 +29,12 @@ public class Player extends Trader implements Serializable {
     private final Wallet wallet;
     private PlayerShip ship;
     private Planet location;
-    
+
     /**
      * Instantiates a new Player in the Game
+     *
      * @param name name of the Player
-     * @param pilot Pilot level 
+     * @param pilot Pilot level
      * @param fighter Fighter level
      * @param trader Trader level
      * @param engineer Engineer level
@@ -47,6 +48,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * return Skill Player is using
+     *
      * @param type Specific skill type of Player
      * @return amount of skill
      */
@@ -56,6 +58,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * Retrieves Player Credits in Player Wallet
+     *
      * @return credits in Player Wallet
      */
     public int getCredits() {
@@ -64,6 +67,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * get Wallet
+     *
      * @return wallet
      */
     public Wallet getWallet() {
@@ -72,6 +76,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * Retrieve Ship of Player
+     *
      * @return PlayerShip
      */
     public PlayerShip getShip() {
@@ -80,6 +85,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * assigns a ship to Player
+     *
      * @param ship ship to assign to Player
      */
     public void setShip(PlayerShip ship) {
@@ -88,6 +94,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * Gets location of Planet
+     *
      * @return location of planet
      */
     public Planet getLocation() {
@@ -96,6 +103,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * Sets location of specific planet
+     *
      * @param planet Planet to set the location of guys
      */
     public void setLocation(Planet planet) {
@@ -104,6 +112,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * gets Debt of Player
+     *
      * @return debt of Player
      */
     public int getDebt() {
@@ -112,6 +121,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * sets debt of the Player
+     *
      * @param debt debt to set of Player
      */
     public void setDebt(int debt) {
@@ -120,7 +130,8 @@ public class Player extends Trader implements Serializable {
 
     /**
      * get number of Police killed
-     * @return get number of Police player has killed 
+     *
+     * @return get number of Police player has killed
      */
     public int getPoliceKills() {
         return policeKills;
@@ -135,6 +146,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * get number of Traders killed
+     *
      * @return get number of Traders player has ckilled
      */
     public int getTraderKills() {
@@ -150,6 +162,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * get number of Pirate Kills
+     *
      * @return number of Pirate Kills
      */
     public int getPirateKills() {
@@ -165,6 +178,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * get the record of Police Record
+     *
      * @return number of Police Scores
      */
     public int getPoliceRecordScore() {
@@ -173,6 +187,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * set Police Record Score for Player
+     *
      * @param score set Police Record Score for Player
      */
     public void setPoliceRecordScore(int score) {
@@ -181,6 +196,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * get Player Reputation Score
+     *
      * @return Player Reputation Score
      */
     public int getReputationScore() {
@@ -188,7 +204,8 @@ public class Player extends Trader implements Serializable {
     }
 
     /**
-     * get Police Record 
+     * get Police Record
+     *
      * @return Police Record
      */
     public PoliceRecord getPoliceRecord() {
@@ -197,6 +214,7 @@ public class Player extends Trader implements Serializable {
 
     /**
      * get Rep. of Player
+     *
      * @return reputation of Player
      */
     public Reputation getReputation() {

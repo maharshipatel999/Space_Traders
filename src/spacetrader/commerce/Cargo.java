@@ -262,6 +262,11 @@ public class Cargo implements Serializable {
         return goods;
     }
     
+    /**
+     * Converts Cargo into a String representation
+     * 
+     * @return String representation of the Cargo 
+     */
     @Override
     public String toString() {
         String toString = "-Cargo Contents- (" + count + "/" + maxCapacity + ")\n";

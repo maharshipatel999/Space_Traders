@@ -36,6 +36,10 @@ public class OverwriteScreenController extends SceneController implements Initia
         this.game = game;
     }
 
+    /**
+     * returns list with all settings of Player
+     * @return list of all settings of Player in game
+     */
     private List<Object> setUpPlayer() {
         List<Object> objList = new ArrayList<>();
         objList.add(game.getUniverse());
@@ -44,6 +48,10 @@ public class OverwriteScreenController extends SceneController implements Initia
         return objList;
     }
 
+    /**
+     * overwrites data in Slot 1 (where Player 1 would be located)
+     * @param event overwrite data in Slot 1
+     */
     @FXML
     protected void overwritePlayer1(ActionEvent event) {
         List<Object> objList = setUpPlayer();
@@ -59,6 +67,10 @@ public class OverwriteScreenController extends SceneController implements Initia
         }
     }
 
+    /**
+     * overwrites data in Slot 2 (where Player 2 would be located)
+     * @param event overwrite data in Slot 1
+     */    
     @FXML
     protected void overwritePlayer2(ActionEvent event) {
         List<Object> objList = setUpPlayer();
@@ -74,6 +86,10 @@ public class OverwriteScreenController extends SceneController implements Initia
         }
     }
 
+    /**
+     * overwrites data in Slot 3 (where Player 3 would be located)
+     * @param event overwrite data in Slot 1
+     */
     @FXML
     protected void overwritePlayer3(ActionEvent event) {
         List<Object> objList = setUpPlayer();
@@ -89,6 +105,7 @@ public class OverwriteScreenController extends SceneController implements Initia
         }
     }
 
+    
     @FXML
     public void serialize() throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
@@ -104,6 +121,7 @@ public class OverwriteScreenController extends SceneController implements Initia
         mainControl.displaySaveProgress("Overwrite Save File", "Saving...", "Game Successfully Saved!");
     }
 
+    
     @FXML
     protected void goBack(ActionEvent event) {
         mainControl.goToHomeScreen(game.getPlayer(), game.getPlayer().getLocation());
