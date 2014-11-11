@@ -24,7 +24,7 @@ public class DepletedInventoryException extends RuntimeException {
      *
      * @param msg the detail message.
      */
-    public DepletedInventoryException(String msg) {
+    public DepletedInventoryException(final String msg) {
         super(msg);
     }
 }

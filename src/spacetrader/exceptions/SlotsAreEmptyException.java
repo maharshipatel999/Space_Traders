@@ -19,11 +19,11 @@ public class SlotsAreEmptyException extends RuntimeException {
 
     /**
      * Constructs an instance of SlotsAreEmpty Exception with the specified
-     * message
+     * message.
      *
      * @param msg the detail message.
      */
-    public SlotsAreEmptyException(String msg) {
+    public SlotsAreEmptyException(final String msg) {
         super(msg);
     }
 }

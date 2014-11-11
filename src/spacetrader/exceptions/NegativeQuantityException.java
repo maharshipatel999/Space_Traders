@@ -24,7 +24,7 @@ public class NegativeQuantityException extends RuntimeException {
      *
      * @param msg the detail message.
      */
-    public NegativeQuantityException(String msg) {
+    public NegativeQuantityException(final String msg) {
         super(msg);
     }
 }

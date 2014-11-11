@@ -24,7 +24,7 @@ public class InsufficientFuelException extends RuntimeException {
      *
      * @param msg the detail message.
      */
-    public InsufficientFuelException(String msg) {
+    public InsufficientFuelException(final String msg) {
         super(msg);
     }
 }

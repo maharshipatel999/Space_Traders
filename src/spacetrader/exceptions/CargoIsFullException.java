@@ -26,7 +26,7 @@ public class CargoIsFullException extends RuntimeException {
      *
      * @param msg the detail message.
      */
-    public CargoIsFullException(String msg) {
+    public CargoIsFullException(final String msg) {
         super(msg);
     }
 }

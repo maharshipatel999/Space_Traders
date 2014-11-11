@@ -24,7 +24,7 @@ public class TooManyRadioButtonsCheckedException extends RuntimeException {
      *
      * @param msg the detail message.
      */
-    public TooManyRadioButtonsCheckedException(String msg) {
+    public TooManyRadioButtonsCheckedException(final String msg) {
         super(msg);
     }
 }

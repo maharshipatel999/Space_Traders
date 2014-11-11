@@ -24,7 +24,7 @@ public class InsufficientFundsException extends RuntimeException {
      *
      * @param msg the detail message.
      */
-    public InsufficientFundsException(String msg) {
+    public InsufficientFundsException(final String msg) {
         super(msg);
     }
 }
