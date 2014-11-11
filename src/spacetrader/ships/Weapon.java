@@ -21,8 +21,7 @@ public class Weapon extends Equipment {
     public String getName() {
         return type.toString();
     }
-    
-    
+
     public int getPower() {
         return type.power();
     }
@@ -30,7 +29,7 @@ public class Weapon extends Equipment {
     public WeaponType getType() {
         return type;
     }
-    
+
     @Override
     public String toString() {
         return type.toString();

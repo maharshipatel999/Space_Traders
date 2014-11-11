@@ -86,8 +86,9 @@ public class SpaceShip implements Serializable {
     }
 
     /**
-     * Calculates the total weapon strength of this ship which is the sum
-     * of the power of each weapon on this ship
+     * Calculates the total weapon strength of this ship which is the sum of the
+     * power of each weapon on this ship
+     *
      * @return the total weapon strength of this ship.
      */
     public int getTotalWeaponStrength() {
@@ -97,7 +98,6 @@ public class SpaceShip implements Serializable {
         }
         return total;
     }
-    
 
     /**
      * Determines if this ship is carrying firearms or narcotics.
@@ -162,7 +162,7 @@ public class SpaceShip implements Serializable {
     public int currentShipPrice() {
         return currentShipPriceWithoutCargo() + cargo.getCostOfAllGoods();
     }
-    
+
     /**
      * Adds a mercenary to this ship's crew if there is still room on this ship.
      *
@@ -208,8 +208,6 @@ public class SpaceShip implements Serializable {
         return crewSkills.getSkill(type);
     }
 
-    
-
     private void calculateHighestCrewSkills() {
         for (Mercenary person : crew) {
             for (Skill type : Skill.values()) {
@@ -218,7 +216,7 @@ public class SpaceShip implements Serializable {
             }
         }
     }
-    
+
     @Override
     public String toString() {
         String toString = "Ship Type: " + type.toString() + "\n";
@@ -228,7 +226,7 @@ public class SpaceShip implements Serializable {
         toString += "-Weapons " + weapons + "\n";
         toString += "-Shields " + shields + "\n";
         toString += "-Gadgets " + gadgets;
-        
+
         return toString;
     }
 
