@@ -104,6 +104,7 @@ public class Universe implements Serializable {
             wormholePlanets.get(i).setWormhole(curHole);
         }
     }
+    // add mercenaries
 
     /**
      * Finds the planet with the specified name.

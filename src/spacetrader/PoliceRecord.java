@@ -11,22 +11,22 @@ import java.util.List;
 
 /**
  *
- * Class with all possible Police Records 
- * 
+ * Class with all possible Police Records
+ *
  * @author Caleb
  */
 public enum PoliceRecord {
 
-    PSYCHO  ("Psycho",   -100),
-    VILLAIN ("Villain",  -70),
+    PSYCHO("Psycho", -100),
+    VILLAIN("Villain", -70),
     CRIMINAL("Criminal", -30),
-    CROOK   ("Crook",    -10),
-    DUBIOUS ("Dubious",  -5),
-    CLEAN   ("Clean",     0),
-    LAWFUL  ("Lawful",    5),
-    TRUSTED ("Trusted",   10),
-    LIKED   ("Liked",     25),
-    HERO    ("Hero",      75);
+    CROOK("Crook", -10),
+    DUBIOUS("Dubious", -5),
+    CLEAN("Clean", 0),
+    LAWFUL("Lawful", 5),
+    TRUSTED("Trusted", 10),
+    LIKED("Liked", 25),
+    HERO("Hero", 75);
 
     private final String name;
     private final int minScore;
@@ -42,6 +42,7 @@ public enum PoliceRecord {
 
     /**
      * get specific name of Police Record
+     *
      * @return return specific name of Police Record
      */
     @Override
@@ -52,10 +53,9 @@ public enum PoliceRecord {
     /**
      * Determines the PoliceRecord level associated with a given police record
      * score.
-     * 
-     * Psycho: score < Villain.minScore()
-     * Villain: score < Criminal.minScore()
-     * 
+     *
+     * Psycho: score < Villain.minScore() Villain: score < Criminal.minScore()
+     *
      * @param policeRecordScore the score who's police record level should be
      * found
      * @return the PoliceRecord level of the policeRecordScore

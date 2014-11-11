@@ -33,7 +33,8 @@ public enum Reputation {
     private static final int SIZE = VALUES.size();
 
     /**
-     * Instantiates new Reputation 
+     * Instantiates new Reputation
+     *
      * @param name name of the Reputation
      * @param minRep minimum Reputation
      */
@@ -44,6 +45,7 @@ public enum Reputation {
 
     /**
      * Returns String representation of Reputation
+     *
      * @return String representation of Player
      */
     @Override

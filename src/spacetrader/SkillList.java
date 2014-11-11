@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  *
  * List that contains Skills and corresponding Skill Values of Player
- * 
+ *
  * @author Caleb
  */
 public class SkillList implements Serializable {
@@ -25,7 +25,7 @@ public class SkillList implements Serializable {
         PILOT, FIGHTER, TRADER, ENGINEER, INVESTOR;
     }
 
-    public static int MAX_SKILL = 10;
+    public static final int MAX_SKILL = 10;
 
     private final Map<Skill, Integer> skills;
 
@@ -37,12 +37,13 @@ public class SkillList implements Serializable {
     }
 
     /**
-     * Instantiates List of Skill with specified Skill Values 
+     * Instantiates List of Skill with specified Skill Values
+     *
      * @param pilot Skill value of Pilot
      * @param fighter Skill value of Fighter
      * @param trader Skill value of Trader
      * @param engineer Skill value of Engineer
-     * @param investor  Skill value of Investor
+     * @param investor Skill value of Investor
      */
     public SkillList(int pilot, int fighter, int trader, int engineer, int investor) {
         skills = new HashMap<>();
@@ -56,6 +57,7 @@ public class SkillList implements Serializable {
 
     /**
      * returns amount skill value of a specific Skill
+     *
      * @param skill Skill to get Skill value of
      * @return desired skill value
      */
@@ -65,6 +67,7 @@ public class SkillList implements Serializable {
 
     /**
      * sets specific value to a skill
+     *
      * @param skill Skill to alter the value of
      * @param value Value to assign skill
      */
