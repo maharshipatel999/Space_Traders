@@ -40,6 +40,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="pilotDownButton" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreasePilot" prefHeight="20.0" prefWidth="30.0">
                      <graphic>
@@ -49,6 +52,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
                <GridPane.margin>
@@ -73,8 +79,14 @@
                            <image>
                               <Image url="@../resources/images/glyphicons_432_plus.png" />
                            </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="pilotDownButton1" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreaseFighter" prefHeight="21.0" prefWidth="31.0">
                      <graphic>
@@ -84,6 +96,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </Group>
@@ -97,6 +112,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="pilotDownButton2" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreaseTrader" prefHeight="20.0" prefWidth="30.0">
                      <graphic>
@@ -106,6 +124,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </Group>
@@ -119,6 +140,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="pilotDownButton3" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreaseEngineer" prefHeight="20.0" prefWidth="30.0">
                      <graphic>
@@ -128,6 +152,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </Group>
@@ -141,6 +168,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="pilotDownButton4" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#decreaseInvestor" prefHeight="20.0" prefWidth="30.0">
                      <graphic>
@@ -150,6 +180,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </Group>
@@ -337,6 +370,9 @@
                      <font>
                         <Font name="Copperplate Gothic Bold" size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="cancelDialog" alignment="BOTTOM_RIGHT" cancelButton="true" minWidth="75.0" mnemonicParsing="false" onAction="#cancelDialogScreen" text="Cancel">
                      <HBox.margin>
@@ -345,6 +381,9 @@
                      <font>
                         <Font name="Copperplate Gothic Bold" size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
                <padding>

@@ -35,7 +35,7 @@ public class Transaction {
      * @param playerCargo the player's cargo
      * @param playerMoney the player's wallet
      */
-    public Transaction(Market market, Cargo playerCargo, Wallet playerMoney) {
+    public Transaction(final Market market,final Cargo playerCargo, final Wallet playerMoney) {
         this.market = market;
         this.playerCargo = playerCargo;
         this.playerMoney = playerMoney;
@@ -49,11 +49,11 @@ public class Transaction {
      * TradeGood.
      *
      * @throws DepletedInventoryException
-     * 
+     *
      * @param good the TradeGood which is being changed
      * @param newQuantity the new quantity of that TradeGood
      */
-    public void changeBuyQuantity(TradeGood good, int newQuantity) 
+    public void changeBuyQuantity(TradeGood good, final int newQuantity)
             throws DepletedInventoryException {
         //Check if quantity is negative
         if (newQuantity < 0) {
@@ -66,7 +66,7 @@ public class Transaction {
                     + "more goods than the market owns");
         }
         int quantityChange = newQuantity - purchases.getQuantity(good);
-        int newTotalCount = playerCargo.getCount() + purchases.getCount() 
+        int newTotalCount = playerCargo.getCount() + purchases.getCount()
                 + quantityChange;
 
         //Check if there is enough cargo space in the player's spaceship
@@ -93,7 +93,7 @@ public class Transaction {
      * @param good the TradeGood which is being changed
      * @param newQuantity the new quantity of that TradeGood
      */
-    public void changeSellQuantity(TradeGood good, int newQuantity) 
+    public void changeSellQuantity(final TradeGood good, final int newQuantity)
             throws DepletedInventoryException {
         //Check if quantity is negative
         if (newQuantity < 0) {
@@ -110,11 +110,15 @@ public class Transaction {
         updateTotalRevenue();
     }
 
+    /**
+     * Completes transaction.
+     */
     public void complete() {
         market.getStock().removeCargoContents(purchases);
         market.getStock().addCargoContents(sales);
         try {
-            playerCargo.removeCargoContents(sales); //we should make it so you cannot buy and sell the same good
+            playerCargo.removeCargoContents(sales); 
+        //we should make it so you cannot buy and sell the same good
             playerCargo.addCargoContents(purchases);
         } catch (DepletedInventoryException e) {
             playerCargo.addCargoContents(purchases);
@@ -130,7 +134,7 @@ public class Transaction {
      * @param good the TradeGood being bought
      * @return quantity bought of good
      */
-    public int getQuantityBought(TradeGood good) {
+    public int getQuantityBought(final TradeGood good) {
         return purchases.getQuantity(good);
     }
 
@@ -140,7 +144,7 @@ public class Transaction {
      * @param good the TradeGood being sold
      * @return quantity sold of good
      */
-    public int getQuantitySold(TradeGood good) {
+    public int getQuantitySold(final TradeGood good) {
         return sales.getQuantity(good);
     }
 
@@ -155,6 +159,9 @@ public class Transaction {
         updateBalance();
     }
 
+    /**
+     * updates total revenue after transaction
+     */
     private void updateTotalRevenue() {
         totalRevenue = 0;
         for (TradeGood good : TradeGood.values()) {
@@ -163,6 +170,9 @@ public class Transaction {
         updateBalance();
     }
 
+    /**
+     * updates balance of Player
+     */
     private void updateBalance() {
         remainingBalance = playerMoney.getCredits() - totalCost + totalRevenue;
     }

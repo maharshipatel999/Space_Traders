@@ -40,11 +40,17 @@
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadGame" text="Reload a Saved Game!">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>

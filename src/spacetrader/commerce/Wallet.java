@@ -30,7 +30,7 @@ public class Wallet implements Serializable {
     /**
      * Determines if the wallet is out of money.
      *
-     * @return
+     * @return whether empty or not
      */
     public boolean isEmpty() {
         return credits == 0;
@@ -73,7 +73,7 @@ public class Wallet implements Serializable {
      * @throws IllegalArgumentException if withdrawal is negative
      * @param withdrawal the amount of money to remove
      */
-    public void removeForcefully(int withdrawal) {
+    public void removeForcefully(final int withdrawal) {
         if (withdrawal < 0) {
             throw new IllegalArgumentException("Cannot add negative credits");
         } else {
@@ -99,7 +99,7 @@ public class Wallet implements Serializable {
      *
      * @param credits the amount of credits in this wallet.
      */
-    public void setCredits(int credits) {
+    public void setCredits(final int credits) {
         this.credits = credits;
     }
 
@@ -118,7 +118,7 @@ public class Wallet implements Serializable {
      * @throws IllegalArgumentException if addition is negative
      * @param addition amount of additional debt
      */
-    public void increaseDebt(int addition) {
+    public void increaseDebt(final int addition) {
         if (addition < 0) {
             throw new IllegalArgumentException("Cannot add negative debt");
         } else {
@@ -140,15 +140,15 @@ public class Wallet implements Serializable {
             credits = (credits < 0) ? 0 : credits;
         }
     }
-    
+
     /**
      * sets insurance cost in wallet.
      * @param cost cost of insurance
      */
-    public void setInsuranceCost(int cost) {
+    public void setInsuranceCost(final int cost) {
         this.insuranceCost = cost;
     }
-    
+
     /**
      * gets insurance cost from wallet.
      * @return insurance cost
