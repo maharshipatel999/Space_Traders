@@ -80,9 +80,10 @@ public class MainController {
     }
 
     /**
-     * 
-     * @param source
-     * @param destination 
+     * Takes care of everything that happens when a player arrives at a planet.
+     *
+     * @param source the planet the player left
+     * @param destination the planet the player is arriving at
      */
     public void arriveAtPlanet(Planet source, Planet destination) {
         //processes time aspect of price increase events
@@ -100,10 +101,9 @@ public class MainController {
         int currentHull = game.getPlayer().getShip().getHullStrength();
         game.getPlayer().getShip().setHullStrength(currentHull + engineerRepairs);
 
-        
         changePlayerLocation(destination);
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayAlertMessage("Notice!",  destination.getName() + " is currently " + destination.getPriceIncEvent().desc().toLowerCase());
+            displayAlertMessage("Notice!", destination.getName() + " is currently " + destination.getPriceIncEvent().desc().toLowerCase());
         }
         if (eventGenerator == null) {
             eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);
@@ -127,31 +127,31 @@ public class MainController {
      * in the game would have a huge stock of tradeGoods.
      *
      * @param destination which planet the player is traveling to
-     * @param distance which planet the player is leaving
+     * @param source which planet the player is leaving
      */
     public void departFromPlanet(Planet source, Planet destination) {
         Player player = game.getPlayer();
         destination.getMarket().setAllPrices(game.getPlayer());
-        
+
         //Decrease police record score if very high
         if (game.getDays() % 3 == 0 && player.getPoliceRecord().compareTo(PoliceRecord.CLEAN) > 0) {
             int newRecord = player.getPoliceRecordScore() - 1;
             player.setPoliceRecordScore(newRecord);
         }
-        
+
         //Increase police record score if very low
         if (game.getPlayer().getPoliceRecord().compareTo(PoliceRecord.DUBIOUS) < 0) {
             int newRecord = player.getPoliceRecordScore() + 1;
             player.setPoliceRecordScore(newRecord);
         }
-        
+
         //Deduct fuel
         int distance = (int) Universe.distanceBetweenPlanets(source, destination);
         player.getShip().getTank().removeFuel(distance);
-        
+
         goToWarpScreen(source, destination);
     }
-    
+
     /**
      * Takes care of the actual act of going to a planet. Things that happens
      * every time you go to a planet from a different planet should be put here.
@@ -186,18 +186,17 @@ public class MainController {
         }
         return null;
     }
-    
+
     /**
      * Gives the mainController access to this MainController. Sets the Stage's
      * scene to this Controller's scene. Shows the scene.
-     * 
+     *
      * @param control a SceneController
      */
     public void setUpControllerAndStage(SceneController control) {
-        
-        
+
     }
-    
+
     /**
      * Transitions the game screen to the Welcome Screen.
      */
@@ -217,7 +216,7 @@ public class MainController {
         control = (CharacterDialogController) extractControllerFromFXML("/spacetrader/CharacterDialog.fxml", stage);
         stage.setScene(control.getScene());
     }
-    
+
     /**
      * Transitions the game screen to the First Screen. Does not do anything
      * extra.
@@ -228,7 +227,7 @@ public class MainController {
         HomeScreenController control;
         control = (HomeScreenController) extractControllerFromFXML("/spacetrader/planets/HomeScreen.fxml", stage);
         control.setUpHomeScreen(player, planet);
-        stage.setScene(control.getScene());        
+        stage.setScene(control.getScene());
     }
 
     /**
@@ -243,7 +242,7 @@ public class MainController {
         control.setUpMarketScreen(planet, game.getPlayer());
         stage.setScene(control.getScene());
     }
-    
+
     public void goToShipYardScreen() {
         stage.setTitle("Welcome to the Ship Yard!");
         ShipYardScreenController control;
@@ -251,7 +250,7 @@ public class MainController {
         control.setUpShipYardScreen(game.getPlayer());
         stage.setScene(control.getScene());
     }
-    
+
     /**
      * Transitions the game screen to the Ship Market.
      */
@@ -274,7 +273,7 @@ public class MainController {
         stage.setScene(control.getScene());
 
     }
-    
+
     /**
      * Transitions the game screen to the Space Map Screen.
      *
@@ -287,7 +286,7 @@ public class MainController {
         control.setUpMap(game.getPlayer(), planet, game.getUniverse().getPlanets());
         stage.setScene(control.getScene());
     }
-    
+
     /**
      * Transitions the game screen to the Warp Screen.
      *
@@ -309,9 +308,9 @@ public class MainController {
             goToWarpScreen(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets().get(10));
         }
         stage.setScene(this.warpScreenControl.getScene());
-        this.warpScreenControl.continueTraveling(game.getPlayer());
+        this.warpScreenControl.continueTraveling();
     }
-    
+
     /**
      * Transitions to the encounter screen corresponding with the specified
      * encounter
@@ -357,7 +356,7 @@ public class MainController {
         control.setUpReloadScreen(game);
         stage.setScene(control.getScene());
     }
-    
+
     public void goToFinanceScreen(Planet planet) {
         stage.setTitle("Welcome to Bank of " + planet.getName() + "!");
         FinanceScreenController control;

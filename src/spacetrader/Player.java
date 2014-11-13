@@ -231,11 +231,21 @@ public class Player extends Trader implements Serializable {
     public int getCurrentWorth() {
         return wallet.getCredits() - debt + ship.currentShipPrice();
     }
-    
+
+    /**
+     * Sets the cost of insurance for this player.
+     *
+     * @param cost the player's cost of insurance
+     */
     public void setInsuranceCost(int cost) {
         this.insuranceCost = cost;
     }
-    
+
+    /**
+     * Gets the cost of insurance of this player.
+     *
+     * @return the cost of insurance
+     */
     public int getInsuranceCost() {
         return this.insuranceCost;
     }
@@ -251,7 +261,7 @@ public class Player extends Trader implements Serializable {
             wallet.removeForcefully(interest);
         }
     }
-    
+
     /**
      * Pays daily cost of insurance
      */

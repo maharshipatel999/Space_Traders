@@ -34,7 +34,7 @@ public class HomeScreenController extends SceneController implements Initializab
     private Button saveGame;
     @FXML
     private Button shipYard;
-    @FXML 
+    @FXML
     private Button bankButton;
 
     /**
@@ -44,11 +44,11 @@ public class HomeScreenController extends SceneController implements Initializab
      */
     public void setUpHomeScreen(Player player, Planet planet) {
         this.planet = planet;
-        this.player = player; 
-        
+        this.player = player;
+
         player.payInsuranceCost();
         player.payInterest();
-        
+
         String description = String.format("%s\n\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
                 planet.getName(), planet.getLocation().x, planet.getLocation().y, planet.getLevel().type(), planet.getPoliticalSystem().type(), planet.getResource().type());
         if (planet.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
@@ -65,6 +65,7 @@ public class HomeScreenController extends SceneController implements Initializab
      */
     @FXML
     protected void goToMarket(ActionEvent event) {
+        //((Node) event.getSource()).setCursor(Cursor.WAIT);
         mainControl.goToMarketScreen(planet);
     }
 
@@ -95,7 +96,7 @@ public class HomeScreenController extends SceneController implements Initializab
     public void goToOverwrite() {
         mainControl.goToOverwriteScreen();
     }
-    
+
     @FXML
     public void goToFinanceScreen() {
         mainControl.goToFinanceScreen(planet);

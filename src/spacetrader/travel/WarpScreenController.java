@@ -42,6 +42,7 @@ public class WarpScreenController extends SceneController implements Initializab
 
     private Planet source;
     private Planet destination;
+    private Player player;
 
     /**
      * Initializes the controller class.
@@ -60,6 +61,7 @@ public class WarpScreenController extends SceneController implements Initializab
      */
     public void setUpWarping(Planet source, Planet destination, Player player) {
         this.destinationPlanet = destination;
+        this.player = player;
 
         encounters = new EncounterManager(source, destination, player.getShip(), player);
 
@@ -82,6 +84,7 @@ public class WarpScreenController extends SceneController implements Initializab
             } else {
                 mainControl.displayAlertMessage("Encounter!", encounter + "\n");
             }
+            continueTraveling();
         } else {
             pauseScreen();
             mainControl.arriveAtPlanet(source, destination);
@@ -101,10 +104,8 @@ public class WarpScreenController extends SceneController implements Initializab
 
     /**
      * Continues setUpWarping sequence for Player where he or she left off.
-     *
-     * @param player the value of player
      */
-    public void continueTraveling(Player player) {
+    public void continueTraveling() {
         repairShip(player);
         checkForEncounter();
     }

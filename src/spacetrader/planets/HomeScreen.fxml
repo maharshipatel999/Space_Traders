@@ -43,9 +43,6 @@
                <font>
                   <Font name="Copperplate Gothic Bold" size="15.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
             </Button>
             <Button fx:id="bankButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToFinanceScreen" prefHeight="123.0" prefWidth="193.0" text="Go to Bank" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <graphic>

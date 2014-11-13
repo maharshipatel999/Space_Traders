@@ -6,7 +6,6 @@
 package spacetrader.system;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -77,11 +76,15 @@ public class FinanceScreenController extends SceneController implements Initiali
      */
     @FXML
     private void buyLoan() {
-        int loan = Integer.parseInt(loanAmt.getText());
-        player.setDebt(player.getDebt() + loan);
-        player.getWallet().add(loan);
-        currentBalance.setText("Current balance: ₪" + player.getWallet().getCredits());
-        debt.setText("₪" + player.getDebt());
+        try {
+            int loan = Integer.parseInt(loanAmt.getText());
+            player.setDebt(player.getDebt() + loan);
+            player.getWallet().add(loan);
+            currentBalance.setText("Current balance: ₪" + player.getWallet().getCredits());
+            debt.setText("₪" + player.getDebt());
+        } catch (NumberFormatException e) {
+            mainControl.displayAlertMessage("Illegal Loan Amount", "You must input a legal loan amount.");
+        }
     }
 
     /**
