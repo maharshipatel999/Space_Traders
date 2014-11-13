@@ -28,14 +28,20 @@ import spacetrader.ships.ShipType;
  *
  * @author Tejas
  */
-public class ShipMarketController extends SceneController implements Initializable {
+public class ShipMarketController 
+    extends SceneController 
+    implements Initializable {
 
     @FXML
-    private Label beetlePrice, bumblebeePrice, fireflyPrice, fleaPrice, gnatPrice, grasshopperPrice,
-            hornetPrice, mosquitoPrice, termitePrice, waspPrice;
+    private Label beetlePrice, bumblebeePrice, fireflyPrice,
+            fleaPrice, gnatPrice, grasshopperPrice,
+            hornetPrice, mosquitoPrice, termitePrice,
+            waspPrice;
     @FXML
-    private RadioButton beetleRadioButton, bumblebeeRadioButton, fireflyRadioButton, fleaRadioButton,
-            gnatRadioButton, grasshopperRadioButton, hornetRadioButton, mosquitoRadioButton,
+    private RadioButton beetleRadioButton, bumblebeeRadioButton,
+            fireflyRadioButton, fleaRadioButton,
+            gnatRadioButton, grasshopperRadioButton,
+            hornetRadioButton, mosquitoRadioButton,
             termiteRadioButton, waspRadioButton;
     @FXML
     private Label playerFunds, shipPrice;
@@ -73,13 +79,16 @@ public class ShipMarketController extends SceneController implements Initializab
 
         shipTypes = ShipType.values();
 
-        shipsButtons = new RadioButton[]{fleaRadioButton, gnatRadioButton, fireflyRadioButton, mosquitoRadioButton,
-            bumblebeeRadioButton, beetleRadioButton, hornetRadioButton, grasshopperRadioButton,
+        shipsButtons = new RadioButton[]{fleaRadioButton, gnatRadioButton,
+            fireflyRadioButton, mosquitoRadioButton, bumblebeeRadioButton,
+            beetleRadioButton, hornetRadioButton, grasshopperRadioButton,
             termiteRadioButton, waspRadioButton};
-        prices = new Label[]{fleaPrice, gnatPrice, fireflyPrice, mosquitoPrice, bumblebeePrice, beetlePrice,
+        prices = new Label[]{fleaPrice, gnatPrice, fireflyPrice, mosquitoPrice,
+            bumblebeePrice, beetlePrice,
             hornetPrice, grasshopperPrice, termitePrice, waspPrice};
 
-        this.playerShipSellingPrice = player.getShip().currentShipPriceWithoutCargo();
+        this.playerShipSellingPrice = player.getShip()
+                .currentShipPriceWithoutCargo();
 
         for (Node node : shipGrid.getChildren()) {
             Integer column = GridPane.getColumnIndex(node);
@@ -90,34 +99,42 @@ public class ShipMarketController extends SceneController implements Initializab
             if (row == null) {
                 row = 0;
             }
-            if (planet.getLevel().ordinal() < shipTypes[row].minTechLevel().ordinal()) {
+            if (planet.getLevel().ordinal() < shipTypes[row]
+                    .minTechLevel().ordinal()) {
                 node.setVisible(false);
             } else if (column == 2) {
                 Tooltip shipToolTip = new Tooltip();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/ships/ShipInfoPane.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass()
+                        .getResource("/spacetrader/ships/ShipInfoPane.fxml"));
                 try {
                     Pane pane = loader.load();
-                    ((ShipInfoPaneController) loader.getController()).setShipType(shipTypes[row]);
+                    ((ShipInfoPaneController) loader.getController())
+                            .setShipType(shipTypes[row]);
                     shipToolTip.setGraphic(pane);
                 } catch (IOException e) {
-                    Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(SpaceTrader.class.getName())
+                            .log(Level.SEVERE, null, e);
                 }
                 Tooltip.install(node, shipToolTip);
             } else if (column == 1) {
-                if (shipTypes[row].price() > player.getCredits() + player.getShip().currentShipPriceWithoutCargo()) {
+                if (shipTypes[row].price() > player.getCredits()
+                        + player.getShip().currentShipPriceWithoutCargo()) {
                     shipsButtons[row].setDisable(true);
                 }
             }
         }
 
-        this.playerShipSellingPrice = player.getShip().currentShipPriceWithoutCargo();
+        this.playerShipSellingPrice = player.getShip()
+                .currentShipPriceWithoutCargo();
 
         playerFunds.setText("₪" + player.getWallet().getCredits());
-        shipPrice.setText("₪" + (shipTypes[0].price() - playerShipSellingPrice));
+        shipPrice.setText("₪" + (shipTypes[0].price()
+                - playerShipSellingPrice));
 
         //Set all the price labels
         for (int i = 0; i < shipTypes.length; i++) {
-            prices[i].setText("₪" + (shipTypes[i].price() - playerShipSellingPrice));
+            prices[i].setText("₪" + (shipTypes[i].price()
+                    - playerShipSellingPrice));
         }
     }
 
@@ -132,14 +149,13 @@ public class ShipMarketController extends SceneController implements Initializab
         int counter = 0;
         for (RadioButton button : shipsButtons) {
             if (button.equals(src)) {
-                shipPrice.setText("₪" + (shipTypes[counter].price() - playerShipSellingPrice));
+                shipPrice.setText("₪" + (shipTypes[counter].price()
+                        - playerShipSellingPrice));
                 shipsButtons[selectedShip].setSelected(false);
                 selectedShip = counter;
             }
             counter++;
         }
-        //largeShipImage.setImage(new Image(shipTypes[selectedShip].spriteFile()));
-
     }
 
     /*
@@ -159,12 +175,19 @@ public class ShipMarketController extends SceneController implements Initializab
      */
     @FXML
     protected void processBuyShip(ActionEvent event) {
-        int costOfPurchase = shipTypes[selectedShip].price() - playerShipSellingPrice;
+        int costOfPurchase = shipTypes[selectedShip].price()
+                - playerShipSellingPrice;
         if (player.getWallet().getCredits() >= costOfPurchase) {
-            String mastHead = String.format("Are you sure you want to buy a %s?", shipTypes[selectedShip].toString());
-            String shipMessage = String.format("If you click \"yes\", your current ship and all its equipment will be sold. "
-                    + "Cargo and crew members will transfer to the new ship in so much as there is room.");
-            Action response = mainControl.displayYesNoComfirmation("Ship Purchase Confirmation", mastHead, shipMessage);
+            String mastHead = String.format(
+                    "Are you sure you want to buy a %s?",
+                    shipTypes[selectedShip].toString());
+            String shipMessage = String.format(
+                    "If you click \"yes\", your current ship "
+                    + "and all its equipment will be sold. "
+                    + "Cargo and crew members will transfer to "
+                    + "the new ship in so much as there is room.");
+            Action response = mainControl.displayYesNoComfirmation(
+                    "Ship Purchase Confirmation", mastHead, shipMessage);
             if (response == Dialog.Actions.NO) {
                 return;
             }
@@ -177,11 +200,13 @@ public class ShipMarketController extends SceneController implements Initializab
             player.setShip(new PlayerShip(shipTypes[selectedShip]));
             player.getShip().getCargo().addCargoContents(oldCargo);
 
-            mainControl.displayAlertMessage(null, "Congratulations on your new ship! ");
+            mainControl.displayAlertMessage(null,
+                    "Congratulations on your new ship! ");
 
             goBackToShipYardScreen();
         } else {
-            mainControl.displayAlertMessage("Acquire More Cash!", "You do not have enough credits to purchase this ship!");
+            mainControl.displayAlertMessage("Acquire More Cash!",
+                    "You do not have enough credits to purchase this ship!");
         }
     }
 

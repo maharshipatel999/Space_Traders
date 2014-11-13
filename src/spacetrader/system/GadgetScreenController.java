@@ -25,23 +25,33 @@ import spacetrader.planets.TechLevel;
 import javafx.scene.control.RadioButton;
 import spacetrader.exceptions.TooManyRadioButtonsCheckedException;
 import java.util.ArrayList;
-import javafx.scene.image.Image;
 
 /**
  * FXML Controller class
  *
  * @author maharshipatel999
  */
-public class GadgetScreenController extends SceneController implements Initializable {
+public class GadgetScreenController 
+    extends SceneController 
+    implements Initializable {
 
     @FXML
-    private Label weapon1Text, weapon2Text, weapon3Text, shield1Text, shield2Text, shield3Text, gadget1Text, gadget2Text, gadget3Text, funds;
+    private Label weapon1Text, weapon2Text, weapon3Text,
+            shield1Text, shield2Text, shield3Text, gadget1Text,
+            gadget2Text, gadget3Text, funds;
 
     @FXML
-    private RadioButton weapon1RBCurrentInventory, weapon2RBCurrentInventory, weapon3RBCurrentInventory, shield1RBCurrentInventory, shield2RBCurrentInventory, shield3RBCurrentInventory, gadget1RBCurrentInventory, gadget2RBCurrentInventory, gadget3RBCurrentInventory;
+    private RadioButton weapon1RBCurrentInventory, weapon2RBCurrentInventory,
+            weapon3RBCurrentInventory, shield1RBCurrentInventory,
+            shield2RBCurrentInventory, shield3RBCurrentInventory, 
+            gadget1RBCurrentInventory, gadget2RBCurrentInventory, 
+            gadget3RBCurrentInventory;
 
     @FXML
-    private RadioButton pulseLaserRBBuy, beamLaserRBBuy, militaryLaserRBBuy, energyShieldRBBuy, reflectiveShieldRBBuy, extraCargoBaysRBBuy, navigatingSystemRBBuy, autoRepairSystemRBBuy, targetingSystemRBBuy, cloakingDeviceRBBuy;
+    private RadioButton pulseLaserRBBuy, beamLaserRBBuy, militaryLaserRBBuy,
+            energyShieldRBBuy, reflectiveShieldRBBuy, extraCargoBaysRBBuy,
+            navigatingSystemRBBuy, autoRepairSystemRBBuy, targetingSystemRBBuy,
+            cloakingDeviceRBBuy;
 
     @FXML
     private Label pulseLaserBuy;
@@ -104,12 +114,26 @@ public class GadgetScreenController extends SceneController implements Initializ
 
     }
 
+    /**
+     * Sets up equipment market screen. Sets visibility of slots
+     * 
+     * @param player player who will use the market
+     */
     public void setUpEquipmentMarketScreen(Player player) {
         this.player = player;
         this.planet = player.getLocation();
         this.ship = player.getShip();
+        String empty = "EMPTY";
         setFunds();
-        allBuySellButtons = new RadioButton[]{pulseLaserRBBuy, beamLaserRBBuy, militaryLaserRBBuy, energyShieldRBBuy, reflectiveShieldRBBuy, extraCargoBaysRBBuy, navigatingSystemRBBuy, autoRepairSystemRBBuy, targetingSystemRBBuy, cloakingDeviceRBBuy, weapon1RBCurrentInventory, weapon2RBCurrentInventory, weapon3RBCurrentInventory, shield1RBCurrentInventory, shield2RBCurrentInventory, shield3RBCurrentInventory, gadget1RBCurrentInventory, gadget2RBCurrentInventory, gadget3RBCurrentInventory};
+        allBuySellButtons = new RadioButton[]{pulseLaserRBBuy, beamLaserRBBuy,
+            militaryLaserRBBuy, energyShieldRBBuy, reflectiveShieldRBBuy,
+            extraCargoBaysRBBuy, navigatingSystemRBBuy, autoRepairSystemRBBuy,
+            targetingSystemRBBuy, cloakingDeviceRBBuy,
+            weapon1RBCurrentInventory, weapon2RBCurrentInventory,
+            weapon3RBCurrentInventory, shield1RBCurrentInventory,
+            shield2RBCurrentInventory, shield3RBCurrentInventory,
+            gadget1RBCurrentInventory, gadget2RBCurrentInventory,
+            gadget3RBCurrentInventory};
 
         int numGadgetSlots = ship.getGadgets().getNumSlots();
         int numShieldSlots = ship.getShields().getNumSlots();
@@ -123,17 +147,17 @@ public class GadgetScreenController extends SceneController implements Initializ
                 weapon2Text.setText(ship.getWeapons().getItem(1).getName());
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else if (numWeaponSlotsFilled == 2) {
-                weapon3Text.setText("EMPTY");
+                weapon3Text.setText(empty);
                 weapon2Text.setText(ship.getWeapons().getItem(1).getName());
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else if (numWeaponSlotsFilled == 1) {
-                weapon3Text.setText("EMPTY");
-                weapon2Text.setText("EMPTY");
+                weapon3Text.setText(empty);
+                weapon2Text.setText(empty);
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else {
-                weapon3Text.setText("EMPTY");
-                weapon2Text.setText("EMPTY");
-                weapon1Text.setText("EMPTY");
+                weapon3Text.setText(empty);
+                weapon2Text.setText(empty);
+                weapon1Text.setText(empty);
             }
         } else if (numWeaponSlots == 2) {
             weapon3RBCurrentInventory.setVisible(false);
@@ -142,11 +166,11 @@ public class GadgetScreenController extends SceneController implements Initializ
                 weapon2Text.setText(ship.getWeapons().getItem(1).getName());
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else if (numWeaponSlotsFilled == 1) {
-                weapon2Text.setText("EMPTY");
+                weapon2Text.setText(empty);
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else {
-                weapon2Text.setText("EMPTY");
-                weapon1Text.setText("EMPTY");
+                weapon2Text.setText(empty);
+                weapon1Text.setText(empty);
             }
         } else if (numWeaponSlots == 1) {
             weapon3RBCurrentInventory.setVisible(false);
@@ -156,7 +180,7 @@ public class GadgetScreenController extends SceneController implements Initializ
             if (numWeaponSlotsFilled == 1) {
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else {
-                weapon1Text.setText("EMPTY");
+                weapon1Text.setText(empty);
             }
         } else {
             weapon3RBCurrentInventory.setVisible(false);
@@ -173,17 +197,17 @@ public class GadgetScreenController extends SceneController implements Initializ
                 shield2Text.setText(ship.getShields().getItem(1).getName());
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else if (numShieldSlotsFilled == 2) {
-                shield3Text.setText("EMPTY");
+                shield3Text.setText(empty);
                 shield2Text.setText(ship.getShields().getItem(1).getName());
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else if (numShieldSlotsFilled == 1) {
-                shield3Text.setText("EMPTY");
-                shield2Text.setText("EMPTY");
+                shield3Text.setText(empty);
+                shield2Text.setText(empty);
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else {
-                shield3Text.setText("EMPTY");
-                shield2Text.setText("EMPTY");
-                shield1Text.setText("EMPTY");
+                shield3Text.setText(empty);
+                shield2Text.setText(empty);
+                shield1Text.setText(empty);
             }
         } else if (numShieldSlots == 2) {
             shield3RBCurrentInventory.setVisible(false);
@@ -192,11 +216,11 @@ public class GadgetScreenController extends SceneController implements Initializ
                 shield2Text.setText(ship.getShields().getItem(1).getName());
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else if (numShieldSlotsFilled == 1) {
-                shield2Text.setText("EMPTY");
+                shield2Text.setText(empty);
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else {
-                shield2Text.setText("EMPTY");
-                shield1Text.setText("EMPTY");
+                shield2Text.setText(empty);
+                shield1Text.setText(empty);
             }
         } else if (numShieldSlots == 1) {
             shield3RBCurrentInventory.setVisible(false);
@@ -206,7 +230,7 @@ public class GadgetScreenController extends SceneController implements Initializ
             if (numShieldSlotsFilled == 1) {
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else {
-                shield1Text.setText("EMPTY");
+                shield1Text.setText(empty);
             }
         } else {
             shield3RBCurrentInventory.setVisible(false);
@@ -223,17 +247,17 @@ public class GadgetScreenController extends SceneController implements Initializ
                 gadget2Text.setText(ship.getGadgets().getItem(1).getName());
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else if (numGadgetSlotsFilled == 2) {
-                gadget3Text.setText("EMPTY");
+                gadget3Text.setText(empty);
                 gadget2Text.setText(ship.getGadgets().getItem(1).getName());
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else if (numGadgetSlotsFilled == 1) {
-                gadget3Text.setText("EMPTY");
-                gadget2Text.setText("EMPTY");
+                gadget3Text.setText(empty);
+                gadget2Text.setText(empty);
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else {
-                gadget3Text.setText("EMPTY");
-                gadget2Text.setText("EMPTY");
-                gadget1Text.setText("EMPTY");
+                gadget3Text.setText(empty);
+                gadget2Text.setText(empty);
+                gadget1Text.setText(empty);
             }
         } else if (numGadgetSlots == 2) {
             gadget3RBCurrentInventory.setVisible(false);
@@ -242,11 +266,11 @@ public class GadgetScreenController extends SceneController implements Initializ
                 gadget2Text.setText(ship.getGadgets().getItem(1).getName());
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else if (numGadgetSlotsFilled == 1) {
-                gadget2Text.setText("EMPTY");
+                gadget2Text.setText(empty);
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else {
-                gadget2Text.setText("EMPTY");
-                gadget1Text.setText("EMPTY");
+                gadget2Text.setText(empty);
+                gadget1Text.setText(empty);
             }
         } else if (numGadgetSlots == 1) {
             gadget3RBCurrentInventory.setVisible(false);
@@ -256,7 +280,7 @@ public class GadgetScreenController extends SceneController implements Initializ
             if (numGadgetSlotsFilled == 1) {
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else {
-                gadget1Text.setText("EMPTY");
+                gadget1Text.setText(empty);
             }
         } else {
             gadget3RBCurrentInventory.setVisible(false);
@@ -360,6 +384,11 @@ public class GadgetScreenController extends SceneController implements Initializ
         }
     }
 
+    /**
+     * Fills descriptions with weapon string representation
+     *
+     * @param l label to change
+     */
     public void weaponCargoToDescription(Label l) {
         if (l.getText().equals(WeaponType.PULSE.toString())) {
             fillDescription(WeaponType.PULSE);
@@ -627,24 +656,24 @@ public class GadgetScreenController extends SceneController implements Initializ
         int numGadgetSlotsFilled = ship.getGadgets().getNumFilledSlots();
         int numShieldSlotsFilled = ship.getShields().getNumFilledSlots();
         int numWeaponSlotsFilled = ship.getWeapons().getNumFilledSlots();
-
+        String empty = "EMPTY";
         if (numWeaponSlots == 3) {
             if (numWeaponSlotsFilled == 3) {
                 weapon3Text.setText(ship.getWeapons().getItem(2).getName());
                 weapon2Text.setText(ship.getWeapons().getItem(1).getName());
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else if (numWeaponSlotsFilled == 2) {
-                weapon3Text.setText("EMPTY");
+                weapon3Text.setText(empty);
                 weapon2Text.setText(ship.getWeapons().getItem(1).getName());
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else if (numWeaponSlotsFilled == 1) {
-                weapon3Text.setText("EMPTY");
-                weapon2Text.setText("EMPTY");
+                weapon3Text.setText(empty);
+                weapon2Text.setText(empty);
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else {
-                weapon3Text.setText("EMPTY");
-                weapon2Text.setText("EMPTY");
-                weapon1Text.setText("EMPTY");
+                weapon3Text.setText(empty);
+                weapon2Text.setText(empty);
+                weapon1Text.setText(empty);
             }
         } else if (numWeaponSlots == 2) {
             weapon3RBCurrentInventory.setVisible(false);
@@ -653,11 +682,11 @@ public class GadgetScreenController extends SceneController implements Initializ
                 weapon2Text.setText(ship.getWeapons().getItem(1).getName());
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else if (numWeaponSlotsFilled == 1) {
-                weapon2Text.setText("EMPTY");
+                weapon2Text.setText(empty);
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else {
-                weapon2Text.setText("EMPTY");
-                weapon1Text.setText("EMPTY");
+                weapon2Text.setText(empty);
+                weapon1Text.setText(empty);
             }
         } else if (numWeaponSlots == 1) {
             weapon3RBCurrentInventory.setVisible(false);
@@ -667,7 +696,7 @@ public class GadgetScreenController extends SceneController implements Initializ
             if (numWeaponSlotsFilled == 1) {
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else {
-                weapon1Text.setText("EMPTY");
+                weapon1Text.setText(empty);
             }
         } else {
             weapon3RBCurrentInventory.setVisible(false);
@@ -685,17 +714,17 @@ public class GadgetScreenController extends SceneController implements Initializ
                 shield2Text.setText(ship.getShields().getItem(1).getName());
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else if (numShieldSlotsFilled == 2) {
-                shield3Text.setText("EMPTY");
+                shield3Text.setText(empty);
                 shield2Text.setText(ship.getShields().getItem(1).getName());
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else if (numShieldSlotsFilled == 1) {
-                shield3Text.setText("EMPTY");
-                shield2Text.setText("EMPTY");
+                shield3Text.setText(empty);
+                shield2Text.setText(empty);
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else {
-                shield3Text.setText("EMPTY");
-                shield2Text.setText("EMPTY");
-                shield1Text.setText("EMPTY");
+                shield3Text.setText(empty);
+                shield2Text.setText(empty);
+                shield1Text.setText(empty);
             }
         } else if (numShieldSlots == 2) {
             shield3RBCurrentInventory.setVisible(false);
@@ -704,11 +733,11 @@ public class GadgetScreenController extends SceneController implements Initializ
                 shield2Text.setText(ship.getShields().getItem(1).getName());
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else if (numShieldSlotsFilled == 1) {
-                shield2Text.setText("EMPTY");
+                shield2Text.setText(empty);
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else {
-                shield2Text.setText("EMPTY");
-                shield1Text.setText("EMPTY");
+                shield2Text.setText(empty);
+                shield1Text.setText(empty);
             }
         } else if (numShieldSlots == 1) {
             shield3RBCurrentInventory.setVisible(false);
@@ -718,7 +747,7 @@ public class GadgetScreenController extends SceneController implements Initializ
             if (numShieldSlotsFilled == 1) {
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else {
-                shield1Text.setText("EMPTY");
+                shield1Text.setText(empty);
             }
         } else {
             shield3RBCurrentInventory.setVisible(false);
@@ -735,17 +764,17 @@ public class GadgetScreenController extends SceneController implements Initializ
                 gadget2Text.setText(ship.getGadgets().getItem(1).getName());
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else if (numGadgetSlotsFilled == 2) {
-                gadget3Text.setText("EMPTY");
+                gadget3Text.setText(empty);
                 gadget2Text.setText(ship.getGadgets().getItem(1).getName());
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else if (numGadgetSlotsFilled == 1) {
-                gadget3Text.setText("EMPTY");
-                gadget2Text.setText("EMPTY");
+                gadget3Text.setText(empty);
+                gadget2Text.setText(empty);
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else {
-                gadget3Text.setText("EMPTY");
-                gadget2Text.setText("EMPTY");
-                gadget1Text.setText("EMPTY");
+                gadget3Text.setText(empty);
+                gadget2Text.setText(empty);
+                gadget1Text.setText(empty);
             }
         } else if (numGadgetSlots == 2) {
             gadget3RBCurrentInventory.setVisible(false);
@@ -754,11 +783,11 @@ public class GadgetScreenController extends SceneController implements Initializ
                 gadget2Text.setText(ship.getGadgets().getItem(1).getName());
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else if (numGadgetSlotsFilled == 1) {
-                gadget2Text.setText("EMPTY");
+                gadget2Text.setText(empty);
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else {
-                gadget2Text.setText("EMPTY");
-                gadget1Text.setText("EMPTY");
+                gadget2Text.setText(empty);
+                gadget1Text.setText(empty);
             }
         } else if (numGadgetSlots == 1) {
             gadget3RBCurrentInventory.setVisible(false);
@@ -768,7 +797,7 @@ public class GadgetScreenController extends SceneController implements Initializ
             if (numGadgetSlotsFilled == 1) {
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else {
-                gadget1Text.setText("EMPTY");
+                gadget1Text.setText(empty);
             }
         } else {
             gadget3RBCurrentInventory.setVisible(false);

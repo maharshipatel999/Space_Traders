@@ -349,9 +349,17 @@ public class SpaceMapScreenController extends SceneController implements Initial
 
         @Override
         public String toString() {
-            String toString = String.format("Size:(%f, %f), RectSize:(%f, %f)", getWidth(), getHeight(), background.getWidth(), background.getHeight());
-            toString += String.format(" TranslateX,Y:(%f, %f), LayoutX,Y:(%f, %f)", getTranslateX(), getTranslateY(), getLayoutX(), getLayoutY());
-            toString += String.format("%nDragContext x,y:(%f, %f), MouseX,Y:(%f, %f)", dragContext.x, dragContext.y, dragContext.mouseX, dragContext.mouseY);
+            String toString = String.format("Size:(%f, %f), RectSize:(%f, %f)",
+                    getWidth(), getHeight(), 
+                    background.getWidth(),
+                    background.getHeight());
+            toString += String.format(" TranslateX,Y:(%f, %f), LayoutX,Y:(%f, %f)",
+                    getTranslateX(),
+                    getTranslateY(),
+                    getLayoutX(), getLayoutY());
+            toString += String.format("%nDragContext x,y:(%f, %f), MouseX,Y:(%f, %f)",
+                    dragContext.x, dragContext.y,
+                    dragContext.mouseX, dragContext.mouseY);
             return toString;
         }
 
