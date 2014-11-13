@@ -36,7 +36,7 @@ public class WarpScreenController extends SceneController implements Initializab
 
     @FXML
     private AnchorPane warpPane;
-    private Planet destinationPlanet;
+
     public int travelRemaining;
     public EncounterManager encounters;
 
@@ -60,7 +60,8 @@ public class WarpScreenController extends SceneController implements Initializab
      * @param player the player
      */
     public void setUpWarping(Planet source, Planet destination, Player player) {
-        this.destinationPlanet = destination;
+        this.source = source;
+        this.destination = destination;
         this.player = player;
 
         encounters = new EncounterManager(source, destination, player.getShip(), player);

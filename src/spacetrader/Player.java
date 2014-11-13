@@ -274,4 +274,8 @@ public class Player extends Trader implements Serializable {
             }
         }
     }
+
+    public Object getCargo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -158,7 +158,7 @@ public class SpaceShip implements Serializable {
     public boolean isCarryingIllegalGoods() {
         int firearms = cargo.getQuantity(TradeGood.FIREARMS);
         int narcotics = cargo.getQuantity(TradeGood.NARCOTICS);
-        return firearms + narcotics > 0;
+        return ((firearms + narcotics) > 0);
     }
 
     /**

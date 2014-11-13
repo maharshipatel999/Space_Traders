@@ -24,8 +24,8 @@ import spacetrader.exceptions.DepletedInventoryException;
  */
 public class Cargo implements Serializable {
 
-    private final Map<TradeGood, Integer> tradeGoods;
-    private final Map<TradeGood, Integer> costOfGoods;
+    private Map<TradeGood, Integer> tradeGoods;
+    private Map<TradeGood, Integer> costOfGoods;
     private int maxCapacity;
     private int count;
 
@@ -101,7 +101,7 @@ public class Cargo implements Serializable {
         this.count -= quantity;
         //adjust cost of this trade good
         if (quantity != 0) {
-            int costPerGood = this.costOfGoods.get(tradeGood) / quantity;
+            int costPerGood = this.costOfGoods.get(tradeGood) / currQuantity;
             int newCost = this.costOfGoods.get(tradeGood) - (quantity * costPerGood);
             this.costOfGoods.put(tradeGood, newCost);
         }
@@ -155,9 +155,13 @@ public class Cargo implements Serializable {
      * Clears the entire Cargo by removing every good and setting count to 0.
      */
     public void clearAllItems() {
+        this.tradeGoods = new HashMap<>();
+        this.costOfGoods = new HashMap<>();
         for (TradeGood good : TradeGood.values()) {
-            clearItem(good);
+            tradeGoods.put(good, 0);
+            costOfGoods.put(good, 0);
         }
+        this.count = 0;
     }
 
     /**
@@ -264,6 +268,7 @@ public class Cargo implements Serializable {
 
     /**
      * Converts Cargo into a String representation
+     *
      * @return String representation of the Cargo
      */
     @Override
