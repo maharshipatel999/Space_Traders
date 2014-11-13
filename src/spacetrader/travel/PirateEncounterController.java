@@ -26,24 +26,22 @@ public class PirateEncounterController implements Initializable {
     }
 
     /**
-     * Follows Player attack sequence in response to attack button pressed
+     * Follows Player attack sequence in response to attack button pressed.
      */
     @FXML
     protected void attackPressed() {
-
-        /**
-         * Follows Player surrender sequence in response to attack button
-         * pressed
-         */
     }
 
+    /**
+     * Follows Player surrender sequence in response to attack button. pressed
+     */
     @FXML
     protected void surrenderPressed() {
 
     }
 
     /**
-     * Follows Player flee sequence in response to attack button pressed
+     * Follows Player flee sequence in response to attack button pressed.
      */
     @FXML
     protected void fleePressed() {

@@ -35,17 +35,17 @@ public class EncounterManager {
     private boolean inspected = false;
 
     /**
-     * Creates queue with all Encounters for one transition period
+     * Creates queue with all Encounters for one transition period.
      *
      * @param source source planet
      * @param destination destination planet
      * @param ship ship Player is using
-     * @param player Player in the game
+     * @param player the game's player
      */
     public EncounterManager(Planet source, Planet destination, PlayerShip ship, Player player) {
         this.player = player;
         this.destination = destination;
-        
+
         int probabilityDenominator = 40; //the larger this number, the more unlikely encounters are
         if (player.getShip().getType() == ShipType.FLEA) { //encounters are half as likely if you're in a flea
             probabilityDenominator *= 2;
@@ -55,17 +55,17 @@ public class EncounterManager {
         encounterProbs[0] = destination.getPoliticalSystem().strengthPirates();
         encounterProbs[1] = destination.calculateStrengthOfPolice(player.getPoliceRecord());
         encounterProbs[2] = destination.getPoliticalSystem().strengthTraders();
-        
+
         encounters = new LinkedList<>(); //create the queue of encounters.
 
         final int TOTAL_CLICKS = 21;
-        
+
         for (int i = 0; i < TOTAL_CLICKS; i++) {
             int index = Tools.pickIndexFromWeightedList(encounterProbs, probabilityDenominator);
             if (index == 0 && raided) {
                 index = 1;
             }
-            
+
             Encounter encounter = null;
             if (index == 0) {
                 encounter = createPoliceEncounter(TOTAL_CLICKS - i);
@@ -74,10 +74,10 @@ public class EncounterManager {
             } else if (index == 2) {
                 encounter = createTraderEncounter(TOTAL_CLICKS - i);
             }
-            
+
             if (encounter != null) {
-                boolean ignoredAndInvisible =
-                        encounter.getState() == State.IGNORE && encounter.opponentIsCloaked();
+                boolean ignoredAndInvisible
+                        = encounter.getState() == State.IGNORE && encounter.opponentIsCloaked();
                 if (!ignoredAndInvisible) {
                     encounters.add(encounter);
                 }
@@ -90,9 +90,11 @@ public class EncounterManager {
     }
 
     /**
-     * Creates a police encounter
+     * Creates a new Police encounter. Returns null if it is an inspection
+     * encounter and the player has already been inspected.
      *
-     * @return Specific Police Encounter
+     * @param param the distance to the destination planet
+     * @return a new Police Encounter or null
      */
     private Encounter createPoliceEncounter(int clicks) {
         int police = destination.getPoliticalSystem().strengthPolice();
@@ -106,7 +108,7 @@ public class EncounterManager {
     }
 
     /**
-     * Creates a pirate encounter
+     * Creates a new Pirate encounter
      *
      * @return Specific Pirate Encounter
      */
@@ -116,7 +118,7 @@ public class EncounterManager {
     }
 
     /**
-     * Creates a trader encounter
+     * Creates a new Trader encounter.
      *
      * @return Specific Trader Encounter
      */
@@ -124,19 +126,19 @@ public class EncounterManager {
         int traders = destination.getPoliticalSystem().strengthTraders();
         return new TraderEncounter(player, clicks, traders, destination.getMarket());
     }
-    
+
     /**
-     * returns newest encounter and pops it off the ArrayList holding all
-     * encounters
+     * Gets the next encounter and pops it off the ArrayList holding all
+     * encounters.
      *
-     * @return latest encounter
+     * @return the next encounter for the player
      */
     public Encounter getNextEncounter() {
         return encounters.poll();
     }
 
     /**
-     * returns the total number of encounters returned by LinkedList
+     * Gets the total number of encounters this EncounterManager made.
      *
      * @return total encounters for warp
      */
@@ -145,9 +147,9 @@ public class EncounterManager {
     }
 
     /**
-     * returns the number of encounters remaining in current Warp
+     * Gets the number of encounters remaining in current Warp.
      *
-     * @return number encounters remaining
+     * @return number of encounters remaining
      */
     public int getEncountersRemaining() {
         return encounters.size();

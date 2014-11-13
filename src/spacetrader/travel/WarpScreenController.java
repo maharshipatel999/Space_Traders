@@ -39,7 +39,7 @@ public class WarpScreenController extends SceneController implements Initializab
     private Planet destinationPlanet;
     public int travelRemaining;
     public EncounterManager encounters;
-    
+
     private Planet source;
     private Planet destination;
 
@@ -60,13 +60,21 @@ public class WarpScreenController extends SceneController implements Initializab
      */
     public void setUpWarping(Planet source, Planet destination, Player player) {
         this.destinationPlanet = destination;
-        
+
         encounters = new EncounterManager(source, destination, player.getShip(), player);
-        
-        while (encounters.getEncountersRemaining() > 0) {
+
+        checkForEncounter();
+    }
+
+    /**
+     * Checks if there is an encounter. If there is, that encounter is executed.
+     * If there is not, the player arrives at the destination planet.
+     */
+    private void checkForEncounter() {
+        if (encounters.getEncountersRemaining() > 0) {
             pauseScreen();
             Encounter encounter = encounters.getNextEncounter();
-            
+
             if (encounter.getState() == Encounter.State.IGNORE) {
                 String alertTitle = "Uneventful " + encounter.getName() + " Encounter!";
                 String message = encounter.getIgnoreMessage(destination.getName());
@@ -74,15 +82,15 @@ public class WarpScreenController extends SceneController implements Initializab
             } else {
                 mainControl.displayAlertMessage("Encounter!", encounter + "\n");
             }
-            
-            
+        } else {
+            pauseScreen();
+            mainControl.arriveAtPlanet(source, destination);
         }
-        
-        pauseScreen();
-        
-        mainControl.arriveAtPlanet(source, destination);
     }
-    
+
+    /**
+     * Pauses the screen for a small amount of time.
+     */
     private void pauseScreen() {
         try {
             Thread.sleep(100);
@@ -92,27 +100,31 @@ public class WarpScreenController extends SceneController implements Initializab
     }
 
     /**
-     * Continues setUpWarping sequence for Player where he or she left off
+     * Continues setUpWarping sequence for Player where he or she left off.
+     *
      * @param player the value of player
      */
     public void continueTraveling(Player player) {
         repairShip(player);
-        
-        
-        
+        checkForEncounter();
     }
 
+    /**
+     * Repairs the player's ship a certain amount based on the player's engineer
+     * skill level.
+     *
+     * @param player the game's player
+     */
     private void repairShip(Player player) {
         PlayerShip ship = player.getShip();
-        
+
         // Engineer may do some repairs
         int repairs = rand.nextInt(player.getEffectiveSkill(Skill.ENGINEER)) / 2;
         ship.setHullStrength(ship.getHullStrength() + repairs);
         if (ship.getHullStrength() > ship.getMaxHullStrength()) {
             repairs = ship.getHullStrength() - ship.getMaxHullStrength();
             ship.setHullStrength(ship.getMaxHullStrength());
-        }
-        else {
+        } else {
             repairs = 0;
         }
         // Shields are easier to repair
@@ -122,14 +134,12 @@ public class WarpScreenController extends SceneController implements Initializab
             if (shield.getHealth() > shield.getType().power()) {
                 repairs = shield.getHealth() - shield.getType().power();
                 shield.setHealth(shield.getType().power());
-            }
-            else {
+            } else {
                 repairs = 0;
             }
         }
     }
-    
-    
+
     /**
      * Shows setUpWarping animation screen for a short period of time.
      */

@@ -22,9 +22,10 @@ import spacetrader.ships.SpaceShip;
 public abstract class Encounter {
 
     public static enum State {
+
         IGNORE, FLEE, ATTACK, INSPECTION, BUY, SELL;
     }
-    
+
     private final Player player;
     private final String encounterScene;
     private final String encounterName;
@@ -87,32 +88,41 @@ public abstract class Encounter {
 
     /**
      * Gets the state of this encounter.
-     * 
+     *
      * @return this encounter's state
      */
     public State getState() {
         return state;
     }
-    
+
     /**
      * Gets the name of this encounter.
+     *
      * @return this encounter's name
      */
     public String getName() {
         return encounterName;
     }
-    
+
     /**
      * Gets the distance from the destination of this encounters.
+     *
      * @return how many clicks from the destination this encounter occurs
      */
     public int getClicksFromDest() {
         return clicksFromDest;
     }
-    
+
+    /**
+     * Gets the message that should be displayed when this the opponent ignores
+     * the player.
+     *
+     * @param destination the planet the player is traveling to
+     * @return the ignore message
+     */
     public String getIgnoreMessage(String destination) {
         return String.format("A %s %s is spotted %d clicks from your destination, %s!\n\nIt ignores you.",
-                 encounterName.toLowerCase(), opponent.getType().toString(), clicksFromDest, destination);
+                encounterName.toLowerCase(), opponent.getType().toString(), clicksFromDest, destination);
     }
 
     /**
@@ -126,6 +136,7 @@ public abstract class Encounter {
 
     /**
      * Determines if the opponent can see the player.
+     *
      * @return true if the player is cloaked
      */
     public boolean playerIsCloaked() {
@@ -135,6 +146,7 @@ public abstract class Encounter {
 
     /**
      * Determines if the player can see the opponent.
+     *
      * @return true if the player is cloaked
      */
     public boolean opponentIsCloaked() {
@@ -170,15 +182,15 @@ public abstract class Encounter {
 
             bestShipIndex = Math.max(bestShipIndex, index); //if this chosen ship is stronger than the opponent's current ship, replace it
         }
-        
+
         //If the player has more money, the opponent's difficulty increases
         int opponentDifficulty = Math.max(1, (player.getCurrentWorth() / 150000)); //should be at least 1
-        
+
         //Instantiate the Opponent's Ship
         OpponentShip opponentShip = new OpponentShip(shipTypes[bestShipIndex], opponentDifficulty, cargoModifier);
         return opponentShip;
     }
-    
+
     @Override
     public String toString() {
         return "State: " + state + "\n" + opponent;

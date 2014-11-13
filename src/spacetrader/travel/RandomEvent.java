@@ -19,12 +19,12 @@ public abstract class RandomEvent {
     protected Player player;
 
     /**
-     * Constructor for instantiating a new Random Event
+     * Constructor for instantiating a new Random Event.
      *
      * @param player Player in game
      * @param message Specific random event message
      * @param quantityChange Quantity of change that occurs to an aspect of the
-     * Player
+     * Player the game's player
      */
     public RandomEvent(Player player, String message, int quantityChange) {
         this.player = player;
@@ -33,15 +33,16 @@ public abstract class RandomEvent {
     }
 
     /**
-     * get message value
-     * @return message
+     * Gets the message displayed by this Random Event.
+     *
+     * @return the message
      */
     public String getMessage() {
         return message;
     }
 
     /**
-     * Carry out Random Event
+     * Carry out the Random Event.
      */
     public abstract void doEvent();
 }

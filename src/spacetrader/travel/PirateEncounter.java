@@ -18,7 +18,7 @@ import spacetrader.ships.ShipType;
 public class PirateEncounter extends Encounter {
 
     private final int pirateStrength;
-    
+
     /**
      * Creates a new pirate encounter.
      *
@@ -29,32 +29,32 @@ public class PirateEncounter extends Encounter {
     public PirateEncounter(Player player, int clicks, int pirateStrength) {
         super(player, "/spacetrader/travel/PirateEncounterScreen.fxml", clicks, "Pirate");
         this.pirateStrength = pirateStrength;
-        
+
         //pirates are strong if the player is worth more
         int tries = 1 + player.getCurrentWorth() / 100000;
         double cargoModifier = 0.5;
-        
+
         this.setOpponent(createShip(tries, ShipType.GNAT, cargoModifier));
         determineState();
     }
 
     /**
-     * Determines the state of this encounter randomly, based on players
-     * current statistics.
+     * Determines the state of this encounter randomly, based on players current
+     * statistics.
      */
-    public final void determineState() { 
+    public final void determineState() {
         if (playerIsCloaked()) {
             return; //by default, state is ignore
         }
-        
+
         final boolean strongEnemyShip = (getOpponent().getType().compareTo(ShipType.GRASSHOPPER) >= 0);
-        final boolean playerShipIsWorse =
-                getPlayer().getShip().getType().compareTo(getOpponent().getType()) < 0;
-        
+        final boolean playerShipIsWorse
+                = getPlayer().getShip().getType().compareTo(getOpponent().getType()) < 0;
+
         final int randomScore = rand.nextInt(Reputation.ELITE.minRep());
-        final int attackingProbability =
-                (getPlayer().getReputationScore() * 4) / (1 + getOpponent().getType().ordinal());
-        
+        final int attackingProbability
+                = (getPlayer().getReputationScore() * 4) / (1 + getOpponent().getType().ordinal());
+
         // Pirates will mostly attack, but they are cowardly: if your rep is too high, they tend to flee
         if (strongEnemyShip || playerShipIsWorse || (randomScore > attackingProbability)) {
             state = State.ATTACK;
@@ -74,7 +74,7 @@ public class PirateEncounter extends Encounter {
     public boolean isIllegalShipType(ShipType type) {
         return type.pirate() < 0 || pirateStrength < type.pirate();
     }
-    
+
     @Override
     public String toString() {
         return "-Pirate Encounter-\n" + super.toString();

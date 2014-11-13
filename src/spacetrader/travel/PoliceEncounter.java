@@ -34,14 +34,13 @@ public class PoliceEncounter extends Encounter {
     private static final int MAXIMUM_FINE_AMOUNT = 10000;
     private static final int FINE_DECREASE = 4 * 10;
     private static final int FINE_ROUND = 50;
-    
-    
+
     private static final double BAD_RECORD_CHANCE_OF_INSPECT = 1;
     private static final double CLEAN_RECORD_CHANCE_OF_INSPECT = .10;
-    private static final double LAWFUL_RECORD_CHANCE_OF_INSPECT = .025; 
+    private static final double LAWFUL_RECORD_CHANCE_OF_INSPECT = .025;
 
     private final int policeStrength;
-    
+
     /**
      * Creates a new police encounter.
      *
@@ -52,7 +51,7 @@ public class PoliceEncounter extends Encounter {
     public PoliceEncounter(Player player, int clicks, int policeStrength) {
         super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml", clicks, "Police");
         this.policeStrength = policeStrength;
-        
+
         int tries = 1;
         if (player.getPoliceRecord().compareTo(PoliceRecord.CRIMINAL) < 0) {
             tries = 3;
@@ -64,23 +63,23 @@ public class PoliceEncounter extends Encounter {
         this.setOpponent(createShip(tries, ShipType.GNAT, cargoModifer));
         this.determineState();
     }
-    
+
     /**
-     * Determines the state of this encounter randomly, based on players
-     * current statistics.
+     * Determines the state of this encounter randomly, based on players current
+     * statistics.
      */
     public final void determineState() {
         if (playerIsCloaked()) {
             return; //by default, state is ignore
         }
         final PoliceRecord playerRecord = getPlayer().getPoliceRecord();
-        final boolean playerShipIsWorse =
-                getPlayer().getShip().getType().compareTo(getOpponent().getType()) < 0;
-        final boolean hasAverageRep =
-                getPlayer().getReputation().compareTo(Reputation.AVERAGE) < 0;
+        final boolean playerShipIsWorse
+                = getPlayer().getShip().getType().compareTo(getOpponent().getType()) < 0;
+        final boolean hasAverageRep
+                = getPlayer().getReputation().compareTo(Reputation.AVERAGE) < 0;
         final int randomScore = rand.nextInt(Reputation.ELITE.minRep());
-        final int attackingProbability =
-                getPlayer().getReputationScore() / (1 + getOpponent().getType().ordinal());
+        final int attackingProbability
+                = getPlayer().getReputationScore() / (1 + getOpponent().getType().ordinal());
 
         double chanceOfInspection = 0;
 
@@ -106,10 +105,10 @@ public class PoliceEncounter extends Encounter {
         } else {
             chanceOfInspection = LAWFUL_RECORD_CHANCE_OF_INSPECT;
         }
-        
+
         if (rand.nextDouble() < chanceOfInspection) {
             state = State.INSPECTION;
-        } 
+        }
     }
 
     /**

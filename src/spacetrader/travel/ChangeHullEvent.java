@@ -8,7 +8,7 @@ package spacetrader.travel;
 import spacetrader.Player;
 
 /**
- * Represents a random event that changes the player's hull
+ * Represents a random event that changes the player's hull.
  *
  * @author Seth
  */
@@ -17,9 +17,9 @@ public class ChangeHullEvent extends RandomEvent {
     /**
      * Constructor for ChangeHullEvent
      *
-     * @param player
-     * @param message
-     * @param quantityChange
+     * @param player the game's player
+     * @param message the message that should be displayed to the user
+     * @param quantityChange the change in hull strength
      */
     public ChangeHullEvent(Player player, String message, int quantityChange) {
         super(player, message, quantityChange);
@@ -37,7 +37,7 @@ public class ChangeHullEvent extends RandomEvent {
     }
 
     /**
-     * Sets hullstrength to hullstrength + quantity change
+     * Sets hullstrength to hullstrength + quantity change.
      */
     @Override
     public void doEvent() {

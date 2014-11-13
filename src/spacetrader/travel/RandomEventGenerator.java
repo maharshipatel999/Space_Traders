@@ -13,7 +13,7 @@ import spacetrader.Universe;
 import spacetrader.system.MainController;
 
 /**
- * A utility class for creating random events.
+ * A factory class for creating random events.
  *
  * @author Seth
  */

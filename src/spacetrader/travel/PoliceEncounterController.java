@@ -33,7 +33,8 @@ public class PoliceEncounterController extends EncounterScreenController impleme
     }
 
     /**
-     * Initiates Player attack sequence (Attack Pressed) 
+     * Initiates Player attack sequence (Attack Pressed)
+     *
      * @param e Event that is being processed
      */
     @FXML
@@ -42,7 +43,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             if (!getPlayerConfirmation()) {
                 return;
             }
-            
+
         }
         infoText.setText("You attack!");
     }
@@ -66,6 +67,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
 
     /**
      * Handles event where Player flees when Flee Button is pressed.
+     *
      * @param e Event that is being processed
      */
     @FXML
@@ -80,6 +82,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
 
     /**
      * Initiates Bribe Sequence for Player when ActionEvent Occurs
+     *
      * @param e specific ActionEvent that occurred
      */
     @FXML

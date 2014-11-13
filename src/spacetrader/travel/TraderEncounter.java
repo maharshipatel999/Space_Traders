@@ -23,7 +23,7 @@ public class TraderEncounter extends Encounter {
 
     private final int traderStrength;
     private final Market destinationMarket;
-    
+
     /**
      * Creates a new TraderEncounter
      *
@@ -36,26 +36,26 @@ public class TraderEncounter extends Encounter {
         super(player, "/spacetrader/travel/TraderEncounterScreen.fxml", clicks, "Trader");
         this.traderStrength = traderStrength;
         this.destinationMarket = destinationMarket;
-        
+
         int tries = 1;
         double cargoModifier = 1;
-        
+
         this.setOpponent(createShip(tries, ShipType.FLEA, cargoModifier));
         determineState();
     }
 
     /**
-     * Determines the state of this encounter randomly, based on players
-     * current statistics.
+     * Determines the state of this encounter randomly, based on players current
+     * statistics.
      */
     public final void determineState() {
         boolean isCriminal = (getPlayer().getPoliceRecord().compareTo(PoliceRecord.CRIMINAL) <= 0);
-        
+
         int randomScore = rand.nextInt(Reputation.ELITE.minRep());
         int fleeingProbability = (getPlayer().getReputationScore() * 10) / (1 + getOpponent().getType().ordinal());
-        
+
         boolean tooIntimidating = isCriminal && (randomScore <= fleeingProbability);
-        
+
         // If you're a criminal, traders tend to flee if you've got at least some reputation
         if (!playerIsCloaked() && !opponentIsCloaked() && tooIntimidating) {
             state = State.FLEE;
@@ -69,9 +69,19 @@ public class TraderEncounter extends Encounter {
             }
         }
     }
-    
+
+    /**
+     * Determines if a space ship has goods that can be sold/bought in the
+     * system the player is in/traveling to.
+     *
+     * @param ship the ship which has a cargo
+     * @param traderBuying true if the trader is buying, false if the trader is
+     * selling
+     * @param player the game's players
+     * @return true if the ship has sellable/purchasable goods
+     */
     private boolean hasTradeableGoods(SpaceShip ship, boolean traderBuying, Player player) {
-	for (TradeGood good : TradeGood.values()) {
+        for (TradeGood good : TradeGood.values()) {
             // trade only if trader is selling and the item has a buy price on the local system
             // or if trader is buying and there is a sell price on the local system.
             if (ship.getCargo().getQuantity(good) > 0) {
@@ -95,11 +105,12 @@ public class TraderEncounter extends Encounter {
                 }
             }
         }
-	return false;
+        return false;
     }
 
     /**
      * Checks to see if the specific Trader Ship is legal in current Planet
+     *
      * @param type Type of Ship
      * @return Whether Trader Ship is legal
      */
@@ -107,7 +118,7 @@ public class TraderEncounter extends Encounter {
     public boolean isIllegalShipType(ShipType type) {
         return type.trader() < 0 || traderStrength < type.trader();
     }
-    
+
     @Override
     public String toString() {
         return "-Trader Encounter-\n" + super.toString();

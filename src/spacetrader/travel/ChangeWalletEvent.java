@@ -14,17 +14,24 @@ import spacetrader.Player;
  */
 public class ChangeWalletEvent extends RandomEvent {
 
-    public ChangeWalletEvent(Player player, String msg, int quantityChange) {
-        super(player, msg, quantityChange);
+    /**
+     * Creates a new ChangeWalletEvent.
+     *
+     * @param player the game's player
+     * @param message the message that should be displayed to the player
+     * @param quantityChange the change in wallet amount
+     */
+    public ChangeWalletEvent(Player player, String message, int quantityChange) {
+        super(player, message, quantityChange);
         if (quantityChange > 0) {
             this.message += "\n\n₪" + quantityChange + " was added to your wallet!";
         } else {
             this.message += "\n\n₪" + Math.abs(quantityChange) + " was removed from your wallet!";
         }
     }
-    // FIX: MIGHT THROW EXCEPTION
+
     /**
-     * adds or removes money from Player's wallet depending on quantity change
+     * Adds or removes money from Player's wallet depending on quantity change.
      */
     @Override
     public void doEvent() {

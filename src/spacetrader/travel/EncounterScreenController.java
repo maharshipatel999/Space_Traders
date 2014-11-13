@@ -8,6 +8,7 @@ package spacetrader.travel;
 import spacetrader.system.SceneController;
 
 /**
+ * Represents a controller for an encounter screen.
  *
  * @author Caleb
  */
@@ -15,6 +16,11 @@ public class EncounterScreenController extends SceneController {
 
     protected Encounter encounter;
 
+    /**
+     * Sets the encounter for this encounter controller.
+     *
+     * @param encounter
+     */
     public void setEncounter(Encounter encounter) {
         this.encounter = encounter;
     }
