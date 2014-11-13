@@ -37,6 +37,8 @@ public class Cargo implements Serializable {
     public Cargo(int maxCapacity) {
         this.maxCapacity = maxCapacity;
         this.tradeGoods = new HashMap<>();
+        
+        
         this.costOfGoods = new HashMap<>();
         for (TradeGood good : TradeGood.values()) {
             tradeGoods.put(good, 0);

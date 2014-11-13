@@ -27,8 +27,8 @@ public enum PriceIncreaseEvent {
             = Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
-    static int maxRandomPrice = 5;
-    static int maxRandomPriceDuration = 10;
+    private static int maxRandomPrice = 5;
+    private static int maxRandomPriceDuration = 10;
 
     /**
      * Creates a price increase event with description.
@@ -37,7 +37,6 @@ public enum PriceIncreaseEvent {
      */
     PriceIncreaseEvent(final String desc) {
         this.desc = desc;
-
     }
 
     /**

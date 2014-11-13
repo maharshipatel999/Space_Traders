@@ -48,6 +48,8 @@ public class Transaction {
      * Updates the quantity the player would like to purchase of a specified
      * TradeGood.
      *
+     * @throws DepletedInventoryException
+     * 
      * @param good the TradeGood which is being changed
      * @param newQuantity the new quantity of that TradeGood
      */
