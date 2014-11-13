@@ -36,6 +36,12 @@ public class ReloadGameScreenController extends SceneController implements Initi
         this.game = game;
     }
 
+    /**
+     * Reloads game1 and sets objects.
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     @FXML
     public void reloadGame1() throws IOException, ClassNotFoundException {
         PlayerSlots slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
@@ -44,6 +50,12 @@ public class ReloadGameScreenController extends SceneController implements Initi
         goToHome();
     }
 
+    /**
+     * Reloads game2 and sets objects.
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     @FXML
     public void reloadGame2() throws IOException, ClassNotFoundException {
         PlayerSlots slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
@@ -52,23 +64,41 @@ public class ReloadGameScreenController extends SceneController implements Initi
         goToHome();
     }
 
+    /**
+     * Reloads game3 and sets objects.
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     @FXML
     public void reloadGame3() throws IOException, ClassNotFoundException {
-        PlayerSlots slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
+        PlayerSlots slots = (PlayerSlots) SerializableUtil
+                .deserialize("saveFile.ser");
         List<Object> objects = slots.getPlayer3();
         setObjects(objects);
         goToHome();
     }
 
+    /**
+     * Goes back to home screen and displays progress.
+     */
     private void goToHome() {
         mainControl.displaySaveProgress("Loading Save File", "Loading...", "Game Successfully Loaded!");
     }
 
+    /**
+     * goes back to welcome screen.
+     * @param e 
+     */
     @FXML
     protected void goBack(ActionEvent e) {
         mainControl.goToWelcomeScreen();
     }
 
+    /**
+     * sets objects back for selected player.
+     * @param objects
+     */
     private void setObjects(List<Object> objects) {
         game.setUniverse((Universe) objects.get(0));
         game.setPlayer((Player) objects.get(1));

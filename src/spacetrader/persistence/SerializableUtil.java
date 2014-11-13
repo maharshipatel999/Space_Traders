@@ -26,7 +26,14 @@ import java.util.List;
  */
 public class SerializableUtil {
 
-    
+    /**
+     * Serializes objects holding player information into a save file.
+     * 
+     * @param object object to deserialize
+     * @param fileName file to deserialize from
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public static void serialize(Object object, String fileName) throws
             FileNotFoundException, IOException {
         OutputStream fileOutput = new FileOutputStream(fileName);
@@ -37,6 +44,13 @@ public class SerializableUtil {
         fileOutput.close();
     }
 
+    /**
+     * Deserializes objects from save file to use in application.
+     * @param fileName
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     public static Object deserialize(String fileName) throws
             IOException, ClassNotFoundException {
         InputStream fileInput = new FileInputStream(fileName);
