@@ -52,7 +52,6 @@ public class PoliceEncounterTest {
         instance = new PoliceEncounter(player, 10, PoliticalSystem.DEMOCRACY.strengthPolice());
 
         //Test Maximum Fine
-        
         storeIllegalGoods();
         int initialMoney = 1000000000;
         player.getWallet().setCredits(initialMoney);
@@ -63,7 +62,6 @@ public class PoliceEncounterTest {
         assertEquals(-1, player.getPoliceRecordScore());
 
         //Test Minimum Fine
-        
         initialMoney = 0;
         player.getWallet().setCredits(initialMoney);
         player.setShip(new PlayerShip(ShipType.FLEA));
@@ -76,7 +74,6 @@ public class PoliceEncounterTest {
         assertEquals(-2, player.getPoliceRecordScore());
 
         //Test Normal Fine
-        
         player.setShip(new PlayerShip(ShipType.GNAT));
         storeIllegalGoods();
         initialMoney = 1000;
@@ -108,7 +105,7 @@ public class PoliceEncounterTest {
     public void testInspectPlayerIllegalGoods() {
         System.out.println("inspectPlayer Legal Ship");
         instance = new PoliceEncounter(player, 10, PoliticalSystem.DEMOCRACY.strengthPolice());
-        
+
         player.getShip().getCargo().addItem(TradeGood.FIREARMS, 2, 5);
         assertTrue(instance.inspectPlayer());
         assertEquals(-1, player.getPoliceRecordScore());
@@ -128,7 +125,7 @@ public class PoliceEncounterTest {
         assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.FIREARMS));
         assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.NARCOTICS));
     }
-    
+
     private void storeIllegalGoods() {
         player.getShip().getCargo().addItem(TradeGood.FIREARMS, 5, 0);
     }
