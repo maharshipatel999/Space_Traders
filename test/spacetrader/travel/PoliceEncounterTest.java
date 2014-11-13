@@ -112,7 +112,7 @@ public class PoliceEncounterTest {
         assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.FIREARMS));
         assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.NARCOTICS));
 
-        player.getShip().getCargo().addItem(TradeGood.NARCOTICS, 3, 6);
+        player.getShip().getCargo().addItem(TradeGood.NARCOTICS, 3, 6);    
         assertTrue(instance.inspectPlayer());
         assertEquals(-2, player.getPoliceRecordScore());
         assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.FIREARMS));
