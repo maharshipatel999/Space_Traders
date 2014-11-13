@@ -21,7 +21,9 @@ import spacetrader.planets.Planet;
  *
  * @author nkaru_000
  */
-public class HomeScreenController extends SceneController implements Initializable {
+public class HomeScreenController 
+    extends SceneController 
+    implements Initializable {
 
     private Planet planet;
     private Player player;
@@ -45,14 +47,20 @@ public class HomeScreenController extends SceneController implements Initializab
     public void setUpHomeScreen(Player player, Planet planet) {
         this.planet = planet;
         this.player = player;
-
+        
         player.payInsuranceCost();
         player.payInterest();
-
-        String description = String.format("%s\n\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
-                planet.getName(), planet.getLocation().x, planet.getLocation().y, planet.getLevel().type(), planet.getPoliticalSystem().type(), planet.getResource().type());
+        
+        String description = String
+                .format("%s\n\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
+                planet.getName(), planet.getLocation().x,
+                planet.getLocation().y, planet.getLevel().type(),
+                planet.getPoliticalSystem().type(),
+                planet.getResource().type());
         if (planet.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            description += "\n\nThis planet is currently suffering an abdormality:\n" + planet.getPriceIncEvent().desc();
+            description += "\n\nThis planet is currently"
+                    + "suffering an abdormality:\n"
+                    + planet.getPriceIncEvent().desc();
         }
 
         planetName.setText(description);

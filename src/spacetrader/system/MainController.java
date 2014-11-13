@@ -97,16 +97,22 @@ public class MainController {
         game.increaseDays();
 
         //The player autofixes their ship depending on their engineer skill
-        int engineerRepairs = rand.nextInt(game.getPlayer().getEffectiveSkill(Skill.ENGINEER));
-        int currentHull = game.getPlayer().getShip().getHullStrength();
-        game.getPlayer().getShip().setHullStrength(currentHull + engineerRepairs);
+        int engineerRepairs = rand.nextInt(game.getPlayer()
+                .getEffectiveSkill(Skill.ENGINEER));
+        int currentHull = game.getPlayer().getShip()
+                .getHullStrength();
+        game.getPlayer().getShip().setHullStrength(currentHull 
+                + engineerRepairs);
 
         changePlayerLocation(destination);
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayAlertMessage("Notice!", destination.getName() + " is currently " + destination.getPriceIncEvent().desc().toLowerCase());
+            displayAlertMessage("Notice!",  destination.getName() 
+                    + " is currently " 
+                    + destination.getPriceIncEvent().desc().toLowerCase());
         }
         if (eventGenerator == null) {
-            eventGenerator = new RandomEventGenerator(game.getPlayer(), game.getUniverse(), this);
+            eventGenerator = new RandomEventGenerator(game.getPlayer(),
+                    game.getUniverse(), this);
         }
 
         if (eventGenerator.eventOccurs()) {
@@ -134,19 +140,22 @@ public class MainController {
         destination.getMarket().setAllPrices(game.getPlayer());
 
         //Decrease police record score if very high
-        if (game.getDays() % 3 == 0 && player.getPoliceRecord().compareTo(PoliceRecord.CLEAN) > 0) {
+        if (game.getDays() % 3 == 0 && player.getPoliceRecord()
+                .compareTo(PoliceRecord.CLEAN) > 0) {
             int newRecord = player.getPoliceRecordScore() - 1;
             player.setPoliceRecordScore(newRecord);
         }
 
         //Increase police record score if very low
-        if (game.getPlayer().getPoliceRecord().compareTo(PoliceRecord.DUBIOUS) < 0) {
+        if (game.getPlayer().getPoliceRecord()
+                .compareTo(PoliceRecord.DUBIOUS) < 0) {
             int newRecord = player.getPoliceRecordScore() + 1;
             player.setPoliceRecordScore(newRecord);
         }
 
         //Deduct fuel
-        int distance = (int) Universe.distanceBetweenPlanets(source, destination);
+        int distance = (int) Universe
+                .distanceBetweenPlanets(source, destination);
         player.getShip().getTank().removeFuel(distance);
 
         goToWarpScreen(source, destination);
@@ -173,7 +182,8 @@ public class MainController {
      * @param myStage the value of myStage
      * @return the corresponding Controller of the fxml file
      */
-    private SceneController extractControllerFromFXML(String fxmlScene, Stage myStage) {
+    private SceneController extractControllerFromFXML(String fxmlScene,
+            Stage myStage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlScene));
         try {
             Scene theScene = new Scene(loader.load());
@@ -182,7 +192,8 @@ public class MainController {
             controller.setMainControl(this);
             return controller;
         } catch (IOException e) {
-            Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(SpaceTrader.class.getName())
+                    .log(Level.SEVERE, null, e);
         }
         return null;
     }
@@ -203,7 +214,8 @@ public class MainController {
     public void goToWelcomeScreen() {
         stage.setTitle("Space Traders!");
         WelcomeScreenController control;
-        control = (WelcomeScreenController) extractControllerFromFXML("/spacetrader/WelcomeScreen.fxml", stage);
+        control = (WelcomeScreenController) extractControllerFromFXML(
+                "/spacetrader/WelcomeScreen.fxml", stage);
         stage.setScene(control.getScene());
         stage.show();
     }
@@ -213,7 +225,8 @@ public class MainController {
      */
     public void goToPlayerConfigScreen() {
         CharacterDialogController control;
-        control = (CharacterDialogController) extractControllerFromFXML("/spacetrader/CharacterDialog.fxml", stage);
+        control = (CharacterDialogController) extractControllerFromFXML(
+                "/spacetrader/CharacterDialog.fxml", stage);
         stage.setScene(control.getScene());
     }
 
@@ -225,9 +238,10 @@ public class MainController {
      */
     public void goToHomeScreen(Player player, Planet planet) {
         HomeScreenController control;
-        control = (HomeScreenController) extractControllerFromFXML("/spacetrader/planets/HomeScreen.fxml", stage);
+        control = (HomeScreenController) extractControllerFromFXML(
+                "/spacetrader/planets/HomeScreen.fxml", stage);
         control.setUpHomeScreen(player, planet);
-        stage.setScene(control.getScene());
+        stage.setScene(control.getScene());     
     }
 
     /**
@@ -238,15 +252,20 @@ public class MainController {
     public void goToMarketScreen(Planet planet) {
         stage.setTitle("Welcome to the Market!");
         MarketScreenController control;
-        control = (MarketScreenController) extractControllerFromFXML("/spacetrader/commerce/MarketScreen.fxml", stage);
+        control = (MarketScreenController) extractControllerFromFXML(
+                "/spacetrader/commerce/MarketScreen.fxml", stage);
         control.setUpMarketScreen(planet, game.getPlayer());
         stage.setScene(control.getScene());
     }
-
+    
+    /**
+     * Transitions the game screen to the Ship Yard Screen.
+     */
     public void goToShipYardScreen() {
         stage.setTitle("Welcome to the Ship Yard!");
         ShipYardScreenController control;
-        control = (ShipYardScreenController) extractControllerFromFXML("/spacetrader/ships/ShipYardScreen.fxml", stage);
+        control = (ShipYardScreenController) extractControllerFromFXML(
+                "/spacetrader/ships/ShipYardScreen.fxml", stage);
         control.setUpShipYardScreen(game.getPlayer());
         stage.setScene(control.getScene());
     }
@@ -257,18 +276,20 @@ public class MainController {
     public void goToShipMarket() {
         stage.setTitle("Welcome to the Ship Market!");
         ShipMarketController control;
-        control = (ShipMarketController) extractControllerFromFXML("/spacetrader/ships/ShipMarket.fxml", stage);
+        control = (ShipMarketController) extractControllerFromFXML(
+                "/spacetrader/ships/ShipMarket.fxml", stage);
         control.setUpShipMarketScreen(game.getPlayer());
         stage.setScene(control.getScene());
     }
 
-    /*
+    /**
      * Transitions to equipment screen
      */
     public void goToEquipmentMarket() {
         stage.setTitle("Welcome to the Equipment Market!");
         GadgetScreenController control;
-        control = (GadgetScreenController) extractControllerFromFXML("/spacetrader/ships/GadgetScreen.fxml", stage);
+        control = (GadgetScreenController) extractControllerFromFXML(
+                "/spacetrader/ships/GadgetScreen.fxml", stage);
         control.setUpEquipmentMarketScreen(game.getPlayer());
         stage.setScene(control.getScene());
 
@@ -282,8 +303,10 @@ public class MainController {
     public void goToSpaceMapScreen(Planet planet) {
         stage.setTitle("Space Map!");
         SpaceMapScreenController control;
-        control = (SpaceMapScreenController) extractControllerFromFXML("/spacetrader/SpaceMapScreen.fxml", stage);
-        control.setUpMap(game.getPlayer(), planet, game.getUniverse().getPlanets());
+        control = (SpaceMapScreenController) extractControllerFromFXML(
+                "/spacetrader/SpaceMapScreen.fxml", stage);
+        control.setUpMap(game.getPlayer(), planet,
+                game.getUniverse().getPlanets());
         stage.setScene(control.getScene());
     }
 
@@ -295,7 +318,8 @@ public class MainController {
      */
     public void goToWarpScreen(Planet source, Planet dest) {
         stage.setTitle("Traveling to " + dest.getName());
-        this.warpScreenControl = (WarpScreenController) extractControllerFromFXML("/spacetrader/travel/WarpScreen.fxml", stage);
+        this.warpScreenControl = (WarpScreenController) 
+                extractControllerFromFXML("/spacetrader/travel/WarpScreen.fxml", stage);
         stage.setScene(this.warpScreenControl.getScene());
         this.warpScreenControl.setUpWarping(source, dest, game.getPlayer());
     }
@@ -305,7 +329,8 @@ public class MainController {
      */
     public void goBackToWarpScreen() {
         if (this.warpScreenControl == null) { //this is only for testing purposes
-            goToWarpScreen(game.getUniverse().getPlanet("Pallet"), game.getUniverse().getPlanets().get(10));
+            goToWarpScreen(game.getUniverse().getPlanet("Pallet"),
+                    game.getUniverse().getPlanets().get(10));
         }
         stage.setScene(this.warpScreenControl.getScene());
         this.warpScreenControl.continueTraveling();
@@ -320,7 +345,8 @@ public class MainController {
     public void goToEncounterScreen(Encounter encounter) {
         stage.setTitle("Space Encounter!");
         EncounterScreenController control;
-        control = (EncounterScreenController) extractControllerFromFXML(encounter.getFXMLScene(), stage);
+        control = (EncounterScreenController) 
+                extractControllerFromFXML(encounter.getFXMLScene(), stage);
         control.setEncounter(encounter);
         stage.setScene(control.getScene());
     }
@@ -335,28 +361,42 @@ public class MainController {
         startStage.initModality(Modality.WINDOW_MODAL);
 
         StartScreenController control;
-        control = (StartScreenController) extractControllerFromFXML("/spacetrader/StartScreen.fxml", startStage);
+        control = (StartScreenController) extractControllerFromFXML(
+                "/spacetrader/StartScreen.fxml", startStage);
         control.setUpPlayerStats(game.getPlayer(), startStage, this);
         startStage.setScene(control.getScene());
         startStage.show();
     }
 
+    /**
+     * Transitions the game screen to the Overwrite Screen.
+     */
     public void goToOverwriteScreen() {
         stage.setTitle("Save Game!");
         OverwriteScreenController control;
-        control = (OverwriteScreenController) extractControllerFromFXML("/spacetrader/persistence/OverwriteScreen.fxml", stage);
+        control = (OverwriteScreenController) extractControllerFromFXML(
+                "/spacetrader/persistence/OverwriteScreen.fxml", stage);
         control.setUpSaveScreen(game);
         stage.setScene(control.getScene());
     }
 
+    /**
+     * Transitions the game screen to the Reload Screen.
+     */
     public void goToReloadScreen() {
         stage.setTitle("Reload Game!");
         ReloadGameScreenController control;
-        control = (ReloadGameScreenController) extractControllerFromFXML("/spacetrader/persistence/ReloadGameScreen.fxml", stage);
+        control = (ReloadGameScreenController) extractControllerFromFXML(
+                "/spacetrader/persistence/ReloadGameScreen.fxml", stage);
         control.setUpReloadScreen(game);
         stage.setScene(control.getScene());
     }
-
+    
+    /**
+     * Transitions the game screen to the Finance Screen.
+     * 
+     * @param planet planet to set up finance screen for
+     */
     public void goToFinanceScreen(Planet planet) {
         stage.setTitle("Welcome to Bank of " + planet.getName() + "!");
         FinanceScreenController control;
@@ -365,6 +405,12 @@ public class MainController {
         stage.setScene(control.getScene());
     }
 
+    /**
+     * Display alert message based on passed in string.
+     * 
+     * @param alertTitle title of state
+     * @param alert alert message
+     */
     public void displayAlertMessage(String alertTitle, String alert) {
         Dialogs.create()
                 .owner(stage)
@@ -374,7 +420,16 @@ public class MainController {
                 .showInformation();
     }
 
-    public Action displayYesNoComfirmation(String optionsTitle, String mastHead, String message) {
+    /**
+     * Display yes-no confirmation.
+     * 
+     * @param optionsTitle title of state
+     * @param mastHead 
+     * @param message message to display
+     * @return Action
+     */
+    public Action displayYesNoComfirmation(String optionsTitle,
+            String mastHead, String message) {
         Action response = Dialogs.create()
                 .owner(stage)
                 .title(optionsTitle)
@@ -385,7 +440,14 @@ public class MainController {
         return response;
     }
 
-    public void displayProgess(String progressTitle, Service service) {
+    /**
+     * Display progress bar.
+     * 
+     * @param progressTitle title of state
+     * @param service
+     */
+    public void displayProgess(String progressTitle,
+            Service service) {
         Dialogs.create()
                 .owner(stage)
                 .title(progressTitle)
@@ -401,7 +463,8 @@ public class MainController {
      * @param updateMessage the message that is displayed over the progress bar
      * @param finishMessage the message displayed when finished
      */
-    public void displaySaveProgress(String progressTitle, String updateMessage, String finishMessage) {
+    public void displaySaveProgress(String progressTitle,
+            String updateMessage, String finishMessage) {
         Service<Void> saveService = new Service<Void>() {
             @Override
             public Task<Void> createTask() {
@@ -424,7 +487,8 @@ public class MainController {
         saveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent e) {
-                goToHomeScreen(game.getPlayer(), game.getPlayer().getLocation());
+                goToHomeScreen(game.getPlayer(),
+                        game.getPlayer().getLocation());
             }
         });
         displayProgess(progressTitle, saveService);

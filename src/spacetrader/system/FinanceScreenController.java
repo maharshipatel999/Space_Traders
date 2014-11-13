@@ -20,7 +20,9 @@ import spacetrader.planets.Planet;
  *
  * @author nkaru_000
  */
-public class FinanceScreenController extends SceneController implements Initializable {
+public class FinanceScreenController
+    extends SceneController
+    implements Initializable {
 
     @FXML
     private Label currentBalance;
@@ -53,9 +55,11 @@ public class FinanceScreenController extends SceneController implements Initiali
     @FXML
     public void setUpFinanceScreen(Player player) {
         this.player = player;
-        currentBalance.setText("Current balance: ₪" + player.getWallet().getCredits());
+        currentBalance.setText("Current balance: ₪"
+                + player.getWallet().getCredits());
         debt.setText("₪" + player.getDebt());
-        shipVal.setText("₪" + player.getShip().currentShipPriceWithoutCargo());
+        shipVal.setText("₪" + player.getShip()
+                .currentShipPriceWithoutCargo());
         int val = player.getShip().currentShipPriceWithoutCargo();
         int cost = val / 1000;
         dailyCost.setText("₪" + cost);
@@ -94,7 +98,8 @@ public class FinanceScreenController extends SceneController implements Initiali
     private void payLoan() {
         player.getWallet().remove(player.getDebt());
         player.setDebt(0);
-        currentBalance.setText("Current balance: ₪" + player.getWallet().getCredits());
+        currentBalance.setText("Current balance: ₪" 
+                + player.getWallet().getCredits());
         debt.setText("₪" + player.getDebt());
     }
 

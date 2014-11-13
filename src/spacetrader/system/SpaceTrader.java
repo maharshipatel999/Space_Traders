@@ -84,6 +84,9 @@ public class SpaceTrader extends Application {
         return days;
     }
 
+    /**
+     * Increase the number of days playing.
+     */
     public void increaseDays() {
         days++;
     }

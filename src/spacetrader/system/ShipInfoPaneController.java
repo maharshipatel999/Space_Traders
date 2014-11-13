@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 import spacetrader.ships.ShipType;
 
 /**
- * FXML Controller class
+ * FXML Controller class.
  *
  * @author Seth
  */
@@ -50,6 +50,11 @@ public class ShipInfoPaneController implements Initializable {
         // TODO
     }
 
+    /**
+     * Sets ship type.
+     * 
+     * @param ship type to set to
+     */
     public void setShipType(ShipType ship) {
         nameText.setText(ship.name().toString());
         String size;
@@ -72,7 +77,7 @@ public class ShipInfoPaneController implements Initializable {
             default:
                 size = "NA";
         }
-        sizeText.setText("" + size);
+        sizeText.setText(size);
         cargoSlotsText.setText("" + ship.cargoBay());
         fuelCapacityText.setText("" + ship.fuel());
         hullStrengthText.setText("" + ship.hullStrength());

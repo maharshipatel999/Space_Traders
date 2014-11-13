@@ -18,18 +18,34 @@ import javafx.scene.text.Text;
 import spacetrader.Player;
 
 /**
- * FXML Controller class
+ * FXML Controller class.
  *
  * @author Caleb Stokols
  */
-public class CharacterDialogController extends SceneController implements Initializable {
+public class CharacterDialogController
+    extends SceneController
+    implements Initializable {
 
-    //These instance variables will eventually go in a Player Class.
-    private int pilotSkill;
-    private int fighterSkill;
-    private int traderSkill;
-    private int engineerSkill;
-    private int investorSkill;
+    /**
+     * skill points for piloting.
+     */
+    private transient int pilotSkill;
+    /**
+     * skill points for fighting.
+     */
+    private transient int fighterSkill;
+    /**
+     * skill points for trading.
+     */
+    private transient int traderSkill;
+    /**
+     * skill points for engineering.
+     */
+    private transient int engineerSkill;
+    /**
+     * skill points for investing.
+     */
+    private transient int investorSkill;
 
     @FXML
     private TextField nameText;
@@ -53,7 +69,8 @@ public class CharacterDialogController extends SceneController implements Initia
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         difficultyChoiceBox.setItems(
-                FXCollections.observableArrayList("Easy", "Medium", "Hard", "Ultra"));
+                FXCollections.observableArrayList(
+                        "Easy", "Medium", "Hard", "Ultra"));
         difficultyChoiceBox.setValue("Medium");
         confirmMessage.setFill(Color.TRANSPARENT);
     }
@@ -74,7 +91,7 @@ public class CharacterDialogController extends SceneController implements Initia
     private void adjustPointsRemainingText() {
         int points = 15 - (pilotSkill + fighterSkill + traderSkill
                 + engineerSkill + investorSkill);
-        skillPointsRemaining.setText("" + points);
+        skillPointsRemaining.setText(((Integer) points).toString());
     }
 
     /**
@@ -83,10 +100,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void increasePilot(ActionEvent event) {
+    protected void increasePilot(final ActionEvent event) {
         if (skillPointsRemaining()) {
             pilotSkill++;
-            pilotSkillText.setText("" + pilotSkill);
+            pilotSkillText.setText(((Integer) pilotSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -97,10 +114,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void decreasePilot(ActionEvent event) {
+    protected void decreasePilot(final ActionEvent event) {
         if (pilotSkill > 0) {
             pilotSkill--;
-            pilotSkillText.setText("" + pilotSkill);
+            pilotSkillText.setText(((Integer) pilotSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -111,10 +128,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void increaseFighter(ActionEvent event) {
+    protected void increaseFighter(final ActionEvent event) {
         if (skillPointsRemaining()) {
             fighterSkill++;
-            fighterSkillText.setText("" + fighterSkill);
+            fighterSkillText.setText(((Integer) fighterSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -125,10 +142,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void decreaseFighter(ActionEvent event) {
+    protected void decreaseFighter(final ActionEvent event) {
         if (fighterSkill > 0) {
             fighterSkill--;
-            fighterSkillText.setText("" + fighterSkill);
+            fighterSkillText.setText(((Integer) fighterSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -139,10 +156,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void increaseTrader(ActionEvent event) {
+    protected void increaseTrader(final ActionEvent event) {
         if (skillPointsRemaining()) {
             traderSkill++;
-            traderSkillText.setText("" + traderSkill);
+            traderSkillText.setText(((Integer) traderSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -153,10 +170,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void decreaseTrader(ActionEvent event) {
+    protected void decreaseTrader(final ActionEvent event) {
         if (traderSkill > 0) {
             traderSkill--;
-            traderSkillText.setText("" + traderSkill);
+            traderSkillText.setText(((Integer) traderSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -167,10 +184,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void increaseEngineer(ActionEvent event) {
+    protected void increaseEngineer(final ActionEvent event) {
         if (skillPointsRemaining()) {
             engineerSkill++;
-            engineerSkillText.setText("" + engineerSkill);
+            engineerSkillText.setText(((Integer) engineerSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -181,10 +198,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void decreaseEngineer(ActionEvent event) {
+    protected void decreaseEngineer(final ActionEvent event) {
         if (engineerSkill > 0) {
             engineerSkill--;
-            engineerSkillText.setText("" + engineerSkill);
+            engineerSkillText.setText(((Integer) engineerSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -195,10 +212,10 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void increaseInvestor(ActionEvent event) {
+    protected void increaseInvestor(final ActionEvent event) {
         if (skillPointsRemaining()) {
             investorSkill++;
-            investorSkillText.setText("" + investorSkill);
+            investorSkillText.setText(((Integer) investorSkill).toString());
         }
         adjustPointsRemainingText();
     }
@@ -209,30 +226,30 @@ public class CharacterDialogController extends SceneController implements Initia
      * @param event the event which occurred
      */
     @FXML
-    protected void decreaseInvestor(ActionEvent event) {
+    protected void decreaseInvestor(final ActionEvent event) {
         if (investorSkill > 0) {
             investorSkill--;
-            investorSkillText.setText("" + investorSkill);
+            investorSkillText.setText(((Integer) investorSkill).toString());
         }
         adjustPointsRemainingText();
     }
 
     @FXML
-    protected void cancelDialogScreen(ActionEvent event) {
+    protected void cancelDialogScreen(final ActionEvent event) {
         mainControl.goToWelcomeScreen();
     }
 
     @FXML
-    protected void okDialogScreen(ActionEvent event) {
-        String name = nameText.getCharacters().toString();
-        if (name.equals("")) {
+    protected void okDialogScreen(final ActionEvent event) {
+        final String name = nameText.getCharacters().toString();
+        if ("".equals(name)) {
             confirmMessage.setText("Please enter your name!");
             confirmMessage.setFill(Color.RED);
         } else if (skillPointsRemaining()) {
             confirmMessage.setText("Please allocate all skill points!");
             confirmMessage.setFill(Color.RED);
         } else {
-            Player player = new Player(name, pilotSkill, fighterSkill,
+            final Player player = new Player(name, pilotSkill, fighterSkill,
                     traderSkill, engineerSkill, investorSkill);
             mainControl.setUpGame(player);
 

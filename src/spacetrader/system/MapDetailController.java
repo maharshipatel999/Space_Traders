@@ -53,8 +53,11 @@ public class MapDetailController implements Initializable {
     @FXML
     private Button warpButton;
     @FXML
-    private Label appxWaterPrice, appxFursPrice, appxFoodPrice, appxOrePrice, appxGamesPrice,
-            appxFirearmsPrice, appxMedicinePrice, appxMachinesPrice, appxNarcoticsPrice, appxRobotsPrice;
+    private Label appxWaterPrice, appxFursPrice, appxFoodPrice,
+            appxOrePrice, appxGamesPrice,
+            appxFirearmsPrice, appxMedicinePrice,
+            appxMachinesPrice, appxNarcoticsPrice,
+            appxRobotsPrice;
 
     private Label[] appxPricesLabels;
 
@@ -89,9 +92,12 @@ public class MapDetailController implements Initializable {
         policePresence.setText(planet.expectedAmountOfPolice());
         piratePresence.setText(planet.expectedAmountOfPirates());
 
-        this.appxPricesLabels = new Label[]{appxWaterPrice, appxFursPrice, appxFoodPrice,
-            appxOrePrice, appxGamesPrice, appxFirearmsPrice, appxMedicinePrice,
-            appxMachinesPrice, appxNarcoticsPrice, appxRobotsPrice};
+        this.appxPricesLabels = new Label[]{appxWaterPrice,
+            appxFursPrice, appxFoodPrice,
+            appxOrePrice, appxGamesPrice, appxFirearmsPrice,
+            appxMedicinePrice,
+            appxMachinesPrice, appxNarcoticsPrice,
+            appxRobotsPrice};
 
         if (planet.isVisited()) {
             planetResources.setText(planet.getResource().type());
@@ -118,6 +124,9 @@ public class MapDetailController implements Initializable {
 
     }
 
+    /**
+     * Hide price labels.
+     */
     public void hideApproximatePrices() {
         for (int i = 0; i < TradeGood.values().length; i++) {
             appxPricesLabels[i].setText("-----");
@@ -132,7 +141,8 @@ public class MapDetailController implements Initializable {
         for (int i = 0; i < TradeGood.values().length; i++) {
             TradeGood good = TradeGood.values()[i];
             int absolutePrice = selectedPlanet.getMarket().getAppxPrice(good);
-            int currentPlanetPrice = mapControl.currentPlanet.getMarket().getBuyPrice(good);
+            int currentPlanetPrice = mapControl.currentPlanet
+                    .getMarket().getBuyPrice(good);
             changeFont(appxPricesLabels[i], false);
             //if the selected planet sells this good
             if (absolutePrice >= 0) {
@@ -141,7 +151,9 @@ public class MapDetailController implements Initializable {
                     this.appxPricesLabels[i].setText("₪" + absolutePrice);
                 } else {
                     int relativePrice = absolutePrice - currentPlanetPrice;
-                    appxPricesLabels[i].setText(((relativePrice >= 0) ? "+ ₪" : "- ₪") + Math.abs(relativePrice));
+                    appxPricesLabels[i].setText(
+                            ((relativePrice >= 0) ? "+ ₪" : "- ₪")
+                                    + Math.abs(relativePrice));
                     if (currentPlanetPrice < 0) {
                         appxPricesLabels[i].setText("-----");
                     }
@@ -158,6 +170,7 @@ public class MapDetailController implements Initializable {
     /**
      * Sets the font bold if isBold is true, otherwise the font is normal
      *
+     * @param text text of label
      * @param isBold true if the font should be bold
      */
     private void changeFont(Label text, boolean isBold) {

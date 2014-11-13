@@ -37,7 +37,7 @@ public class OverwriteScreenController extends SceneController implements Initia
     }
 
     /**
-     * returns list with all settings of Player
+     * returns list with all settings of Player.
      * @return list of all settings of Player in game
      */
     private List<Object> setUpPlayer() {
@@ -49,7 +49,7 @@ public class OverwriteScreenController extends SceneController implements Initia
     }
 
     /**
-     * overwrites data in Slot 1 (where Player 1 would be located)
+     * overwrites data in Slot 1 (where Player 1 would be located).
      * @param event overwrite data in Slot 1
      */
     @FXML
@@ -68,7 +68,7 @@ public class OverwriteScreenController extends SceneController implements Initia
     }
 
     /**
-     * overwrites data in Slot 2 (where Player 2 would be located)
+     * overwrites data in Slot 2 (where Player 2 would be located).
      * @param event overwrite data in Slot 1
      */    
     @FXML
@@ -87,7 +87,7 @@ public class OverwriteScreenController extends SceneController implements Initia
     }
 
     /**
-     * overwrites data in Slot 3 (where Player 3 would be located)
+     * overwrites data in Slot 3 (where Player 3 would be located).
      * @param event overwrite data in Slot 1
      */
     @FXML
@@ -105,7 +105,13 @@ public class OverwriteScreenController extends SceneController implements Initia
         }
     }
 
-    
+    /**
+     * Serializes game into save file.
+     * 
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     @FXML
     public void serialize() throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
@@ -121,7 +127,11 @@ public class OverwriteScreenController extends SceneController implements Initia
         mainControl.displaySaveProgress("Overwrite Save File", "Saving...", "Game Successfully Saved!");
     }
 
-    
+    /**
+     * goes back to home screen.
+     * 
+     * @param event 
+     */
     @FXML
     protected void goBack(ActionEvent event) {
         mainControl.goToHomeScreen(game.getPlayer(), game.getPlayer().getLocation());
