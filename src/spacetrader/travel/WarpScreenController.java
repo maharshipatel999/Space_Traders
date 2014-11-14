@@ -110,7 +110,7 @@ public class WarpScreenController extends SceneController implements Initializab
      * Continues setUpWarping sequence for Player where he or she left off.
      */
     public void continueTraveling() {
-        repairShip(player);
+        //repairShip(player);
         checkForEncounter();
     }
 
