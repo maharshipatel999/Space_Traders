@@ -6,25 +6,27 @@
 package spacetrader.system;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
-import spacetrader.Player;
-import spacetrader.planets.Planet;
-import spacetrader.ships.PlayerShip;
-import spacetrader.ships.ShieldType;
-import spacetrader.ships.WeaponType;
-import spacetrader.ships.GadgetType;
-import spacetrader.ships.Shield;
-import spacetrader.ships.Weapon;
-import spacetrader.ships.Gadget;
-import spacetrader.planets.TechLevel;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import spacetrader.Player;
+import spacetrader.SkillList.Skill;
 import spacetrader.exceptions.TooManyRadioButtonsCheckedException;
-import java.util.ArrayList;
+import spacetrader.planets.Planet;
+import spacetrader.planets.TechLevel;
+import spacetrader.ships.Equipment;
+import spacetrader.ships.Gadget;
+import spacetrader.ships.GadgetType;
+import spacetrader.ships.PlayerShip;
+import spacetrader.ships.Shield;
+import spacetrader.ships.ShieldType;
+import spacetrader.ships.Weapon;
+import spacetrader.ships.WeaponType;
 
 /**
  * FXML Controller class
@@ -422,8 +424,8 @@ public class GadgetScreenController
     private void fillDescription(ShieldType s) {
         name.setText(s.toString());
         type.setText("SHIELD");
-        buyPrice.setText("₪" + s.price());
-        sellPrice.setText("₪" + (s.price() * .75));
+        buyPrice.setText("₪" + buyingPrice(new Shield(s)));
+        sellPrice.setText("₪" + sellingPrice(new Shield(s)));
         String val = "" + s.power();
         power.setText(val);
         charge.setText("N/A");
@@ -433,8 +435,8 @@ public class GadgetScreenController
     private void fillDescription(WeaponType w) {
         name.setText(w.toString());
         type.setText("WEAPON");
-        buyPrice.setText("₪" + w.price());
-        sellPrice.setText("₪" + (w.price() * .75));
+        buyPrice.setText("₪" + buyingPrice(new Weapon(w)));
+        sellPrice.setText("₪" + sellingPrice(new Weapon(w)));
         String val = "" + w.power();
         power.setText(val);
         charge.setText("N/A");
@@ -444,8 +446,8 @@ public class GadgetScreenController
     private void fillDescription(GadgetType g) {
         name.setText(g.toString());
         type.setText("GADGET");
-        buyPrice.setText("₪" + g.price());
-        sellPrice.setText("₪" + (g.price() * .75));
+        buyPrice.setText("₪" + buyingPrice(new Gadget(g)));
+        sellPrice.setText("₪" + sellingPrice(new Gadget(g)));
         power.setText("N/A");
         charge.setText("N/A");
     }
@@ -807,7 +809,20 @@ public class GadgetScreenController
             gadget1RBCurrentInventory.setVisible(false);
             gadget1Text.setVisible(false);
         }
-        
+    }
+    
+    /**
+     * Price of buying a good.
+     */
+    private int buyingPrice(Equipment equip) {
+        return equip.getBuyPrice(player.getEffectiveSkill(Skill.TRADER));
+    }
+    
+    /**
+     * Price of selling a good.
+     */
+    private int sellingPrice(Equipment equip) {
+        return equip.getSellPrice(player.getEffectiveSkill(Skill.TRADER));
     }
 
 }

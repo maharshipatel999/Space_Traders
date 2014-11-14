@@ -10,6 +10,7 @@ import spacetrader.PoliceRecord;
 import spacetrader.Reputation;
 import static spacetrader.Tools.rand;
 import spacetrader.commerce.TradeGood;
+import spacetrader.planets.Planet;
 import spacetrader.ships.ShipType;
 
 /**
@@ -164,11 +165,12 @@ public class PoliceEncounter extends Encounter {
      * Calculates the amount of bribe, police on the player's planet will ask
      * for.
      *
+     * @param destination
      * @return the bribe the police are asking for
      */
-    public int calculcateBribe() {
+    public int calculcateBribe(Planet destination) {
         int bribe = getPlayer().getCurrentWorth();
-        bribe /= 10 + (10 * getPlayer().getLocation().getPoliticalSystem().bribeLevel()); //This should be the destination planet, not the current planet.
+        bribe /= 10 + (10 * destination.getPoliticalSystem().bribeLevel());
         return bribe;
     }
 

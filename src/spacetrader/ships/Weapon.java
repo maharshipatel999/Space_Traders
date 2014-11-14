@@ -22,14 +22,14 @@ public class Weapon extends Equipment {
         this.type = type;
     }
 
-    /**
-     * Gets the name of this weapon.
-     *
-     * @return the name of this weapon's type
-     */
     @Override
     public String getName() {
         return type.toString();
+    }
+
+    @Override
+    public int getBasePrice() {
+        return type.price();
     }
 
     /**
@@ -50,11 +50,6 @@ public class Weapon extends Equipment {
         return type;
     }
 
-    /**
-     * Gets a String representation of this object.
-     *
-     * @return the String version of this instance
-     */
     @Override
     public String toString() {
         return type.toString();

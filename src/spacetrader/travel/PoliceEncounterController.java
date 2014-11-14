@@ -45,7 +45,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             }
 
         }
-        infoText.setText("You attack!");
+        mainControl.displayAlertMessage("Attack!", null, "You agrresively start attacking the police!");
         mainControl.goBackToWarpScreen();
     }
 
@@ -99,7 +99,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         } else {
             mainControl.displayAlertMessage("Bribery Offer", null, "I will offer you a bribery!");
         }
-        
+
         mainControl.goBackToWarpScreen();
     }
 
