@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
@@ -42,6 +43,8 @@ public class StartScreenController extends SceneController implements Initializa
     @FXML
     private Label playerMoney;
     @FXML
+    private Label playerDebt;
+    @FXML
     private Label playerPoliceRecord;
     @FXML
     private Label playerRep;
@@ -57,6 +60,15 @@ public class StartScreenController extends SceneController implements Initializa
     private Label playerEngineer;
     @FXML
     private Label playerInvestor;
+
+    @FXML
+    private Label insuranceMessage;
+    @FXML
+    private Label insuranceDailyCost;
+    @FXML
+    private Label insuranceNoClaim;
+    @FXML
+    private HBox insuranceInfoBox;
 
     @FXML
     private Label cargoSlots;
@@ -75,14 +87,13 @@ public class StartScreenController extends SceneController implements Initializa
     private Label shipShieldSlots;
     @FXML
     private Label shipGadgetSlots;
-    @FXML 
+    @FXML
     private ProgressBar fuelBar;
     @FXML
     private ProgressBar hullBar;
 
     private Player player;
     private Stage startStage;
-    private MainController mainControl;
 
     /**
      * Initializes the controller class.
@@ -97,29 +108,36 @@ public class StartScreenController extends SceneController implements Initializa
      *
      * @param player the player who's stats should be displayed
      * @param myStage the window which should display the start screen
-     * @param mainControl the main controller which directs the game
      */
-    public void setUpPlayerStats(Player player, Stage myStage, MainController mainControl) {
+    public void setUpPlayerStats(Player player, Stage myStage) {
         this.startStage = myStage;
         this.player = player;
-        this.mainControl = mainControl;
         PlayerShip ship = player.getShip();
 
         playerName.setText(player.getName());
         playerMoney.setText("₪" + player.getWallet().getCredits());
+        playerDebt.setText("₪" + player.getWallet().getDebt());
         playerRep.setText(player.getReputation().toString());
         playerPoliceRecord.setText(player.getPoliceRecord().toString());
-        playerTotalKills.setText("" + (player.getTraderKills() + player.getPoliceKills() + player.getPirateKills()));
-        playerPilot.setText("" + player.getSkill(Skill.PILOT));
-        playerFighter.setText("" + player.getSkill(Skill.FIGHTER));
-        playerTrader.setText("" + player.getSkill(Skill.TRADER));
-        playerEngineer.setText("" + player.getSkill(Skill.ENGINEER));
-        playerInvestor.setText("" + player.getSkill(Skill.INVESTOR));
+        playerTotalKills.setText(String.valueOf(player.getTraderKills() + player.getPoliceKills() + player.getPirateKills()));
+        playerPilot.setText(String.valueOf(player.getSkill(Skill.PILOT)));
+        playerFighter.setText(String.valueOf(player.getSkill(Skill.FIGHTER)));
+        playerTrader.setText(String.valueOf(player.getSkill(Skill.TRADER)));
+        playerEngineer.setText(String.valueOf(player.getSkill(Skill.ENGINEER)));
+        playerInvestor.setText(String.valueOf(player.getSkill(Skill.INVESTOR)));
 
-        shipType.setText("" + ship.getType().toString());
+        if (player.getInsuranceCost() > 0) {
+            insuranceMessage.setText("You have insurance.");
+            insuranceDailyCost.setText(String.valueOf(player.getInsuranceCost()));
+            insuranceNoClaim.setText("0");
+        } else {
+            insuranceInfoBox.setVisible(false);
+        }
+
+        shipType.setText(ship.getType().toString());
         shipFuel.setText(ship.getTank().getFuelAmount() + "/" + ship.getTank().getMaxFuel());
         fuelBar.setProgress((ship.getTank().getFuelAmount() / ship.getTank().getMaxFuel() * 100));
-        shipHull.setText(ship.getHullStrength() + "/" + ship.getMaxHullStrength());
+        shipHull.setText((100 * ship.getHullStrength() / ship.getMaxHullStrength()) + "%");
         hullBar.setProgress((ship.getHullStrength() / ship.getMaxHullStrength() * 100));
         shipWeaponSlots.setText(ship.getWeapons().getNumFilledSlots() + "/" + ship.getType().weaponSlots());
         shipShieldSlots.setText(ship.getShields().getNumFilledSlots() + "/" + ship.getType().shieldSlots());
@@ -132,7 +150,7 @@ public class StartScreenController extends SceneController implements Initializa
             TradeGood good = tradeGoodList.get(i);
             int quantity = ship.getCargo().getQuantity(good);
             if (quantity > 0) {
-                inventory.addRow(3 + i, new Label(tradeGoodList.get(i).type()), new Label("" + quantity));
+                inventory.addRow(3 + i, new Label(tradeGoodList.get(i).type()), new Label(String.valueOf(quantity)));
             }
         }
     }
@@ -170,14 +188,14 @@ public class StartScreenController extends SceneController implements Initializa
                     player.getWallet().add(10000);
                     break;
                 /*case "Show Police Encounter":
-                    mainControl.goToEncounterScreen(new PoliceEncounter(player, universe.getPlanet("Pallet").getPoliticalSystem().getStrengthOfTraders()));
-                    break;
-                case "Show Pirate Encounter":
-                    mainControl.goToEncounterScreen(new PirateEncounter(player));
-                    break;
-                case "Show Trader Encounter":
-                    mainControl.goToEncounterScreen(new TraderEncounter(player));
-                    break;*/
+                 mainControl.goToEncounterScreen(new PoliceEncounter(player, universe.getPlanet("Pallet").getPoliticalSystem().getStrengthOfTraders()));
+                 break;
+                 case "Show Pirate Encounter":
+                 mainControl.goToEncounterScreen(new PirateEncounter(player));
+                 break;
+                 case "Show Trader Encounter":
+                 mainControl.goToEncounterScreen(new TraderEncounter(player));
+                 break;*/
                 case "Show Ship Info":
                     Stage stage = new Stage();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/ships/ShipInfoPane.fxml"));

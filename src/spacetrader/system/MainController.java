@@ -396,7 +396,8 @@ public class MainController {
         StartScreenController control;
         control = (StartScreenController) extractControllerFromFXML(
                 "/spacetrader/StartScreen.fxml", startStage);
-        control.setUpPlayerStats(game.getPlayer(), startStage, this);
+        control.setMainControl(this);
+        control.setUpPlayerStats(game.getPlayer(), startStage);
         startStage.setScene(control.getScene());
         startStage.show();
     }
