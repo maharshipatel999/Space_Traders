@@ -42,6 +42,8 @@ public class FinanceScreenController
     private Button payLoan;
     @FXML
     private Button backButton;
+    @FXML
+    private TextField payBackAmt;
 
     private Player player;
     private Planet planet;
@@ -80,14 +82,25 @@ public class FinanceScreenController
      */
     @FXML
     private void buyLoan() {
+        String loanStr = loanAmt.getText();
         try {
-            int loan = Integer.parseInt(loanAmt.getText());
+            int loan = Integer.parseInt(loanStr);
+            if (loan > 1000) {
+                loanAmt.clear();
+                mainControl.displayAlertMessage("Alert!", "Incorrect entry!",
+                        "Please enter a number 1 - 1000 only!");
+                return;
+            }
             player.setDebt(player.getDebt() + loan);
             player.getWallet().add(loan);
-            currentBalance.setText("Current balance: ₪" + player.getWallet().getCredits());
+            currentBalance.setText("Current balance: ₪" 
+                    + player.getWallet().getCredits());
             debt.setText("₪" + player.getDebt());
+            loanAmt.clear();
         } catch (NumberFormatException e) {
-            mainControl.displayAlertMessage("Illegal Loan Amount", null, "You must input a legal loan amount.");
+            loanAmt.clear();
+            mainControl.displayAlertMessage("Alert!", "Incorrect entry!",
+                    "Please enter a number 1 - 1000 only!");
         }
     }
 
@@ -96,11 +109,26 @@ public class FinanceScreenController
      */
     @FXML
     private void payLoan() {
-        player.getWallet().remove(player.getDebt());
-        player.setDebt(0);
-        currentBalance.setText("Current balance: ₪" 
-                + player.getWallet().getCredits());
-        debt.setText("₪" + player.getDebt());
+        String amtStr = payBackAmt.getText();
+        try {
+            int amt = Integer.parseInt(amtStr);
+            if (amt > player.getWallet().getCredits()) {
+                loanAmt.clear();
+                mainControl.displayAlertMessage("Alert!", "Incorrect entry!",
+                    "You do not have enough money to pay that much!");
+                return;
+            }
+            player.getWallet().remove(amt);
+            player.setDebt(player.getDebt() - amt);
+            currentBalance.setText("Current balance: ₪" 
+                    + player.getWallet().getCredits());
+            debt.setText("₪" + player.getDebt());
+            payBackAmt.clear();
+        } catch (NumberFormatException e) {
+            payBackAmt.clear();
+            mainControl.displayAlertMessage("Alert!", "Incorrect entry!",
+                    "Please enter a valid numerical value!");
+        }  
     }
 
     /**

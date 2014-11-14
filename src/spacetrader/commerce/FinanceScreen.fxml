@@ -48,6 +48,19 @@
                         </Label>
                      </children>
                   </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Enter desired amount to pay back: ">
+                           <font>
+                              <Font name="Copperplate Gothic Light" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="payBackAmt" maxWidth="50.0" prefHeight="20.0" prefWidth="390.0" />
+                     </children>
+                  </HBox>
                   <Button fx:id="payLoan" mnemonicParsing="false" onAction="#payLoan" text="Pay Back Existing Loan">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="15.0" />
