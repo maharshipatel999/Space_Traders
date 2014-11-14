@@ -199,8 +199,9 @@
                               <RadioButton fx:id="cloakingDeviceRBBuy" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#selectEquipment" prefHeight="55.0" prefWidth="79.0" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.valignment="CENTER" />
                           </children>
                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.66665649414062" minWidth="10.0" prefWidth="53.33331298828125" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.33334350585938" minWidth="10.0" prefWidth="176.66668701171875" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.66665649414062" minWidth="10.0" prefWidth="46.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="160.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.33334350585938" minWidth="7.0" prefWidth="18.0" />
                           </columnConstraints>
                           <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -242,8 +243,8 @@
                   </Separator>
                       <GridPane prefHeight="266.0" prefWidth="292.0">
                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="130.6666259765625" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="125.3333740234375" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="119.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="123.0" />
                           </columnConstraints>
                           <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
