@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -24,7 +25,7 @@
          <center>
             <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane prefHeight="296.0" prefWidth="191.0">
+                  <GridPane prefHeight="265.0" prefWidth="191.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="99.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="75.0" prefWidth="92.0" />
@@ -64,16 +65,15 @@
                         <Label prefHeight="21.0" prefWidth="71.0" text="Trader:" GridPane.rowIndex="10" />
                         <Label prefHeight="21.0" prefWidth="80.0" text="Investor:" GridPane.rowIndex="12" />
                         <Label prefHeight="21.0" prefWidth="79.0" text="Engineer:" GridPane.rowIndex="11" />
-                        <Label text="Skills" GridPane.columnSpan="2" GridPane.rowIndex="6">
+                        <Label prefHeight="28.0" prefWidth="192.0" text="Skills" GridPane.columnSpan="2" GridPane.rowIndex="6">
                            <padding>
-                              <Insets left="10.0" />
+                              <Insets left="55.0" />
                            </padding>
                            <font>
-                              <Font size="19.0" />
+                              <Font size="22.0" />
                            </font>
                         </Label>
                         <Label prefHeight="21.0" prefWidth="62.0" text="Pilot:" GridPane.rowIndex="8" />
-                        <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                         <Label prefHeight="21.0" prefWidth="64.0" text="Money:" GridPane.rowIndex="2" />
                         <Label fx:id="playerName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="playerMoney" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -91,7 +91,7 @@
                         <Insets left="10.0" />
                      </FlowPane.margin>
                   </GridPane>
-                  <GridPane prefHeight="296.0" prefWidth="191.0">
+                  <GridPane prefHeight="336.0" prefWidth="191.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Space Ship" GridPane.columnSpan="2">
                            <font>
@@ -116,7 +116,7 @@
                         <Label fx:id="shipShieldSlots" text="0/0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Label fx:id="shipGadgetSlots" text="0/0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <ProgressBar fx:id="fuelBar" prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ProgressBar prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ProgressBar fx:id="hullBar" prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label fx:id="shipHull" text="0/0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                         <Label fx:id="shipFuel" text="0/0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                      </children>
@@ -126,14 +126,15 @@
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="42.0" minHeight="-Infinity" prefHeight="42.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="56.0" minHeight="-Infinity" prefHeight="41.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="51.0" minHeight="-Infinity" prefHeight="42.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="52.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="83.0" minHeight="7.0" prefHeight="57.0" />
+                        <RowConstraints maxHeight="79.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <GridPane fx:id="inventory" minHeight="-Infinity" prefWidth="200.0" vgap="5.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="102.0" />

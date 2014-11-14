@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -74,6 +75,10 @@ public class StartScreenController extends SceneController implements Initializa
     private Label shipShieldSlots;
     @FXML
     private Label shipGadgetSlots;
+    @FXML 
+    private ProgressBar fuelBar;
+    @FXML
+    private ProgressBar hullBar;
 
     private Player player;
     private Stage startStage;
@@ -113,7 +118,9 @@ public class StartScreenController extends SceneController implements Initializa
 
         shipType.setText("" + ship.getType().toString());
         shipFuel.setText(ship.getTank().getFuelAmount() + "/" + ship.getTank().getMaxFuel());
+        fuelBar.setProgress((ship.getTank().getFuelAmount() / ship.getTank().getMaxFuel() * 100));
         shipHull.setText(ship.getHullStrength() + "/" + ship.getMaxHullStrength());
+        hullBar.setProgress((ship.getHullStrength() / ship.getMaxHullStrength() * 100));
         shipWeaponSlots.setText(ship.getWeapons().getNumFilledSlots() + "/" + ship.getType().weaponSlots());
         shipShieldSlots.setText(ship.getShields().getNumFilledSlots() + "/" + ship.getType().shieldSlots());
         shipGadgetSlots.setText(ship.getGadgets().getNumFilledSlots() + "/" + ship.getType().gadgetSlots());
