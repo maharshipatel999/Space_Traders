@@ -46,6 +46,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
 
         }
         infoText.setText("You attack!");
+        mainControl.goBackToWarpScreen();
     }
 
     /**
@@ -78,6 +79,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             }
         }
         infoText.setText("You try to flee!");
+        mainControl.goBackToWarpScreen();
     }
 
     /**
@@ -97,6 +99,8 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         } else {
             mainControl.displayAlertMessage("Bribery Offer", null, "I will offer you a bribery!");
         }
+        
+        mainControl.goBackToWarpScreen();
     }
 
     /**

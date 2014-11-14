@@ -177,7 +177,7 @@ public class ShipYardScreenController
             double damageFraction = (maxHull - currHull) / (double) maxHull;
             int repairAmount = (damageFraction >= .10) 
                     ? (maxHull / 10) : (maxHull - currHull);
-            incHullButton.setText("Repair " + ((repairAmount / maxHull) * 100) 
+            incHullButton.setText("Repair " + (((double) repairAmount / maxHull) * 100)
                     + "% of Hull: ₪" + (repairAmount * repairCost));
         }
     }
