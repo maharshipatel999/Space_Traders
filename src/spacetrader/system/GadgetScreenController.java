@@ -161,7 +161,7 @@ public class GadgetScreenController
             }
         } else if (numWeaponSlots == 2) {
             weapon3RBCurrentInventory.setVisible(false);
-            weapon3Text.setVisible(false);
+            weapon3Text.getParent().setVisible(false);
             if (numWeaponSlotsFilled == 2) {
                 weapon2Text.setText(ship.getWeapons().getItem(1).getName());
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
@@ -174,9 +174,9 @@ public class GadgetScreenController
             }
         } else if (numWeaponSlots == 1) {
             weapon3RBCurrentInventory.setVisible(false);
-            weapon3Text.setVisible(false);
+            weapon3Text.getParent().setVisible(false);
             weapon2RBCurrentInventory.setVisible(false);
-            weapon2Text.setVisible(false);
+            weapon2Text.getParent().setVisible(false);
             if (numWeaponSlotsFilled == 1) {
                 weapon1Text.setText(ship.getWeapons().getItem(0).getName());
             } else {
@@ -184,11 +184,11 @@ public class GadgetScreenController
             }
         } else {
             weapon3RBCurrentInventory.setVisible(false);
-            weapon3Text.setVisible(false);
+            weapon3Text.getParent().setVisible(false);
             weapon2RBCurrentInventory.setVisible(false);
-            weapon2Text.setVisible(false);
+            weapon2Text.getParent().setVisible(false);
             weapon1RBCurrentInventory.setVisible(false);
-            weapon1Text.setVisible(false);
+            weapon1Text.getParent().setVisible(false);
         }
 
         if (numShieldSlots == 3) {
@@ -211,7 +211,7 @@ public class GadgetScreenController
             }
         } else if (numShieldSlots == 2) {
             shield3RBCurrentInventory.setVisible(false);
-            shield3Text.setVisible(false);
+            shield3Text.getParent().setVisible(false);
             if (numShieldSlotsFilled == 2) {
                 shield2Text.setText(ship.getShields().getItem(1).getName());
                 shield1Text.setText(ship.getShields().getItem(0).getName());
@@ -224,9 +224,9 @@ public class GadgetScreenController
             }
         } else if (numShieldSlots == 1) {
             shield3RBCurrentInventory.setVisible(false);
-            shield3Text.setVisible(false);
+            shield3Text.getParent().setVisible(false);
             shield2RBCurrentInventory.setVisible(false);
-            shield2Text.setVisible(false);
+            shield2Text.getParent().setVisible(false);
             if (numShieldSlotsFilled == 1) {
                 shield1Text.setText(ship.getShields().getItem(0).getName());
             } else {
@@ -234,11 +234,11 @@ public class GadgetScreenController
             }
         } else {
             shield3RBCurrentInventory.setVisible(false);
-            shield3Text.setVisible(false);
+            shield3Text.getParent().setVisible(false);
             shield2RBCurrentInventory.setVisible(false);
-            shield2Text.setVisible(false);
+            shield2Text.getParent().setVisible(false);
             shield1RBCurrentInventory.setVisible(false);
-            shield1Text.setVisible(false);
+            shield1Text.getParent().setVisible(false);
         }
 
         if (numGadgetSlots == 3) {
@@ -261,7 +261,7 @@ public class GadgetScreenController
             }
         } else if (numGadgetSlots == 2) {
             gadget3RBCurrentInventory.setVisible(false);
-            gadget3Text.setVisible(false);
+            gadget3Text.getParent().setVisible(false);
             if (numGadgetSlotsFilled == 2) {
                 gadget2Text.setText(ship.getGadgets().getItem(1).getName());
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
@@ -274,9 +274,9 @@ public class GadgetScreenController
             }
         } else if (numGadgetSlots == 1) {
             gadget3RBCurrentInventory.setVisible(false);
-            gadget3Text.setVisible(false);
+            gadget3Text.getParent().setVisible(false);
             gadget2RBCurrentInventory.setVisible(false);
-            gadget2Text.setVisible(false);
+            gadget2Text.getParent().setVisible(false);
             if (numGadgetSlotsFilled == 1) {
                 gadget1Text.setText(ship.getGadgets().getItem(0).getName());
             } else {
@@ -284,16 +284,16 @@ public class GadgetScreenController
             }
         } else {
             gadget3RBCurrentInventory.setVisible(false);
-            gadget3Text.setVisible(false);
+            gadget3Text.getParent().setVisible(false);
             gadget2RBCurrentInventory.setVisible(false);
-            gadget2Text.setVisible(false);
+            gadget2Text.getParent().setVisible(false);
             gadget1RBCurrentInventory.setVisible(false);
-            gadget1Text.setVisible(false);
+            gadget1Text.getParent().setVisible(false);
         }
 
         TechLevel techLevel = planet.getLevel();
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println(planet.getLevel().toString());
+        //System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~");
+        //System.out.println(planet.getLevel().toString());
 
         switch (techLevel) {
             case PRE_AGRICULTURE:
@@ -491,11 +491,11 @@ public class GadgetScreenController
         if (!wrongButton) {
             boolean buy = false;
             boolean bought = false;
-            System.out.println("You got: " + (player.getWallet().getCredits() + "They got: " + Double.parseDouble(buyPrice.getText().substring(1))));
+            //System.out.println("You got: " + (player.getWallet().getCredits() + "They got: " + Double.parseDouble(buyPrice.getText().substring(1))));
             if ((player.getWallet().getCredits() >= Double.parseDouble(buyPrice.getText().substring(1)))) {
                 buy = true;
             } else {
-                mainControl.displayAlertMessage("Transaction Unsuccessful", null, "n33d M0re C4sh M0ney");
+                mainControl.displayAlertMessage("Transaction Unsuccessful", null, "You do not have enough money to make this purchase.");
             }
             // do a check for space
             if (type.getText().equals("GADGET") && buy) {
@@ -504,7 +504,7 @@ public class GadgetScreenController
                     if (name.getText().equals("5 Extra Cargo Bays")) {
                         player.getShip().getGadgets().addItem(new Gadget(GadgetType.EXTRA_CARGO));
                         player.getShip().getCargo().increaseCapacity();
-                        System.out.println("Name: " + ship.getGadgets().getItem(0).getName());
+                        //System.out.println("Name: " + ship.getGadgets().getItem(0).getName());
 
                         bought = true;
                     } else if (name.getText().equals("Auto-Repair System")) {
@@ -637,10 +637,10 @@ public class GadgetScreenController
             setFunds();
             int i = 0;
             while (i < player.getShip().getGadgets().getNumFilledSlots()) {
-                System.out.println(player.getShip().getGadgets().getItem(i).getName());
+                //System.out.println(player.getShip().getGadgets().getItem(i).getName());
                 i++;
             }
-            System.out.println(name.getText());
+            //System.out.println(name.getText());
 
         } else {
             mainControl.displayAlertMessage("Wrong Button Pressed", null, "Click Buy to BUY and Sell to SELL. Derps");
