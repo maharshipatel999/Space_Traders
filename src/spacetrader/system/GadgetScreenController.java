@@ -495,7 +495,7 @@ public class GadgetScreenController
             if ((player.getWallet().getCredits() >= Double.parseDouble(buyPrice.getText().substring(1)))) {
                 buy = true;
             } else {
-                mainControl.displayAlertMessage("Transaction Unsuccessful", "n33d M0re C4sh M0ney");
+                mainControl.displayAlertMessage("Transaction Unsuccessful", null, "n33d M0re C4sh M0ney");
             }
             // do a check for space
             if (type.getText().equals("GADGET") && buy) {
@@ -521,7 +521,7 @@ public class GadgetScreenController
                         bought = true;
                     }
                 } else {
-                    mainControl.displayAlertMessage("Transaction Unsuccessful", "Need more Gadget Space");
+                    mainControl.displayAlertMessage("Transaction Unsuccessful", null, "Need more Gadget Space");
                 }
 
             } else if (type.getText().equals("WEAPON") && buy) {
@@ -537,7 +537,7 @@ public class GadgetScreenController
                         bought = true;
                     }
                 } else {
-                    mainControl.displayAlertMessage("Transaction Unsuccessful", "Need more Weapon Space");
+                    mainControl.displayAlertMessage("Transaction Unsuccessful", null, "Need more Weapon Space");
                 }
             } else if (type.getText().equals("SHIELD") && buy) {
                 if (!ship.getShields().isFull()) {
@@ -549,7 +549,7 @@ public class GadgetScreenController
                         bought = true;
                     }
                 } else {
-                    mainControl.displayAlertMessage("Transaction Unsuccessful", "Need more Shield Space");
+                    mainControl.displayAlertMessage("Transaction Unsuccessful", null, "Need more Shield Space");
                 }
             }
 
@@ -557,15 +557,15 @@ public class GadgetScreenController
                 player.getWallet().setCredits((int) ((player.getWallet().getCredits() - Double.parseDouble(buyPrice.getText().substring(1)))));
                 //setUpEquipmentMarketScreen(player);
                 refreshValues();
-                mainControl.displayAlertMessage("Transaction Successful", "Successfully Bought 1 " + name.getText());
+                mainControl.displayAlertMessage("Transaction Successful", null, "Successfully Bought 1 " + name.getText());
             } else if (buy) {
-                mainControl.displayAlertMessage("Unsuccessful Transaction", "Acquire more space to be able to purchase " + name.getText());
+                mainControl.displayAlertMessage("Unsuccessful Transaction", null, "Acquire more space to be able to purchase " + name.getText());
             }
 
             setFunds();
 
         } else {
-            mainControl.displayAlertMessage("Wrong Button Pressed", "Click Buy to BUY and Sell to SELL. Derps");
+            mainControl.displayAlertMessage("Wrong Button Pressed", null, "Click Buy to BUY and Sell to SELL. Derps");
         }
 
     }
@@ -643,7 +643,7 @@ public class GadgetScreenController
             System.out.println(name.getText());
 
         } else {
-            mainControl.displayAlertMessage("Wrong Button Pressed", "Click Buy to BUY and Sell to SELL. Derps");
+            mainControl.displayAlertMessage("Wrong Button Pressed", null, "Click Buy to BUY and Sell to SELL. Derps");
 
         }
 

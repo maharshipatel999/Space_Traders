@@ -11,12 +11,15 @@ import spacetrader.ships.ShipType;
 import java.io.Serializable;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Wallet;
+import spacetrader.exceptions.InsufficientFundsException;
 
 /**
  *
  * @author Seth
  */
 public class Player extends Trader implements Serializable {
+    
+    public static final int MAX_DEBT = 100000;
 
     private int debt = 0; // Current Debt
     private int insuranceCost = 0;
@@ -147,7 +150,7 @@ public class Player extends Trader implements Serializable {
     /**
      * get number of Traders killed
      *
-     * @return get number of Traders player has ckilled
+     * @return get number of Traders player has killed
      */
     public int getTraderKills() {
         return traderKills;
@@ -251,27 +254,63 @@ public class Player extends Trader implements Serializable {
     }
 
     /**
-     * Pays interest with Player
+     * Pays interest on the player's debt.
      */
     public void payInterest() {
-        int interest;
-
-        if (debt > 0) {
-            interest = Math.max(1, debt / 10);
+        if (debt > MAX_DEBT) {
+            throw new InsufficientFundsException("debt");
+        } else if (debt > 0) {
+            int interest = Math.max(1, debt / 10);
             wallet.removeForcefully(interest);
         }
     }
 
     /**
-     * Pays daily cost of insurance
+     * Pays daily cost of insurance. Can throw exception if player does not have
+     * enough money.
      */
     public void payInsuranceCost() {
         if ((insuranceCost > 0)) {
-            if (wallet.getCredits() > insuranceCost) {
-                wallet.remove(insuranceCost);
-            } else {
-                wallet.removeForcefully(insuranceCost);
-            }
+            wallet.remove(insuranceCost);
+        }
+    }
+
+    /**
+     * Pays the salaries for each of the mercenaries on the player's ship.
+     */
+    public void payMercenaries() {
+        //TODO
+    }
+
+    /**
+     * Pays all of the daily costs, such as insurance, mercenaries fees, and
+     * interest rates. Throws InsufficientFundsExceptions depending on which fee
+     * could not be paid.
+     */
+    public void payDailyFees() {
+        //store the player's money so that if they don't have enough money to
+        //pay one of their bills, their money can be restored to its original value.
+        int originalPlayerMoney = wallet.getCredits();
+
+        try {
+            payInsuranceCost();
+        } catch (InsufficientFundsException e) {
+            wallet.setCredits(originalPlayerMoney);
+            throw new InsufficientFundsException("insurance");
+        }
+
+        try {
+            payMercenaries();
+        } catch (InsufficientFundsException e) {
+            wallet.setCredits(originalPlayerMoney);
+            throw new InsufficientFundsException("mercenaries");
+        }
+
+        try {
+            payInterest();
+        } catch (InsufficientFundsException e) {
+            wallet.setCredits(originalPlayerMoney);
+            throw e;
         }
     }
 

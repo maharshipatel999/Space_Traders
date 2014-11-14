@@ -25,6 +25,7 @@ import spacetrader.SkillList.Skill;
 import static spacetrader.Tools.rand;
 import spacetrader.Universe;
 import spacetrader.commerce.PriceIncreaseEvent;
+import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
@@ -40,12 +41,11 @@ import spacetrader.travel.WarpScreenController;
  */
 public class MainController {
 
-    private SpaceTrader game;
-    private Stage stage;
+    private final SpaceTrader game;
+    private final Stage stage;
     private RandomEventGenerator eventGenerator;
 
     private WarpScreenController warpScreenControl;
-    private Scene warpScreenScene;
 
     /**
      * Creates the MainController. MainController has a reference to the main
@@ -81,11 +81,17 @@ public class MainController {
 
     /**
      * Takes care of everything that happens when a player arrives at a planet.
+     * Moves a player to a selected planet. Adjust Price Increase Events on all
+     * planets. All the planets who's tradeGood stock has been decremented
+     * should have their stock increased. The player fixes his ship's hull
+     * strength. Random events can occur at this point.
      *
      * @param source the planet the player left
      * @param destination the planet the player is arriving at
      */
     public void arriveAtPlanet(Planet source, Planet destination) {
+        game.increaseDays();
+        
         //processes time aspect of price increase events
         for (Planet planet : game.getUniverse().getPlanets()) {
             if (planet.getPriceIncDuration() > 0) {
@@ -94,20 +100,19 @@ public class MainController {
                 planet.setRandomPriceIncEvent();
             }
         }
-        game.increaseDays();
 
         //The player autofixes their ship depending on their engineer skill
         int engineerRepairs = rand.nextInt(game.getPlayer()
                 .getEffectiveSkill(Skill.ENGINEER));
         int currentHull = game.getPlayer().getShip()
                 .getHullStrength();
-        game.getPlayer().getShip().setHullStrength(currentHull 
+        game.getPlayer().getShip().setHullStrength(currentHull
                 + engineerRepairs);
 
         changePlayerLocation(destination);
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayAlertMessage("Notice!",  destination.getName() 
-                    + " is currently " 
+            displayAlertMessage("Notice!", null, destination.getName()
+                    + " is currently "
                     + destination.getPriceIncEvent().desc().toLowerCase());
         }
         if (eventGenerator == null) {
@@ -118,25 +123,52 @@ public class MainController {
         if (eventGenerator.eventOccurs()) {
             RandomEvent event = eventGenerator.getRandomEvent();
             event.doEvent();
-            displayAlertMessage("Special Event!", event.getMessage());
+            displayAlertMessage("Special Event!", null, event.getMessage());
         }
     }
 
     /**
-     * Moves a player to a selected planet. The destination planet's prices
-     * should be recalculated. Every planet in the universe who's
-     * priceIncreaseEvent counter has ran out should have it removed. If the
-     * destination planet doesn't have a priceIncreaseEvent currently, one
-     * should be randomly added based on a small probability. All the planets
-     * who's tradeGood stock has been decremented should have their stock
-     * increased. (Not every planet because then planets that are visited late
-     * in the game would have a huge stock of tradeGoods.
+     * The destination planet's prices should be recalculated. Determine if the
+     * player can pay their mercenary, interest, and insurance costs. If not,
+     * kick them back to the home screen. Adjust the player's police record and
+     * reputation. Deduct fuel from the player's ship. Finally, go to the warp
+     * screen.
      *
      * @param destination which planet the player is traveling to
      * @param source which planet the player is leaving
      */
     public void departFromPlanet(Planet source, Planet destination) {
         Player player = game.getPlayer();
+
+        try {
+            player.payDailyFees();
+        } catch (InsufficientFundsException e) {
+            String msgTitle, message;
+            switch (e.getMessage()) {
+                case "insurance":
+                    msgTitle = "Unable to Pay Insurance";
+                    message = "You do not have enough money to pay for your insurance!"
+                            + "\n\nUntil you sell your insurance, or aquire more money,"
+                            + " you will not be allowed to depart.";
+                    break;
+                case "mercenaries":
+                    msgTitle = "Unable to Pay Crew Salaries";
+                    message = "";
+                    break;
+                case "debt":
+                    msgTitle = "Too Much Debt";
+                    message = "";
+                    break;
+                default: //should never happen
+                    msgTitle = "Unknown Fee Error";
+                    message = "You have a mysterious fee which can not be paid. Sorry.";
+                    break;
+            }
+            
+            displayAlertMessage(msgTitle, null, message);
+            goToHomeScreen(player, player.getLocation());
+        }
+
         destination.getMarket().setAllPrices(game.getPlayer());
 
         //Decrease police record score if very high
@@ -158,6 +190,7 @@ public class MainController {
                 .distanceBetweenPlanets(source, destination);
         player.getShip().getTank().removeFuel(distance);
 
+        //Start doing encounters!
         goToWarpScreen(source, destination);
     }
 
@@ -212,11 +245,11 @@ public class MainController {
      * Transitions the game screen to the Welcome Screen.
      */
     public void goToWelcomeScreen() {
-        stage.setTitle("Space Traders!");
         WelcomeScreenController control;
         control = (WelcomeScreenController) extractControllerFromFXML(
                 "/spacetrader/WelcomeScreen.fxml", stage);
         stage.setScene(control.getScene());
+        stage.setTitle("Space Traders!");
         stage.show();
     }
 
@@ -241,7 +274,8 @@ public class MainController {
         control = (HomeScreenController) extractControllerFromFXML(
                 "/spacetrader/planets/HomeScreen.fxml", stage);
         control.setUpHomeScreen(player, planet);
-        stage.setScene(control.getScene());     
+        stage.setTitle("Planet Home");
+        stage.setScene(control.getScene());
     }
 
     /**
@@ -250,23 +284,23 @@ public class MainController {
      * @param planet the planet who's market we're visiting
      */
     public void goToMarketScreen(Planet planet) {
-        stage.setTitle("Welcome to the Market!");
         MarketScreenController control;
         control = (MarketScreenController) extractControllerFromFXML(
                 "/spacetrader/commerce/MarketScreen.fxml", stage);
         control.setUpMarketScreen(planet, game.getPlayer());
+        stage.setTitle("Welcome to the Market");
         stage.setScene(control.getScene());
     }
-    
+
     /**
      * Transitions the game screen to the Ship Yard Screen.
      */
     public void goToShipYardScreen() {
-        stage.setTitle("Welcome to the Ship Yard!");
         ShipYardScreenController control;
         control = (ShipYardScreenController) extractControllerFromFXML(
                 "/spacetrader/ships/ShipYardScreen.fxml", stage);
         control.setUpShipYardScreen(game.getPlayer());
+        stage.setTitle("Welcome to the Ship Yard");
         stage.setScene(control.getScene());
     }
 
@@ -274,11 +308,11 @@ public class MainController {
      * Transitions the game screen to the Ship Market.
      */
     public void goToShipMarket() {
-        stage.setTitle("Welcome to the Ship Market!");
         ShipMarketController control;
         control = (ShipMarketController) extractControllerFromFXML(
                 "/spacetrader/ships/ShipMarket.fxml", stage);
         control.setUpShipMarketScreen(game.getPlayer());
+        stage.setTitle("Welcome to the Ship Market");
         stage.setScene(control.getScene());
     }
 
@@ -286,11 +320,11 @@ public class MainController {
      * Transitions to equipment screen
      */
     public void goToEquipmentMarket() {
-        stage.setTitle("Welcome to the Equipment Market!");
         GadgetScreenController control;
         control = (GadgetScreenController) extractControllerFromFXML(
                 "/spacetrader/ships/GadgetScreen.fxml", stage);
         control.setUpEquipmentMarketScreen(game.getPlayer());
+        stage.setTitle("Welcome to the Equipment Market");
         stage.setScene(control.getScene());
 
     }
@@ -301,12 +335,12 @@ public class MainController {
      * @param planet the planet who's market we're on
      */
     public void goToSpaceMapScreen(Planet planet) {
-        stage.setTitle("Space Map!");
         SpaceMapScreenController control;
         control = (SpaceMapScreenController) extractControllerFromFXML(
                 "/spacetrader/SpaceMapScreen.fxml", stage);
         control.setUpMap(game.getPlayer(), planet,
                 game.getUniverse().getPlanets());
+        stage.setTitle("Galactic Planet Map");
         stage.setScene(control.getScene());
     }
 
@@ -317,9 +351,9 @@ public class MainController {
      * @param dest the planet we are going to
      */
     public void goToWarpScreen(Planet source, Planet dest) {
+        
+        this.warpScreenControl = (WarpScreenController) extractControllerFromFXML("/spacetrader/travel/WarpScreen.fxml", stage);
         stage.setTitle("Traveling to " + dest.getName());
-        this.warpScreenControl = (WarpScreenController) 
-                extractControllerFromFXML("/spacetrader/travel/WarpScreen.fxml", stage);
         stage.setScene(this.warpScreenControl.getScene());
         this.warpScreenControl.setUpWarping(source, dest, game.getPlayer());
     }
@@ -343,11 +377,10 @@ public class MainController {
      * @param encounter the encounter which is currently getting handled
      */
     public void goToEncounterScreen(Encounter encounter) {
-        stage.setTitle("Space Encounter!");
         EncounterScreenController control;
-        control = (EncounterScreenController) 
-                extractControllerFromFXML(encounter.getFXMLScene(), stage);
+        control = (EncounterScreenController) extractControllerFromFXML(encounter.getFXMLScene(), stage);
         control.setEncounter(encounter);
+        //stage.setTitle("Space Encounter!");
         stage.setScene(control.getScene());
     }
 
@@ -372,11 +405,11 @@ public class MainController {
      * Transitions the game screen to the Overwrite Screen.
      */
     public void goToOverwriteScreen() {
-        stage.setTitle("Save Game!");
         OverwriteScreenController control;
         control = (OverwriteScreenController) extractControllerFromFXML(
                 "/spacetrader/persistence/OverwriteScreen.fxml", stage);
         control.setUpSaveScreen(game);
+        stage.setTitle("Save Game!");
         stage.setScene(control.getScene());
     }
 
@@ -384,34 +417,35 @@ public class MainController {
      * Transitions the game screen to the Reload Screen.
      */
     public void goToReloadScreen() {
-        stage.setTitle("Reload Game!");
         ReloadGameScreenController control;
         control = (ReloadGameScreenController) extractControllerFromFXML(
                 "/spacetrader/persistence/ReloadGameScreen.fxml", stage);
         control.setUpReloadScreen(game);
+        stage.setTitle("Reload Game!");
         stage.setScene(control.getScene());
     }
-    
+
     /**
      * Transitions the game screen to the Finance Screen.
-     * 
+     *
      * @param planet planet to set up finance screen for
      */
     public void goToFinanceScreen(Planet planet) {
-        stage.setTitle("Welcome to Bank of " + planet.getName() + "!");
         FinanceScreenController control;
         control = (FinanceScreenController) extractControllerFromFXML("/spacetrader/commerce/FinanceScreen.fxml", stage);
         control.setUpFinanceScreen(game.getPlayer());
+        stage.setTitle("Welcome to Bank of " + planet.getName() + "!");
         stage.setScene(control.getScene());
     }
 
     /**
      * Display alert message based on passed in string.
-     * 
+     *
      * @param alertTitle title of state
+     * @param mastHead the value of mastHead
      * @param alert alert message
      */
-    public void displayAlertMessage(String alertTitle, String alert) {
+    public void displayAlertMessage(String alertTitle, String mastHead, String alert) {
         Dialogs.create()
                 .owner(stage)
                 .title(alertTitle)
@@ -422,9 +456,9 @@ public class MainController {
 
     /**
      * Display yes-no confirmation.
-     * 
+     *
      * @param optionsTitle title of state
-     * @param mastHead 
+     * @param mastHead
      * @param message message to display
      * @return Action
      */
@@ -442,7 +476,7 @@ public class MainController {
 
     /**
      * Display progress bar.
-     * 
+     *
      * @param progressTitle title of state
      * @param service
      */

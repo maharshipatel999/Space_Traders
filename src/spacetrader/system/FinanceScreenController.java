@@ -87,7 +87,7 @@ public class FinanceScreenController
             currentBalance.setText("Current balance: ₪" + player.getWallet().getCredits());
             debt.setText("₪" + player.getDebt());
         } catch (NumberFormatException e) {
-            mainControl.displayAlertMessage("Illegal Loan Amount", "You must input a legal loan amount.");
+            mainControl.displayAlertMessage("Illegal Loan Amount", null, "You must input a legal loan amount.");
         }
     }
 

@@ -200,12 +200,12 @@ public class ShipMarketController
             player.setShip(new PlayerShip(shipTypes[selectedShip]));
             player.getShip().getCargo().addCargoContents(oldCargo);
 
-            mainControl.displayAlertMessage(null,
+            mainControl.displayAlertMessage(null, null,
                     "Congratulations on your new ship! ");
 
             goBackToShipYardScreen();
         } else {
-            mainControl.displayAlertMessage("Acquire More Cash!",
+            mainControl.displayAlertMessage("Acquire More Cash!", null,
                     "You do not have enough credits to purchase this ship!");
         }
     }

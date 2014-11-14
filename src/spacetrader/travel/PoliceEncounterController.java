@@ -58,9 +58,9 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         boolean inspectionFailed = ((PoliceEncounter) encounter).inspectPlayer();
 
         if (inspectionFailed) {
-            mainControl.displayAlertMessage("Inspection Failed!", "The Customs Police took all the illegal goods from your ship, and sent you on your way.");
+            mainControl.displayAlertMessage("Inspection Failed!", null, "The Customs Police took all the illegal goods from your ship, and sent you on your way.");
         } else {
-            mainControl.displayAlertMessage("Inspection Passed!", "The Police find nothing illegal in your cargo holds and appologize for the inconvience.");
+            mainControl.displayAlertMessage("Inspection Passed!", null, "The Police find nothing illegal in your cargo holds and appologize for the inconvience.");
         }
         mainControl.goBackToWarpScreen();
     }
@@ -93,9 +93,9 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             }
         }
         if (encounter.getPlayer().getLocation().getPoliticalSystem().bribeLevel() <= 0) {
-            mainControl.displayAlertMessage("Bribery Failed!", "These officers cannot be bribed.");
+            mainControl.displayAlertMessage("Bribery Failed!", null, "These officers cannot be bribed.");
         } else {
-            mainControl.displayAlertMessage("Bribery Offer", "I will offer you a bribery!");
+            mainControl.displayAlertMessage("Bribery Offer", null, "I will offer you a bribery!");
         }
     }
 

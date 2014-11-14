@@ -5,11 +5,13 @@
  */
 package spacetrader.planets;
 
+import java.io.Serializable;
+
 /**
  *
  * @author maharshipatel999
  */
-public class Wormhole {
+public class Wormhole implements Serializable {
 
     private Planet source;
     private Planet destination;

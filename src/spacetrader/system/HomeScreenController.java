@@ -42,15 +42,13 @@ public class HomeScreenController
     /**
      * Customizes text on homes screen based on player and planet names
      *
+     * @param player the game's player
      * @param planet planet that player is currently on
      */
     public void setUpHomeScreen(Player player, Planet planet) {
         this.planet = planet;
         this.player = player;
-        
-        player.payInsuranceCost();
-        player.payInterest();
-        
+
         String description = String
                 .format("%s\n\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
                 planet.getName(), planet.getLocation().x,

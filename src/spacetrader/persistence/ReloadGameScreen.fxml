@@ -16,27 +16,27 @@
             <Image url="@../../resources/images/space%20image.jpg" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="252.0" layoutY="97.0" prefHeight="336.0" prefWidth="241.0" spacing="30.0">
+      <VBox alignment="CENTER" layoutX="-1.0" layoutY="72.0" prefHeight="471.0" prefWidth="745.0" spacing="30.0">
          <children>
-            <Button fx:id="game1" mnemonicParsing="false" onAction="#reloadGame1" text="Game 1">
+            <Button fx:id="game1" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#reloadGame1" text="Empty Game Slot">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="20.0" />
+                  <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="game2" mnemonicParsing="false" onAction="#reloadGame2" text="Game 2">
+            <Button fx:id="game2" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#reloadGame2" text="Empty Game Slot">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="20.0" />
+                  <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="game3" mnemonicParsing="false" onAction="#reloadGame3" text="Game 3">
+            <Button fx:id="game3" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#reloadGame3" text="Empty Game Slot">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="20.0" />
+                  <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -47,7 +47,7 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <Text fill="WHITE" layoutX="167.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to reload!" textAlignment="CENTER">
+      <Text fill="WHITE" layoutX="-1.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to reload!" textAlignment="CENTER" wrappingWidth="745.0">
          <font>
             <Font name="Segoe Script" size="36.0" />
          </font>

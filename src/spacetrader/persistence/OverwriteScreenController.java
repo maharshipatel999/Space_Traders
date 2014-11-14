@@ -5,15 +5,18 @@
  */
 package spacetrader.persistence;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import spacetrader.Player;
 import spacetrader.system.SceneController;
 import spacetrader.system.SpaceTrader;
 
@@ -23,6 +26,9 @@ import spacetrader.system.SpaceTrader;
  * @author nkaru_000
  */
 public class OverwriteScreenController extends SceneController implements Initializable {
+
+    @FXML
+    private Button player1, player2, player3;
 
     private PlayerSlots slots;
     private SpaceTrader game;
@@ -34,10 +40,32 @@ public class OverwriteScreenController extends SceneController implements Initia
      */
     public void setUpSaveScreen(SpaceTrader game) {
         this.game = game;
+
+        try {
+            slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
+            if (slots.getPlayer1() != null) {
+                Player player = (Player) slots.getPlayer1().get(1);
+                String gameLabel = String.format("Game 1\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                player1.setText(gameLabel);
+            }
+            if (slots.getPlayer2() != null) {
+                Player player = (Player) slots.getPlayer2().get(1);
+                String gameLabel = String.format("Game 2\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                player2.setText(gameLabel);
+            }
+            if (slots.getPlayer3() != null) {
+                Player player = (Player) slots.getPlayer3().get(1);
+                String gameLabel = String.format("Game 3\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                player3.setText(gameLabel);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            //Do nothing since its perfectly acceptable for their not to be any savefiles yet.
+        }
     }
 
     /**
      * returns list with all settings of Player.
+     *
      * @return list of all settings of Player in game
      */
     private List<Object> setUpPlayer() {
@@ -50,78 +78,50 @@ public class OverwriteScreenController extends SceneController implements Initia
 
     /**
      * overwrites data in Slot 1 (where Player 1 would be located).
+     *
      * @param event overwrite data in Slot 1
      */
     @FXML
-    protected void overwritePlayer1(ActionEvent event) {
+    protected void overwritePlayer1(ActionEvent event) throws IOException, ClassNotFoundException {
         List<Object> objList = setUpPlayer();
         slots.setPlayer1(objList);
-        try {
-            serialize();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        serialize();
     }
 
     /**
      * overwrites data in Slot 2 (where Player 2 would be located).
+     *
      * @param event overwrite data in Slot 1
-     */    
+     */
     @FXML
     protected void overwritePlayer2(ActionEvent event) {
         List<Object> objList = setUpPlayer();
         slots.setPlayer2(objList);
-        try {
-            serialize();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        serialize();
+
     }
 
     /**
      * overwrites data in Slot 3 (where Player 3 would be located).
+     *
      * @param event overwrite data in Slot 1
      */
     @FXML
     protected void overwritePlayer3(ActionEvent event) {
         List<Object> objList = setUpPlayer();
         slots.setPlayer3(objList);
-        try {
-            serialize();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        serialize();
     }
 
     /**
      * Serializes game into save file.
-     * 
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @throws ClassNotFoundException 
      */
     @FXML
-    public void serialize() throws FileNotFoundException, IOException, ClassNotFoundException {
+    public void serialize() {
         try {
             SerializableUtil.serialize(slots, "saveFile.ser");
-        } catch (FileNotFoundException e) {
-            System.out.println("FNFException");
-            System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println("IOException");
-            System.out.println(e.getMessage());
+            Logger.getLogger(OverwriteScreenController.class.getName()).log(Level.SEVERE, null, e);
         }
 
         mainControl.displaySaveProgress("Overwrite Save File", "Saving...", "Game Successfully Saved!");
@@ -129,8 +129,8 @@ public class OverwriteScreenController extends SceneController implements Initia
 
     /**
      * goes back to home screen.
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     protected void goBack(ActionEvent event) {

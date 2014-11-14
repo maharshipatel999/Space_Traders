@@ -221,7 +221,7 @@ public class ShipYardScreenController
             updateFuelBar();
             setFuelButtons();
         } catch (InsufficientFundsException e) {
-            mainControl.displayAlertMessage("Insufficient Funds",
+            mainControl.displayAlertMessage("Insufficient Funds", null,
                     "You do not have enough money to buy more fuel!");
         }
     }
@@ -263,7 +263,7 @@ public class ShipYardScreenController
             updateHullBar();
             setHullButtons();
         } catch (InsufficientFundsException e) {
-            mainControl.displayAlertMessage("Insufficient Funds", "You do not have enough money to buy more fuel!");
+            mainControl.displayAlertMessage("Insufficient Funds", null, "You do not have enough money to buy more fuel!");
         }
     }
 
@@ -281,7 +281,7 @@ public class ShipYardScreenController
     protected void goToEquipmentScreen() {
         if (planet.getLevel().equals(TechLevel.AGRICULTURE) 
                 || planet.getLevel().equals(TechLevel.PRE_AGRICULTURE)) {
-            mainControl.displayAlertMessage("UNDER CONSTRUCTION",
+            mainControl.displayAlertMessage("UNDER CONSTRUCTION", null,
                     "Equipment Market Unavailable. Planet has not yet "
                     + "achieved a high enough tech level to offer Equipment Goods.");
         } else {
@@ -296,7 +296,7 @@ public class ShipYardScreenController
                 "Ship Purchase Confirmation", null, escapePodMessage);
             if (response == Dialog.Actions.YES) {
                 player.getShip().setEscapePod();
-                mainControl.displayAlertMessage("Transaction Successful",
+                mainControl.displayAlertMessage("Transaction Successful", null,
                         "You successfully bought a new escape pod!");
                 updateEscapePodText();
             }
