@@ -22,14 +22,14 @@ public class Gadget extends Equipment {
         this.type = type;
     }
 
-    /**
-     * Gets the name of this Gadget.
-     *
-     * @return the name of this Gadget
-     */
     @Override
     public String getName() {
         return type.toString();
+    }
+
+    @Override
+    public int getBasePrice() {
+        return type.price();
     }
 
     /**
@@ -41,11 +41,6 @@ public class Gadget extends Equipment {
         return type;
     }
 
-    /**
-     * Gets the string representation of this object.
-     *
-     * @return the string of this Gadget
-     */
     @Override
     public String toString() {
         return type.toString();

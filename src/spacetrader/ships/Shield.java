@@ -24,14 +24,14 @@ public class Shield extends Equipment {
         this.health = type.power();
     }
 
-    /**
-     * Gets the name of this Shield.
-     *
-     * @return the name of the this Object's ShieldType
-     */
     @Override
     public String getName() {
         return type.toString();
+    }
+
+    @Override
+    public int getBasePrice() {
+        return type.price();
     }
 
     /**
@@ -61,11 +61,6 @@ public class Shield extends Equipment {
         return type;
     }
 
-    /**
-     * Returns a string representation of this object.
-     *
-     * @return the string format of this object
-     */
     @Override
     public String toString() {
         return type.toString();

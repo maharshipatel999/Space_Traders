@@ -110,7 +110,7 @@ public class WarpScreenController extends SceneController implements Initializab
      * Continues setUpWarping sequence for Player where he or she left off.
      */
     public void continueTraveling() {
-        //repairShip(player);
+        repairShip(player);
         checkForEncounter();
     }
 
@@ -124,7 +124,7 @@ public class WarpScreenController extends SceneController implements Initializab
         PlayerShip ship = player.getShip();
 
         // Engineer may do some repairs
-        int repairs = rand.nextInt(player.getEffectiveSkill(Skill.ENGINEER)) / 2;
+        int repairs = rand.nextInt(Math.max(1, player.getEffectiveSkill(Skill.ENGINEER))) / 2;
         ship.setHullStrength(ship.getHullStrength() + repairs);
         if (ship.getHullStrength() > ship.getMaxHullStrength()) {
             repairs = ship.getHullStrength() - ship.getMaxHullStrength();

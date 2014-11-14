@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import spacetrader.Player;
+import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Cargo;
 import spacetrader.planets.Planet;
 import spacetrader.ships.PlayerShip;
@@ -56,8 +57,8 @@ public class ShipMarketController
 
     private int playerShipSellingPrice;
 
-    Player player;
-    Planet planet;
+    private Player player;
+    private Planet planet;
 
     /**
      * Initializes the controller class.
@@ -117,7 +118,7 @@ public class ShipMarketController
                 }
                 Tooltip.install(node, shipToolTip);
             } else if (column == 1) {
-                if (shipTypes[row].price() > player.getCredits()
+                if (shipPurchasingPrice(shipTypes[row]) > player.getCredits()
                         + player.getShip().currentShipPriceWithoutCargo()) {
                     shipsButtons[row].setDisable(true);
                 }
@@ -128,12 +129,12 @@ public class ShipMarketController
                 .currentShipPriceWithoutCargo();
 
         playerFunds.setText("₪" + player.getWallet().getCredits());
-        shipPrice.setText("₪" + (shipTypes[0].price()
+        shipPrice.setText("₪" + (shipPurchasingPrice(shipTypes[0])
                 - playerShipSellingPrice));
 
         //Set all the price labels
         for (int i = 0; i < shipTypes.length; i++) {
-            prices[i].setText("₪" + (shipTypes[i].price()
+            prices[i].setText("₪" + (shipPurchasingPrice(shipTypes[i])
                     - playerShipSellingPrice));
         }
     }
@@ -149,7 +150,7 @@ public class ShipMarketController
         int counter = 0;
         for (RadioButton button : shipsButtons) {
             if (button.equals(src)) {
-                shipPrice.setText("₪" + (shipTypes[counter].price()
+                shipPrice.setText("₪" + (shipPurchasingPrice(shipTypes[counter])
                         - playerShipSellingPrice));
                 shipsButtons[selectedShip].setSelected(false);
                 selectedShip = counter;
@@ -158,24 +159,15 @@ public class ShipMarketController
         }
     }
 
-    /*
-     private void deselectOtherButtons(int notThisButton) {
-     for (int i = 0; i < ShipType.VALUES.size() ; i++) {
-     if (i != notThisButton) {
-     shipsButtons[i].setSelected(false);
-     }
-     }
-     }
-     */
     /**
      * Processes the event where the user wants to buy the currently selected
-     * ship
+     * ship.
      *
      * @param event mouse click on buy button
      */
     @FXML
     protected void processBuyShip(ActionEvent event) {
-        int costOfPurchase = shipTypes[selectedShip].price()
+        int costOfPurchase = shipPurchasingPrice(shipTypes[selectedShip])
                 - playerShipSellingPrice;
         if (player.getWallet().getCredits() >= costOfPurchase) {
             String mastHead = String.format(
@@ -216,6 +208,18 @@ public class ShipMarketController
     @FXML
     protected void goBackToShipYardScreen() {
         mainControl.goToShipYardScreen();
+    }
+    
+    /**
+     * Determines the price for buying a ship. The price is fluctuated from the
+     * ship type's base price by the player's trader skill.
+     * @param type the type of ship
+     * @return the price of this ship
+     */
+    private int shipPurchasingPrice(ShipType type) {
+        double priceOfShip = type.price() * (100 - player.getEffectiveSkill(Skill.TRADER)) / 100.0;
+
+        return (int) priceOfShip;
     }
 
 }

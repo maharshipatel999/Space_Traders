@@ -19,6 +19,36 @@ public abstract class Equipment {
     public abstract String getName();
 
     /**
+     * Gets the base price of this equipment as directly and solely determined
+     * by the type of the equipment.
+     *
+     * @return the base price
+     */
+    public abstract int getBasePrice();
+
+    /**
+     * Determines the price of buying this equipment, is affected by the
+     * player's trader skill.
+     *
+     * @param traderSkill the trader skill level of the player buying this good
+     * @return the price of buying this equipment
+     */
+    public int getBuyPrice(int traderSkill) {
+        return (int) (getBasePrice() * (100 - traderSkill) / 100.0);
+    }
+
+    /**
+     * Determines the price of selling this equipment, is affected by the
+     * player's trader skill.
+     *
+     * @param traderSkill the trader skill level of the player selling this good
+     * @return the price of selling this equipment
+     */
+    public int getSellPrice(int traderSkill) {
+        return (getBuyPrice(traderSkill) * 3) / 4;
+    }
+
+    /**
      * Checks if these two items are equal to each other.
      *
      * @param o the other item

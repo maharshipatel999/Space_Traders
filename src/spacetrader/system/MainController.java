@@ -91,7 +91,7 @@ public class MainController {
      */
     public void arriveAtPlanet(Planet source, Planet destination) {
         game.increaseDays();
-        
+
         //processes time aspect of price increase events
         for (Planet planet : game.getUniverse().getPlanets()) {
             if (planet.getPriceIncDuration() > 0) {
@@ -102,8 +102,8 @@ public class MainController {
         }
 
         //The player autofixes their ship depending on their engineer skill
-        int engineerRepairs = rand.nextInt(game.getPlayer()
-                .getEffectiveSkill(Skill.ENGINEER));
+        int engineerRepairs = rand.nextInt(Math.max(1,
+                game.getPlayer().getEffectiveSkill(Skill.ENGINEER)));
         int currentHull = game.getPlayer().getShip()
                 .getHullStrength();
         game.getPlayer().getShip().setHullStrength(currentHull
@@ -164,7 +164,7 @@ public class MainController {
                     message = "You have a mysterious fee which can not be paid. Sorry.";
                     break;
             }
-            
+
             displayAlertMessage(msgTitle, null, message);
             goToHomeScreen(player, player.getLocation());
         }
@@ -351,7 +351,7 @@ public class MainController {
      * @param dest the planet we are going to
      */
     public void goToWarpScreen(Planet source, Planet dest) {
-        
+
         this.warpScreenControl = (WarpScreenController) extractControllerFromFXML("/spacetrader/travel/WarpScreen.fxml", stage);
         stage.setTitle("Traveling to " + dest.getName());
         stage.setScene(this.warpScreenControl.getScene());

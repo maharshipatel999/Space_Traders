@@ -8,7 +8,6 @@ package spacetrader.ships;
 import java.io.Serializable;
 import java.util.ArrayList;
 import spacetrader.Mercenary;
-import spacetrader.Player;
 import spacetrader.SkillList;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Cargo;
@@ -150,6 +149,34 @@ public class SpaceShip implements Serializable {
     }
 
     /**
+     * Determines the total possible shield health of this ship which is the sum
+     * of the power of all the shields equipped.
+     *
+     * @return the max total shield health of this ship
+     */
+    public int getMaxShieldHealth() {
+        int totalHealth = 0;
+        for (Shield shield : shields) {
+            totalHealth += shield.getType().power();
+        }
+        return totalHealth;
+    }
+
+    /**
+     * Determines the current shield health of this ship which is the sum of the
+     * health of all the shields equipped.
+     *
+     * @return the current total shield health of this ship
+     */
+    public int getShieldHealth() {
+        int totalHealth = 0;
+        for (Shield shield : shields) {
+            totalHealth += shield.getHealth();
+        }
+        return totalHealth;
+    }
+
+    /**
      * Determines if this ship is carrying firearms or narcotics.
      *
      * @return true if this ship is carrying firearms or narcotics, false
@@ -159,20 +186,6 @@ public class SpaceShip implements Serializable {
         int firearms = cargo.getQuantity(TradeGood.FIREARMS);
         int narcotics = cargo.getQuantity(TradeGood.NARCOTICS);
         return ((firearms + narcotics) > 0);
-    }
-
-    /**
-     * This method should be put in the shipYard Determines the price of this
-     * ship
-     *
-     * @param player the player of the game
-     * @return the price of this ship
-     */
-    public int shipPrice(Player player) {
-        int basePrice = type.price() * (100 - player.getEffectiveSkill(Skill.TRADER)) / 100;
-
-        //change basePrice more based on its contentes
-        return basePrice;
     }
 
     /**
