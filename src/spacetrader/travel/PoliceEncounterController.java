@@ -5,6 +5,7 @@
  */
 package spacetrader.travel;
 
+import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -13,6 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
+import spacetrader.exceptions.InsufficientFundsException;
+import spacetrader.planets.Planet;
 
 /**
  * FXML Controller class
@@ -85,10 +88,10 @@ public class PoliceEncounterController extends EncounterScreenController impleme
     /**
      * Initiates Bribe Sequence for Player when ActionEvent Occurs
      *
-     * @param e specific ActionEvent that occurred
+     * @param event specific ActionEvent that occurred
      */
     @FXML
-    protected void bribePressed(ActionEvent e) {
+    protected void bribePressed(ActionEvent event) {
         if (!encounter.getPlayer().getShip().isCarryingIllegalGoods()) {
             if (!getPlayerConfirmation()) {
                 return;
@@ -97,7 +100,21 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         if (encounter.getPlayer().getLocation().getPoliticalSystem().bribeLevel() <= 0) {
             mainControl.displayAlertMessage("Bribery Failed!", null, "These officers cannot be bribed.");
         } else {
-            mainControl.displayAlertMessage("Bribery Offer", null, "I will offer you a bribery!");
+            Planet destination = new Planet("Earth", new Point(5, 10)); //FIX THIS
+            int bribeAmount = ((PoliceEncounter) encounter).calculcateBribe(destination);
+            String masthead = String.format("The police will let you go off ₪%d.", bribeAmount);
+            String message = "Do you accept their offer?";
+            Action response = mainControl.displayYesNoComfirmation("Bribery Offer", masthead, message);
+            if (response == Dialog.Actions.YES) {
+                try {
+                    encounter.getPlayer().getWallet().remove(bribeAmount);
+                } catch (InsufficientFundsException e) {
+                    mainControl.displayAlertMessage("Cannot Afford Bribe", null, "You do not have enough money to bribe the police.");
+                }
+                mainControl.displayAlertMessage("Bribe Successful", null, "The officers accept your bribe and send you off on your way.");
+            } else {
+                return;
+            }
         }
 
         mainControl.goBackToWarpScreen();

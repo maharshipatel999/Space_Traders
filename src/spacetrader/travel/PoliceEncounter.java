@@ -169,8 +169,21 @@ public class PoliceEncounter extends Encounter {
      * @return the bribe the police are asking for
      */
     public int calculcateBribe(Planet destination) {
+        final int MIN_BRIBE = 100;
+        final int MAX_BRIBE = 10000;
+        final int ROUND_BRIBE = 100;  //what place to round the bribe to
+        
         int bribe = getPlayer().getCurrentWorth();
         bribe /= 10 + (10 * destination.getPoliticalSystem().bribeLevel());
+        
+        //round up to nearest hundred place
+        if (bribe % ROUND_BRIBE != 0) {
+            bribe += (ROUND_BRIBE - (bribe % ROUND_BRIBE));
+        }
+        //enforce upper and lower bounds
+        bribe = Math.min(bribe, MAX_BRIBE);
+        bribe = Math.max(bribe, MIN_BRIBE);
+        
         return bribe;
     }
 
