@@ -87,7 +87,7 @@ public class FinanceScreenController
             int loan = Integer.parseInt(loanStr);
             if (loan > 1000) {
                 loanAmt.clear();
-                mainControl.displayAlertMessage("Alert!", "Incorrect entry!",
+                mainControl.displayAlertMessage("Incorrect entry!",
                         "Please enter a number 1 - 1000 only!");
                 return;
             }
@@ -99,7 +99,7 @@ public class FinanceScreenController
             loanAmt.clear();
         } catch (NumberFormatException e) {
             loanAmt.clear();
-            mainControl.displayAlertMessage("Alert!", "Incorrect entry!",
+            mainControl.displayAlertMessage("Incorrect entry!",
                     "Please enter a number 1 - 1000 only!");
         }
     }
@@ -114,7 +114,7 @@ public class FinanceScreenController
             int amt = Integer.parseInt(amtStr);
             if (amt > player.getWallet().getCredits()) {
                 loanAmt.clear();
-                mainControl.displayAlertMessage("Alert!", "Incorrect entry!",
+                mainControl.displayAlertMessage("Incorrect entry!",
                     "You do not have enough money to pay that much!");
                 return;
             }
@@ -126,7 +126,7 @@ public class FinanceScreenController
             payBackAmt.clear();
         } catch (NumberFormatException e) {
             payBackAmt.clear();
-            mainControl.displayAlertMessage("Alert!", "Incorrect entry!",
+            mainControl.displayAlertMessage("Incorrect entry!",
                     "Please enter a valid numerical value!");
         }  
     }

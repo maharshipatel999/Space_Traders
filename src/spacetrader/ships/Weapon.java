@@ -5,6 +5,8 @@
  */
 package spacetrader.ships;
 
+import spacetrader.planets.TechLevel;
+
 /**
  *
  * @author nkaru_000
@@ -26,10 +28,20 @@ public class Weapon extends Equipment {
     public String getName() {
         return type.toString();
     }
+    
+    @Override
+    public String getEquipmentName() {
+        return "Weapon";
+    }
 
     @Override
     public int getBasePrice() {
         return type.price();
+    }
+    
+    @Override
+    public TechLevel getMinTechLevel() {
+        return type.minTechLevel();
     }
 
     /**

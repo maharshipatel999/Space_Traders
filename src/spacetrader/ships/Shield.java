@@ -5,6 +5,8 @@
  */
 package spacetrader.ships;
 
+import spacetrader.planets.TechLevel;
+
 /**
  *
  * @author Caleb
@@ -28,10 +30,20 @@ public class Shield extends Equipment {
     public String getName() {
         return type.toString();
     }
+    
+    @Override
+    public String getEquipmentName() {
+        return "Shield";
+    }
 
     @Override
     public int getBasePrice() {
         return type.price();
+    }
+    
+    @Override
+    public TechLevel getMinTechLevel() {
+        return type.minTechLevel();
     }
 
     /**

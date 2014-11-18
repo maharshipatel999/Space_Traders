@@ -5,11 +5,16 @@
  */
 package spacetrader.ships;
 
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import spacetrader.planets.TechLevel;
+
 /**
  *
  * @author Caleb
  */
-public abstract class Equipment {
+public abstract class Equipment implements Serializable, Cloneable {
 
     /**
      * Returns the name of this Equipment.
@@ -17,6 +22,18 @@ public abstract class Equipment {
      * @return this Equipment's name
      */
     public abstract String getName();
+    
+    /**
+     * Returns the name of this type of equipment.
+     * @return the type of equipment this item is.
+     */
+    public abstract String getEquipmentName();
+    
+    /**
+     * Returns the minimum tech level required for a planet to sell/buy this good.
+     * @return the minimum tech level required for this equipment
+     */
+    public abstract TechLevel getMinTechLevel();
 
     /**
      * Gets the base price of this equipment as directly and solely determined
@@ -72,5 +89,15 @@ public abstract class Equipment {
     @Override
     public int hashCode() {
         return this.getName().hashCode();
+    }
+    
+    @Override
+    public Equipment clone() {
+        try {
+            return (Equipment) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Equipment.class.getName()).log(Level.SEVERE, null, ex);
+            return this;
+        }
     }
 }

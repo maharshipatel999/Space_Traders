@@ -12,8 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.planets.Planet;
 
@@ -48,7 +46,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             }
 
         }
-        mainControl.displayAlertMessage("Attack!", null, "You agrresively start attacking the police!");
+        mainControl.displayAlertMessage("Attack!", "You agrresively start attacking the police!");
         mainControl.goBackToWarpScreen();
     }
 
@@ -62,9 +60,9 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         boolean inspectionFailed = ((PoliceEncounter) encounter).inspectPlayer();
 
         if (inspectionFailed) {
-            mainControl.displayAlertMessage("Inspection Failed!", null, "The Customs Police took all the illegal goods from your ship, and sent you on your way.");
+            mainControl.displayAlertMessage("Inspection Failed!", "The Customs Police took all the illegal goods from your ship, and sent you on your way.");
         } else {
-            mainControl.displayAlertMessage("Inspection Passed!", null, "The Police find nothing illegal in your cargo holds and appologize for the inconvience.");
+            mainControl.displayAlertMessage("Inspection Passed!", "The Police find nothing illegal in your cargo holds and appologize for the inconvience.");
         }
         mainControl.goBackToWarpScreen();
     }
@@ -98,20 +96,20 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             }
         }
         if (encounter.getPlayer().getLocation().getPoliticalSystem().bribeLevel() <= 0) {
-            mainControl.displayAlertMessage("Bribery Failed!", null, "These officers cannot be bribed.");
+            mainControl.displayAlertMessage("Bribery Failed!", "These officers cannot be bribed.");
         } else {
             Planet destination = new Planet("Earth", new Point(5, 10)); //FIX THIS
             int bribeAmount = ((PoliceEncounter) encounter).calculcateBribe(destination);
             String masthead = String.format("The police will let you go off ₪%d.", bribeAmount);
             String message = "Do you accept their offer?";
-            Action response = mainControl.displayYesNoComfirmation("Bribery Offer", masthead, message);
-            if (response == Dialog.Actions.YES) {
+            boolean response = mainControl.displayYesNoConfirmation("Bribery Offer", masthead, message);
+            if (response) {
                 try {
                     encounter.getPlayer().getWallet().remove(bribeAmount);
                 } catch (InsufficientFundsException e) {
-                    mainControl.displayAlertMessage("Cannot Afford Bribe", null, "You do not have enough money to bribe the police.");
+                    mainControl.displayAlertMessage("Cannot Afford Bribe", "You do not have enough money to bribe the police.");
                 }
-                mainControl.displayAlertMessage("Bribe Successful", null, "The officers accept your bribe and send you off on your way.");
+                mainControl.displayAlertMessage("Bribe Successful", "The officers accept your bribe and send you off on your way.");
             } else {
                 return;
             }
@@ -126,11 +124,10 @@ public class PoliceEncounterController extends EncounterScreenController impleme
      * @return true if they confirmed, false otherwise
      */
     private boolean getPlayerConfirmation() {
-        Action response = mainControl.displayYesNoComfirmation("Not Carrying Illegal Goods",
+        boolean response = mainControl.displayYesNoConfirmation("Not Carrying Illegal Goods",
                 "Are you sure you want to do this?",
                 "You are not carrying illegal goods so you have nothing to fear!");
 
-        return (response == Dialog.Actions.YES);
-
+        return (response);
     }
 }

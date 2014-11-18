@@ -15,8 +15,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
 import spacetrader.Player;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Cargo;
@@ -178,9 +176,9 @@ public class ShipMarketController
                     + "and all its equipment will be sold. "
                     + "Cargo and crew members will transfer to "
                     + "the new ship in so much as there is room.");
-            Action response = mainControl.displayYesNoComfirmation(
+            boolean response = mainControl.displayYesNoConfirmation(
                     "Ship Purchase Confirmation", mastHead, shipMessage);
-            if (response == Dialog.Actions.NO) {
+            if (!response) {
                 return;
             }
             if (costOfPurchase < 0) {
@@ -192,12 +190,12 @@ public class ShipMarketController
             player.setShip(new PlayerShip(shipTypes[selectedShip]));
             player.getShip().getCargo().addCargoContents(oldCargo);
 
-            mainControl.displayAlertMessage(null, null,
+            mainControl.displayAlertMessage(null,
                     "Congratulations on your new ship! ");
 
             goBackToShipYardScreen();
         } else {
-            mainControl.displayAlertMessage("Acquire More Cash!", null,
+            mainControl.displayAlertMessage("Acquire More Cash!",
                     "You do not have enough credits to purchase this ship!");
         }
     }

@@ -81,12 +81,12 @@ public class WarpScreenController extends SceneController implements Initializab
             if (encounter.getState() == Encounter.State.IGNORE) {
                 String alertTitle = "Uneventful " + encounter.getName() + " Encounter!";
                 String message = encounter.getIgnoreMessage(destination.getName());
-                mainControl.displayAlertMessage(alertTitle, null, message);
+                mainControl.displayAlertMessage(alertTitle, message);
                 continueTraveling();
             } else if (encounter.getState() == Encounter.State.INSPECTION) {
                 mainControl.goToEncounterScreen(encounter);
             } else {
-                mainControl.displayAlertMessage("Encounter!", null, encounter + "\n");
+                mainControl.displayAlertMessage("Encounter!", encounter + "\n");
                 continueTraveling();
             }
         } else {

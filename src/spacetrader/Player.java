@@ -5,13 +5,15 @@
  */
 package spacetrader;
 
-import spacetrader.planets.Planet;
-import spacetrader.ships.PlayerShip;
-import spacetrader.ships.ShipType;
 import java.io.Serializable;
 import spacetrader.SkillList.Skill;
 import spacetrader.commerce.Wallet;
 import spacetrader.exceptions.InsufficientFundsException;
+import spacetrader.planets.Planet;
+import spacetrader.ships.PlayerShip;
+import spacetrader.ships.ShipType;
+import spacetrader.ships.Weapon;
+import spacetrader.ships.WeaponType;
 
 /**
  *
@@ -47,6 +49,7 @@ public class Player extends Trader implements Serializable {
         super(name, pilot, fighter, trader, engineer, investor);
         wallet = new Wallet();
         ship = new PlayerShip(ShipType.GNAT);
+        ship.getWeapons().addItem(new Weapon(WeaponType.PULSE));
     }
 
     /**
@@ -205,6 +208,14 @@ public class Player extends Trader implements Serializable {
     public int getReputationScore() {
         return reputationScore;
     }
+    
+    /**
+     * Sets this Player's reputation score.
+     * @param reputationScore the new reputation score
+     */
+    public void setReputationScore(int reputationScore) {
+        this.reputationScore = reputationScore;
+    }
 
     /**
      * get Police Record
@@ -315,6 +326,6 @@ public class Player extends Trader implements Serializable {
     }
 
     public Object getCargo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ship.getCargo();
     }
 }

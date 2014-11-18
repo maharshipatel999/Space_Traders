@@ -13,7 +13,7 @@ import spacetrader.planets.TechLevel;
  */
 public enum GadgetType {
 
-    EXTRA_CARGO(TechLevel.EARLY_INDUSTRIAL, 2500, 35, "5 Extra Cargo Bays"),
+    EXTRA_CARGO(TechLevel.EARLY_INDUSTRIAL, 2500, 35, "5-Slot Cargo Expansion"),
     // Increases engineer's effectivity
     AUTO_REPAIR(TechLevel.INDUSTRIAL, 7500, 20, "Auto-Repair System"),
      // Increases pilot's effectivity

@@ -13,8 +13,8 @@ import spacetrader.planets.TechLevel;
  */
 public enum ShieldType {
 
-    ENERGY("Energy shield", 100, 5000, TechLevel.INDUSTRIAL, 70),
-    REFLECTIVE("Reflective shield", 200, 20000, TechLevel.POST_INDUSTRIAL, 30);
+    ENERGY("Energy Shield", 100, 5000, TechLevel.INDUSTRIAL, 70),
+    REFLECTIVE("Reflective Shield", 200, 20000, TechLevel.POST_INDUSTRIAL, 30);
 
     private final String type;
     private final int power;

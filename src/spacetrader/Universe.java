@@ -41,12 +41,21 @@ public class Universe implements Serializable {
      * planet has a randomly chosen name and randomly chosen location.
      */
     public Universe() {
+        this(new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
+                TechLevel.AGRICULTURE, Resource.NONE, PoliticalSystem.DEMOCRACY));
+    }
+
+    /**
+     * Creates the Universe with a semi-randomly chosen amount of Planets. Each
+     * planet has a randomly chosen name and randomly chosen location.
+     *
+     * @param homePlanet the planet which the player should start on.
+     */
+    public Universe(Planet homePlanet) {
         int planetAmount = rand.nextInt(PLANET_MAX_AMOUNT - PLANET_MIN_AMOUNT) + PLANET_MIN_AMOUNT;
         planets = new ArrayList<>(planetAmount);
 
         //Add Home Planet
-        Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
-                TechLevel.AGRICULTURE, Resource.NONE, PoliticalSystem.DEMOCRACY);
         homePlanet.setRandomPriceIncEvent();
         planets.add(homePlanet);
         planetNames.add(homePlanet.getName());

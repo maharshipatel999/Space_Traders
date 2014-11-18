@@ -13,9 +13,9 @@ import spacetrader.planets.TechLevel;
  */
 public enum WeaponType {
 
-    PULSE("Pulse laser", 15, 2000, TechLevel.INDUSTRIAL, 50),
-    BEAM("Beam laser", 25, 12500, TechLevel.POST_INDUSTRIAL, 35),
-    MILITARY("Military laser", 35, 35000, TechLevel.HI_TECH, 15);
+    PULSE("Pulse Laser", 15, 2000, TechLevel.INDUSTRIAL, 50),
+    BEAM("Beam Laser", 25, 12500, TechLevel.POST_INDUSTRIAL, 35),
+    MILITARY("Military Laser", 35, 35000, TechLevel.HI_TECH, 15);
 
     private final String type;
     private final int power;

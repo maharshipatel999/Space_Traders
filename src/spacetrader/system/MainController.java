@@ -5,30 +5,51 @@
  */
 package spacetrader.system;
 
+import java.awt.Point;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
+import javafx.stage.StageStyle;
+import org.controlsfx.control.PropertySheet;
 import org.controlsfx.dialog.Dialogs;
+import org.controlsfx.property.BeanProperty;
 import spacetrader.Player;
 import spacetrader.PoliceRecord;
+import spacetrader.Reputation;
 import spacetrader.SkillList.Skill;
 import static spacetrader.Tools.rand;
 import spacetrader.Universe;
+import static spacetrader.Universe.HEIGHT;
+import static spacetrader.Universe.WIDTH;
 import spacetrader.commerce.PriceIncreaseEvent;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
+import spacetrader.planets.PoliticalSystem;
+import spacetrader.planets.Resource;
+import spacetrader.planets.TechLevel;
+import spacetrader.ships.PlayerShip;
+import spacetrader.ships.ShipType;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.RandomEvent;
@@ -67,6 +88,65 @@ public class MainController {
         //});
     }
 
+    public void displayAdminCheats() {
+        AdminCheats cheats = new AdminCheats();
+
+        ObservableList<PropertySheet.Item> list = FXCollections.observableArrayList();
+        try {
+            for (String var : new String[]{"initialCredits", "techLevel", "politicalSystem", "resource", "startingShip", "policeRecord", "reputation"}) {
+                list.add(new BeanProperty(cheats, new PropertyDescriptor(var, cheats.getClass())));
+            }
+        } catch (IntrospectionException ex) {
+            Logger.getLogger(WelcomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Create Stage
+        Stage cheatStage = new Stage();
+        cheatStage.initOwner(stage);
+        cheatStage.initModality(Modality.WINDOW_MODAL);
+        
+        //Create Pane
+        VBox pane = new VBox();
+        pane.setAlignment(Pos.BOTTOM_RIGHT);
+        
+        //Create Property Sheet
+        PropertySheet propertySheet = new PropertySheet(list);
+        propertySheet.setModeSwitcherVisible(false);
+        propertySheet.setSearchBoxVisible(false);
+        
+        //Create Done Button
+        Button doneButton = new Button("Done");
+        doneButton.setOnAction((e) -> {
+            cheatStage.close();
+            setUpGameWithCheats(cheats);
+        });
+        doneButton.setDefaultButton(true);
+        
+        //add nodes to pane, and set the pane to the stage's scene.
+        pane.getChildren().addAll(propertySheet, doneButton);
+        Scene scene = new Scene(pane);
+        cheatStage.setScene(scene);
+        cheatStage.show();
+    }
+
+    /**
+     * Starts the game using user-defined values
+     * @param cheats the holder of the user-defined values
+     */
+    private void setUpGameWithCheats(AdminCheats cheats) {
+        Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
+                cheats.getTechLevel(), cheats.getResource(), cheats.getPoliticalSystem());
+        game.setUniverse(new Universe(homePlanet));
+
+        Player cheatPlayer = new Player("LubMaster", 3, 3, 3, 3, 3);
+        cheatPlayer.getWallet().setCredits(cheats.getInitialCredits());
+        cheatPlayer.setShip(new PlayerShip(cheats.getStartingShip()));
+        cheatPlayer.setReputationScore(cheats.getReputation().minRep());
+        cheatPlayer.setPoliceRecordScore(cheats.getPoliceRecord().minScore());
+        game.setPlayer(cheatPlayer);
+
+        changePlayerLocation(homePlanet);
+    }
+
     /**
      * Sets the game's universe to a new universe and the game's player to a
      * specified Player.
@@ -82,9 +162,9 @@ public class MainController {
     /**
      * Takes care of everything that happens when a player arrives at a planet.
      * Moves a player to a selected planet. Adjust Price Increase Events on all
-     * planets. All the planets who's tradeGood stock has been decremented
-     * should have their stock increased. The player fixes his ship's hull
-     * strength. Random events can occur at this point.
+ planets. All the planets who's tradeGood stock has been decremented
+ should have their stock increased. The player fixes his startingShip's hull
+ strength. Random events can occur at this point.
      *
      * @param source the planet the player left
      * @param destination the planet the player is arriving at
@@ -101,7 +181,7 @@ public class MainController {
             }
         }
 
-        //The player autofixes their ship depending on their engineer skill
+        //The player autofixes their startingShip depending on their engineer skill
         int engineerRepairs = rand.nextInt(Math.max(1,
                 game.getPlayer().getEffectiveSkill(Skill.ENGINEER)));
         int currentHull = game.getPlayer().getShip()
@@ -111,7 +191,7 @@ public class MainController {
 
         changePlayerLocation(destination);
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayAlertMessage("Notice!", null, destination.getName()
+            displayAlertMessage("Notice!", destination.getName()
                     + " is currently "
                     + destination.getPriceIncEvent().desc().toLowerCase());
         }
@@ -123,16 +203,16 @@ public class MainController {
         if (eventGenerator.eventOccurs()) {
             RandomEvent event = eventGenerator.getRandomEvent();
             event.doEvent();
-            displayAlertMessage("Special Event!", null, event.getMessage());
+            displayAlertMessage("Special Event!", event.getMessage());
         }
     }
 
     /**
      * The destination planet's prices should be recalculated. Determine if the
-     * player can pay their mercenary, interest, and insurance costs. If not,
-     * kick them back to the home screen. Adjust the player's police record and
-     * reputation. Deduct fuel from the player's ship. Finally, go to the warp
-     * screen.
+ player can pay their mercenary, interest, and insurance costs. If not,
+ kick them back to the home screen. Adjust the player's police record and
+ reputation. Deduct fuel from the player's startingShip. Finally, go to the warp
+ screen.
      *
      * @param destination which planet the player is traveling to
      * @param source which planet the player is leaving
@@ -165,7 +245,7 @@ public class MainController {
                     break;
             }
 
-            displayAlertMessage(msgTitle, null, message);
+            displayAlertMessage(msgTitle, message);
             goToHomeScreen(player, player.getLocation());
         }
 
@@ -442,16 +522,21 @@ public class MainController {
     /**
      * Display alert message based on passed in string.
      *
-     * @param alertTitle title of state
-     * @param mastHead the value of mastHead
-     * @param alert alert message
+     * @param header title of state
+     * @param message alert message
      */
-    public void displayAlertMessage(String alertTitle, String mastHead, String alert) {
+    public void displayAlertMessage(String header, String message) {
+        /*Alert dialog = new Alert(AlertType.INFORMATION, message, ButtonType.OK);
+        dialog.setTitle("Information");
+        dialog.setResizable(true);
+        dialog.setHeaderText(header);
+        dialog.initStyle(StageStyle.UTILITY);*/
+
         Dialogs.create()
                 .owner(stage)
-                .title(alertTitle)
+                .title(header)
                 //.masthead(null)
-                .message(alert)
+                .message(message)
                 .showInformation();
     }
 
@@ -461,18 +546,28 @@ public class MainController {
      * @param optionsTitle title of state
      * @param mastHead
      * @param message message to display
-     * @return Action
+     * @return true if the player confirmed yes, otherwise false
      */
-    public Action displayYesNoComfirmation(String optionsTitle,
+    public boolean displayYesNoConfirmation(String optionsTitle,
             String mastHead, String message) {
-        Action response = Dialogs.create()
+        
+        Alert dialog = new Alert(AlertType.CONFIRMATION, message, ButtonType.NO, ButtonType.YES);
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle(optionsTitle);
+        if (mastHead != null) {
+            dialog.setHeaderText(mastHead);
+        }
+        Optional<ButtonType> result = dialog.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.YES;
+
+        /*Action response = Dialogs.create()
                 .owner(stage)
                 .title(optionsTitle)
                 .masthead(mastHead)
                 .message(message)
                 .actions(Dialog.Actions.YES, Dialog.Actions.NO)
                 .showConfirm();
-        return response;
+        return response;*/
     }
 
     /**
@@ -527,5 +622,87 @@ public class MainController {
             }
         });
         displayProgess(progressTitle, saveService);
+    }
+
+    /**
+     * Holds the values for all the testing options.
+     * Every instance variable must have a getter and setter.
+     */
+    public class AdminCheats {
+
+        private int initialCredits;
+        private TechLevel techLevel;
+        private PoliticalSystem politicalSystem;
+        private Resource resource;
+        private ShipType startingShip;
+        private PoliceRecord policeRecord;
+        private Reputation reputation;
+
+        private AdminCheats() {
+            techLevel = TechLevel.INDUSTRIAL;
+            politicalSystem = PoliticalSystem.DEMOCRACY;
+            resource = Resource.NONE;
+            initialCredits = 5000;
+            startingShip = ShipType.GNAT;
+            reputation = Reputation.HARMLESS;
+            policeRecord = PoliceRecord.CLEAN;
+            
+        }
+        
+        public TechLevel getTechLevel() {
+            return techLevel;
+        }
+
+        public void setTechLevel(TechLevel techLevel) {
+            this.techLevel = techLevel;
+        }
+
+        public PoliticalSystem getPoliticalSystem() {
+            return politicalSystem;
+        }
+
+        public void setPoliticalSystem(PoliticalSystem politicalSystem) {
+            this.politicalSystem = politicalSystem;
+        }
+
+        public int getInitialCredits() {
+            return initialCredits;
+        }
+
+        public void setInitialCredits(int initialCredits) {
+            this.initialCredits = initialCredits;
+        }
+
+        public ShipType getStartingShip() {
+            return startingShip;
+        }
+
+        public void setStartingShip(ShipType startingShip) {
+            this.startingShip = startingShip;
+        }
+
+        public Resource getResource() {
+            return resource;
+        }
+
+        public void setResource(Resource resource) {
+            this.resource = resource;
+        }
+
+        public PoliceRecord getPoliceRecord() {
+            return policeRecord;
+        }
+
+        public void setPoliceRecord(PoliceRecord policeRecord) {
+            this.policeRecord = policeRecord;
+        }
+
+        public Reputation getReputation() {
+            return reputation;
+        }
+
+        public void setReputation(Reputation reputation) {
+            this.reputation = reputation;
+        }
     }
 }

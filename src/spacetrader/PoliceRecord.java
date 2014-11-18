@@ -49,6 +49,14 @@ public enum PoliceRecord {
     public String toString() {
         return name;
     }
+    
+    /**
+     * Returns the minimum police record score for this police record
+     * @return min score
+     */
+    public int minScore() {
+        return minScore;
+    }
 
     /**
      * Determines the PoliceRecord level associated with a given police record

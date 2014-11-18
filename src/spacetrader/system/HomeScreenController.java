@@ -83,7 +83,7 @@ public class HomeScreenController
     @FXML
     protected void goToSpace(ActionEvent event) {
         if (player.getDebt() > 10000) {
-            mainControl.displayAlertMessage("Alert!", "Restricted from travel!",
+            mainControl.displayAlertMessage("Restricted from travel!",
                     "You are not allowed to travel because your debt is too high!");
         } else {
             mainControl.goToSpaceMapScreen(planet);

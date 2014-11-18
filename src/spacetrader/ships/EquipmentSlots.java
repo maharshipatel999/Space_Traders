@@ -20,8 +20,7 @@ import spacetrader.exceptions.SlotsAreFullException;
 public class EquipmentSlots<T extends Equipment> implements Serializable, Iterable<T> {
 
     private final ArrayList<T> list;
-    private int numSlots;
-    int size;
+    private final int numSlots;
 
     /**
      * Creates new Equipments with a given initial capacity.
@@ -31,7 +30,12 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
     public EquipmentSlots(int numSlots) {
         this.list = new ArrayList<>();
         this.numSlots = numSlots;
-        size = 0;
+    }
+
+    private void rangeCheck(int index) {
+        if (index >= numSlots) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + numSlots);
+        }
     }
 
     /**
@@ -45,30 +49,11 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
             throw new SlotsAreFullException();
         } else {
             list.add(item);
-            size = size + 1;
         }
     }
 
     /**
-     * removes an item of the same type from the equipment slot
-     *
-     * @param item the item to be removed
-     */
-    public void removeItemOfSameType(T item) {
-        T listItem = null;
-        for (int i = 0; i < list.size(); i++) {
-            if (item.equals(list.get(i))) {
-                listItem = list.get(i);
-                break;
-            }
-        }
-        if (item != null) {
-            removeItem(listItem);
-        }
-    }
-
-    /**
-     * Removes an item to the next open slot.
+     * Removes an item from the equipment slots.
      *
      * @param item the equipment to add to a slot.
      */
@@ -77,22 +62,28 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
             throw new SlotsAreEmptyException();
         } else {
             list.remove(item);
-            size = size - 1;
         }
+    }
+
+    /**
+     * Removes the item at a slot specified by its index.
+     *
+     * @param index the spot to remove from
+     */
+    public void removeAtIndex(int index) {
+        rangeCheck(index);
+
+        list.remove(index);
     }
 
     /**
      * Gets the item at a slot specified by its index.
      *
-     * @param index the index of the slot to looked at
+     * @param index the index of the slot to look at
      * @return the item at the given index
      */
     public T getItem(int index) {
-        if (isFull()) {
-            return list.get(index);
-        } else {
-            throw new IndexOutOfBoundsException("Index is out legal range");
-        }
+        return list.get(index);
     }
 
     /**
@@ -112,36 +103,31 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
      * @param item the item at the given index
      */
     public void replaceItem(int index, T item) {
-        if (index > 0 && index < list.size()) {
-            list.remove(index);
-            list.add(index, item);
-        } else {
-            throw new IndexOutOfBoundsException("Index is out of legal range");
-        }
+        rangeCheck(index);
 
+        list.remove(index);
+        list.add(index, item);
     }
 
     /**
      * Increases the number of available slots.
      */
-    public void addSlot() {
-        numSlots++;
-    }
-
+//    public void addSlot() {
+//        numSlots++;
+//    }
     /**
      * Decreases the number of available slots
      */
-    public void removeSlot() {
-        numSlots--;
-    }
-
+//    public void removeSlot() {
+//        numSlots--;
+//    }
     /**
      * Determines the number of filled slots.
      *
      * @return the amount of filled slots.
      */
     public int getNumFilledSlots() {
-        return size;
+        return list.size();
     }
 
     /**
@@ -159,7 +145,7 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
      * @return true if every slot is full, otherwise false
      */
     public boolean isFull() {
-        return size >= numSlots;
+        return list.size() >= numSlots;
     }
 
     /**
@@ -168,7 +154,7 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
      * @return whether arrayList Empty or not
      */
     public boolean isEmpty() {
-        return size == 0;
+        return list.isEmpty();
     }
 
     /**
@@ -195,7 +181,7 @@ public class EquipmentSlots<T extends Equipment> implements Serializable, Iterab
      */
     @Override
     public String toString() {
-        String toString = "(" + size + "/" + numSlots + "): ";
+        String toString = "(" + list.size() + "/" + numSlots + "): ";
         for (T item : list) {
             toString += item.toString() + ", ";
         }

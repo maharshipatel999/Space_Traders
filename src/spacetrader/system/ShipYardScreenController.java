@@ -12,14 +12,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
 import spacetrader.Player;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.planets.Planet;
 import spacetrader.planets.TechLevel;
 import spacetrader.ships.FuelTank;
+import spacetrader.ships.GadgetType;
+import spacetrader.ships.ShieldType;
 import spacetrader.ships.ShipType;
+import spacetrader.ships.WeaponType;
 
 /**
  * FXML Controller class.
@@ -27,66 +28,89 @@ import spacetrader.ships.ShipType;
  * @author nkaru_000
  */
 public class ShipYardScreenController
-    extends SceneController
-    implements Initializable {
+        extends SceneController
+        implements Initializable {
 
-    @FXML private Label walletAmt;
-    
-    @FXML private Label fuelAmountLabel;
-    @FXML private ProgressBar fuelProgress;
-    @FXML private Button incFuelButton;
-    @FXML private Button maxFuelButton;
-    @FXML private Label fuelStatus;
-    
-    @FXML private Label hullAmountLabel;
-    @FXML private ProgressBar hullProgress;
-    @FXML private Button incHullButton;
-    @FXML private Button maxHullButton;
-    @FXML private Label hullStatus;
+    @FXML
+    private Label walletAmt;
 
-    @FXML private Label shipDesc;
-    @FXML private Label equipmentDesc;
-    @FXML private Button saleShips;
-    @FXML private Button saleEquipment;
-    @FXML private Label escapePodText;
-    @FXML private Button buyEscapePodButton;
-    
-    @FXML private Button backButton;
+    @FXML
+    private Label fuelAmountLabel, hullAmountLabel;
+    @FXML
+    private ProgressBar fuelProgress, hullProgress;
+    @FXML
+    private Button incFuelButton, maxFuelButton;
+    @FXML
+    private Button incHullButton, maxHullButton;
+    @FXML
+    private Label fuelStatus, hullStatus;
+
+    @FXML
+    private Label shipDesc, equipmentDesc, escapePodText;
+    @FXML
+    private Button saleShips, saleEquipment, buyEscapePodButton;
+
+    @FXML
+    private Button backButton;
 
     private Player player;
     private Planet planet;
-    
-       public void setUpShipYardScreen(Player player) {
+
+    /**
+     * Calculates the minimum required tech level in order to have a equipment
+     * market.
+     *
+     * @return the minimum required tech level to sell or buy equipment
+     */
+    private static TechLevel minimumRequiredTechLevel() {
+        int minLevel = TechLevel.values().length; //one greater than the max
+        for (GadgetType type : GadgetType.values()) {
+            minLevel = Math.min(minLevel, type.minTechLevel().ordinal());
+        }
+        for (ShieldType type : ShieldType.values()) {
+            minLevel = Math.min(minLevel, type.minTechLevel().ordinal());
+        }
+        for (WeaponType type : WeaponType.values()) {
+            minLevel = Math.min(minLevel, type.minTechLevel().ordinal());
+        }
+        return TechLevel.values()[minLevel];
+    }
+
+    /**
+     * Sets up the ship yard. Selects which buttons to reveal/hide and
+     * enable/disable. Sets the hull and full progress bars and player money.
+     *
+     * @param player
+     */
+    public void setUpShipYardScreen(Player player) {
         this.player = player;
         this.planet = player.getLocation();
         int amount = player.getWallet().getCredits();
-        
+
         walletAmt.setText("Wallet: ₪" + amount);
         updateFuelBar();
         updateHullBar();
         setFuelButtons();
         setHullButtons();
-        
+
         //Makes it the default button on the screen.
-        maxFuelButton.requestFocus(); 
-        
+        maxFuelButton.requestFocus();
+
         //Determine if this planet sells ships, equipment, or escape pods.
-        if (player.getLocation().getLevel().ordinal()
-                < ShipType.FLEA.minTechLevel().ordinal()) {
-            shipDesc.setText("There are no ships for sale.");
-            saleShips.setDisable(true);
-        } else {
+        if (player.getLocation().getLevel().compareTo(ShipType.FLEA.minTechLevel()) >= 0) {
             shipDesc.setText(
                     "There are several ships currently avaible for purchase!");
-        }
-        
-        if (planet.getLevel().equals(TechLevel.AGRICULTURE)
-                || planet.getLevel().equals(TechLevel.PRE_AGRICULTURE)) {
-            equipmentDesc.setText("This planet does not sell ship equipment.");
-            saleEquipment.setDisable(true);
         } else {
+            shipDesc.setText("There are no ships for sale.");
+            saleShips.setDisable(true);
+        }
+
+        if (planet.getLevel().compareTo(minimumRequiredTechLevel()) >= 0) {
             equipmentDesc.setText(
                     "There are several equipment available for purchase!");
+        } else {
+            equipmentDesc.setText("This planet does not sell ship equipment.");
+            saleEquipment.setDisable(true);
         }
         updateEscapePodText();
     }
@@ -103,17 +127,17 @@ public class ShipYardScreenController
             escapePodText.setText("An escape pod is for sale!");
         }
     }
-    
+
     /**
-    * Updates the fuel progress bar.
-    */
+     * Updates the fuel progress bar.
+     */
     private void updateFuelBar() {
         int currFuel = player.getShip().getTank().getFuelAmount();
         int maxFuel = player.getShip().getTank().getMaxFuel();
         fuelProgress.setProgress((double) currFuel / maxFuel);
         fuelAmountLabel.setText(currFuel + "/" + maxFuel);
     }
-    
+
     /**
      * Updates the hull strength progress bar.
      */
@@ -123,7 +147,7 @@ public class ShipYardScreenController
         hullProgress.setProgress(currStrength / maxStrength);
         hullAmountLabel.setText((100.0 * currStrength / maxStrength) + "%");
     }
-    
+
     /**
      * Updates the buttons for buying fuel.
      */
@@ -131,7 +155,7 @@ public class ShipYardScreenController
         int currFuel = player.getShip().getTank().getFuelAmount();
         int maxFuel = player.getShip().getTank().getMaxFuel();
         int fuelCost = player.getShip().getType().fuelCost();
-        
+
         //Disable the player's ability to buy fuel if their fuel tank is full.
         if (currFuel == maxFuel) {
             fuelStatus.setVisible(true);
@@ -142,7 +166,7 @@ public class ShipYardScreenController
             fuelStatus.setVisible(false);
             incFuelButton.setVisible(true);
             maxFuelButton.setVisible(true);
-            
+
             maxFuelButton.setText("Fill Entire Tank: ₪"
                     + ((maxFuel - currFuel) * fuelCost));
             int refillAmt = (maxFuel - currFuel == 1) ? 1 : 2;
@@ -150,7 +174,7 @@ public class ShipYardScreenController
                     + " Unit" + (refillAmt > 1 ? "s" : "") + " of Fuel: ₪" + refillAmt * fuelCost);
         }
     }
-    
+
     /**
      * Updates the buttons for fixing the hull.
      */
@@ -158,7 +182,7 @@ public class ShipYardScreenController
         int currHull = player.getShip().getHullStrength();
         int maxHull = player.getShip().getMaxHullStrength();
         int repairCost = player.getShip().getType().repairCost();
-        
+
         //Disable the player's ability to repair 
         //the ship if their hull is completely fixed.
         if (currHull == maxHull) {
@@ -171,39 +195,41 @@ public class ShipYardScreenController
             fuelStatus.setVisible(false);
             incFuelButton.setVisible(true);
             maxFuelButton.setVisible(true);
-            
+
             maxHullButton.setText("Repair All Damage: ₪" + ((maxHull - currHull) * repairCost));
-            
+
             double damageFraction = (maxHull - currHull) / (double) maxHull;
-            int repairAmount = (damageFraction >= .10) 
+            int repairAmount = (damageFraction >= .10)
                     ? (maxHull / 10) : (maxHull - currHull);
             incHullButton.setText("Repair " + (((double) repairAmount / maxHull) * 100)
                     + "% of Hull: ₪" + (repairAmount * repairCost));
         }
     }
-    
+
     /**
      * Adds 1 or 2 more fuel to the player's tank.
      */
-    @FXML void increaseFuel() {
+    @FXML
+    void increaseFuel() {
         int fuelAmount = (incFuelButton.getText().contains("1")) ? 1 : 2;
         buyFuel(fuelAmount);
     }
-    
+
     /**
      * Completely fills the player's tank.
      */
-    @FXML void increaseToMaxFuel() {
+    @FXML
+    void increaseToMaxFuel() {
         FuelTank tank = player.getShip().getTank();
         int fuelDiff = tank.getMaxFuel() - tank.getFuelAmount();
         buyFuel(fuelDiff);
     }
-    
+
     /**
-     * Adds more fuel to the player's tank and removes the appropriate amount
-     * of money from the player's wallet. If the player does not have enough money,
+     * Adds more fuel to the player's tank and removes the appropriate amount of
+     * money from the player's wallet. If the player does not have enough money,
      * it will display an alert message.
-     * 
+     *
      * @param fuelAmount amoutn of fuel to buy
      */
     private void buyFuel(int fuelAmount) {
@@ -214,19 +240,20 @@ public class ShipYardScreenController
             //This can throw an InsufficientFundsException
             player.getWallet().remove(fuelAmount * fuelCost);
             player.getShip().getTank().addFuel(fuelAmount);
-            
+
             //Update ShipYardScreen
             int amount = player.getWallet().getCredits();
             walletAmt.setText("Wallet: ₪" + amount);
             updateFuelBar();
             setFuelButtons();
         } catch (InsufficientFundsException e) {
-            mainControl.displayAlertMessage("Insufficient Funds", null,
+            mainControl.displayAlertMessage("Insufficient Funds",
                     "You do not have enough money to buy more fuel!");
         }
     }
-    
-    @FXML void increaseHullStrength() {
+
+    @FXML
+    void increaseHullStrength() {
         int maxHull = player.getShip().getMaxHullStrength();
         int currHull = player.getShip().getHullStrength();
         double damageFraction = (maxHull - currHull) / (double) maxHull;
@@ -242,10 +269,10 @@ public class ShipYardScreenController
         int hullDifference = maxStrength - currStrength;
         repairHull(hullDifference);
     }
-    
+
     /**
      * Repairs hull by desired amount.
-     * 
+     *
      * @param hullAmount amount to repair by
      */
     private void repairHull(int hullAmount) {
@@ -263,7 +290,7 @@ public class ShipYardScreenController
             updateHullBar();
             setHullButtons();
         } catch (InsufficientFundsException e) {
-            mainControl.displayAlertMessage("Insufficient Funds", null, "You do not have enough money to buy more fuel!");
+            mainControl.displayAlertMessage("Insufficient Funds", "You do not have enough money to buy more fuel!");
         }
     }
 
@@ -271,7 +298,7 @@ public class ShipYardScreenController
     protected void goToShipMarketScreen() {
         mainControl.goToShipMarket();
     }
-    
+
     @FXML
     protected void goBackToHomeScreen() {
         mainControl.goToHomeScreen(player, player.getLocation());
@@ -279,34 +306,28 @@ public class ShipYardScreenController
 
     @FXML
     protected void goToEquipmentScreen() {
-        if (planet.getLevel().equals(TechLevel.AGRICULTURE) 
-                || planet.getLevel().equals(TechLevel.PRE_AGRICULTURE)) {
-            mainControl.displayAlertMessage("UNDER CONSTRUCTION", null,
-                    "Equipment Market Unavailable. Planet has not yet "
-                    + "achieved a high enough tech level to offer Equipment Goods.");
-        } else {
-            mainControl.goToEquipmentMarket();
+        mainControl.goToEquipmentMarket();
+    }
+
+    @FXML
+    protected void buyEscapePod() {
+        String escapePodMessage
+                = "Are you sure you want to buy an escape pod for ₪2000?";
+        boolean response = mainControl.displayYesNoConfirmation(
+                "Ship Purchase Confirmation", null, escapePodMessage);
+        if (response) {
+            player.getShip().setEscapePod();
+            mainControl.displayAlertMessage("Transaction Successful",
+                    "You successfully bought a new escape pod!");
+            updateEscapePodText();
         }
     }
-    
-    @FXML protected void buyEscapePod() {
-         String escapePodMessage = 
-                 "Are you sure you want to buy an escape pod for ₪2000?";
-        Action response = mainControl.displayYesNoComfirmation(
-                "Ship Purchase Confirmation", null, escapePodMessage);
-            if (response == Dialog.Actions.YES) {
-                player.getShip().setEscapePod();
-                mainControl.displayAlertMessage("Transaction Successful", null,
-                        "You successfully bought a new escape pod!");
-                updateEscapePodText();
-            }
-    }
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    } 
+
+    }
 }

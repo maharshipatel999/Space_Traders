@@ -99,7 +99,10 @@ public class Wallet implements Serializable {
      *
      * @param credits the amount of credits in this wallet.
      */
-    public void setCredits(final int credits) {
+    public void setCredits(int credits) {
+        if (credits < 0) {
+            throw new InsufficientFundsException("Cannot have negative credits");
+        }
         this.credits = credits;
     }
 

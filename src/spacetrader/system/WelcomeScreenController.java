@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import spacetrader.Player;
 
 /**
  * FXML Controller class
@@ -44,7 +43,6 @@ public class WelcomeScreenController extends SceneController implements Initiali
     //to FirstScreen with default character configuration.
     @FXML
     protected void layEggs(ActionEvent event) {
-        Player player = new Player("LubMaster", 3, 3, 3, 3, 3);
-        mainControl.setUpGame(player);
+        mainControl.displayAdminCheats();
     }
 }
