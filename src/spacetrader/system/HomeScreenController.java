@@ -21,23 +21,17 @@ import spacetrader.planets.Planet;
  *
  * @author nkaru_000
  */
-public class HomeScreenController 
-    extends SceneController 
-    implements Initializable {
+public class HomeScreenController extends SceneController implements Initializable {
+
+    @FXML
+    private Button marketPlaceButton, shipYard, bankButton;
+    @FXML
+    private Label planetName, planetInfo;
+    @FXML
+    private Button saveGame;
 
     private Planet planet;
     private Player player;
-
-    @FXML
-    private Button marketPlaceButton;
-    @FXML
-    private Label planetName;
-    @FXML
-    private Button saveGame;
-    @FXML
-    private Button shipYard;
-    @FXML
-    private Button bankButton;
 
     /**
      * Customizes text on homes screen based on player and planet names
@@ -50,18 +44,19 @@ public class HomeScreenController
         this.player = player;
 
         String description = String
-                .format("%s\n\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
-                planet.getName(), planet.getLocation().x,
-                planet.getLocation().y, planet.getLevel().type(),
-                planet.getPoliticalSystem().type(),
-                planet.getResource().type());
+                .format("\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
+                        planet.getLocation().x, planet.getLocation().y,
+                        planet.getLevel().type(),
+                        planet.getPoliticalSystem().type(),
+                        planet.getResource().type());
         if (planet.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            description += "\n\nThis planet is currently"
-                    + "suffering an abdormality:\n"
+            description += "\n\nThis planet is currently "
+                    + "suffering from an abnormality:\n"
                     + planet.getPriceIncEvent().desc();
         }
 
-        planetName.setText(description);
+        planetName.setText(planet.getName());
+        planetInfo.setText(description);
     }
 
     /**

@@ -24,57 +24,48 @@
                      </font>
                   </Text>
                   <Separator prefWidth="200.0" />
-                  <HBox spacing="10.0">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label text="Name:">
+                        <Label text="Name:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <padding>
                               <Insets top="3.0" />
                            </padding>
                         </Label>
-                        <Text fx:id="planetName" strokeType="OUTSIDE" strokeWidth="0.0" text="LubsTown" wrappingWidth="205.708984375">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                        <Text fx:id="planetName" strokeType="OUTSIDE" strokeWidth="0.0" text="LubsTown" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
-                  <HBox spacing="10.0">
+                  </AnchorPane>
+                  <AnchorPane>
                      <children>
-                        <Label text="Tech Level:">
+                        <Label text="Tech Level:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <padding>
                               <Insets top="3.0" />
                            </padding>
                         </Label>
-                        <Text fx:id="planetLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="Science" wrappingWidth="178.708984375">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                        <Text fx:id="planetLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="Science" textAlignment="RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
-                  <HBox spacing="10.0">
+                  </AnchorPane>
+                  <AnchorPane>
                      <children>
-                        <Label text="Government:">
+                        <Label text="Government:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <padding>
                               <Insets top="3.0" />
                            </padding>
                         </Label>
-                        <Text fx:id="planetGovt" strokeType="OUTSIDE" strokeWidth="0.0" text="Democracy" wrappingWidth="158.708984375">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                        <Text fx:id="planetGovt" strokeType="OUTSIDE" strokeWidth="0.0" text="Democracy" textAlignment="RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
+                  </AnchorPane>
                   <HBox prefHeight="23.0" spacing="10.0">
                      <children>
                         <VBox prefHeight="56.0" prefWidth="49.0">
@@ -99,19 +90,16 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox spacing="10.0">
+                  <AnchorPane>
                      <children>
-                        <Label text="Special Resources:" />
-                        <Text fx:id="planetResources" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" wrappingWidth="131.708984375">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                        <Label text="Special Resources:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                        <Text fx:id="planetResources" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" textAlignment="RIGHT" wrappingWidth="131.708984375" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
+                  </AnchorPane>
                   <Text fx:id="outOfRangeText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Planet is Out of Range!">
                      <font>
                         <Font name="System Bold" size="21.0" />
@@ -124,7 +112,7 @@
             </VBox>
             <VBox fx:id="averagePriceList" prefHeight="200.0" prefWidth="280.0" spacing="5.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Approximate Price List">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expected Prices on Planet">
                      <font>
                         <Font name="System Bold" size="19.0" />
                      </font>

@@ -148,7 +148,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
         double planetY = planetMap.planetIcons.get(planet).getCenterY();
 
         double translateX = -1 * planetX + (mapScreen.getPrefWidth() / 2);
-        double translateY = -1 * planetY + (mapScreen.getHeight() / 2);
+        double translateY = -1 * planetY + (mapScreen.getPrefHeight() / 2);
 
         if (translateX > 0) {
             translateX = 0;
