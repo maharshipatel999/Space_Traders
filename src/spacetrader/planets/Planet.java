@@ -241,14 +241,14 @@ public class Planet implements Serializable {
     /**
      * Determine the amount of police that will be on the planet
      *
+     * @param record the player's police record
      * @return description of how many police can be expected to be on the
-     * planet
+     * planet the player's police record
      */
-    //I just used completely random numbers. This needs to be actually calculated.
-    public String expectedAmountOfPolice() {
-        double policeVariable = Math.random() * 21; //SHOULDNT BE RANDOM
+    public String expectedAmountOfPolice(PoliceRecord record) {
+        int policeVariable = calculateStrengthOfPolice(record);
 
-        int activityIndex = (int) policeVariable / activity.length;
+        int activityIndex = Math.min(policeVariable, activity.length - 1);
         return activity[activityIndex];
     }
 
@@ -258,11 +258,10 @@ public class Planet implements Serializable {
      * @return description of how many pirates can be expected to be on the
      * planet
      */
-    //I just used completely random numbers. This needs to be actually calculated.
     public String expectedAmountOfPirates() {
-        double pirateVariable = Math.random() * 21; //SHOULDNT BE RANDOM
+        int pirateVariable = this.politSys.strengthPirates();
 
-        int activityIndex = (int) pirateVariable / activity.length;
+        int activityIndex = Math.min(pirateVariable, activity.length - 1);
         return activity[activityIndex];
     }
 

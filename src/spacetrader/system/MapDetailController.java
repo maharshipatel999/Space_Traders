@@ -18,8 +18,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import spacetrader.planets.Planet;
+import spacetrader.Player;
 import spacetrader.commerce.TradeGood;
+import spacetrader.planets.Planet;
 
 /**
  * FXML Controller class
@@ -29,23 +30,11 @@ import spacetrader.commerce.TradeGood;
 public class MapDetailController implements Initializable {
 
     @FXML
-    private Text planetName;
+    private Text planetName, planetLevel, planetGovt, planetResources;
     @FXML
-    private Text planetLevel;
+    private Text policePresence, piratePresence, outOfRangeText;
     @FXML
-    private Text planetGovt;
-    @FXML
-    private Text policePresence;
-    @FXML
-    private Text piratePresence;
-    @FXML
-    private Text planetResources;
-    @FXML
-    private Text outOfRangeText;
-    @FXML
-    private VBox planetInformation;
-    @FXML
-    private VBox averagePriceList;
+    private VBox planetInformation, averagePriceList;
     @FXML
     private HBox priceDisplayButtons;
     @FXML
@@ -83,13 +72,14 @@ public class MapDetailController implements Initializable {
      * Fills in the sidebar with information from the planet selected
      *
      * @param planet the selected planet
+     * @param player the player of the game
      */
-    public void setPlanetInfo(Planet planet) {
+    public void setPlanetInfo(Planet planet, Player player) {
         selectedPlanet = planet;
         planetName.setText(planet.getName());
         planetLevel.setText(planet.getLevel().type());
         planetGovt.setText(planet.getPoliticalSystem().type());
-        policePresence.setText(planet.expectedAmountOfPolice());
+        policePresence.setText(planet.expectedAmountOfPolice(player.getPoliceRecord()));
         piratePresence.setText(planet.expectedAmountOfPirates());
 
         this.appxPricesLabels = new Label[]{appxWaterPrice,
@@ -110,6 +100,7 @@ public class MapDetailController implements Initializable {
             priceDisplayButtons.setDisable(false);
             warpButton.setDisable(false);
             planetInformation.getChildren().remove(outOfRangeText);
+            
             setApproximatePrices();
 
         } else {

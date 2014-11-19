@@ -20,8 +20,7 @@ import spacetrader.planets.Planet;
  *
  * @author nkaru_000
  */
-public class FinanceScreenController
-    extends SceneController
+public class FinanceScreenController extends SceneController
     implements Initializable {
 
     @FXML

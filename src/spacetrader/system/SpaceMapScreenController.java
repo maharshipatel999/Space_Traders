@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -28,7 +29,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.controlsfx.control.MasterDetailPane;
+import org.controlsfx.control.PopOver;
 import spacetrader.Player;
 import spacetrader.Universe;
 import spacetrader.planets.Planet;
@@ -121,7 +124,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
      */
     private void showPlanetInfo(Planet planet) {
         mapScreen.setShowDetailNode(true);
-        infoControl.setPlanetInfo(planet);
+        infoControl.setPlanetInfo(planet, player);
         helpfulPanelInfoText.setVisible(true);
     }
 
@@ -189,6 +192,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
         private Rectangle background;
         private Planet selectedPlanet;
         private Map<Planet, Circle> planetIcons;
+        private PopOver flightRadiusPopUp;
 
         /**
          * Constructor.
@@ -229,6 +233,8 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 //Set current Mouse X and Y position
                 dragContext.mouseX = event.getSceneX();
                 dragContext.mouseY = event.getSceneY();
+                
+                flightRadiusPopUp.hide(new Duration(1500));
             });
 
             addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
@@ -331,6 +337,14 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
                     flightRadius.setOpacity(.6);
                     flightRadius.setStroke(Color.LAWNGREEN);
+                    flightRadiusPopUp = new PopOver(new Group(new Text("This is your current max range of travel.")));
+                    flightRadiusPopUp.getContentNode().setUserData(Boolean.FALSE);
+                    flightRadius.setOnMouseEntered((e) -> {
+                        if ((Boolean) flightRadiusPopUp.getContentNode().getUserData() == false) {
+                            flightRadiusPopUp.show(flightRadius);
+                            flightRadiusPopUp.getContentNode().setUserData(Boolean.TRUE);
+                        }
+                    });
                     //add right above the background, so that the circle is beneath all the planets, but is still visible
                     this.getChildren().add(numberOfBackgroundNodes, flightRadius);
                 }
@@ -344,7 +358,11 @@ public class SpaceMapScreenController extends SceneController implements Initial
          * @return the color of that planet
          */
         private Color getUnselectedPlanetColor(Planet p) {
-            return p.isVisited() ? Color.DARKCYAN : Color.GREEN;
+            Color color = p.isVisited() ? Color.DARKCYAN : Color.GREEN;
+            if (!SpaceMapScreenController.this.isInRangeOf(p)) {
+                color = color.darker();
+            }
+            return color;
         }
 
         @Override

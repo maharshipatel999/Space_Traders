@@ -15,9 +15,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import org.controlsfx.control.PopOver;
 import spacetrader.Player;
 import spacetrader.SkillList.Skill;
-import spacetrader.commerce.Cargo;
 import spacetrader.planets.Planet;
 import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
@@ -27,9 +30,9 @@ import spacetrader.ships.ShipType;
  *
  * @author Tejas
  */
-public class ShipMarketController 
-    extends SceneController 
-    implements Initializable {
+public class ShipMarketController
+        extends SceneController
+        implements Initializable {
 
     @FXML
     private Label beetlePrice, bumblebeePrice, fireflyPrice,
@@ -78,11 +81,11 @@ public class ShipMarketController
 
         shipTypes = ShipType.values();
 
-        shipsButtons = new RadioButton[]{fleaRadioButton, gnatRadioButton,
+        shipsButtons = new RadioButton[] {fleaRadioButton, gnatRadioButton,
             fireflyRadioButton, mosquitoRadioButton, bumblebeeRadioButton,
             beetleRadioButton, hornetRadioButton, grasshopperRadioButton,
             termiteRadioButton, waspRadioButton};
-        prices = new Label[]{fleaPrice, gnatPrice, fireflyPrice, mosquitoPrice,
+        prices = new Label[] {fleaPrice, gnatPrice, fireflyPrice, mosquitoPrice,
             bumblebeePrice, beetlePrice,
             hornetPrice, grasshopperPrice, termitePrice, waspPrice};
 
@@ -101,7 +104,7 @@ public class ShipMarketController
             if (planet.getLevel().ordinal() < shipTypes[row]
                     .minTechLevel().ordinal()) {
                 node.setVisible(false);
-            } else if (column == 2) {
+            } else if (column == 2 | column == 1) {
                 Tooltip shipToolTip = new Tooltip();
                 FXMLLoader loader = new FXMLLoader(getClass()
                         .getResource("/spacetrader/ships/ShipInfoPane.fxml"));
@@ -110,11 +113,20 @@ public class ShipMarketController
                     ((ShipInfoPaneController) loader.getController())
                             .setShipType(shipTypes[row]);
                     shipToolTip.setGraphic(pane);
+                    if (column == 2) {
+                        setTextBlack(pane);
+                    }
                 } catch (IOException e) {
                     Logger.getLogger(SpaceTrader.class.getName())
                             .log(Level.SEVERE, null, e);
                 }
-                Tooltip.install(node, shipToolTip);
+                if (column == 2) {
+                    PopOver popup = new PopOver(shipToolTip.getGraphic());
+                    node.setOnMouseEntered((e) -> popup.show(node));
+                    node.setOnMouseExited((e) -> popup.hide(new Duration(150)));
+                } else {
+                    Tooltip.install(node, shipToolTip);
+                }
             } else if (column == 1) {
                 if (shipPurchasingPrice(shipTypes[row]) > player.getCredits()
                         + player.getShip().currentShipPriceWithoutCargo()) {
@@ -134,6 +146,18 @@ public class ShipMarketController
         for (int i = 0; i < shipTypes.length; i++) {
             prices[i].setText("₪" + (shipPurchasingPrice(shipTypes[i])
                     - playerShipSellingPrice));
+        }
+    }
+
+    private void setTextBlack(Pane pane) {
+        for (Node node : pane.getChildren()) {
+            if (node instanceof Text) {
+                ((Text) node).setFill(Color.BLACK);
+            } else {
+                if (node instanceof Pane) {
+                    setTextBlack((Pane) node);
+                }
+            }
         }
     }
 
@@ -165,6 +189,11 @@ public class ShipMarketController
      */
     @FXML
     protected void processBuyShip(ActionEvent event) {
+        if (shipTypes[selectedShip] == player.getShip().getType()) {
+            mainControl.displayAlertMessage("Ship Already In Possession", "You already "
+                    + "own this type of ship! There is no benefit in buying it again");
+            return;
+        }
         int costOfPurchase = shipPurchasingPrice(shipTypes[selectedShip])
                 - playerShipSellingPrice;
         if (player.getCredits() >= costOfPurchase) {
@@ -186,9 +215,17 @@ public class ShipMarketController
             } else {
                 player.removeCredits(costOfPurchase);
             }
-            Cargo oldCargo = player.getCargo();
+            //All the old equipment on the player's ship will be sold.
+            //It is already included in the calculation of "costOfPurchase".
+
+            PlayerShip oldShip = player.getShip();
             player.setShip(new PlayerShip(shipTypes[selectedShip]));
-            player.getCargo().addCargoContents(oldCargo);
+            player.getCargo().addCargoContents(oldShip.getCargo());
+
+            //the escape pod on your old ship transfers to the new ship
+            if (oldShip.hasEscapePod()) {
+                player.getShip().setEscapePod();
+            }
 
             mainControl.displayAlertMessage(null,
                     "Congratulations on your new ship! ");
@@ -207,10 +244,11 @@ public class ShipMarketController
     protected void goBackToShipYardScreen() {
         mainControl.goToShipYardScreen();
     }
-    
+
     /**
      * Determines the price for buying a ship. The price is fluctuated from the
      * ship type's base price by the player's trader skill.
+     *
      * @param type the type of ship
      * @return the price of this ship
      */

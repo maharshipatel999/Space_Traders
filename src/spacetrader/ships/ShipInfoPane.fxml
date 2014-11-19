@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
@@ -20,7 +21,7 @@
                             <children>
                                 <HBox prefHeight="52.0" prefWidth="100.0">
                                     <children>
-                                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+                                        <Text fill="#eeeeee" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: ">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -159,6 +160,9 @@
             <padding>
                 <Insets left="15.0" top="10.0" />
             </padding>
+         <effect>
+            <ColorAdjust contrast="-0.07" hue="-0.1" saturation="-0.02" />
+         </effect>
         </VBox>
     </children>
 </AnchorPane>

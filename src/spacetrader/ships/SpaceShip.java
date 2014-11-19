@@ -7,6 +7,8 @@ package spacetrader.ships;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import spacetrader.Mercenary;
 import spacetrader.SkillList;
 import spacetrader.SkillList.Skill;
@@ -17,7 +19,7 @@ import spacetrader.commerce.TradeGood;
  *
  * @author Caleb Stokols
  */
-public class SpaceShip implements Serializable {
+public class SpaceShip implements Iterable<Equipment>, Serializable {
 
     private final ShipType type;
     private final Cargo cargo;
@@ -285,6 +287,25 @@ public class SpaceShip implements Serializable {
                 crewSkills.setSkill(type, highestValue);
             }
         }
+    }
+    
+    /**
+     * Returns an iterator that will iterate through all this ship's 
+     * equipment in the order of weapons, shields, gadgets.
+     */
+    @Override
+    public Iterator<Equipment> iterator() {
+        List<Equipment> itemList = new ArrayList<>();
+        for (Weapon item : weapons) {
+            itemList.add((Equipment) item);
+        }
+        for (Shield item : shields) {
+            itemList.add((Equipment) item);
+        }
+        for (Gadget item : gadgets) {
+            itemList.add((Equipment) item);
+        }
+        return itemList.iterator();
     }
 
     /**

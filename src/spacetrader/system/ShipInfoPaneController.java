@@ -22,26 +22,18 @@ import spacetrader.ships.ShipType;
 public class ShipInfoPaneController implements Initializable {
 
     @FXML
-    private Text nameText;
+    private Text nameText, sizeText;
     @FXML
-    private Text sizeText;
+    private Text cargoSlotsText, fuelCapacityText, hullStrengthText;
     @FXML
-    private Text cargoSlotsText;
-    @FXML
-    private Text fuelCapacityText;
-    @FXML
-    private Text hullStrengthText;
-    @FXML
-    private Text weaponSlotsText;
-    @FXML
-    private Text shieldSlotsText;
-    @FXML
-    private Text gadgetSlotsText;
+    private Text weaponSlotsText, shieldSlotsText, gadgetSlotsText;
     @FXML
     private Text crewQuartersText;
     @FXML
     private ImageView shipImage;
 
+    private static final String[] SIZES = new String[] {"Tiny", "Small", "Medium", "Large", "Huge"};
+    
     /**
      * Initializes the controller class.
      */
@@ -51,40 +43,22 @@ public class ShipInfoPaneController implements Initializable {
     }
 
     /**
-     * Sets ship type.
+     * Sets the pane's text to match the specified ship type's information.
      * 
      * @param ship type to set to
      */
     public void setShipType(ShipType ship) {
-        nameText.setText(ship.name().toString());
-        String size;
-        switch (ship.size()) {
-            case 0:
-                size = "Tiny";
-                break;
-            case 1:
-                size = "Small";
-                break;
-            case 2:
-                size = "Medium";
-                break;
-            case 3:
-                size = "Large";
-                break;
-            case 4:
-                size = "Huge";
-                break;
-            default:
-                size = "NA";
-        }
+        nameText.setText(ship.toString());
+        
+        String size = SIZES[ship.size()];
         sizeText.setText(size);
-        cargoSlotsText.setText("" + ship.cargoBay());
-        fuelCapacityText.setText("" + ship.fuel());
-        hullStrengthText.setText("" + ship.hullStrength());
-        weaponSlotsText.setText("" + ship.weaponSlots());
-        shieldSlotsText.setText("" + ship.shieldSlots());
-        gadgetSlotsText.setText("" + ship.gadgetSlots());
-        crewQuartersText.setText("" + ship.crew());
+        cargoSlotsText.setText(String.valueOf(ship.cargoBay()));
+        fuelCapacityText.setText(String.valueOf(ship.fuel()));
+        hullStrengthText.setText(String.valueOf(ship.hullStrength()));
+        weaponSlotsText.setText(String.valueOf(ship.weaponSlots()));
+        shieldSlotsText.setText(String.valueOf(ship.shieldSlots()));
+        gadgetSlotsText.setText(String.valueOf(ship.gadgetSlots()));
+        crewQuartersText.setText(String.valueOf(ship.crew()));
         shipImage.setImage(new Image(ship.spriteFile()));
     }
 }
