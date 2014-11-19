@@ -7,6 +7,7 @@ package spacetrader;
 
 import java.io.Serializable;
 import spacetrader.SkillList.Skill;
+import spacetrader.commerce.Consumer;
 import spacetrader.commerce.Wallet;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.planets.Planet;
@@ -19,12 +20,8 @@ import spacetrader.ships.WeaponType;
  *
  * @author Seth
  */
-public class Player extends Trader implements Serializable {
-    
-    public static final int MAX_DEBT = 100000;
+public class Player extends Trader implements Consumer, Serializable {
 
-    private int debt = 0; // Current Debt
-    private int insuranceCost = 0;
     private int policeKills = 0; // Number of police ships killed
     private int traderKills = 0; // Number of trader ships killed
     private int pirateKills = 0; // Number of pirate ships killed
@@ -45,7 +42,8 @@ public class Player extends Trader implements Serializable {
      * @param engineer Engineer level
      * @param investor Investor level
      */
-    public Player(String name, int pilot, int fighter, int trader, int engineer, int investor) {
+    public Player(String name, int pilot, int fighter, int trader, int engineer,
+            int investor) {
         super(name, pilot, fighter, trader, engineer, investor);
         wallet = new Wallet();
         ship = new PlayerShip(ShipType.GNAT);
@@ -60,24 +58,6 @@ public class Player extends Trader implements Serializable {
      */
     public int getEffectiveSkill(Skill type) {
         return Math.max(getSkill(type), ship.getCrewSkill(type));
-    }
-
-    /**
-     * Retrieves Player Credits in Player Wallet
-     *
-     * @return credits in Player Wallet
-     */
-    public int getCredits() {
-        return wallet.getCredits();
-    }
-
-    /**
-     * get Wallet
-     *
-     * @return wallet
-     */
-    public Wallet getWallet() {
-        return wallet;
     }
 
     /**
@@ -114,24 +94,6 @@ public class Player extends Trader implements Serializable {
      */
     public void setLocation(Planet planet) {
         this.location = planet;
-    }
-
-    /**
-     * gets Debt of Player
-     *
-     * @return debt of Player
-     */
-    public int getDebt() {
-        return debt;
-    }
-
-    /**
-     * sets debt of the Player
-     *
-     * @param debt debt to set of Player
-     */
-    public void setDebt(int debt) {
-        this.debt = debt;
     }
 
     /**
@@ -208,9 +170,10 @@ public class Player extends Trader implements Serializable {
     public int getReputationScore() {
         return reputationScore;
     }
-    
+
     /**
      * Sets this Player's reputation score.
+     *
      * @param reputationScore the new reputation score
      */
     public void setReputationScore(int reputationScore) {
@@ -243,47 +206,7 @@ public class Player extends Trader implements Serializable {
      * @return the player's current worth
      */
     public int getCurrentWorth() {
-        return wallet.getCredits() - debt + ship.currentShipPrice();
-    }
-
-    /**
-     * Sets the cost of insurance for this player.
-     *
-     * @param cost the player's cost of insurance
-     */
-    public void setInsuranceCost(int cost) {
-        this.insuranceCost = cost;
-    }
-
-    /**
-     * Gets the cost of insurance of this player.
-     *
-     * @return the cost of insurance
-     */
-    public int getInsuranceCost() {
-        return this.insuranceCost;
-    }
-
-    /**
-     * Pays interest on the player's debt.
-     */
-    public void payInterest() {
-        if (debt > MAX_DEBT) {
-            throw new InsufficientFundsException("debt");
-        } else if (debt > 0) {
-            int interest = Math.max(1, debt / 10);
-            wallet.removeForcefully(interest);
-        }
-    }
-
-    /**
-     * Pays daily cost of insurance. Can throw exception if player does not have
-     * enough money.
-     */
-    public void payInsuranceCost() {
-        if ((insuranceCost > 0)) {
-            wallet.remove(insuranceCost);
-        }
+        return wallet.getCredits() - wallet.getDebt() + ship.currentShipPrice();
     }
 
     /**
@@ -328,4 +251,66 @@ public class Player extends Trader implements Serializable {
     public Object getCargo() {
         return ship.getCargo();
     }
+
+    @Override
+    public void addCredits(int deposit) {
+        wallet.addCredits(deposit);
+    }
+
+    @Override
+    public void removeCredits(int withdrawal) {
+        wallet.removeCredits(withdrawal);
+    }
+
+    @Override
+    public void removeCreditsForced(int withdrawal) {
+        wallet.removeCreditsForced(withdrawal);
+    }
+
+    @Override
+    public int getCredits() {
+        return wallet.getCredits();
+    }
+
+    @Override
+    public void setCredits(int credits) {
+        wallet.setCredits(credits);
+    }
+
+    @Override
+    public int getDebt() {
+        return wallet.getDebt();
+    }
+
+    @Override
+    public void addDebt(int addition) {
+        wallet.addDebt(addition);
+    }
+
+    @Override
+    public void removeDebt(int removal) {
+        wallet.removeDebt(removal);
+    }
+    
+    @Override
+    public void setInsuranceCost(int cost) {
+        wallet.setInsuranceCost(cost);
+    }
+
+    @Override
+    public int getInsuranceCost() {
+        return wallet.getInsuranceCost();
+    }
+    
+    @Override
+    public void payInsuranceCost() {
+        wallet.payInsuranceCost();
+    }
+    
+    @Override
+    public void payInterest() {
+        wallet.payInterest();
+    }
+
+    
 }

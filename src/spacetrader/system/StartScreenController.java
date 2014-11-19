@@ -115,8 +115,8 @@ public class StartScreenController extends SceneController implements Initializa
         PlayerShip ship = player.getShip();
 
         playerName.setText(player.getName());
-        playerMoney.setText("₪" + player.getWallet().getCredits());
-        playerDebt.setText("₪" + player.getWallet().getDebt());
+        playerMoney.setText("₪" + player.getCredits());
+        playerDebt.setText("₪" + player.getDebt());
         playerRep.setText(player.getReputation().toString());
         playerPoliceRecord.setText(player.getPoliceRecord().toString());
         playerTotalKills.setText(String.valueOf(player.getTraderKills() + player.getPoliceKills() + player.getPirateKills()));
@@ -165,9 +165,9 @@ public class StartScreenController extends SceneController implements Initializa
         List<String> choices = new ArrayList<>();
         choices.add("Increase Fuel");
         choices.add("Get Money!");
-        //choices.add("Show Police Encounter");
-        //choices.add("Show Pirate Encounter");
-        //choices.add("Show Trader Encounter");
+        //choices.addCredits("Show Police Encounter");
+        //choices.addCredits("Show Pirate Encounter");
+        //choices.addCredits("Show Trader Encounter");
         choices.add("Show Ship Info");
 
         Optional<String> response = Dialogs.create()
@@ -185,7 +185,7 @@ public class StartScreenController extends SceneController implements Initializa
                     player.getShip().getTank().addFuel(50);
                     break;
                 case "Get Money!":
-                    player.getWallet().add(10000);
+                    player.addCredits(10000);
                     break;
                 /*case "Show Police Encounter":
                  mainControl.goToEncounterScreen(new PoliceEncounter(player, universe.getPlanet("Pallet").getPoliticalSystem().getStrengthOfTraders()));

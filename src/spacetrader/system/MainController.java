@@ -138,7 +138,7 @@ public class MainController {
         game.setUniverse(new Universe(homePlanet));
 
         Player cheatPlayer = new Player("LubMaster", 3, 3, 3, 3, 3);
-        cheatPlayer.getWallet().setCredits(cheats.getInitialCredits());
+        cheatPlayer.setCredits(cheats.getInitialCredits());
         cheatPlayer.setShip(new PlayerShip(cheats.getStartingShip()));
         cheatPlayer.setReputationScore(cheats.getReputation().minRep());
         cheatPlayer.setPoliceRecordScore(cheats.getPoliceRecord().minScore());

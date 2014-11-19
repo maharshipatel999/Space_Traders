@@ -126,7 +126,7 @@ public class ShipMarketController
         this.playerShipSellingPrice = player.getShip()
                 .currentShipPriceWithoutCargo();
 
-        playerFunds.setText("₪" + player.getWallet().getCredits());
+        playerFunds.setText("₪" + player.getCredits());
         shipPrice.setText("₪" + (shipPurchasingPrice(shipTypes[0])
                 - playerShipSellingPrice));
 
@@ -167,7 +167,7 @@ public class ShipMarketController
     protected void processBuyShip(ActionEvent event) {
         int costOfPurchase = shipPurchasingPrice(shipTypes[selectedShip])
                 - playerShipSellingPrice;
-        if (player.getWallet().getCredits() >= costOfPurchase) {
+        if (player.getCredits() >= costOfPurchase) {
             String mastHead = String.format(
                     "Are you sure you want to buy a %s?",
                     shipTypes[selectedShip].toString());
@@ -182,9 +182,9 @@ public class ShipMarketController
                 return;
             }
             if (costOfPurchase < 0) {
-                player.getWallet().add(-costOfPurchase);
+                player.addCredits(-costOfPurchase);
             } else {
-                player.getWallet().remove(costOfPurchase);
+                player.removeCredits(costOfPurchase);
             }
             Cargo oldCargo = player.getShip().getCargo();
             player.setShip(new PlayerShip(shipTypes[selectedShip]));

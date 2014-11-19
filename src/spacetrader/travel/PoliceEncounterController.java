@@ -105,7 +105,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             boolean response = mainControl.displayYesNoConfirmation("Bribery Offer", masthead, message);
             if (response) {
                 try {
-                    encounter.getPlayer().getWallet().remove(bribeAmount);
+                    encounter.getPlayer().removeCredits(bribeAmount);
                 } catch (InsufficientFundsException e) {
                     mainControl.displayAlertMessage("Cannot Afford Bribe", "You do not have enough money to bribe the police.");
                 }

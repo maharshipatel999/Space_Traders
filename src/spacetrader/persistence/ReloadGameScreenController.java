@@ -45,19 +45,19 @@ public class ReloadGameScreenController extends SceneController implements Initi
             slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
             if (slots.getPlayer1() != null) {
                 Player player = (Player) slots.getPlayer1().get(1);
-                String gameLabel = String.format("Game 1\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                String gameLabel = String.format("Game 1\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getCredits());
                 game1.setText(gameLabel);
                 game1.setDisable(false);
             }
             if (slots.getPlayer2() != null) {
                 Player player = (Player) slots.getPlayer2().get(1);
-                String gameLabel = String.format("Game 2\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                String gameLabel = String.format("Game 2\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getCredits());
                 game2.setText(gameLabel);
                 game2.setDisable(false);
             }
             if (slots.getPlayer3() != null) {
                 Player player = (Player) slots.getPlayer3().get(1);
-                String gameLabel = String.format("Game 3\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                String gameLabel = String.format("Game 3\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getCredits());
                 game3.setText(gameLabel);
                 game3.setDisable(false);
             }

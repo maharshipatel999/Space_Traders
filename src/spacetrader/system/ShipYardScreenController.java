@@ -85,7 +85,7 @@ public class ShipYardScreenController
     public void setUpShipYardScreen(Player player) {
         this.player = player;
         this.planet = player.getLocation();
-        int amount = player.getWallet().getCredits();
+        int amount = player.getCredits();
 
         walletAmt.setText("Wallet: ₪" + amount);
         updateFuelBar();
@@ -238,11 +238,11 @@ public class ShipYardScreenController
 
             //Update Player's Wallet and Ship's Fuel Tank
             //This can throw an InsufficientFundsException
-            player.getWallet().remove(fuelAmount * fuelCost);
+            player.removeCredits(fuelAmount * fuelCost);
             player.getShip().getTank().addFuel(fuelAmount);
 
             //Update ShipYardScreen
-            int amount = player.getWallet().getCredits();
+            int amount = player.getCredits();
             walletAmt.setText("Wallet: ₪" + amount);
             updateFuelBar();
             setFuelButtons();
@@ -281,11 +281,11 @@ public class ShipYardScreenController
 
             //Update Player's Wallet and Ship's Hull Strength
             int currStrength = player.getShip().getHullStrength();
-            player.getWallet().remove(hullAmount * repairCost); //This can throw an InsufficientFundsException
+            player.removeCredits(hullAmount * repairCost); //This can throw an InsufficientFundsException
             player.getShip().setHullStrength(currStrength + hullAmount);
 
             //Update ShipYardScreen
-            int amount = player.getWallet().getCredits();
+            int amount = player.getCredits();
             walletAmt.setText("Wallet: ₪" + amount);
             updateHullBar();
             setHullButtons();

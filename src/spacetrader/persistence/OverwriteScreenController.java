@@ -45,17 +45,17 @@ public class OverwriteScreenController extends SceneController implements Initia
             slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
             if (slots.getPlayer1() != null) {
                 Player player = (Player) slots.getPlayer1().get(1);
-                String gameLabel = String.format("Game 1\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                String gameLabel = String.format("Game 1\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getCredits());
                 player1.setText(gameLabel);
             }
             if (slots.getPlayer2() != null) {
                 Player player = (Player) slots.getPlayer2().get(1);
-                String gameLabel = String.format("Game 2\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                String gameLabel = String.format("Game 2\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getCredits());
                 player2.setText(gameLabel);
             }
             if (slots.getPlayer3() != null) {
                 Player player = (Player) slots.getPlayer3().get(1);
-                String gameLabel = String.format("Game 3\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getWallet().getCredits());
+                String gameLabel = String.format("Game 3\n\nPlayer: %s\nCredits: ₪%d", player.getName(), player.getCredits());
                 player3.setText(gameLabel);
             }
         } catch (IOException | ClassNotFoundException e) {

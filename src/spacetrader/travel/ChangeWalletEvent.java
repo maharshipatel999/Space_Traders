@@ -36,9 +36,9 @@ public class ChangeWalletEvent extends RandomEvent {
     @Override
     public void doEvent() {
         if (quantityChange > 0) {
-            player.getWallet().add(quantityChange);
+            player.addCredits(quantityChange);
         } else {
-            player.getWallet().removeForcefully(Math.abs(quantityChange));
+            player.removeCreditsForced(Math.abs(quantityChange));
         }
     }
 }

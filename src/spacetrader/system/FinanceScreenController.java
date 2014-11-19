@@ -58,7 +58,7 @@ public class FinanceScreenController
     public void setUpFinanceScreen(Player player) {
         this.player = player;
         currentBalance.setText("Current balance: ₪"
-                + player.getWallet().getCredits());
+                + player.getCredits());
         debt.setText("₪" + player.getDebt());
         shipVal.setText("₪" + player.getShip()
                 .currentShipPriceWithoutCargo());
@@ -69,7 +69,7 @@ public class FinanceScreenController
             buyInsurance.setDisable(true);
             buyInsurance.setText("Escape pod required");
         }
-        int ownMoney = player.getWallet().getCredits() - player.getDebt();
+        int ownMoney = player.getCredits() - player.getDebt();
         if (!(ownMoney > player.getDebt())) {
             payLoan.setDisable(true);
             payLoan.setText("Insufficient funds to pay loans");
@@ -91,10 +91,10 @@ public class FinanceScreenController
                         "Please enter a number 1 - 1000 only!");
                 return;
             }
-            player.setDebt(player.getDebt() + loan);
-            player.getWallet().add(loan);
+            player.addDebt(loan);
+            player.addCredits(loan);
             currentBalance.setText("Current balance: ₪" 
-                    + player.getWallet().getCredits());
+                    + player.getCredits());
             debt.setText("₪" + player.getDebt());
             loanAmt.clear();
         } catch (NumberFormatException e) {
@@ -112,16 +112,16 @@ public class FinanceScreenController
         String amtStr = payBackAmt.getText();
         try {
             int amt = Integer.parseInt(amtStr);
-            if (amt > player.getWallet().getCredits()) {
+            if (amt > player.getCredits()) {
                 loanAmt.clear();
                 mainControl.displayAlertMessage("Incorrect entry!",
                     "You do not have enough money to pay that much!");
                 return;
             }
-            player.getWallet().remove(amt);
-            player.setDebt(player.getDebt() - amt);
+            player.removeCredits(amt);
+            player.removeDebt(amt);
             currentBalance.setText("Current balance: ₪" 
-                    + player.getWallet().getCredits());
+                    + player.getCredits());
             debt.setText("₪" + player.getDebt());
             payBackAmt.clear();
         } catch (NumberFormatException e) {

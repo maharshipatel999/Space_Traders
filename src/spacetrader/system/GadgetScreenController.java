@@ -220,14 +220,14 @@ public class GadgetScreenController
     @FXML
     protected void pressBuyButton(ActionEvent event) {
         int cost = buyingPrice(selectedIcon.item);
-        int initialCredits = player.getWallet().getCredits();
+        int initialCredits = player.getCredits();
 
         //the default pop-up for the player
         String msgTitle = "Transaction Unsuccessful";
         String msgText = "Purchase Failure";
 
         try {
-            player.getWallet().remove(cost);
+            player.removeCredits(cost);
 
             int type;
             //Finds the type of the icon searching through each list.
@@ -247,7 +247,7 @@ public class GadgetScreenController
         } catch (SlotsAreFullException e) {
             //Since its possible that the player's wallet was successfully
             //decremented, we must reset it back to its original value.
-            player.getWallet().setCredits(initialCredits);
+            player.setCredits(initialCredits);
             msgText = "Acquire more equipment slots to be able to purchase a " + nameText.getText() + ".";
         } catch (InsufficientFundsException e) {
             msgText = String.format("You do not have enough money to purchase a %s.%n%nIt costs ₪%d, but you only have ₪%d.",
@@ -283,7 +283,7 @@ public class GadgetScreenController
         }
 
         int revenue = sellingPrice(selectedIcon.item);
-        player.getWallet().add(revenue);
+        player.addCredits(revenue);
 
         String msgTitle = "Transaction Successful";
         String msgText = String.format("You successfully sold your %s for ₪%d!", nameText.getText(), revenue);
@@ -332,7 +332,7 @@ public class GadgetScreenController
      * Updates the text that shows the player's current amount of credits.
      */
     private void updateFundsText() {
-        funds.setText("₪" + player.getWallet().getCredits());
+        funds.setText("₪" + player.getCredits());
     }
 
     private void updateDescription() {

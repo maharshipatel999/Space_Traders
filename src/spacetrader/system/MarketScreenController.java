@@ -115,7 +115,7 @@ public class MarketScreenController extends SceneController implements Initializ
     public void setUpMarketScreen(Planet planet, Player player) {
         this.player = player;
         this.market = planet.getMarket();
-        cashier = new Transaction(market, player.getShip().getCargo(), player.getWallet());
+        cashier = new Transaction(market, player.getShip().getCargo(), player);
 
         stocks = new Label[]{stock0, stock1, stock2, stock3, stock4,
             stock5, stock6, stock7, stock8, stock9};
@@ -154,7 +154,7 @@ public class MarketScreenController extends SceneController implements Initializ
         planetGovt.setText(planet.getPoliticalSystem().type());
         planetLevel.setText(planet.getLevel().type());
         planetResource.setText(planet.getResource().type());
-        playerFunds.setText("₪" + player.getWallet().getCredits());
+        playerFunds.setText("₪" + player.getCredits());
         cargoSlots.setText(player.getShip().getCargo().getCount() + "/" + player.getShip().getCargo().getMaxCapacity());
         priceEvent.setText(planet.getPriceIncEvent().desc());
         updateNetBalance();

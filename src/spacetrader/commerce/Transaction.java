@@ -19,9 +19,9 @@ public class Transaction {
 
     private final Market market;
     private final Cargo playerCargo;
-    private final Wallet playerMoney;
-    private Cargo purchases;
-    private Cargo sales;
+    private final Consumer playerMoney;
+    private final Cargo purchases;
+    private final Cargo sales;
     private int totalCost;
     private int totalRevenue;
     private int remainingBalance;
@@ -35,7 +35,7 @@ public class Transaction {
      * @param playerCargo the player's cargo
      * @param playerMoney the player's wallet
      */
-    public Transaction(final Market market,final Cargo playerCargo, final Wallet playerMoney) {
+    public Transaction(final Market market, final Cargo playerCargo, final Consumer playerMoney) {
         this.market = market;
         this.playerCargo = playerCargo;
         this.playerMoney = playerMoney;
@@ -124,8 +124,8 @@ public class Transaction {
             playerCargo.addCargoContents(purchases);
             playerCargo.removeCargoContents(sales);
         }
-        playerMoney.add(totalRevenue);
-        playerMoney.remove(totalCost);
+        playerMoney.addCredits(totalRevenue);
+        playerMoney.removeCredits(totalCost);
     }
 
     /**

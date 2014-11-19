@@ -144,7 +144,7 @@ public class PoliceEncounter extends Encounter {
             fine = Math.min(fine, MAXIMUM_FINE_AMOUNT);
             fine = Math.max(fine, MINIMUM_FINE_AMOUNT);
 
-            getPlayer().getWallet().removeForcefully(fine);
+            getPlayer().removeCreditsForced(fine);
 
             //remove the illegal goods
             getPlayer().getShip().getCargo().clearItem(TradeGood.FIREARMS);
