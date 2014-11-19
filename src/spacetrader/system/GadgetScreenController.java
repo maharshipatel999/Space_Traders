@@ -239,7 +239,7 @@ public class GadgetScreenController
             shipEquipmentSlots[type].addItem(selectedIcon.item.clone()); //gives the player a copy of that item.
 
             if (selectedIcon.item.equals(new Gadget(GadgetType.EXTRA_CARGO))) {
-                player.getShip().getCargo().increaseCapacity();
+                player.getCargo().increaseCapacity();
             }
 
             msgTitle = "Transaction Successful";
@@ -279,7 +279,7 @@ public class GadgetScreenController
         shipEquipmentSlots[type].removeAtIndex(slot);
 
         if (selectedIcon.item.equals(new Gadget(GadgetType.EXTRA_CARGO))) {
-            player.getShip().getCargo().decreaseCapacity();
+            player.getCargo().decreaseCapacity();
         }
 
         int revenue = sellingPrice(selectedIcon.item);

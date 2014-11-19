@@ -60,7 +60,7 @@ public class TraderEncounter extends Encounter {
         if (!playerIsCloaked() && !opponentIsCloaked() && tooIntimidating) {
             state = State.FLEE;
         } else if (rand.nextInt(1000) < 100) { // Will there be trade in orbit?
-            if (!getPlayer().getShip().getCargo().isFull() && hasTradeableGoods(getOpponent(), false, getPlayer())) {
+            if (!getPlayer().getCargo().isFull() && hasTradeableGoods(getOpponent(), false, getPlayer())) {
                 state = State.SELL;
             }
             // we fudge on whether the trader has capacity to carry the stuff he's buying.

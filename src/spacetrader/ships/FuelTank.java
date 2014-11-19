@@ -75,19 +75,19 @@ public class FuelTank implements Serializable {
      *
      * @param amount how much to increase the max fuel by
      */
-    public void increaseMaxFuel(int amount) {
-        maxFuel += amount;
-    }
+    //public void increaseMaxFuel(int amount) {
+    //    maxFuel += amount;
+    //}
 
     /**
      * Decreases the max fuel of this tank by a specified amount.
      *
      * @param amount how much to decrease the max fuel by
      */
-    public void decreaseMaxFuel(int amount) {
-        if (amount < maxFuel) {
-            throw new IllegalArgumentException("Amount is too large.");
-        }
-        maxFuel -= amount;
-    }
+    //public void decreaseMaxFuel(int amount) {
+    //    if (amount < maxFuel) {
+    //        throw new IllegalArgumentException("Amount is too large.");
+    //    }
+    //    maxFuel -= amount;
+    //}
 }

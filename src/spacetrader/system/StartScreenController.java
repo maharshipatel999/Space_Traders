@@ -135,8 +135,8 @@ public class StartScreenController extends SceneController implements Initializa
         }
 
         shipType.setText(ship.getType().toString());
-        shipFuel.setText(ship.getTank().getFuelAmount() + "/" + ship.getTank().getMaxFuel());
-        fuelBar.setProgress((ship.getTank().getFuelAmount() / ship.getTank().getMaxFuel() * 100));
+        shipFuel.setText(ship.getFuelAmount() + "/" + ship.getMaxFuel());
+        fuelBar.setProgress((ship.getFuelAmount() / ship.getMaxFuel() * 100));
         shipHull.setText((100 * ship.getHullStrength() / ship.getMaxHullStrength()) + "%");
         hullBar.setProgress((ship.getHullStrength() / ship.getMaxHullStrength() * 100));
         shipWeaponSlots.setText(ship.getWeapons().getNumFilledSlots() + "/" + ship.getType().weaponSlots());
@@ -181,8 +181,8 @@ public class StartScreenController extends SceneController implements Initializa
         if (response.isPresent()) {
             switch (response.get()) {
                 case "Increase Fuel":
-                    player.getShip().getTank().increaseMaxFuel(50);
-                    player.getShip().getTank().addFuel(50);
+                    //player.getShip().increaseMaxFuel(50);
+                    player.getShip().addFuel(50);
                     break;
                 case "Get Money!":
                     player.addCredits(10000);

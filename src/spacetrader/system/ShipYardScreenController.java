@@ -16,10 +16,10 @@ import spacetrader.Player;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.planets.Planet;
 import spacetrader.planets.TechLevel;
-import spacetrader.ships.FuelTank;
 import spacetrader.ships.GadgetType;
 import spacetrader.ships.ShieldType;
 import spacetrader.ships.ShipType;
+import spacetrader.ships.SpaceShip;
 import spacetrader.ships.WeaponType;
 
 /**
@@ -132,8 +132,8 @@ public class ShipYardScreenController
      * Updates the fuel progress bar.
      */
     private void updateFuelBar() {
-        int currFuel = player.getShip().getTank().getFuelAmount();
-        int maxFuel = player.getShip().getTank().getMaxFuel();
+        int currFuel = player.getShip().getFuelAmount();
+        int maxFuel = player.getShip().getMaxFuel();
         fuelProgress.setProgress((double) currFuel / maxFuel);
         fuelAmountLabel.setText(currFuel + "/" + maxFuel);
     }
@@ -152,8 +152,8 @@ public class ShipYardScreenController
      * Updates the buttons for buying fuel.
      */
     private void setFuelButtons() {
-        int currFuel = player.getShip().getTank().getFuelAmount();
-        int maxFuel = player.getShip().getTank().getMaxFuel();
+        int currFuel = player.getShip().getFuelAmount();
+        int maxFuel = player.getShip().getMaxFuel();
         int fuelCost = player.getShip().getType().fuelCost();
 
         //Disable the player's ability to buy fuel if their fuel tank is full.
@@ -201,8 +201,9 @@ public class ShipYardScreenController
             double damageFraction = (maxHull - currHull) / (double) maxHull;
             int repairAmount = (damageFraction >= .10)
                     ? (maxHull / 10) : (maxHull - currHull);
-            incHullButton.setText("Repair " + (((double) repairAmount / maxHull) * 100)
-                    + "% of Hull: ₪" + (repairAmount * repairCost));
+            int repairPercentage = (int) (100.0 * repairAmount / maxHull);
+            incHullButton.setText("Repair " + repairPercentage + "% of Hull: ₪"
+                    + (repairAmount * repairCost));
         }
     }
 
@@ -220,8 +221,8 @@ public class ShipYardScreenController
      */
     @FXML
     void increaseToMaxFuel() {
-        FuelTank tank = player.getShip().getTank();
-        int fuelDiff = tank.getMaxFuel() - tank.getFuelAmount();
+        SpaceShip ship = player.getShip();
+        int fuelDiff = ship.getMaxFuel() - ship.getFuelAmount();
         buyFuel(fuelDiff);
     }
 
@@ -239,7 +240,7 @@ public class ShipYardScreenController
             //Update Player's Wallet and Ship's Fuel Tank
             //This can throw an InsufficientFundsException
             player.removeCredits(fuelAmount * fuelCost);
-            player.getShip().getTank().addFuel(fuelAmount);
+            player.getShip().addFuel(fuelAmount);
 
             //Update ShipYardScreen
             int amount = player.getCredits();

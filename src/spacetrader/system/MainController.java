@@ -268,7 +268,7 @@ public class MainController {
         //Deduct fuel
         int distance = (int) Universe
                 .distanceBetweenPlanets(source, destination);
-        player.getShip().getTank().removeFuel(distance);
+        player.getShip().removeFuel(distance);
 
         //Start doing encounters!
         goToWarpScreen(source, destination);

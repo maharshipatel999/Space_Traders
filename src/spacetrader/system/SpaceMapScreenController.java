@@ -84,8 +84,8 @@ public class SpaceMapScreenController extends SceneController implements Initial
     public void setUpMap(Player player, Planet currentPlanet, ArrayList<Planet> planets) {
         this.player = player;
         this.currentPlanet = currentPlanet;
-        this.fuelAmount = player.getShip().getTank().getFuelAmount();
-        this.maxFuelAmount = player.getShip().getTank().getMaxFuel();
+        this.fuelAmount = player.getShip().getFuelAmount();
+        this.maxFuelAmount = player.getShip().getMaxFuel();
         fuelRemaingText.setText("Fuel Remaining : " + fuelAmount + "/" + maxFuelAmount);
         planetMap.addPlanets(planets);
 

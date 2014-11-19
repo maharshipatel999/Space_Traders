@@ -115,7 +115,7 @@ public class MarketScreenController extends SceneController implements Initializ
     public void setUpMarketScreen(Planet planet, Player player) {
         this.player = player;
         this.market = planet.getMarket();
-        cashier = new Transaction(market, player.getShip().getCargo(), player);
+        cashier = new Transaction(market, player.getCargo(), player);
 
         stocks = new Label[]{stock0, stock1, stock2, stock3, stock4,
             stock5, stock6, stock7, stock8, stock9};
@@ -139,7 +139,7 @@ public class MarketScreenController extends SceneController implements Initializ
             revenue5, revenue6, revenue7, revenue8, revenue9};
 
         buyGoods = market.getStock().getTradeGoods();
-        sellGoods = player.getShip().getCargo().getTradeGoods();
+        sellGoods = player.getCargo().getTradeGoods();
 
         //Remove appropriate amount of rows from grid
         if (buyGoods.size() < 10) {
@@ -149,13 +149,13 @@ public class MarketScreenController extends SceneController implements Initializ
             deleteGridRows(sellGoods.size(), sellGrid);
         }
 
-        setUpPanels(player.getShip().getCargo());
+        setUpPanels(player.getCargo());
         planetName.setText(planet.getName());
         planetGovt.setText(planet.getPoliticalSystem().type());
         planetLevel.setText(planet.getLevel().type());
         planetResource.setText(planet.getResource().type());
         playerFunds.setText("₪" + player.getCredits());
-        cargoSlots.setText(player.getShip().getCargo().getCount() + "/" + player.getShip().getCargo().getMaxCapacity());
+        cargoSlots.setText(player.getCargo().getCount() + "/" + player.getCargo().getMaxCapacity());
         priceEvent.setText(planet.getPriceIncEvent().desc());
         updateNetBalance();
         viewIsInitialized = true;
@@ -339,7 +339,7 @@ public class MarketScreenController extends SceneController implements Initializ
     private void updateSellText(int index) {
         TradeGood good = sellGoods.get(index);
         int quantity = cashier.getQuantitySold(good);
-        int oldInventory = player.getShip().getCargo().getQuantity(good);
+        int oldInventory = player.getCargo().getQuantity(good);
         inventorys[index].setText("" + (oldInventory - quantity));
         numSells[index].setText("" + quantity);
         revenues[index].setText("₪" + (quantity * market.getBuyPrice(good)));
@@ -351,7 +351,7 @@ public class MarketScreenController extends SceneController implements Initializ
      */
     private void updateNetBalance() {
         moneyRemaining.setText(cashier.getRemainingBalance() + " credits");
-        cargoSlots.setText(player.getShip().getCargo().getCount() + "/" + player.getShip().getCargo().getMaxCapacity());
+        cargoSlots.setText(player.getCargo().getCount() + "/" + player.getCargo().getMaxCapacity());
 
     }
 
@@ -404,7 +404,7 @@ public class MarketScreenController extends SceneController implements Initializ
                     } else {
                         TradeGood good = sellGoods.get(row - 1);
                         price = -1; //if selling, price doesn't matter
-                        quantity = player.getShip().getCargo().getQuantity(good) - cashier.getQuantitySold(good);
+                        quantity = player.getCargo().getQuantity(good) - cashier.getQuantitySold(good);
                     }
                     if (quantity <= 0) {
                         node.setDisable(true);

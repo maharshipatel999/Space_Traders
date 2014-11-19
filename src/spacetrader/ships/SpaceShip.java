@@ -28,7 +28,7 @@ public class SpaceShip implements Serializable {
     private final ArrayList<Mercenary> crew;
     private final SkillList crewSkills;
 
-    private int maxHullStrength;
+    private final int maxHullStrength;
     private int hullStrength;
 
     /**
@@ -57,15 +57,6 @@ public class SpaceShip implements Serializable {
      */
     public Cargo getCargo() {
         return cargo;
-    }
-
-    /**
-     * Gets the fuel tank of this ship
-     *
-     * @return the fuel tank of this instance
-     */
-    public FuelTank getTank() {
-        return tank;
     }
 
     /**
@@ -201,18 +192,18 @@ public class SpaceShip implements Serializable {
         currentPrice -= (maxHullStrength - hullStrength) * type.repairCost();
 
         //subtract cost to fill tank with fuel
-        currentPrice -= (getTank().getMaxFuel() - getTank().getFuelAmount());
+        currentPrice -= (getMaxFuel() - getFuelAmount());
 
         //add reduced cost of equipment
         for (int i = 0; i < weapons.getNumFilledSlots(); i++) {
-            currentPrice += weapons.getItem(i).getType().price() * .75;
+            currentPrice += weapons.getItem(i).getSellPrice(0);
         }
         for (int i = 0; i < shields.getNumFilledSlots(); i++) {
-            currentPrice += weapons.getItem(i).getType().price() * .75;
+            currentPrice += weapons.getItem(i).getSellPrice(0);
         }
-        //for (int i = 0; i < gadgets.getNumFilledSlots(); i++) {
-        //    currentPrice += gadgets.getItem(i).getType().price() * .75;
-        //}
+        for (int i = 0; i < gadgets.getNumFilledSlots(); i++) {
+            currentPrice += gadgets.getItem(i).getSellPrice(0);
+        }
 
         return currentPrice;
     }
@@ -256,6 +247,13 @@ public class SpaceShip implements Serializable {
             calculateHighestCrewSkills();
         }
         return fired;
+    }
+    
+    /**
+     * Returns the max number of crew this ship can carry.
+     */
+    public int getMaxNumCrew() {
+        return type.crew();
     }
 
     /**
@@ -306,4 +304,39 @@ public class SpaceShip implements Serializable {
         return toString;
     }
 
+    /**
+     * Gets the current remaining amount of fuel.
+     *
+     * @return this ship's current fuel amount
+     */
+    public int getFuelAmount() {
+        return tank.getFuelAmount();
+    }
+
+    /**
+     * Gets the max amount of fuel this ship can hold.
+     *
+     * @return the maximum fuel capacity of this ship
+     */
+    public int getMaxFuel() {
+        return tank.getMaxFuel();
+    }
+
+    /**
+     * Adds a specified amount of fuel to this ship's fuel tank.
+     *
+     * @param fuelAmount the amount of fuel to add
+     */
+    public void addFuel(int fuelAmount) {
+        tank.addFuel(fuelAmount);
+    }
+
+    /**
+     * Removes a specified amount of fuel from this ship's fuel tank.
+     *
+     * @param fuelAmount the amount of fuel to remove
+     */
+    public void removeFuel(int fuelAmount) {
+        tank.removeFuel(fuelAmount);
+    }
 }

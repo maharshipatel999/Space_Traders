@@ -7,6 +7,7 @@ package spacetrader;
 
 import java.io.Serializable;
 import spacetrader.SkillList.Skill;
+import spacetrader.commerce.Cargo;
 import spacetrader.commerce.Consumer;
 import spacetrader.commerce.Wallet;
 import spacetrader.exceptions.InsufficientFundsException;
@@ -94,6 +95,15 @@ public class Player extends Trader implements Consumer, Serializable {
      */
     public void setLocation(Planet planet) {
         this.location = planet;
+    }
+
+    /**
+     * Gets the cargo of this player's ship's cargo.
+     * 
+     * @return this player's cargo
+     */
+    public Cargo getCargo() {
+        return ship.getCargo();
     }
 
     /**
@@ -246,10 +256,6 @@ public class Player extends Trader implements Consumer, Serializable {
             wallet.setCredits(originalPlayerMoney);
             throw e;
         }
-    }
-
-    public Object getCargo() {
-        return ship.getCargo();
     }
 
     @Override

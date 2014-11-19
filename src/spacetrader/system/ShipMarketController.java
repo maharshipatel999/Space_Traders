@@ -186,9 +186,9 @@ public class ShipMarketController
             } else {
                 player.removeCredits(costOfPurchase);
             }
-            Cargo oldCargo = player.getShip().getCargo();
+            Cargo oldCargo = player.getCargo();
             player.setShip(new PlayerShip(shipTypes[selectedShip]));
-            player.getShip().getCargo().addCargoContents(oldCargo);
+            player.getCargo().addCargoContents(oldCargo);
 
             mainControl.displayAlertMessage(null,
                     "Congratulations on your new ship! ");

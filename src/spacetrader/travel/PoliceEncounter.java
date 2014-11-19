@@ -147,8 +147,8 @@ public class PoliceEncounter extends Encounter {
             getPlayer().removeCreditsForced(fine);
 
             //remove the illegal goods
-            getPlayer().getShip().getCargo().clearItem(TradeGood.FIREARMS);
-            getPlayer().getShip().getCargo().clearItem(TradeGood.NARCOTICS);
+            getPlayer().getCargo().clearItem(TradeGood.FIREARMS);
+            getPlayer().getCargo().clearItem(TradeGood.NARCOTICS);
 
             //update police record
             int newRecord = getPlayer().getPoliceRecordScore() + TRAFFICKING;
