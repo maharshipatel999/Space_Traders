@@ -54,34 +54,34 @@ public class PoliceEncounterTest {
         //Test Maximum Fine
         storeIllegalGoods();
         int initialMoney = 1000000000;
-        player.getWallet().setCredits(initialMoney);
+        player.setCredits(initialMoney);
 
         assertTrue(instance.inspectPlayer());
         int expectedFine = 10000;
-        assertEquals(initialMoney - expectedFine, player.getWallet().getCredits());
+        assertEquals(initialMoney - expectedFine, player.getCredits());
         assertEquals(-1, player.getPoliceRecordScore());
 
         //Test Minimum Fine
         initialMoney = 0;
-        player.getWallet().setCredits(initialMoney);
+        player.setCredits(initialMoney);
         player.setShip(new PlayerShip(ShipType.FLEA));
         storeIllegalGoods();
 
         assertTrue(instance.inspectPlayer());
         expectedFine = 100;
-        assertEquals(0, player.getWallet().getCredits());
-        assertEquals(Math.abs(initialMoney - expectedFine), player.getWallet().getDebt());
+        assertEquals(0, player.getCredits());
+        assertEquals(Math.abs(initialMoney - expectedFine), player.getDebt());
         assertEquals(-2, player.getPoliceRecordScore());
 
         //Test Normal Fine
         player.setShip(new PlayerShip(ShipType.GNAT));
         storeIllegalGoods();
         initialMoney = 1000;
-        player.getWallet().setCredits(initialMoney);
+        player.setCredits(initialMoney);
 
         assertTrue(instance.inspectPlayer());
         expectedFine = 250;
-        assertEquals(initialMoney - expectedFine, player.getWallet().getCredits());
+        assertEquals(initialMoney - expectedFine, player.getCredits());
         assertEquals(-3, player.getPoliceRecordScore());
     }
 
@@ -94,7 +94,7 @@ public class PoliceEncounterTest {
         instance = new PoliceEncounter(player, 10, PoliticalSystem.DEMOCRACY.strengthPolice());
         for (TradeGood good : TradeGood.values()) {
             if (good != TradeGood.FIREARMS && good != TradeGood.NARCOTICS) {
-                player.getShip().getCargo().addItem(good, rand.nextInt(2) + 1, 30);
+                player.getCargo().addItem(good, rand.nextInt(2) + 1, 30);
             }
         }
         assertFalse(instance.inspectPlayer());
@@ -106,27 +106,27 @@ public class PoliceEncounterTest {
         System.out.println("inspectPlayer Legal Ship");
         instance = new PoliceEncounter(player, 10, PoliticalSystem.DEMOCRACY.strengthPolice());
 
-        player.getShip().getCargo().addItem(TradeGood.FIREARMS, 2, 5);
+        player.getCargo().addItem(TradeGood.FIREARMS, 2, 5);
         assertTrue(instance.inspectPlayer());
         assertEquals(-1, player.getPoliceRecordScore());
-        assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.FIREARMS));
-        assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.NARCOTICS));
+        assertEquals(0, player.getCargo().getQuantity(TradeGood.FIREARMS));
+        assertEquals(0, player.getCargo().getQuantity(TradeGood.NARCOTICS));
 
-        player.getShip().getCargo().addItem(TradeGood.NARCOTICS, 3, 6);    
+        player.getCargo().addItem(TradeGood.NARCOTICS, 3, 6);    
         assertTrue(instance.inspectPlayer());
         assertEquals(-2, player.getPoliceRecordScore());
-        assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.FIREARMS));
-        assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.NARCOTICS));
+        assertEquals(0, player.getCargo().getQuantity(TradeGood.FIREARMS));
+        assertEquals(0, player.getCargo().getQuantity(TradeGood.NARCOTICS));
 
-        player.getShip().getCargo().addItem(TradeGood.FIREARMS, 2, 5);
-        player.getShip().getCargo().addItem(TradeGood.NARCOTICS, 3, 6);
+        player.getCargo().addItem(TradeGood.FIREARMS, 2, 5);
+        player.getCargo().addItem(TradeGood.NARCOTICS, 3, 6);
         assertTrue(instance.inspectPlayer());
         assertEquals(-3, player.getPoliceRecordScore());
-        assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.FIREARMS));
-        assertEquals(0, player.getShip().getCargo().getQuantity(TradeGood.NARCOTICS));
+        assertEquals(0, player.getCargo().getQuantity(TradeGood.FIREARMS));
+        assertEquals(0, player.getCargo().getQuantity(TradeGood.NARCOTICS));
     }
 
     private void storeIllegalGoods() {
-        player.getShip().getCargo().addItem(TradeGood.FIREARMS, 5, 0);
+        player.getCargo().addItem(TradeGood.FIREARMS, 5, 0);
     }
 }

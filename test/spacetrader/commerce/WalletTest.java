@@ -41,34 +41,20 @@ public class WalletTest {
     }
 
     /**
-     * Test of isEmpty method, of class Wallet.
-     */
-    @Test
-    public void testIsEmpty() {
-        System.out.println("isEmpty");
-        Wallet instance = new Wallet();
-        boolean expResult = false;
-        boolean result = instance.isEmpty();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of add method, of class Wallet.
+     * Test of addCredits method, of class Wallet.
      */
     @Test
     public void testAdd() {
         System.out.println("add");
         int deposit = 0;
         Wallet instance = new Wallet();
-        instance.add(deposit);
-        // TODO review the generated test code and remove the default call to fail.
+        instance.addCredits(deposit);
+        // TODO review the generated test code and removeCredits the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of remove method, of class Wallet.
+     * Test of removeCredits method, of class Wallet.
      */
     @Test
     public void testRemove() {
@@ -78,7 +64,7 @@ public class WalletTest {
         //Test withdrawl < 0
         int withdrawal = -10;
         try {
-            instance.remove(withdrawal);
+            instance.removeCredits(withdrawal);
             fail("Should have thrown an IllegalArgumentException");
         } catch (IllegalArgumentException e) {
             assertTrue(e.getMessage().equals("Cannot add negative credits"));
@@ -89,7 +75,7 @@ public class WalletTest {
         withdrawal = 1500;
         assertTrue(instance.getCredits() < withdrawal);
         try {
-            instance.remove(withdrawal);
+            instance.removeCredits(withdrawal);
             fail("Should have thrown an InsufficientFundsException");
         } catch (InsufficientFundsException e) { }
         
@@ -98,7 +84,7 @@ public class WalletTest {
         withdrawal = 0;
         int initCredits = instance.getCredits();
         try {
-            instance.remove(withdrawal);
+            instance.removeCredits(withdrawal);
         } catch (IllegalArgumentException e) {
             fail("Should NOT have thrown an IllegalArgumentException");
         }
@@ -110,7 +96,7 @@ public class WalletTest {
         assertTrue(instance.getCredits() >= withdrawal);
         initCredits = instance.getCredits();
         try {
-            instance.remove(withdrawal);
+            instance.removeCredits(withdrawal);
         } catch (Exception e) {
             fail("Should NOT have thrown an Exception");
         }
@@ -120,15 +106,15 @@ public class WalletTest {
     }
 
     /**
-     * Test of removeForcefully method, of class Wallet.
+     * Test of removeCreditsForced method, of class Wallet.
      */
     @Test
     public void testRemoveForcefully() {
         System.out.println("removeForcefully");
         int withdrawal = 0;
         Wallet instance = new Wallet();
-        instance.removeForcefully(withdrawal);
-        // TODO review the generated test code and remove the default call to fail.
+        instance.removeCreditsForced(withdrawal);
+        // TODO review the generated test code and removeCredits the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -142,7 +128,7 @@ public class WalletTest {
         int expResult = 0;
         int result = instance.getCredits();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // TODO review the generated test code and removeCredits the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -155,7 +141,7 @@ public class WalletTest {
         int credits = 0;
         Wallet instance = new Wallet();
         instance.setCredits(credits);
-        // TODO review the generated test code and remove the default call to fail.
+        // TODO review the generated test code and removeCredits the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -169,33 +155,33 @@ public class WalletTest {
         int expResult = 0;
         int result = instance.getDebt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // TODO review the generated test code and removeCredits the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of increaseDebt method, of class Wallet.
+     * Test of addDebt method, of class Wallet.
      */
     @Test
     public void testIncreaseDebt() {
         System.out.println("increaseDebt");
         int addition = 0;
         Wallet instance = new Wallet();
-        instance.increaseDebt(addition);
-        // TODO review the generated test code and remove the default call to fail.
+        instance.addDebt(addition);
+        // TODO review the generated test code and removeCredits the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of decreaseDebt method, of class Wallet.
+     * Test of removeDebt method, of class Wallet.
      */
     @Test
     public void testDecreaseDebt() {
         System.out.println("decreaseDebt");
         int removal = 0;
         Wallet instance = new Wallet();
-        instance.decreaseDebt(removal);
-        // TODO review the generated test code and remove the default call to fail.
+        instance.removeDebt(removal);
+        // TODO review the generated test code and removeCredits the default call to fail.
         fail("The test case is a prototype.");
     }
     

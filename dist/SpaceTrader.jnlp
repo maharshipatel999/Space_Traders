@@ -11,8 +11,9 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SpaceTrader.jar" size="10623693" download="eager" />
-    <jar href="lib/controlsfx-8.0.6_20.jar" size="856539" download="eager" />
+    <jar href="SpaceTrader.jar" size="10893046" download="eager" />
+    <jar href="lib/controlsfx-8.20.8.jar" size="957666" download="eager" />
+    <jar href="lib/openjfx-dialogs-1.0.2.jar" size="148557" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="SpaceTrader" >
     <param name="requiredFXVersion" value="8.0+"/>

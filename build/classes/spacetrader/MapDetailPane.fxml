@@ -11,71 +11,62 @@
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MapDetailController">
    <children>
-      <SplitPane dividerPositions="0.4335154826958106" layoutX="31.0" layoutY="222.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.43169398907103823" layoutX="31.0" layoutY="222.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
             <VBox fx:id="planetInformation" prefHeight="222.0" prefWidth="280.0" spacing="3.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Planet Information">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Planet Information" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="19.0" />
                      </font>
                   </Text>
                   <Separator prefWidth="200.0" />
-                  <HBox spacing="10.0">
+                  <AnchorPane VBox.vgrow="NEVER">
                      <children>
-                        <Label text="Name:">
+                        <Label text="Name:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <padding>
                               <Insets top="3.0" />
                            </padding>
                         </Label>
-                        <Text fx:id="planetName" strokeType="OUTSIDE" strokeWidth="0.0" text="LubsTown" wrappingWidth="205.708984375">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                        <Text fx:id="planetName" strokeType="OUTSIDE" strokeWidth="0.0" text="LubsTown" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
-                  <HBox spacing="10.0">
+                  </AnchorPane>
+                  <AnchorPane VBox.vgrow="NEVER">
                      <children>
-                        <Label text="Tech Level:">
+                        <Label text="Tech Level:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <padding>
                               <Insets top="3.0" />
                            </padding>
                         </Label>
-                        <Text fx:id="planetLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="Science" wrappingWidth="178.708984375">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                        <Text fx:id="planetLevel" strokeType="OUTSIDE" strokeWidth="0.0" text="Science" textAlignment="RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
-                  <HBox spacing="10.0">
+                  </AnchorPane>
+                  <AnchorPane VBox.vgrow="NEVER">
                      <children>
-                        <Label text="Government:">
+                        <Label text="Government:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <padding>
                               <Insets top="3.0" />
                            </padding>
                         </Label>
-                        <Text fx:id="planetGovt" strokeType="OUTSIDE" strokeWidth="0.0" text="Democracy" wrappingWidth="158.708984375">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                        <Text fx:id="planetGovt" strokeType="OUTSIDE" strokeWidth="0.0" text="Democracy" textAlignment="RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
-                  <HBox prefHeight="23.0" spacing="10.0">
+                  </AnchorPane>
+                  <HBox prefHeight="23.0" spacing="10.0" VBox.vgrow="NEVER">
                      <children>
                         <VBox prefHeight="56.0" prefWidth="49.0">
                            <children>
@@ -99,19 +90,16 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox spacing="10.0">
+                  <AnchorPane VBox.vgrow="NEVER">
                      <children>
-                        <Label text="Special Resources:" />
-                        <Text fx:id="planetResources" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" wrappingWidth="131.708984375">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                        <Label text="Special Resources:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                        <Text fx:id="planetResources" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" textAlignment="RIGHT" wrappingWidth="131.708984375" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
+                  </AnchorPane>
                   <Text fx:id="outOfRangeText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Planet is Out of Range!">
                      <font>
                         <Font name="System Bold" size="21.0" />
@@ -124,7 +112,7 @@
             </VBox>
             <VBox fx:id="averagePriceList" prefHeight="200.0" prefWidth="280.0" spacing="5.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Approximate Price List">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expected Prices on Planet">
                      <font>
                         <Font name="System Bold" size="19.0" />
                      </font>
@@ -230,6 +218,41 @@
                            </font></Label>
                      </children>
                   </GridPane>
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="38.0" spacing="18.0">
+                     <children>
+                        <HBox fx:id="priceDisplayButtons" alignment="CENTER" prefHeight="42.0" prefWidth="165.0" spacing="4.0">
+                           <children>
+                              <ToggleButton mnemonicParsing="false" onAction="#absolutePressed" prefHeight="26.0" prefWidth="75.0" text="Absolute">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="prices" />
+                                 </toggleGroup>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ToggleButton>
+                              <ToggleButton mnemonicParsing="false" onAction="#relativePressed" prefHeight="26.0" prefWidth="75.0" text="Relative" toggleGroup="$prices">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ToggleButton>
+                           </children>
+                        </HBox>
+                        <Button fx:id="warpButton" mnemonicParsing="false" onAction="#warpToPlanet" prefHeight="25.0" prefWidth="82.0" text="WARP">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
                <padding>
                   <Insets left="10.0" top="4.0" />
@@ -237,36 +260,6 @@
             </VBox>
         </items>
       </SplitPane>
-      <Button fx:id="warpButton" layoutX="172.0" layoutY="486.0" mnemonicParsing="false" onAction="#warpToPlanet" prefHeight="25.0" prefWidth="82.0" text="WARP" AnchorPane.bottomAnchor="6.0" AnchorPane.rightAnchor="3.0">
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <HBox fx:id="priceDisplayButtons" layoutX="14.0" layoutY="563.0" prefHeight="30.0" prefWidth="165.0" spacing="4.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="14.0">
-         <children>
-            <ToggleButton mnemonicParsing="false" onAction="#absolutePressed" prefHeight="26.0" prefWidth="75.0" text="Absolute">
-               <toggleGroup>
-                  <ToggleGroup fx:id="prices" />
-               </toggleGroup>
-               <font>
-                  <Font size="13.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ToggleButton>
-            <ToggleButton mnemonicParsing="false" onAction="#relativePressed" prefHeight="26.0" prefWidth="75.0" text="Relative" toggleGroup="$prices">
-               <font>
-                  <Font size="13.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ToggleButton>
-         </children>
-      </HBox>
    </children>
    <opaqueInsets>
       <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />

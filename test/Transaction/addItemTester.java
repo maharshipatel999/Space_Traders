@@ -11,7 +11,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import spacetrader.ships.EquipmentSlots;
 import spacetrader.ships.Equipment;
 import spacetrader.exceptions.SlotsAreEmptyException;
@@ -112,7 +111,7 @@ public class addItemTester {
      */
     @Test(expected = SlotsAreEmptyException.class)
     public void throwExceptionRemove() {
-        slots.removeItemOfSameType(new Gadget(GadgetType.AUTO_REPAIR));
+        slots.removeItem(new Gadget(GadgetType.AUTO_REPAIR));
     }
  
     /**
@@ -124,7 +123,7 @@ public class addItemTester {
         slots.addItem(i);
         assert (slots.getNumFilledSlots() == 1);
         assert (slots.getNumSlots() == 3);
-        slots.removeItemOfSameType(i);
+        slots.removeItem(i);
         assert (slots.getNumFilledSlots() == 0);
         assert (slots.getNumSlots() == 3);        
     }
