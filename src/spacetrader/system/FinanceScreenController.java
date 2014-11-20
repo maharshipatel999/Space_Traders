@@ -74,6 +74,10 @@ public class FinanceScreenController
             payLoan.setDisable(true);
             payLoan.setText("Insufficient funds to pay loans");
         }
+        if (player.getDebt() == 0) {
+            payLoan.setDisable(true);
+            payLoan.setText("No loans to pay off");
+        }
     }
 
     /**
@@ -102,6 +106,10 @@ public class FinanceScreenController
             mainControl.displayAlertMessage("Incorrect entry!",
                     "Please enter a number 1 - 1000 only!");
         }
+        if (player.getDebt() > 0) {
+            payLoan.setDisable(false);
+            payLoan.setText("Pay off loan");
+        }
     }
 
     /**
@@ -128,7 +136,11 @@ public class FinanceScreenController
             payBackAmt.clear();
             mainControl.displayAlertMessage("Incorrect entry!",
                     "Please enter a valid numerical value!");
-        }  
+        }
+        if (player.getDebt() == 0) {
+            payLoan.setDisable(true);
+            payLoan.setText("No loans to pay off");
+        }
     }
 
     /**
