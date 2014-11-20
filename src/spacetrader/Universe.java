@@ -29,12 +29,17 @@ public class Universe implements Serializable {
     public static final int HEIGHT = 110;
     private static final int PLANET_MAX_AMOUNT = 120;
     private static final int PLANET_MIN_AMOUNT = 100;
-    private static final int MIN_DISTANCE = 5;
+    private static final int MIN_DISTANCE = 6;
+    private static final int MAX_DISTANCE = 13;
+    
+    private static final int INITIAL_PLANET_NUM = 6;
 
     private final ArrayList<Planet> planets;
     private final Set<String> planetNames = new HashSet<>();
     private final Set<Point> planetLocations = new HashSet<>(100);
     private final ArrayList<Planet> wormholePlanets;
+    
+    //The region of the universe where planets currently exist
 
     /**
      * Creates the Universe with a semi-randomly chosen amount of Planets. Each
@@ -59,7 +64,7 @@ public class Universe implements Serializable {
         homePlanet.setRandomPriceIncEvent();
         planets.add(homePlanet);
         planetNames.add(homePlanet.getName());
-        planetLocations.add(homePlanet.getLocation());
+        this.addNewPlanetLocation(homePlanet.getLocation());
 
         //Create all the planets!
         for (int i = 0; i < planetAmount; i++) {
@@ -74,8 +79,8 @@ public class Universe implements Serializable {
             Point location;
             do {
                 location = generateRandomLocation();
-            } while (planetLocations.contains(location) || !isIsolated(location));
-            planetLocations.add(location);
+            } while (planetLocations.contains(location) || !isOptimalDistance(location));
+            this.addNewPlanetLocation(location);
 
             //create planet
             Planet planet = new Planet(name, location);
@@ -132,13 +137,17 @@ public class Universe implements Serializable {
         return null;
     }
 
-    private boolean isIsolated(Point point) {
+    private boolean isOptimalDistance(Point point) {
+        boolean isNearAnotherPlanet = false;
         for (Point p : planetLocations) {
             if (point.distance(p.getX(), p.getY()) < MIN_DISTANCE) {
                 return false;
             }
+            if (point.distance(p.getX(), p.getY()) < MAX_DISTANCE + 20) {
+                isNearAnotherPlanet = true;
+            }
         }
-        return true;
+        return isNearAnotherPlanet || planets.size() < INITIAL_PLANET_NUM;
     }
 
     public void updatePriceEvent(Planet p) {
@@ -157,6 +166,10 @@ public class Universe implements Serializable {
     public static double distanceBetweenPlanets(Planet p1, Planet p2) {
         return Point.distance(p1.getLocation().getX(), p1.getLocation().getY(), p2.getLocation().getX(), p2.getLocation().getY());
     }
+    
+    private void addNewPlanetLocation(Point point) {
+        planetLocations.add(point);
+    }
 
     /**
      * Creates a new random point between MAX_LOC (exclusive) and MIN_LOC
@@ -165,9 +178,17 @@ public class Universe implements Serializable {
      * @return a new random point.
      */
     private Point generateRandomLocation() {
-        int x = rand.nextInt(WIDTH);
-        int y = rand.nextInt(HEIGHT);
-        return new Point(x, y);
+        if (planets.size() < INITIAL_PLANET_NUM) {
+            int x = MIN_DISTANCE / 2 - rand.nextInt(MIN_DISTANCE) 
+                        + ((WIDTH * (1 + 2 * (planets.size() % 3))) / 6);		
+            int y = MIN_DISTANCE / 2 - rand.nextInt(MIN_DISTANCE) 
+                        + ((HEIGHT * (planets.size() < 3 ? 1 : 3)) / 4);
+            return new Point(x, y);
+        } else {
+            int x = rand.nextInt(WIDTH);
+            int y = rand.nextInt(HEIGHT);
+            return new Point(x, y);
+        }
     }
 
     /**
