@@ -127,7 +127,7 @@ public class Wallet implements Serializable, Consumer {
         if (addition < 0) {
             throw new IllegalArgumentException("Cannot add negative debt");
         } else {
-            credits += addition;
+            debt += addition;
         }
     }
 
@@ -142,8 +142,11 @@ public class Wallet implements Serializable, Consumer {
         if (removal < 0) {
             throw new IllegalArgumentException("Cannot remove negative debt");
         } else {
-            credits -= removal;
-            credits = (credits < 0) ? 0 : credits;
+            debt -= removal;
+            if (debt < 0) {
+                credits += Math.abs(debt);
+                debt = 0;
+            }
         }
     }
 

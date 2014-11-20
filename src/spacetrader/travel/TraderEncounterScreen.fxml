@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="spacetrader.travel.TraderEncounterController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="350.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.topAnchor="0.0">
+         <fill>
+            <LinearGradient endX="0.44660194174757284" endY="1.0" startX="0.4466019417475728">
+               <stops>
+                  <Stop color="#1753a8" />
+                  <Stop color="#17a61b" offset="0.007246376811594201" />
+                  <Stop color="#26bd24" offset="0.11871270247229326" />
+                  <Stop color="#16700f" offset="0.3442739414606423" />
+                  <Stop color="#399c36" offset="0.6585677749360614" />
+                  <Stop color="#2cc22b" offset="0.869067917021881" />
+                  <Stop color="#15de14" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <VBox alignment="TOP_CENTER" layoutX="167.0" prefHeight="350.0" prefWidth="600.0" spacing="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="You've encountered a trader!">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="traderOffer" alignment="CENTER" contentDisplay="CENTER" text="Offer">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="currAmt" alignment="CENTER" contentDisplay="CENTER" text="Current amount">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="50.0">
+               <children>
+                  <Button fx:id="trade" mnemonicParsing="false" text="Trade">
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="17.0" />
+                     </font>
+                  </Button>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="257.0">
+                     <children>
+                        <TextField fx:id="qField" layoutX="108.0" layoutY="1.0" />
+                        <Label layoutX="8.0" layoutY="4.0" text="Quantity:">
+                           <font>
+                              <Font name="Copperplate Gothic Bold" size="17.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Button fx:id="reject" mnemonicParsing="false" text="Reject">
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="17.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
