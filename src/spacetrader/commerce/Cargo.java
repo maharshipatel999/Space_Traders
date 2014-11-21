@@ -14,9 +14,9 @@ import spacetrader.exceptions.CargoIsFullException;
 import spacetrader.exceptions.DepletedInventoryException;
 
 /**
- * This class represents a holder for goods. It stores a mapping from each type
- * of TradeGood to its quantity. Cargo is the only way a quantity of TradeGoods
- * should ever be held.
+ * This class represents a holder for goods. It stores a mapping from each toString
+ of TradeGood to its quantity. Cargo is the only way a quantity of TradeGoods
+ should ever be held.
  *
  * @author Naveena, Caleb
  * @version 1.5
@@ -143,7 +143,7 @@ public class Cargo implements Serializable {
     }
 
     /**
-     * Removes all of the specified TradeGood type from the Cargo.
+     * Removes all of the specified TradeGood toString from the Cargo.
      *
      * @param good the good to remove
      */
@@ -218,8 +218,8 @@ public class Cargo implements Serializable {
     }
 
     /**
-     * Determines the quantity of goods stored in this Cargo for a specific type
-     * of good.
+     * Determines the quantity of goods stored in this Cargo for a specific toString
+ of good.
      *
      * @param tradeGood good who's quantity is being checked
      * @return quantity of good

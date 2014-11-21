@@ -19,8 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import spacetrader.planets.Planet;
 import spacetrader.Player;
 import spacetrader.commerce.Cargo;
@@ -39,10 +37,6 @@ import spacetrader.exceptions.NegativeQuantityException;
  */
 public class MarketScreenController extends SceneController implements Initializable {
 
-    @FXML
-    private Text alertText;
-    @FXML
-    private Label planetName, planetGovt, planetLevel, planetResource;
     @FXML
     private Label playerFunds, moneyRemaining, cargoSlots, priceEvent;
     @FXML
@@ -101,7 +95,7 @@ public class MarketScreenController extends SceneController implements Initializ
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        alertText.setFill(Color.TRANSPARENT);
+        //alertText.setFill(Color.TRANSPARENT);
     }
 
     /**
@@ -150,10 +144,6 @@ public class MarketScreenController extends SceneController implements Initializ
         }
 
         setUpPanels(player.getCargo());
-        planetName.setText(planet.getName());
-        planetGovt.setText(planet.getPoliticalSystem().type());
-        planetLevel.setText(planet.getLevel().type());
-        planetResource.setText(planet.getResource().type());
         playerFunds.setText("₪" + player.getCredits());
         cargoSlots.setText(player.getCargo().getCount() + "/" + player.getCargo().getMaxCapacity());
         priceEvent.setText(planet.getPriceIncEvent().desc());
@@ -191,7 +181,7 @@ public class MarketScreenController extends SceneController implements Initializ
             TradeGood good = buyGoods.get(i);
 
             stocks[i].setText("" + market.getStock().getQuantity(good));
-            goodBuys[i].setText("" + good.type());
+            goodBuys[i].setText("" + good.toString());
             priceBuys[i].setText("₪" + market.getBuyPrice(good));
         }
 
@@ -199,7 +189,7 @@ public class MarketScreenController extends SceneController implements Initializ
             TradeGood good = sellGoods.get(i);
 
             inventorys[i].setText("" + cargo.getQuantity(good));
-            goodSells[i].setText("" + good.type());
+            goodSells[i].setText("" + good.toString());
             priceSells[i].setText("₪" + market.getSellPrice(good));
         }
     }
@@ -361,8 +351,7 @@ public class MarketScreenController extends SceneController implements Initializ
      * @param message the message to be displayed
      */
     private void displayAlert(String message) {
-        alertText.setFill(Color.RED);
-        alertText.setText(message);
+        mainControl.displayAlertMessage("Market Warning!", message);
     }
 
     /**

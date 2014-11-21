@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
+import spacetrader.PoliceRecord;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.planets.Planet;
 
@@ -33,21 +34,26 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         // TODO
     }
 
-    /**
-     * Initiates Player attack sequence (Attack Pressed)
-     *
-     * @param e Event that is being processed
-     */
-    @FXML
+    @Override
     protected void attackPressed(ActionEvent e) {
+        boolean attackConfirmed;
         if (!encounter.getPlayer().getShip().isCarryingIllegalGoods()) {
-            if (!getPlayerConfirmation()) {
-                return;
-            }
-
+            attackConfirmed = getPlayerConfirmation();
+        } else {
+            attackConfirmed = mainControl.displayYesNoConfirmation(
+                    "Engaging In Criminal Activity!",
+                    "Are you sure you want to do this?",
+                    PoliceEncounter.ATTACK_CONFIM_MSG);
         }
-        mainControl.displayAlertMessage("Attack!", "You agrresively start attacking the police!");
-        mainControl.goBackToWarpScreen();
+        if (!attackConfirmed) {
+            return;
+        }
+
+        //the player's police record should be no greater than the crook score.
+        int updatedRecord = Math.min(encounter.getPlayer().getPoliceRecordScore(), PoliceRecord.CROOK.minScore());
+        encounter.getPlayer().setPoliceRecordScore(updatedRecord + PoliceEncounter.ATTACK_POLICE_SCORE);
+
+        super.attackPressed(e);
     }
 
     /**
@@ -60,7 +66,10 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         boolean inspectionFailed = ((PoliceEncounter) encounter).inspectPlayer();
 
         if (inspectionFailed) {
-            mainControl.displayAlertMessage("Inspection Failed!", "The Customs Police took all the illegal goods from your ship, and sent you on your way.");
+            String fineMsg = String.format("The police discovers illegal goods "
+                    + "in your cargo holds. These goods are impounded and you are "
+                    + "fined ₪%d", ((PoliceEncounter) encounter).determineFine());
+            mainControl.displayAlertMessage("Inspection Failed!", fineMsg);
         } else {
             mainControl.displayAlertMessage("Inspection Passed!", "The Police find nothing illegal in your cargo holds and appologize for the inconvience.");
         }
@@ -79,6 +88,17 @@ public class PoliceEncounterController extends EncounterScreenController impleme
                 return;
             }
         }
+
+        int updatedRecord;
+        if (encounter.getPlayer().getPoliceRecord().compareTo(PoliceRecord.DUBIOUS) >= 0) {
+            updatedRecord = PoliceRecord.DUBIOUS.minScore() - 1;
+        } else {
+            int currentRecord = encounter.getPlayer().getPoliceRecordScore();
+            updatedRecord = currentRecord + PoliceEncounter.FLEE_FROM_INSPECTION;
+        }
+        encounter.getPlayer().setPoliceRecordScore(updatedRecord);
+
+        //go the the attack screen.
         infoText.setText("You try to flee!");
         mainControl.goBackToWarpScreen();
     }

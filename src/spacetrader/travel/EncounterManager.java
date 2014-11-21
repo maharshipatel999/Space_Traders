@@ -13,6 +13,8 @@ import spacetrader.Tools;
 import spacetrader.planets.Planet;
 import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
+import spacetrader.system.MainController;
+import spacetrader.system.MainController.Debug;
 import spacetrader.travel.Encounter.State;
 
 /**
@@ -67,12 +69,29 @@ public class EncounterManager {
             }
 
             Encounter encounter = null;
-            if (index == 0) {
-                encounter = createPoliceEncounter(TOTAL_CLICKS - i);
-            } else if (index == 1) {
-                encounter = createPirateEncounter(TOTAL_CLICKS - i);
-            } else if (index == 2) {
-                encounter = createTraderEncounter(TOTAL_CLICKS - i);
+            
+            if (MainController.debugStatus != Debug.OFF) {
+                switch (MainController.debugStatus) {
+                    case POLICE_ENCOUNTER:
+                        encounter = createPoliceEncounter(TOTAL_CLICKS - i);
+                        break;
+                    case PIRATE_ENCOUNTER:
+                        encounter = createPirateEncounter(TOTAL_CLICKS - i);
+                        break;
+                    case TRADER_ENCOUNTER:
+                        encounter = createTraderEncounter(TOTAL_CLICKS - i);
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                if (index == 0) {
+                    encounter = createPoliceEncounter(TOTAL_CLICKS - i);
+                } else if (index == 1) {
+                    encounter = createPirateEncounter(TOTAL_CLICKS - i);
+                } else if (index == 2) {
+                    encounter = createTraderEncounter(TOTAL_CLICKS - i);
+                }
             }
 
             if (encounter != null) {

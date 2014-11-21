@@ -10,8 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="spacetrader.travel.TraderEncounterController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.TraderEncounterController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="350.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.topAnchor="0.0">
          <fill>
@@ -28,41 +27,47 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <VBox alignment="TOP_CENTER" layoutX="167.0" prefHeight="350.0" prefWidth="600.0" spacing="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="47.0" prefWidth="600.0" text="You've encountered a trader!" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="Copperplate Gothic Bold" size="24.0" />
+         </font>
+      </Label>
+      <VBox alignment="CENTER" layoutX="167.0" layoutY="53.0" prefHeight="242.0" prefWidth="600.0" spacing="20.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="You've encountered a trader!">
+            <Label fx:id="traderOffer" alignment="CENTER" contentDisplay="CENTER" text="Offer" wrapText="true">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="24.0" />
+                  <Font size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="currAmountText" alignment="CENTER" contentDisplay="CENTER" text="Current amount" wrapText="true">
+               <font>
+                  <Font size="23.0" />
                </font>
             </Label>
-            <Label fx:id="traderOffer" alignment="CENTER" contentDisplay="CENTER" text="Offer">
+         </children>
+         <padding>
+            <Insets left="25.0" right="25.0" />
+         </padding>
+      </VBox>
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="590.0" spacing="150.0" AnchorPane.bottomAnchor="0.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#rejectOffer" text="Reject">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="24.0" />
+                  <Font name="Copperplate Gothic Bold" size="17.0" />
                </font>
-            </Label>
-            <Label fx:id="currAmt" alignment="CENTER" contentDisplay="CENTER" text="Current amount">
-               <font>
-                  <Font name="Copperplate Gothic Bold" size="24.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="50.0">
+            </Button>
+            <HBox alignment="CENTER" prefHeight="30.0" spacing="20.0">
                <children>
-                  <Button fx:id="trade" mnemonicParsing="false" text="Trade">
+                  <Label text="Amount:">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="17.0" />
                      </font>
-                  </Button>
-                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="257.0">
-                     <children>
-                        <TextField fx:id="qField" layoutX="108.0" layoutY="1.0" />
-                        <Label layoutX="8.0" layoutY="4.0" text="Quantity:">
-                           <font>
-                              <Font name="Copperplate Gothic Bold" size="17.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-                  <Button fx:id="reject" mnemonicParsing="false" text="Reject">
+                  </Label>
+                  <TextField fx:id="quantityField" prefHeight="31.0" prefWidth="70.0" promptText="Enter An Amount" text="0" />
+                  <Button mnemonicParsing="false" onAction="#acceptOffer" text="Trade">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="17.0" />
                      </font>
@@ -70,9 +75,6 @@
                </children>
             </HBox>
          </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>

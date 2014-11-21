@@ -32,7 +32,6 @@ public class Market implements Serializable {
      * Constructor
      *
      * @param planet the planet to be assigned an instance of Market
-     * @param player
      */
     public Market(Planet planet) {
         this.planet = planet;
@@ -85,6 +84,9 @@ public class Market implements Serializable {
                     buyPrice = sellPrice + 1;
                 }
             }
+            if (planet.getLevel().ordinal() < good.minUseLevel()) {
+                sellPrice = -1;
+            }
 
             buyPrices.put(good, buyPrice);
             sellPrices.put(good, sellPrice);
@@ -120,9 +122,9 @@ public class Market implements Serializable {
 
                 //checks the resource of the planet and applies a price accordingly
                 if (planet.isVisited()) {
-                    if ((planet.getResource() == good.highCondition()) && good.highCondition() != Resource.NONE) {
+                    if ((planet.getResource() == good.highCondition()) && planet.getResource() != Resource.NONE) {
                         appxPrice *= (4.0 / 3);
-                    } else if ((planet.getResource() == good.lowCondition()) && good.lowCondition() != Resource.NONE) {
+                    } else if ((planet.getResource() == good.lowCondition()) && planet.getResource() != Resource.NONE) {
                         appxPrice *= (3.0 / 4);
                     }
                 }
@@ -147,9 +149,9 @@ public class Market implements Serializable {
                 quantity = 1 + ((quantity * 3) / 4);
             }
             //if the price is expecially expensive, there should be less of it and vice versa
-            if (planet.getResource() == good.lowCondition() && good.lowCondition() != Resource.NONE) {
+            if (planet.getResource() == good.lowCondition() && planet.getResource() != Resource.NONE) {
                 quantity = (quantity * 4) / 3;
-            } else if (planet.getResource() == good.highCondition() && good.highCondition() != Resource.NONE) {
+            } else if (planet.getResource() == good.highCondition() && planet.getResource() != Resource.NONE) {
                 quantity = (quantity * 3) / 4;
             }
             //when there is a price increase event, the quantity should be very low
@@ -173,7 +175,7 @@ public class Market implements Serializable {
      * Gets the selling price of a specific TradeGood.
      *
      * @param good the TradeGood to find the price off
-     * @return the price of a good on this planet.
+     * @return the price of a good on this planet
      */
     public int getSellPrice(TradeGood good) {
         return sellPrices.get(good);
@@ -183,7 +185,7 @@ public class Market implements Serializable {
      * Gets the buying price of a specific TradeGood.
      *
      * @param good the TradeGood to find the price off
-     * @return the price of a good on this planet.
+     * @return the price of a good on this planet
      */
     public int getBuyPrice(TradeGood good) {
         return buyPrices.get(good);
@@ -193,10 +195,28 @@ public class Market implements Serializable {
      * Gets the approximate price of a specific TradeGood.
      *
      * @param good the TradeGood to find the price off
-     * @return the price of a good on this planet.
+     * @return the price of a good on this planet
      */
     public int getAppxPrice(TradeGood good) {
         return appxPrices.get(good);
+    }
+
+    /**
+     * Determines if a particular good can be bought in this Market.
+     * @param good the good to be bought
+     * @return true if the good can be bought, false otherwise
+     */
+    public boolean isBuyable(TradeGood good) {
+        return buyPrices.get(good) >= 0;
+    }
+
+    /**
+     * Determines if a particular good can be sold in this Market.
+     * @param good the good to sell
+     * @return true if the good can be sold, false otherwise
+     */
+    public boolean isSellable(TradeGood good) {
+        return sellPrices.get(good) >= 0;
     }
 
     /**

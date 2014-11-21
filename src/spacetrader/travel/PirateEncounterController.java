@@ -7,6 +7,7 @@ package spacetrader.travel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -15,7 +16,7 @@ import javafx.fxml.Initializable;
  *
  * @author Caleb
  */
-public class PirateEncounterController implements Initializable {
+public class PirateEncounterController extends EncounterScreenController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -25,11 +26,9 @@ public class PirateEncounterController implements Initializable {
         // TODO
     }
 
-    /**
-     * Follows Player attack sequence in response to attack button pressed.
-     */
-    @FXML
-    protected void attackPressed() {
+    @Override
+    protected void attackPressed(ActionEvent e) {
+        super.attackPressed(e);
     }
 
     /**

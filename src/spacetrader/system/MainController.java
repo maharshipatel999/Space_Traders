@@ -68,6 +68,12 @@ public class MainController {
 
     private WarpScreenController warpScreenControl;
 
+    public enum Debug {
+        OFF, TRADER_ENCOUNTER, POLICE_ENCOUNTER, PIRATE_ENCOUNTER, METEORS
+    }
+
+    public static Debug debugStatus = Debug.OFF;
+
     /**
      * Creates the MainController. MainController has a reference to the main
      * class and stage.
@@ -93,7 +99,7 @@ public class MainController {
 
         ObservableList<PropertySheet.Item> list = FXCollections.observableArrayList();
         try {
-            for (String var : new String[]{"initialCredits", "techLevel", "politicalSystem", "resource", "startingShip", "policeRecord", "reputation"}) {
+            for (String var : new String[]{"initialCredits", "techLevel", "politicalSystem", "resource", "startingShip", "policeRecord", "reputation", "debugMode"}) {
                 list.add(new BeanProperty(cheats, new PropertyDescriptor(var, cheats.getClass())));
             }
         } catch (IntrospectionException ex) {
@@ -133,6 +139,7 @@ public class MainController {
      * @param cheats the holder of the user-defined values
      */
     private void setUpGameWithCheats(AdminCheats cheats) {
+        debugStatus = cheats.debugMode;
         Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
                 cheats.getTechLevel(), cheats.getResource(), cheats.getPoliticalSystem());
         game.setUniverse(new Universe(homePlanet));
@@ -295,8 +302,7 @@ public class MainController {
      * @param myStage the value of myStage
      * @return the corresponding Controller of the fxml file
      */
-    private SceneController extractControllerFromFXML(String fxmlScene,
-            Stage myStage) {
+    private SceneController extractControllerFromFXML(String fxmlScene, Stage myStage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlScene));
         try {
             Scene theScene = new Scene(loader.load());
@@ -637,6 +643,7 @@ public class MainController {
         private ShipType startingShip;
         private PoliceRecord policeRecord;
         private Reputation reputation;
+        private Debug debugMode;
 
         private AdminCheats() {
             techLevel = TechLevel.INDUSTRIAL;
@@ -646,6 +653,7 @@ public class MainController {
             startingShip = ShipType.GNAT;
             reputation = Reputation.HARMLESS;
             policeRecord = PoliceRecord.CLEAN;
+            debugMode = Debug.OFF;
             
         }
         
@@ -704,5 +712,14 @@ public class MainController {
         public void setReputation(Reputation reputation) {
             this.reputation = reputation;
         }
+
+        public Debug getDebugMode() {
+            return debugMode;
+        }
+
+        public void setDebugMode(Debug debugMode) {
+            this.debugMode = debugMode;
+        }
+        
     }
 }

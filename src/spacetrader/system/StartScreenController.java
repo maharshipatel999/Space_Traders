@@ -150,7 +150,7 @@ public class StartScreenController extends SceneController implements Initializa
             TradeGood good = tradeGoodList.get(i);
             int quantity = ship.getCargo().getQuantity(good);
             if (quantity > 0) {
-                inventory.addRow(3 + i, new Label(tradeGoodList.get(i).type()), new Label(String.valueOf(quantity)));
+                inventory.addRow(3 + i, new Label(tradeGoodList.get(i).toString()), new Label(String.valueOf(quantity)));
             }
         }
     }

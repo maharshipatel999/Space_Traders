@@ -64,7 +64,7 @@ public enum TradeGood {
     /**
      * Creates a new Trade Good.
      *
-     * @param type type of trade good
+     * @param type toString of trade good
      * @param price price of trade good
      * @param incPerLevel increase in price per level
      * @param variance variance in price
@@ -72,8 +72,8 @@ public enum TradeGood {
      * @param maxTraderPrice maximum price to sell product for
      * @param roundoff roundoff of price
      * @param incEvent PriceIncreaseEvent of this Trade Good
-     * @param lowCondition Resource condition if Trade Good low quantity
-     * @param highCondition Resource condition if Trade Good high quantity
+     * @param lowCondition Resource condition if Trade Good low price
+     * @param highCondition Resource condition if Trade Good high price
      * @param bestLevel Tech Level of Planet
      * @param minProduceLevel minimum Produce Level of Trade Good
      * @param minUseLevel minimum usage level of Trade Good
@@ -108,16 +108,17 @@ public enum TradeGood {
     }
 
     /**
-     * gets type of Trade Good.
+     * gets toString of Trade Good.
      *
-     * @return type of Trade Good
+     * @return toString of Trade Good
      */
-    public String type() {
+    @Override
+    public String toString() {
         return type;
     }
 
     /**
-     * returns price of Trade Good.
+     * Gets base price of Trade Good.
      *
      * @return price of Trade Good
      */
@@ -126,16 +127,17 @@ public enum TradeGood {
     }
 
     /**
-     * returns value of increase in Price per level.
+     * Gets amount to increase the price of this good for each TechLevel above
+     * the minimum produce level.
      *
-     * @return increase in Price per level
+     * @return increase in price per level
      */
     public int incPerLevel() {
         return incPerLevel;
     }
 
     /**
-     * returns variance of price of TradeGood.
+     * Gets variance of price of TradeGood.
      *
      * @return variance of price of TradeGood
      */
@@ -144,25 +146,25 @@ public enum TradeGood {
     }
 
     /**
-     * returns minimum price Trader will sell for.
+     * Gets minimum price Trader will sell or buy this good for.
      *
-     * @return min. price trader will sell for
+     * @return the smallest price a trader will offer
      */
     public int minTraderPrice() {
         return minTraderPrice;
     }
 
     /**
-     * returns maximum price Trader will sell for.
+     * Gets maximum price Trader will sell or buy this good for.
      *
-     * @return max. price trader will sell for
+     * @return the largest price a trader will offer
      */
     public int maxTraderPrice() {
         return maxTraderPrice;
     }
 
     /**
-     * returns round-off of the TradeGood.
+     * Gets round-off of the TradeGood.
      *
      * @return round-off of TradeGood
      */
@@ -171,62 +173,61 @@ public enum TradeGood {
     }
 
     /**
-     * Specific PriceIncreaseEvent associated with TradeGood.
+     * Gets the event which dramatically raises the price of this good
      *
-     * @return PriceIncreaseEvent associated with TradeGood
+     * @return the PriceIncreaseEvent which raises the price of this good
      */
     public PriceIncreaseEvent incEvent() {
         return incEvent;
     }
 
     /**
-     * gets resource condition for if TradeGood low in quantity.
+     * Gets resource condition which causes this good to be cheap.
      *
-     * @return resource condition associated with when TradeGood is low in
-     * quantity
+     * @return resource which lowers the price of this good
      */
     public Resource lowCondition() {
         return lowCondition;
     }
 
     /**
-     * gets resource condition for if specific TradeGood is high in quantity.
+     * Gets resource condition which causes this good to be expensive.
      *
-     * @return TradeGood is high in quantity
+     * @return resource which raises the price of this good
      */
     public Resource highCondition() {
         return highCondition;
     }
 
     /**
-     * gets specific TechLevel at minimum that this TradeGood is available at.
+     * Gets the TechLevel in which this good is most bountiful.
      *
-     * @return lowest tech level that this item is available at
+     * @return the tech level that sells the most of this good
      */
     public TechLevel bestLevel() {
         return bestLevel;
     }
 
     /**
-     * minimum Produce level of Trade Good.
+     * Gets the minimum required tech level that a good will be buyable on a planet.
      *
-     * @return min. Produce level of Trade Good
+     * @return min tech level to buy a good on a planet
      */
     public int minProduceLevel() {
         return minProduceLevel;
     }
 
     /**
-     * gets minimum Use Level of Trade Good.
+     * Gets the minimum required TechLevel that a good will be sellable on a planet.
      *
-     * @return min. use level of Trade Good
+     * @return min tech level to sell a good on a planet
      */
     public int minUseLevel() {
         return minUseLevel;
     }
 
     /**
-     * gets a random TradeGood.
+     * Gets a random TradeGood.
      *
      * @return a TradeGood determined at random
      */

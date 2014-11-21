@@ -5,6 +5,8 @@
  */
 package spacetrader.travel;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import spacetrader.system.SceneController;
 
 /**
@@ -14,6 +16,11 @@ import spacetrader.system.SceneController;
  */
 public class EncounterScreenController extends SceneController {
 
+    private static final String NO_WEAPONS_MSG = 
+        "You either are flying a ship without any weapon slots, so your only "
+        + "option is to flee from fights, or you haven't bought any weapons yet."
+        + " Sorry, no weapons, no attacking.";
+    
     protected Encounter encounter;
 
     /**
@@ -23,5 +30,21 @@ public class EncounterScreenController extends SceneController {
      */
     public void setEncounter(Encounter encounter) {
         this.encounter = encounter;
+    }
+    
+    /**
+     * Initiates Player attack sequence (Attack Pressed).
+     *
+     * @param e event that is being processed
+     */
+    @FXML
+    protected void attackPressed(ActionEvent e) {
+        if (encounter.getPlayer().getShip().getTotalWeaponStrength() <= 0) {
+            mainControl.displayAlertMessage("No Weapons", NO_WEAPONS_MSG);
+        } else {
+            mainControl.displayAlertMessage("Attacking!", "You attack the enemy ship!"
+                    + " (attacking is currently in development");
+        }
+        mainControl.goBackToWarpScreen();
     }
 }

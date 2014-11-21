@@ -22,9 +22,7 @@ public class PoliceEncounter extends Encounter {
 
     public static final int ATTACK_POLICE_SCORE = -3;
     public static final int KILL_POLICE_SCORE = -6;
-    public static final int ATTACK_TRADER_SCORE = -2;
-    public static final int PLUNDER_TRADER_SCORE = -2;
-    public static final int KILL_TRADER_SCORE = -4;
+    
     public static final int ATTACK_PIRATE_SCORE = 0;
     public static final int KILL_PIRATE_SCORE = 1;
     public static final int PLUNDER_PIRATE_SCORE = -1;
@@ -39,6 +37,10 @@ public class PoliceEncounter extends Encounter {
     private static final double BAD_RECORD_CHANCE_OF_INSPECT = 1;
     private static final double CLEAN_RECORD_CHANCE_OF_INSPECT = .10;
     private static final double LAWFUL_RECORD_CHANCE_OF_INSPECT = .025;
+    
+    public static final String ATTACK_CONFIM_MSG = 
+       "If you attack the police, they know you are a die-hard criminal and will"
+        + " immediately label you as such.";
 
     private final int policeStrength;
 
@@ -135,15 +137,9 @@ public class PoliceEncounter extends Encounter {
     public boolean inspectPlayer() {
         //determine if player is carrying illegal goods
         if (getPlayer().getShip().isCarryingIllegalGoods()) {
+            
             //calculate the player's fine
-            int fine = getPlayer().getCurrentWorth() / FINE_DECREASE;
-            //round the fine up to the nearest ROUND_AMOUNT
-            if ((fine % FINE_ROUND) != 0) {
-                fine += FINE_ROUND - (fine % FINE_ROUND);
-            }
-            fine = Math.min(fine, MAXIMUM_FINE_AMOUNT);
-            fine = Math.max(fine, MINIMUM_FINE_AMOUNT);
-
+            int fine = determineFine();
             getPlayer().removeCreditsForced(fine);
 
             //remove the illegal goods
@@ -159,6 +155,22 @@ public class PoliceEncounter extends Encounter {
             getPlayer().setPoliceRecordScore(newRecord);
             return false;
         }
+    }
+
+    /**
+     * Determined the amount to fine the player for carrying illegal goods.
+     * 
+     * @return the amount of the fine
+     */
+    public int determineFine() {
+        int fine = getPlayer().getCurrentWorth() / FINE_DECREASE;
+        //round the fine up to the nearest ROUND_AMOUNT
+        if ((fine % FINE_ROUND) != 0) {
+            fine += FINE_ROUND - (fine % FINE_ROUND);
+        }
+        fine = Math.min(fine, MAXIMUM_FINE_AMOUNT);
+        fine = Math.max(fine, MINIMUM_FINE_AMOUNT);
+        return fine;
     }
 
     /**
