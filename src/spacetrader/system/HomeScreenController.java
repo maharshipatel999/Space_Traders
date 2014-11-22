@@ -45,7 +45,7 @@ public class HomeScreenController extends SceneController implements Initializab
 
         String description = String
                 .format("\nLocation: (%d, %d)\nTech Level: %s\nGovernment: %s\nSpecial Resources: %s",
-                        planet.getLocation().x, planet.getLocation().y,
+                        (int) planet.getLocation().getX(), (int) planet.getLocation().getY(),
                         planet.getLevel().type(),
                         planet.getPoliticalSystem().type(),
                         planet.getResource().type());

@@ -5,12 +5,12 @@
  */
 package spacetrader.travel;
 
-import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.text.Text;
 import spacetrader.PoliceRecord;
 import spacetrader.exceptions.InsufficientFundsException;
@@ -118,7 +118,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         if (encounter.getPlayer().getLocation().getPoliticalSystem().bribeLevel() <= 0) {
             mainControl.displayAlertMessage("Bribery Failed!", "These officers cannot be bribed.");
         } else {
-            Planet destination = new Planet("Earth", new Point(5, 10)); //FIX THIS
+            Planet destination = new Planet("Earth", new Point2D(5, 10)); //FIX THIS
             int bribeAmount = ((PoliceEncounter) encounter).calculcateBribe(destination);
             String masthead = String.format("The police will let you go off ₪%d.", bribeAmount);
             String message = "Do you accept their offer?";

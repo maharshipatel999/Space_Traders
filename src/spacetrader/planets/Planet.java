@@ -5,9 +5,9 @@
  */
 package spacetrader.planets;
 
-import java.awt.Point;
 import java.io.Serializable;
 import java.util.Random;
+import javafx.geometry.Point2D;
 import spacetrader.PoliceRecord;
 import spacetrader.commerce.Market;
 import spacetrader.commerce.PriceIncreaseEvent;
@@ -33,7 +33,7 @@ public class Planet implements Serializable {
             };
 
     private final String name;
-    private final Point location;
+    private final Point2D location;
     private final TechLevel level;
     private final Resource resource;
     private final PoliticalSystem politSys;
@@ -51,7 +51,7 @@ public class Planet implements Serializable {
      * @param name - name of planet
      * @param location - location of planet
      */
-    public Planet(String name, Point location) {
+    public Planet(String name, Point2D location) {
         this(name, location, TechLevel.getRandomTechLevel(),
                 Resource.getRandomResource(),
                 PoliticalSystem.getRandomPoliticalSystem());
@@ -65,13 +65,14 @@ public class Planet implements Serializable {
      * @param resource - main resource of planet
      * @param politSys - political system of planet
      */
-    public Planet(String name, Point location, TechLevel level,
+    public Planet(String name, Point2D location, TechLevel level,
             Resource resource, PoliticalSystem politSys) {
         this.name = name;
         this.location = location;
         this.level = level;
         this.resource = resource;
         this.politSys = politSys;
+        this.priceIncEvent = PriceIncreaseEvent.NONE;
         this.size = rand.nextInt(5); //this should probably be moved to the Universe class
 
         this.market = new Market(this);
@@ -93,7 +94,7 @@ public class Planet implements Serializable {
      *
      * @return location of the planet
      */
-    public Point getLocation() {
+    public Point2D getLocation() {
         return this.location;
     }
 

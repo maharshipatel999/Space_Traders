@@ -5,7 +5,6 @@
  */
 package spacetrader.system;
 
-import java.awt.Point;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
@@ -19,6 +18,7 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -140,7 +140,7 @@ public class MainController {
      */
     private void setUpGameWithCheats(AdminCheats cheats) {
         debugStatus = cheats.debugMode;
-        Planet homePlanet = new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
+        Planet homePlanet = new Planet("Pallet", new Point2D(WIDTH / 2, HEIGHT / 2),
                 cheats.getTechLevel(), cheats.getResource(), cheats.getPoliticalSystem());
         game.setUniverse(new Universe(homePlanet));
 

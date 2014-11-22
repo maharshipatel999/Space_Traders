@@ -206,6 +206,8 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 dragContext.mouseY = event.getSceneY();
                 dragContext.x = this.getTranslateX();
                 dragContext.y = this.getTranslateY();
+                
+                flightRadiusPopUp.hide(new Duration(1000));
             });
 
             addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, (event) -> {
@@ -233,8 +235,6 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 //Set current Mouse X and Y position
                 dragContext.mouseX = event.getSceneX();
                 dragContext.mouseY = event.getSceneY();
-                
-                flightRadiusPopUp.hide(new Duration(1500));
             });
 
             addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
@@ -277,7 +277,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
 
             for (Planet planet : planets) {
                 //assign each planet a location that is scaled to the size of the map
-                double planetX = (MAP_WIDTH * (planet.getLocation().getX() / Universe.WIDTH)) + LEFT_MARGIN; //remove magic number
+                double planetX = (MAP_WIDTH * (planet.getLocation().getX() / Universe.WIDTH)) + LEFT_MARGIN;
                 double planetY = (MAP_HEIGHT * (planet.getLocation().getY() / Universe.HEIGHT)) + TOP_MARGIN;
 
                 //create an icon for each planet
@@ -285,6 +285,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 planetIcons.put(planet, planetIcon);
                 if (planet != currentPlanet) {
                     planetIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
+                        flightRadiusPopUp.hide(new Duration(500));
                         this.setCursor(Cursor.HAND);
                         if (selectedPlanet == null) {
                             showPlanetInfo(planet);
