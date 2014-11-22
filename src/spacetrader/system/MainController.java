@@ -5,36 +5,20 @@
  */
 package spacetrader.system;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.io.IOException;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.controlsfx.control.PropertySheet;
-import org.controlsfx.dialog.Dialogs;
-import org.controlsfx.property.BeanProperty;
+import org.controlsfx.control.PopOver;
 import spacetrader.Player;
 import spacetrader.PoliceRecord;
-import spacetrader.Reputation;
 import spacetrader.SkillList.Skill;
 import static spacetrader.Tools.rand;
 import spacetrader.Universe;
@@ -45,11 +29,7 @@ import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
-import spacetrader.planets.PoliticalSystem;
-import spacetrader.planets.Resource;
-import spacetrader.planets.TechLevel;
 import spacetrader.ships.PlayerShip;
-import spacetrader.ships.ShipType;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.RandomEvent;
@@ -65,6 +45,7 @@ public class MainController {
     private final SpaceTrader game;
     private final Stage stage;
     private RandomEventGenerator eventGenerator;
+    private InformationPresenter popUpControl;
 
     private WarpScreenController warpScreenControl;
 
@@ -84,7 +65,8 @@ public class MainController {
     public MainController(SpaceTrader game, Stage stage) {
         this.game = game;
         this.stage = stage;
-
+        popUpControl = new InformationPresenter(stage);
+        
         //stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
         //    if (game.getUniverse() != null) {
         //        if (event.getCode() == KeyCode.ESCAPE) {
@@ -96,42 +78,11 @@ public class MainController {
 
     public void displayAdminCheats() {
         AdminCheats cheats = new AdminCheats();
-
-        ObservableList<PropertySheet.Item> list = FXCollections.observableArrayList();
-        try {
-            for (String var : new String[]{"initialCredits", "techLevel", "politicalSystem", "resource", "startingShip", "policeRecord", "reputation", "debugMode"}) {
-                list.add(new BeanProperty(cheats, new PropertyDescriptor(var, cheats.getClass())));
-            }
-        } catch (IntrospectionException ex) {
-            Logger.getLogger(WelcomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //Create Stage
         Stage cheatStage = new Stage();
-        cheatStage.initOwner(stage);
-        cheatStage.initModality(Modality.WINDOW_MODAL);
-        
-        //Create Pane
-        VBox pane = new VBox();
-        pane.setAlignment(Pos.BOTTOM_RIGHT);
-        
-        //Create Property Sheet
-        PropertySheet propertySheet = new PropertySheet(list);
-        propertySheet.setModeSwitcherVisible(false);
-        propertySheet.setSearchBoxVisible(false);
-        
-        //Create Done Button
-        Button doneButton = new Button("Done");
-        doneButton.setOnAction((e) -> {
+        popUpControl.displayAdminCheats(cheats, cheatStage, (e) -> {
             cheatStage.close();
             setUpGameWithCheats(cheats);
         });
-        doneButton.setDefaultButton(true);
-        
-        //add nodes to pane, and set the pane to the stage's scene.
-        pane.getChildren().addAll(propertySheet, doneButton);
-        Scene scene = new Scene(pane);
-        cheatStage.setScene(scene);
-        cheatStage.show();
     }
 
     /**
@@ -139,7 +90,7 @@ public class MainController {
      * @param cheats the holder of the user-defined values
      */
     private void setUpGameWithCheats(AdminCheats cheats) {
-        debugStatus = cheats.debugMode;
+        debugStatus = cheats.getDebugMode();
         Planet homePlanet = new Planet("Pallet", new Point2D(WIDTH / 2, HEIGHT / 2),
                 cheats.getTechLevel(), cheats.getResource(), cheats.getPoliticalSystem());
         game.setUniverse(new Universe(homePlanet));
@@ -532,48 +483,19 @@ public class MainController {
      * @param message alert message
      */
     public void displayAlertMessage(String header, String message) {
-        /*Alert dialog = new Alert(AlertType.INFORMATION, message, ButtonType.OK);
-        dialog.setTitle("Information");
-        dialog.setResizable(true);
-        dialog.setHeaderText(header);
-        dialog.initStyle(StageStyle.UTILITY);*/
-
-        Dialogs.create()
-                .owner(stage)
-                .title(header)
-                //.masthead(null)
-                .message(message)
-                .showInformation();
+        popUpControl.displayAlertMessage(header, message);
     }
 
     /**
      * Display yes-no confirmation.
      *
      * @param optionsTitle title of state
-     * @param mastHead
+     * @param mastHead the header
      * @param message message to display
      * @return true if the player confirmed yes, otherwise false
      */
-    public boolean displayYesNoConfirmation(String optionsTitle,
-            String mastHead, String message) {
-        
-        Alert dialog = new Alert(AlertType.CONFIRMATION, message, ButtonType.NO, ButtonType.YES);
-        dialog.initStyle(StageStyle.UTILITY);
-        dialog.setTitle(optionsTitle);
-        if (mastHead != null) {
-            dialog.setHeaderText(mastHead);
-        }
-        Optional<ButtonType> result = dialog.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.YES;
-
-        /*Action response = Dialogs.create()
-                .owner(stage)
-                .title(optionsTitle)
-                .masthead(mastHead)
-                .message(message)
-                .actions(Dialog.Actions.YES, Dialog.Actions.NO)
-                .showConfirm();
-        return response;*/
+    public boolean displayYesNoConfirmation(String optionsTitle, String mastHead, String message) {
+        return popUpControl.displayYesNoConfirmation(optionsTitle, mastHead, message);
     }
 
     /**
@@ -582,14 +504,8 @@ public class MainController {
      * @param progressTitle title of state
      * @param service
      */
-    public void displayProgess(String progressTitle,
-            Service service) {
-        Dialogs.create()
-                .owner(stage)
-                .title(progressTitle)
-                .showWorkerProgress(service);
-
-        service.start();
+    public void displayProgess(String progressTitle, Service service) {
+        popUpControl.displayProgess(progressTitle, service);
     }
 
     /**
@@ -601,125 +517,25 @@ public class MainController {
      */
     public void displaySaveProgress(String progressTitle,
             String updateMessage, String finishMessage) {
-        Service<Void> saveService = new Service<Void>() {
-            @Override
-            public Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    public Void call() throws InterruptedException {
-                        updateMessage(updateMessage);
-                        updateProgress(0, 100);
-                        for (int i = 0; i < 100; i++) {
-                            Thread.sleep(10);
-                            updateProgress(i + 1, 100);
-                        }
-                        updateMessage(finishMessage);
-                        return null;
-                    }
-                };
-            }
-        };
-
-        saveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent e) {
+        
+        popUpControl.displaySaveProgress(progressTitle, updateMessage, finishMessage,
+            (WorkerStateEvent e) -> {
                 goToHomeScreen(game.getPlayer(),
-                        game.getPlayer().getLocation());
-            }
-        });
-        displayProgess(progressTitle, saveService);
+                game.getPlayer().getLocation());
+            });
     }
-
+    
     /**
-     * Holds the values for all the testing options.
-     * Every instance variable must have a getter and setter.
+     * Creates a PopOver with the given text.
+     * 
+     * @param message the text to be displayed
+     * @return a new PopOver with the provided message
      */
-    public class AdminCheats {
-
-        private int initialCredits;
-        private TechLevel techLevel;
-        private PoliticalSystem politicalSystem;
-        private Resource resource;
-        private ShipType startingShip;
-        private PoliceRecord policeRecord;
-        private Reputation reputation;
-        private Debug debugMode;
-
-        private AdminCheats() {
-            techLevel = TechLevel.INDUSTRIAL;
-            politicalSystem = PoliticalSystem.DEMOCRACY;
-            resource = Resource.NONE;
-            initialCredits = 5000;
-            startingShip = ShipType.GNAT;
-            reputation = Reputation.HARMLESS;
-            policeRecord = PoliceRecord.CLEAN;
-            debugMode = Debug.OFF;
-            
-        }
-        
-        public TechLevel getTechLevel() {
-            return techLevel;
-        }
-
-        public void setTechLevel(TechLevel techLevel) {
-            this.techLevel = techLevel;
-        }
-
-        public PoliticalSystem getPoliticalSystem() {
-            return politicalSystem;
-        }
-
-        public void setPoliticalSystem(PoliticalSystem politicalSystem) {
-            this.politicalSystem = politicalSystem;
-        }
-
-        public int getInitialCredits() {
-            return initialCredits;
-        }
-
-        public void setInitialCredits(int initialCredits) {
-            this.initialCredits = initialCredits;
-        }
-
-        public ShipType getStartingShip() {
-            return startingShip;
-        }
-
-        public void setStartingShip(ShipType startingShip) {
-            this.startingShip = startingShip;
-        }
-
-        public Resource getResource() {
-            return resource;
-        }
-
-        public void setResource(Resource resource) {
-            this.resource = resource;
-        }
-
-        public PoliceRecord getPoliceRecord() {
-            return policeRecord;
-        }
-
-        public void setPoliceRecord(PoliceRecord policeRecord) {
-            this.policeRecord = policeRecord;
-        }
-
-        public Reputation getReputation() {
-            return reputation;
-        }
-
-        public void setReputation(Reputation reputation) {
-            this.reputation = reputation;
-        }
-
-        public Debug getDebugMode() {
-            return debugMode;
-        }
-
-        public void setDebugMode(Debug debugMode) {
-            this.debugMode = debugMode;
-        }
-        
+    public PopOver createPopOver(String message) {
+        return popUpControl.createPopOver(message);
+    }
+    
+    public void showTextOnHover(Node node, String message) {
+        popUpControl.showTextOnHover(node, message);
     }
 }

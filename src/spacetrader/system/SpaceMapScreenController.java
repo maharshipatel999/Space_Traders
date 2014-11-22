@@ -18,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -338,8 +337,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
                     flightRadius.setOpacity(.6);
                     flightRadius.setStroke(Color.LAWNGREEN);
-                    flightRadiusPopUp = new PopOver(new Group(new Text("This is your current max range of travel.")));
-                    flightRadiusPopUp.getContentNode().setUserData(Boolean.FALSE);
+                    flightRadiusPopUp = mainControl.createPopOver("This is your current max range of travel.");
                     flightRadius.setOnMouseEntered((e) -> {
                         if ((Boolean) flightRadiusPopUp.getContentNode().getUserData() == false) {
                             flightRadiusPopUp.show(flightRadius);

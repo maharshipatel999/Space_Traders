@@ -204,7 +204,6 @@ public class Universe implements Serializable {
     }
 
     private void addNewPlanetLocation(Point2D point) {
-        System.out.println(planets.size());
         planetLocations.add(point);
     }
 
