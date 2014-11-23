@@ -11,9 +11,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MapDetailController">
    <children>
-      <SplitPane dividerPositions="0.43169398907103823" layoutX="31.0" layoutY="222.0" orientation="VERTICAL" prefHeight="551.0" prefWidth="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.4408014571948998" orientation="VERTICAL" prefHeight="551.0" prefWidth="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-            <VBox fx:id="planetInformation" prefHeight="222.0" prefWidth="280.0" spacing="3.0">
+            <VBox fx:id="planetInformation" prefHeight="244.0" prefWidth="278.0" spacing="3.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -26,14 +26,14 @@
                   <Separator prefWidth="200.0" />
                   <AnchorPane VBox.vgrow="NEVER">
                      <children>
-                        <Label text="Name:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                        <Label prefHeight="24.0" prefWidth="41.0" text="Name:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <padding>
                               <Insets top="3.0" />
                            </padding>
                         </Label>
                         <Text fx:id="planetName" strokeType="OUTSIDE" strokeWidth="0.0" text="LubsTown" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
-                              <Font size="20.0" />
+                              <Font size="22.0" />
                            </font>
                         </Text>
                      </children>
@@ -70,40 +70,47 @@
                      <children>
                         <VBox prefHeight="56.0" prefWidth="49.0">
                            <children>
-                              <Label text="Police" />
-                              <Text fx:id="policePresence" strokeType="OUTSIDE" strokeWidth="0.0" text="Some" wrappingWidth="95.708984375">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
-                              </Text>
+                              <Label prefHeight="31.0" prefWidth="41.0" text="Police:" />
                            </children>
                         </VBox>
-                        <VBox prefHeight="0.0" prefWidth="100.0">
+                        <Text fx:id="policePresence" strokeType="OUTSIDE" strokeWidth="0.0" text="Some" textAlignment="RIGHT" wrappingWidth="193.708984375">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="23.0" spacing="10.0">
+                     <children>
+                        <VBox prefHeight="56.0" prefWidth="49.0">
                            <children>
-                              <Label text="Pirates" />
-                              <Text fx:id="piratePresence" strokeType="OUTSIDE" strokeWidth="0.0" text="Some" wrappingWidth="122.708984375">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
-                              </Text>
+                              <Label prefHeight="23.0" prefWidth="52.0" text="Pirates:" />
                            </children>
                         </VBox>
+                        <Text fx:id="piratePresence" strokeType="OUTSIDE" strokeWidth="0.0" text="Some" textAlignment="RIGHT" wrappingWidth="193.708984375">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
                      </children>
                   </HBox>
                   <AnchorPane VBox.vgrow="NEVER">
                      <children>
-                        <Label text="Special Resources:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                        <Label prefHeight="22.0" prefWidth="115.0" text="Special Resources:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                         <Text fx:id="planetResources" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" textAlignment="RIGHT" wrappingWidth="131.708984375" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
                   </AnchorPane>
-                  <Text fx:id="outOfRangeText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Planet is Out of Range!">
+                  <Text fx:id="outOfRangeText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Planet is Out of Range!" wrappingWidth="249.42626953125">
                      <font>
                         <Font name="System Bold" size="21.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </Text>
                </children>
                <padding>

@@ -82,4 +82,22 @@ public enum GadgetType {
     public String toString() {
         return name;
     }
+
+    /**
+     * Gets the image of this ship.
+     *
+     * @return the String of where the image of this ship type is located
+     */
+//    public String spriteFile() {
+//        if (this.name.equals("5-Slot Cargo Expansion")) {
+//            
+//        } else if () {
+//            
+//        }
+//        String fileName = Character.toLowerCase(type.charAt(0)) +
+//                type.substring(1);
+//        fileName = "/resources/images/ship_sprites/" + fileName + ".png";
+//        return fileName;
+//    }
+    
 }

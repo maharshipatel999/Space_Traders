@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -315,10 +316,41 @@ public class SpaceMapScreenController extends SceneController implements Initial
 
                 //add wormholes
                 if (planet.getWormhole() != null) {
-                    Circle planetWormholeIcon = new Circle(planetX + PLANET_RADIUS + 2, planetY + PLANET_RADIUS + 2,
+                    Circle wormholeIcon = new Circle(planetX + PLANET_RADIUS + 2, planetY + PLANET_RADIUS + 2,
                             5, getUnselectedPlanetColor(planet));
-                    planetWormholeIcon.setFill(Color.YELLOW);
-                    this.getChildren().add(planetWormholeIcon);
+                    wormholeIcon.setFill(Color.YELLOW);
+                    this.getChildren().add(wormholeIcon);
+                    
+                    Tooltip wormholeToolTip = new Tooltip();
+                    FXMLLoader miniMapLoader = new FXMLLoader(getClass()
+                            .getResource("/spacetrader/planets/WormholeMap.fxml"));
+                    try {
+                        Pane pane = miniMapLoader.load();
+                    ((WormholeMiniMapController) miniMapLoader.getController())
+                            .setWormholeMap(planets, planet);
+                        wormholeToolTip.setGraphic(pane);
+                    } catch (IOException e) {
+                        Logger.getLogger(SpaceTrader.class.getName())
+                                .log(Level.SEVERE, null, e);
+                    }
+                    
+                    PopOver wormholePopOver = new PopOver(wormholeToolTip.getGraphic());
+                    planetIcon.addEventHandler(MouseEvent.MOUSE_ENTERED, (event) -> {
+                        wormholePopOver.show(wormholeIcon);
+                    });
+
+                    planetIcon.addEventHandler(MouseEvent.MOUSE_EXITED, (event) -> {
+                        wormholePopOver.hide(new Duration(150));
+                    });
+                    
+                    wormholeIcon.addEventHandler(MouseEvent.MOUSE_ENTERED, (event) -> {
+                        this.setCursor(Cursor.HAND);
+                    });
+
+                    wormholeIcon.addEventHandler(MouseEvent.MOUSE_EXITED, (event) -> {
+                        this.setCursor(Cursor.OPEN_HAND);
+                    });
+
                 }
 
                 //Create text for the name of each planet.
