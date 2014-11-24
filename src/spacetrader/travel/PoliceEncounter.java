@@ -23,9 +23,7 @@ public class PoliceEncounter extends Encounter {
     public static final int ATTACK_POLICE_SCORE = -3;
     public static final int KILL_POLICE_SCORE = -6;
     
-    public static final int ATTACK_PIRATE_SCORE = 0;
-    public static final int KILL_PIRATE_SCORE = 1;
-    public static final int PLUNDER_PIRATE_SCORE = -1;
+    
     public static final int TRAFFICKING = -1;
     public static final int FLEE_FROM_INSPECTION = -2;
 

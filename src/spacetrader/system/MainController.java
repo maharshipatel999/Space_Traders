@@ -15,6 +15,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import spacetrader.Mercenary;
 import spacetrader.Player;
 import spacetrader.PoliceRecord;
 import spacetrader.SkillList.Skill;
@@ -23,11 +24,13 @@ import spacetrader.Universe;
 import static spacetrader.Universe.HEIGHT;
 import static spacetrader.Universe.WIDTH;
 import spacetrader.commerce.PriceIncreaseEvent;
+import spacetrader.commerce.TradeGood;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
 import spacetrader.ships.PlayerShip;
+import spacetrader.ships.ShipType;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.RandomEvent;
@@ -184,7 +187,7 @@ public class MainController {
                 case "insurance":
                     msgTitle = "Unable to Pay Insurance";
                     message = "You do not have enough money to pay for your insurance!"
-                            + "\n\nUntil you sell your insurance, or aquire more money,"
+                            + "\n\nUntil you stop your insurance at the bank, or aquire more money,"
                             + " you will not be allowed to depart.";
                     break;
                 case "mercenaries":
@@ -193,7 +196,11 @@ public class MainController {
                     break;
                 case "debt":
                     msgTitle = "Too Much Debt";
-                    message = "";
+                    message = "Your ship has been chained to the station's dock."
+                            + " Your debt has increased to a point where you are"
+                            + " no longer a trusted trader. You may not leave "
+                            + "until you can reduce it to an acceptable level. "
+                            + "You have been warned and should have listened...";
                     break;
                 default: //should never happen
                     msgTitle = "Unknown Fee Error";
@@ -204,7 +211,14 @@ public class MainController {
             displayAlertMessage(msgTitle, message);
             goToHomeScreen(player, player.getLocation());
         }
-
+        if (game.getPlayer().getDebt() > 75000) {
+            displayAlertMessage("Debt Warning!", "You get this warning because "
+                    + "your debt has exceeded 75000 credits. If you don't pay "
+                    + "back quickly, you may find yourself stuck in a system with"
+                    + " no way to leave. You have been warned.");
+        }
+        
+        
         destination.getMarket().setAllPrices(game.getPlayer());
 
         //Decrease police record score if very high
@@ -241,6 +255,100 @@ public class MainController {
         destination.setVisited();
         destination.getMarket().setAllPrices(game.getPlayer());
         goToHomeScreen(game.getPlayer(), destination);
+    }
+    
+    /**
+     * Happens when the player gets arrested by the police. Fines and imprisons the player.
+     */
+    public void playerGetsArrested() {
+        Player player = game.getPlayer();
+	int negPoliceScore = -player.getPoliceRecordScore();
+        
+	int fine = ((1 + (((player.getCurrentWorth() * Math.min(80, negPoliceScore)) / 100) / 500)) * 500);
+	int daysImprisoned = Math.max( 30, negPoliceScore );
+
+	displayAlertMessage("You've been arrested!", "At least you survived." );
+        displayAlertMessage("Conviction", "Your fine and number of days in prison are based on"
+                + " the kind of criminal you were found to be.");
+
+	String conviction = String.format("You are convicted to %d days in prison and a fine of ₪%d.", daysImprisoned, fine);
+        displayAlertMessage("Conviction Determined", conviction);
+
+        //Remove Illegal Goods
+	if (player.getShip().isCarryingIllegalGoods()) {
+            displayAlertMessage("Illegal Goods Impounded", "What would you expect?" );
+            player.getCargo().clearItem(TradeGood.NARCOTICS);
+            player.getCargo().clearItem(TradeGood.FIREARMS);
+	}
+        //Remove Insurance
+	if (player.getInsuranceCost() <= 0) {
+            displayAlertMessage("", "InsuranceLostAlert" );
+            player.setInsuranceCost(0);
+            //NoClaim = 0; reset no-claim to zero
+	}
+        //Remove Crew
+        Mercenary[] crew = player.getShip().getCrew();
+	if (crew.length > 0) {
+            displayAlertMessage("Mercenaries Leave", "You can't pay your mercenaries "
+                    + "while you are imprisoned, and so they have sought new employment." );
+            for (int i = 0; i < crew.length; i++) {
+                player.getShip().fireMercenary(crew[i]);
+            }
+	}
+
+	//Arrival();
+        //TODO Handle arriving at planet. set prices, change quantities, shuffle status
+        
+        //Increment Days
+        for (int i = 0; i < daysImprisoned; i++) {
+            game.increaseDays();
+        }
+
+        //Pay the fine
+	if (player.getCredits() >= fine)
+		player.removeCredits(fine);
+        else {
+            //Sell the player's ship
+            player.addCredits(player.getShip().currentShipPrice());
+
+            if (player.getCredits() >= fine) {
+                player.removeCredits(fine);
+            } else {
+                player.setCredits(0);
+            }
+            displayAlertMessage("Ship Sold", "The Space Corps needs cash to make"
+                    + " you pay for the damages you did. Your ship is the only "
+                    + "valuable possession you have.");
+            displayAlertMessage("Flea Received", "It's standard practice for the"
+                    + " police to leave a condemned criminal with at least the "
+                    + "means to leave the solar system." );
+
+            //CreateFlea();
+            player.setShip(new PlayerShip(ShipType.FLEA));
+	}
+	
+        //Update their Police Record
+	player.setPoliceRecordScore(PoliceRecord.DUBIOUS.minScore());
+
+        //Pay off as much as the player's debt as possible.
+        int debt = player.getDebt();
+	if (player.getDebt() > 0) {
+            if (player.getCredits() >= debt) {
+                player.removeCredits(debt);
+                player.removeDebt(debt);
+            } else {
+                player.removeDebt(player.getCredits());
+                player.setCredits(0);
+            }
+	}
+	
+        //Pay Interest on all the days imprisoned.
+	for (int i = 0; i < daysImprisoned; ++i) {
+            player.payInterest();
+        }
+
+        //go to the new planet
+        changePlayerLocation(warpScreenControl.getDestination());
     }
 
     /**

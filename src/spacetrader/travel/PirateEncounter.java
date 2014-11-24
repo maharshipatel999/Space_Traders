@@ -17,6 +17,10 @@ import spacetrader.ships.ShipType;
  */
 public class PirateEncounter extends Encounter {
 
+    public static final int ATTACK_PIRATE_SCORE = 0;
+    public static final int KILL_PIRATE_SCORE = 1;
+    public static final int PLUNDER_PIRATE_SCORE = -1;
+    
     private final int pirateStrength;
 
     /**
@@ -29,6 +33,7 @@ public class PirateEncounter extends Encounter {
     public PirateEncounter(Player player, int clicks, int pirateStrength) {
         super(player, "/spacetrader/travel/PirateEncounterScreen.fxml", clicks, "Pirate");
         this.pirateStrength = pirateStrength;
+        this.plunderScore = PLUNDER_PIRATE_SCORE;
 
         //pirates are strong if the player is worth more
         int tries = 1 + player.getCurrentWorth() / 100000;

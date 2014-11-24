@@ -44,6 +44,7 @@ public class TraderEncounter extends Encounter {
         super(player, "/spacetrader/travel/TraderEncounterScreen.fxml", clicks, "Trader");
         this.traderStrength = traderStrength;
         this.destinationMarket = destinationMarket;
+        this.plunderScore = PLUNDER_TRADER_SCORE;
 
         int tries = 1;
         double cargoModifier = 1;

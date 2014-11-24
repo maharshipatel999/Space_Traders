@@ -120,14 +120,15 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         } else {
             Planet destination = new Planet("Earth", new Point2D(5, 10)); //FIX THIS
             int bribeAmount = ((PoliceEncounter) encounter).calculcateBribe(destination);
-            String masthead = String.format("The police will let you go off ₪%d.", bribeAmount);
+            String masthead = String.format("These police officers are willing to forego inspection for the amount of ₪%d.", bribeAmount);
             String message = "Do you accept their offer?";
             boolean response = mainControl.displayYesNoConfirmation("Bribery Offer", masthead, message);
             if (response) {
                 try {
                     encounter.getPlayer().removeCredits(bribeAmount);
                 } catch (InsufficientFundsException e) {
-                    mainControl.displayAlertMessage("Cannot Afford Bribe", "You do not have enough money to bribe the police.");
+                    mainControl.displayAlertMessage("Cannot Afford Bribe", "You don't have enough cash for a bribe.");
+                    return;
                 }
                 mainControl.displayAlertMessage("Bribe Successful", "The officers accept your bribe and send you off on your way.");
             } else {

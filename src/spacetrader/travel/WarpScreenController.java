@@ -142,6 +142,15 @@ public class WarpScreenController extends SceneController implements Initializab
         }
     }
 
+    public Planet getSource() {
+        return source;
+    }
+
+    public Planet getDestination() {
+        return destination;
+    }
+    
+
     /**
      * Shows setUpWarping animation screen for a short period of time.
      */

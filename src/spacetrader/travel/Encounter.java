@@ -32,6 +32,8 @@ public abstract class Encounter {
     private SpaceShip opponent;
     protected State state;
     protected int clicksFromDest;
+    
+    protected int plunderScore;
 
     /**
      * Creates a new Encounter. Encounters have a player, and an fxmlscene.
@@ -133,6 +135,14 @@ public abstract class Encounter {
      * @return true if its legal
      */
     protected abstract boolean isIllegalShipType(ShipType type);
+    
+    /**
+     * Updates the players Police Record from plundering an opponent ship.
+     */
+    public void updateRecordAfterPlunder() {
+        int updatedScore = player.getPoliceRecordScore() + plunderScore;
+        player.setPoliceRecordScore(updatedScore);
+    }
 
     /**
      * Determines if the opponent can see the player.
