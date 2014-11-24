@@ -12,11 +12,9 @@ import javafx.concurrent.Service;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.controlsfx.control.PopOver;
 import spacetrader.Player;
 import spacetrader.PoliceRecord;
 import spacetrader.SkillList.Skill;
@@ -523,19 +521,5 @@ public class MainController {
                 goToHomeScreen(game.getPlayer(),
                 game.getPlayer().getLocation());
             });
-    }
-    
-    /**
-     * Creates a PopOver with the given text.
-     * 
-     * @param message the text to be displayed
-     * @return a new PopOver with the provided message
-     */
-    public PopOver createPopOver(String message) {
-        return popUpControl.createPopOver(message);
-    }
-    
-    public void showTextOnHover(Node node, String message) {
-        popUpControl.showTextOnHover(node, message);
     }
 }

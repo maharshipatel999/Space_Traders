@@ -17,11 +17,12 @@
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.SpaceMapScreenController">
    <children>
       <MasterDetailPane fx:id="mapScreen" detailSide="LEFT" prefHeight="600.0" prefWidth="900.0" showDetailNode="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button layoutX="723.0" layoutY="550.0" mnemonicParsing="false" onAction="#backToPlanet" prefHeight="50.0" prefWidth="131.0" text="Back To Planet" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Button layoutX="723.0" layoutY="550.0" mnemonicParsing="false" onAction="#backToPlanet" prefHeight="42.0" prefWidth="117.0" text="Back To Planet" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="4.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Text fx:id="fuelRemaingText" layoutX="411.0" layoutY="580.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fuel Remaining" wrappingWidth="160.13671875" AnchorPane.bottomAnchor="16.0" />
+      <Text fx:id="fuelRemaingText" layoutX="411.0" layoutY="580.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fuel Remaining" wrappingWidth="160.13671875" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="540.0" />
       <Label fx:id="helpfulPanelInfoText" layoutX="21.0" layoutY="565.0" text="Double Click to close the Planet Info Panel" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" />
+      <Button layoutX="683.0" layoutY="558.0" mnemonicParsing="false" onAction="#viewColorKey" text="View Map Key" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="350.0" />
    </children>
 </AnchorPane>

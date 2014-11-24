@@ -73,17 +73,17 @@ public class CharacterDialogController
     public void setMainControl(MainController mainControl) {
         super.setMainControl(mainControl);
         
-        mainControl.showTextOnHover(pilotLabel, "Determines how well you pilot your ship.\n " +
+        InformationPresenter.showTextOnHover(pilotLabel, "Determines how well you pilot your ship.\n " +
                 "A good pilot can easily flee, dodge attacks,\n " +
                 "and stay on the tail of fleeing ships.");
-        mainControl.showTextOnHover(fighterLabel, "Determines how well you handle your weapons.\n" +
+        InformationPresenter.showTextOnHover(fighterLabel, "Determines how well you handle your weapons.\n" +
                 "A good fighter is great at hitting other ships.");
-        mainControl.showTextOnHover(traderLabel, "Determines what prices you must pay for trade goods, ships and equipment.\n" +
+        InformationPresenter.showTextOnHover(traderLabel, "Determines what prices you must pay for trade goods, ships and equipment.\n" +
                 "A good trader can reduce prices up to 10%.");
-        mainControl.showTextOnHover(engineerLabel, "Determines how well you keep your ship in shape.\n" +
+        InformationPresenter.showTextOnHover(engineerLabel, "Determines how well you keep your ship in shape.\n" +
                 "A good engineer protects the hull and shields in a fight,\n" +
                 "repairs them quicker during travel, and may even enhance his ship's weaponry.");
-        mainControl.showTextOnHover(investorLabel, "Determines how well you do in investing in the galactic markets.\n" +
+        InformationPresenter.showTextOnHover(investorLabel, "Determines how well you do in investing in the galactic markets.\n" +
                 "Since stock prices and interest rates are volatile, \n" +
                 "an investor could make a killing or lose his savings. Be wary.");
     }

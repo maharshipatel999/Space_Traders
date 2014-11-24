@@ -186,14 +186,14 @@ public class InformationPresenter {
         cheatStage.setScene(scene);
         cheatStage.show();
     }
-    
+
     /**
      * Creates a PopOver with the given text.
      * 
      * @param message the text to be displayed
      * @return a new PopOver with the provided message
      */
-    public PopOver createPopOver(String message) {
+    public static PopOver createTextPopOver(String message) {
         Label text = new Label(message);
         text.setPadding(new Insets(15, 15, 15, 15));
 
@@ -202,9 +202,34 @@ public class InformationPresenter {
         return popup;
     }
     
-    public void showTextOnHover(Node node, String message) {
-        PopOver popup = createPopOver(message);
+    /**
+     * Creates a new popover that displays the provided message. Sets the popover
+     * to display whenever the mouse hovers over the provided node. Returns the
+     * new popover 
+     * 
+     * @param node the node which displays the text when the mouse enters it
+     * @param message the text to display on the popover
+     * @return the newly created PopOver
+     */
+    public static PopOver showTextOnHover(Node node, String message) {
+        PopOver popup = createTextPopOver(message);
         node.setOnMouseEntered((e) -> popup.show(node));
         node.setOnMouseExited((e) -> popup.hide(new Duration(200)));
+        return popup;
+    }
+    
+    /**
+     * Creates a new popover that displays the provided content node. Sets the popover
+     * to display whenever the mouse hovers over the provided node.
+     * 
+     * @param node the node which displays the text when the mouse enters it
+     * @param content the content for the PopOver that is displayed
+     * @return the newly created PopOver
+     */
+    public static PopOver showNodeOnHover(Node node, Node content) {
+        PopOver popup = new PopOver(node);
+        node.setOnMouseEntered((e) -> popup.show(node));
+        node.setOnMouseExited((e) -> popup.hide(new Duration(200)));
+        return popup;
     }
 }

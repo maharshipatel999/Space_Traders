@@ -17,6 +17,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
+import javafx.geometry.Side;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -24,12 +27,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.MasterDetailPane;
 import org.controlsfx.control.PopOver;
 import spacetrader.Player;
@@ -49,8 +54,12 @@ public class SpaceMapScreenController extends SceneController implements Initial
     private Text fuelRemaingText;
     @FXML
     private Label helpfulPanelInfoText;
+    
+    private static final Color SELECTED_PLNT_COLOR = Color.RED;
+    private static final Color WORMHOLE_COLOR = Color.YELLOW;
 
     private MapDetailController infoControl;
+    private HiddenSidesPane mapSidesPane;
     private MapPane planetMap;
     private Pane planetInfo;
 
@@ -62,7 +71,10 @@ public class SpaceMapScreenController extends SceneController implements Initial
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         planetMap = new MapPane();
-        mapScreen.setMasterNode(planetMap);
+        mapSidesPane = new HiddenSidesPane();
+        ///superPane.setTriggerDistance(10);
+        mapScreen.setMasterNode(mapSidesPane);
+        //mapScreen.setMasterNode(planetMap);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/MapDetailPane.fxml"));
         try {
             planetInfo = loader.load();
@@ -75,6 +87,11 @@ public class SpaceMapScreenController extends SceneController implements Initial
         mapScreen.setDetailNode(planetInfo);
         
         helpfulPanelInfoText.setVisible(false);
+        
+        mapSidesPane.setContent(planetMap);
+        mapSidesPane.setBottom(new PlanetColorKey());
+        mapSidesPane.setAnimationDelay(Duration.ZERO);
+        mapSidesPane.setTriggerDistance(-1);
     }
 
     /**
@@ -123,7 +140,20 @@ public class SpaceMapScreenController extends SceneController implements Initial
      * @param planet selected planet
      */
     private void showPlanetInfo(Planet planet) {
-        mapScreen.setShowDetailNode(true);
+        double localX = planetMap.planetIcons.get(planet).getCenterX();
+        Point2D sceneLoc = planetMap.planetIcons.get(planet).localToScene(localX, 0);
+        
+        //if the planet would be covered by the info pane, put it on the right
+        if (sceneLoc.getX() < (planetInfo.getPrefWidth())) {
+            mapSidesPane.setLeft(null);
+            mapSidesPane.setRight(planetInfo);
+            mapSidesPane.setPinnedSide(Side.RIGHT);
+        } else {
+            mapSidesPane.setRight(null);
+            mapSidesPane.setLeft(planetInfo);
+            mapSidesPane.setPinnedSide(Side.LEFT);
+        }
+        //mapScreen.setShowDetailNode(true);
         infoControl.setPlanetInfo(planet, player);
         helpfulPanelInfoText.setVisible(true);
     }
@@ -132,13 +162,27 @@ public class SpaceMapScreenController extends SceneController implements Initial
      * Hides the detail pane.
      */
     private void hidePlanetInfo() {
-        mapScreen.setShowDetailNode(false);
+        mapSidesPane.setPinnedSide(null);
+        //mapScreen.setShowDetailNode(false);
         helpfulPanelInfoText.setVisible(false);
     }
 
     @FXML
     protected void backToPlanet(ActionEvent event) {
         mainControl.goToHomeScreen(player, currentPlanet);
+    }
+    
+    @FXML
+    protected void viewColorKey(ActionEvent event) {
+        PlanetColorKey colorKeyPane = new PlanetColorKey();
+        PopOver popup = new PopOver(colorKeyPane);
+        popup.setCornerRadius(20);
+        popup.detach();
+        popup.setDetachedTitle("Map Key");
+        double x = (mapScreen.getWidth() / 2) + (colorKeyPane.getPrefWidth() / 2);
+        double y = -300;
+        popup.show(getScene().getRoot(), x);
+        //colorKey.set
     }
 
     /**
@@ -185,7 +229,9 @@ public class SpaceMapScreenController extends SceneController implements Initial
         public static final double MAP_HEIGHT = 1980;
         public static final double LEFT_MARGIN = 40, RIGHT_MARGIN = 90;
         public static final double TOP_MARGIN = 40, BOTTOM_MARGIN = 40;
+        
         public static final double PLANET_RADIUS = 10;
+        public static final double WORMHOLE_RADIUS = 5;
 
         private final MapDragContext dragContext = new MapDragContext();
 
@@ -207,7 +253,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 dragContext.x = this.getTranslateX();
                 dragContext.y = this.getTranslateY();
                 
-                flightRadiusPopUp.hide(new Duration(1000));
+                flightRadiusPopUp.hide(new Duration(200));
             });
 
             addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, (event) -> {
@@ -284,41 +330,40 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 Circle planetIcon = new Circle(planetX, planetY, PLANET_RADIUS, getUnselectedPlanetColor(planet));
                 planetIcons.put(planet, planetIcon);
                 if (planet != currentPlanet) {
-                    planetIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
-                        flightRadiusPopUp.hide(new Duration(500));
+                    
+                    //set what happens with the planet icon is clicked
+                    planetIcon.setOnMousePressed((event) -> {
                         this.setCursor(Cursor.HAND);
+                        flightRadiusPopUp.hide(new Duration(200));
+                        showPlanetInfo(planet);
                         if (selectedPlanet == null) {
-                            showPlanetInfo(planet);
-                            planetIcon.setFill(Color.RED);
+                            planetIcon.setFill(SELECTED_PLNT_COLOR);
                         } else if (planet != selectedPlanet) {
-                            showPlanetInfo(planet);
-                            planetIcon.setFill(Color.RED);
+                            planetIcon.setFill(SELECTED_PLNT_COLOR);
                             planetIcons.get(selectedPlanet).setFill(getUnselectedPlanetColor(selectedPlanet));
                         }
                         selectedPlanet = planet;
                         event.consume();
                     });
+                    
+                    //this prevents the map from dragging when you move the mouse
+                    //after pressing on a planet
+                    planetIcon.setOnMouseDragged((event) -> event.consume());
                 }
 
                 //So that after you click on a planet, the cursor is still a pointing hand
-                planetIcon.addEventHandler(MouseEvent.MOUSE_RELEASED, (event) -> {
+                planetIcon.setOnMouseReleased((event) -> {
                     this.setCursor(Cursor.HAND);
                     event.consume();
                 });
 
-                planetIcon.addEventHandler(MouseEvent.MOUSE_ENTERED, (event) -> {
-                    this.setCursor(Cursor.HAND);
-                });
-
-                planetIcon.addEventHandler(MouseEvent.MOUSE_EXITED, (event) -> {
-                    this.setCursor(Cursor.OPEN_HAND);
-                });
+                planetIcon.setOnMouseEntered((e) -> this.setCursor(Cursor.HAND));
+                planetIcon.setOnMouseExited((e) -> this.setCursor(Cursor.OPEN_HAND));
 
                 //add wormholes
                 if (planet.getWormhole() != null) {
-                    Circle wormholeIcon = new Circle(planetX + PLANET_RADIUS + 2, planetY + PLANET_RADIUS + 2,
-                            5, getUnselectedPlanetColor(planet));
-                    wormholeIcon.setFill(Color.YELLOW);
+                    Circle wormholeIcon = new Circle(planetX + PLANET_RADIUS + 2, planetY + PLANET_RADIUS + 2, WORMHOLE_RADIUS, getUnselectedPlanetColor(planet));
+                    wormholeIcon.setFill(WORMHOLE_COLOR);
                     this.getChildren().add(wormholeIcon);
                     
                     Tooltip wormholeToolTip = new Tooltip();
@@ -350,7 +395,6 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     wormholeIcon.addEventHandler(MouseEvent.MOUSE_EXITED, (event) -> {
                         this.setCursor(Cursor.OPEN_HAND);
                     });
-
                 }
 
                 //Create text for the name of each planet.
@@ -365,11 +409,11 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 //Create flight radius
                 if (planet == currentPlanet) {
                     double maxTravelDistance = (MAP_WIDTH * (fuelAmount / (double) Universe.WIDTH));
-                    planetIcon.setFill(Color.BLUE);
+                    planetIcon.setFill(CURR_PLNT_COLOR);
                     Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
                     flightRadius.setOpacity(.6);
                     flightRadius.setStroke(Color.LAWNGREEN);
-                    flightRadiusPopUp = mainControl.createPopOver("This is your current max range of travel.");
+                    flightRadiusPopUp = InformationPresenter.createTextPopOver("This is your current max range of travel.");
                     flightRadius.setOnMouseEntered((e) -> {
                         if ((Boolean) flightRadiusPopUp.getContentNode().getUserData() == false) {
                             flightRadiusPopUp.show(flightRadius);
@@ -381,6 +425,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 }
             }
         }
+        
 
         /**
          * Determines the color of a planet that is not selected.
@@ -389,7 +434,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
          * @return the color of that planet
          */
         private Color getUnselectedPlanetColor(Planet p) {
-            Color color = p.isVisited() ? Color.DARKCYAN : Color.GREEN;
+            Color color = p.isVisited() ? VISITED_PLNT_COLOR : UNVISITED_PLNT_COLOR;
             if (!SpaceMapScreenController.this.isInRangeOf(p)) {
                 color = color.darker();
             }
@@ -421,6 +466,43 @@ public class SpaceMapScreenController extends SceneController implements Initial
             public double mouseY;
             public double x;
             public double y;
+        }
+    }
+    public static final Color UNVISITED_PLNT_COLOR = Color.GREEN;
+    public static final Color VISITED_PLNT_COLOR = Color.DARKCYAN;
+    public static final Color CURR_PLNT_COLOR = Color.BLUE;
+    
+    
+    private class PlanetColorKey extends GridPane {
+        
+        public PlanetColorKey() {
+            this.setPrefWidth(400);
+            this.setPadding(new Insets(15, 15, 15, 15));
+            this.setHgap(15);
+            this.setVgap(10);
+            Circle[] icons = new Circle[]{
+                new Circle(MapPane.PLANET_RADIUS, CURR_PLNT_COLOR),
+                new Circle(MapPane.PLANET_RADIUS, SELECTED_PLNT_COLOR),
+                new Circle(MapPane.PLANET_RADIUS, UNVISITED_PLNT_COLOR),
+                new Circle(MapPane.PLANET_RADIUS, UNVISITED_PLNT_COLOR.darker()),
+                new Circle(MapPane.PLANET_RADIUS, VISITED_PLNT_COLOR),
+                new Circle(MapPane.PLANET_RADIUS, VISITED_PLNT_COLOR.darker()),
+                new Circle(MapPane.WORMHOLE_RADIUS, WORMHOLE_COLOR)
+            };
+            String[] descriptions = new String[]{
+                "Your current location",
+                "The selected planet",
+                "Unvisited & In Range",
+                "Unvisited & Out of Range", 
+                "Visited & In Range",
+                "Visited & Out of Range",
+                "A wormhole (If you're on its local planet, you can use it to travel to another wormhole)"
+            };
+            for (int i = 0; i < icons.length; i++) {
+                Label desc = new Label(descriptions[i]);
+                desc.setWrapText(true);
+                this.addRow(i, icons[i], desc);
+            }
         }
     }
 }
