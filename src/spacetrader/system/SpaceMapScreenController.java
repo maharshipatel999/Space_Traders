@@ -22,7 +22,6 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Side;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -57,6 +56,9 @@ public class SpaceMapScreenController extends SceneController implements Initial
     
     private static final Color SELECTED_PLNT_COLOR = Color.RED;
     private static final Color WORMHOLE_COLOR = Color.YELLOW;
+    public static final Color UNVISITED_PLNT_COLOR = Color.GREEN;
+    public static final Color VISITED_PLNT_COLOR = Color.DARKCYAN;
+    public static final Color CURR_PLNT_COLOR = Color.BLUE;
 
     private MapDetailController infoControl;
     private HiddenSidesPane mapSidesPane;
@@ -72,9 +74,9 @@ public class SpaceMapScreenController extends SceneController implements Initial
     public void initialize(URL url, ResourceBundle rb) {
         planetMap = new MapPane();
         mapSidesPane = new HiddenSidesPane();
-        ///superPane.setTriggerDistance(10);
+
         mapScreen.setMasterNode(mapSidesPane);
-        //mapScreen.setMasterNode(planetMap);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/spacetrader/MapDetailPane.fxml"));
         try {
             planetInfo = loader.load();
@@ -245,7 +247,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
          */
         public MapPane() {
             this.setCursor(Cursor.OPEN_HAND);
-            addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
+            this.setOnMousePressed((event) -> {
                 this.setCursor(Cursor.CLOSED_HAND);
                 //remember initial mouse cursor coordinates and node position
                 dragContext.mouseX = event.getSceneX();
@@ -255,16 +257,11 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 
                 flightRadiusPopUp.hide(new Duration(200));
             });
-
-            addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, (event) -> {
-                this.setCursor(Cursor.OPEN_HAND);
-            });
-
-            addEventHandler(MouseEvent.MOUSE_RELEASED, (event) -> {
-                this.setCursor(Cursor.OPEN_HAND);
-            });
-
-            addEventHandler(MouseEvent.MOUSE_DRAGGED, (event) -> {
+            this.setOnMouseReleased((e) -> this.setCursor(Cursor.OPEN_HAND));
+            this.setOnMouseExited((e) -> this.setCursor(Cursor.OPEN_HAND));
+            
+            
+            this.setOnMouseDragged((event) -> {
                 //Get the exact translated X and doubleY coordinate
                 double tempX = dragContext.x + event.getSceneX() - dragContext.mouseX;
                 double tempY = dragContext.y + event.getSceneY() - dragContext.mouseY;
@@ -283,12 +280,12 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 dragContext.mouseY = event.getSceneY();
             });
 
-            addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-                if (event.getButton().equals(MouseButton.PRIMARY)
-                        && event.getClickCount() == 2) {
+            this.setOnMouseClicked((event) -> {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     hidePlanetInfo();
                     if (selectedPlanet != null) {
-                        planetIcons.get(selectedPlanet).setFill(getUnselectedPlanetColor(selectedPlanet));
+                        planetIcons.get(selectedPlanet).setFill(
+                                getUnselectedPlanetColor(selectedPlanet));
                         selectedPlanet = null;
                     }
                 }
@@ -301,55 +298,63 @@ public class SpaceMapScreenController extends SceneController implements Initial
          * @param planets the list of planets to be added
          */
         private void addPlanets(ArrayList<Planet> planets) {
+            // *** Add Black Background ***
             background = new Rectangle(MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN,
                     MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN,
                     Color.BLACK);
             this.getChildren().add(background);
+            
+            // *** Add Stars ***
+            final int STAR_IMAGE_WIDTH = (int) (new ImageView("/resources/images/starfield.png")).getImage().getWidth();
+            final int EXCESS_SPACE = ((int) (MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN)) % STAR_IMAGE_WIDTH;
+            
             FlowPane starsPane = new FlowPane();
-            int starImageWidth = (int) (new ImageView("/resources/images/starfield.png")).getImage().getWidth();
-            int extraSpace = ((int) (MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN)) % starImageWidth;
-
-            starsPane.setPrefSize(MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN + extraSpace,
-                    MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN);
-
+            starsPane.setPrefWidth(MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN + EXCESS_SPACE);
+            starsPane.setPrefHeight(MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN);
             for (int i = 0; i < 16; i++) {
                 starsPane.getChildren().add(new ImageView("/resources/images/starfield.png"));
             }
             this.getChildren().add(starsPane);
+            
+            //This is used for adding the flight radius in the correct position
+            //It needs to be above the background and underneath all the planets
+            int firstPlanetIndex = this.getChildren().size();
 
-            int numberOfBackgroundNodes = this.getChildren().size();
-
-            planetIcons = new HashMap<>();
-
+            // *** Add Planets ***
+            this.planetIcons = new HashMap<>();
             for (Planet planet : planets) {
                 //assign each planet a location that is scaled to the size of the map
                 double planetX = (MAP_WIDTH * (planet.getLocation().getX() / Universe.WIDTH)) + LEFT_MARGIN;
                 double planetY = (MAP_HEIGHT * (planet.getLocation().getY() / Universe.HEIGHT)) + TOP_MARGIN;
 
                 //create an icon for each planet
-                Circle planetIcon = new Circle(planetX, planetY, PLANET_RADIUS, getUnselectedPlanetColor(planet));
-                planetIcons.put(planet, planetIcon);
-                if (planet != currentPlanet) {
-                    
-                    //set what happens with the planet icon is clicked
-                    planetIcon.setOnMousePressed((event) -> {
-                        this.setCursor(Cursor.HAND);
-                        flightRadiusPopUp.hide(new Duration(200));
+                Circle planetIcon = new Circle(planetX, planetY,
+                        PLANET_RADIUS, getUnselectedPlanetColor(planet));
+                this.planetIcons.put(planet, planetIcon);
+                
+                planetIcon.setOnMousePressed((event) -> {
+                    flightRadiusPopUp.hide(new Duration(200));
+                    this.setCursor(Cursor.HAND);
+                    if (selectedPlanet != null) {
+                        //reset the color of the previously selected planet
+                        Color regColor = getUnselectedPlanetColor(selectedPlanet);
+                        planetIcons.get(selectedPlanet).setFill(regColor);
+                    }
+                    if (planet != currentPlanet && planet != selectedPlanet) {
                         showPlanetInfo(planet);
-                        if (selectedPlanet == null) {
-                            planetIcon.setFill(SELECTED_PLNT_COLOR);
-                        } else if (planet != selectedPlanet) {
-                            planetIcon.setFill(SELECTED_PLNT_COLOR);
-                            planetIcons.get(selectedPlanet).setFill(getUnselectedPlanetColor(selectedPlanet));
-                        }
+                        planetIcon.setFill(SELECTED_PLNT_COLOR);
                         selectedPlanet = planet;
-                        event.consume();
-                    });
-                    
-                    //this prevents the map from dragging when you move the mouse
-                    //after pressing on a planet
-                    planetIcon.setOnMouseDragged((event) -> event.consume());
-                }
+                    } else {
+                        hidePlanetInfo();
+                        selectedPlanet = null;
+                    }
+                    event.consume();
+                });
+                
+                
+                //This prevents the map from dragging when you move the mouse
+                //after pressing on a planet
+                planetIcon.setOnMouseDragged((event) -> event.consume());
 
                 //So that after you click on a planet, the cursor is still a pointing hand
                 planetIcon.setOnMouseReleased((event) -> {
@@ -360,26 +365,24 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 planetIcon.setOnMouseEntered((e) -> this.setCursor(Cursor.HAND));
                 planetIcon.setOnMouseExited((e) -> this.setCursor(Cursor.OPEN_HAND));
 
-                //add wormholes
+                // *** Add Wormholes ***
                 if (planet.getWormhole() != null) {
-                    Circle wormholeIcon = new Circle(planetX + PLANET_RADIUS + 2, planetY + PLANET_RADIUS + 2, WORMHOLE_RADIUS, getUnselectedPlanetColor(planet));
+                    Circle wormholeIcon = new Circle(planetX + PLANET_RADIUS + 10, planetY + PLANET_RADIUS + 2,
+                            WORMHOLE_RADIUS, getUnselectedPlanetColor(planet));
                     wormholeIcon.setFill(WORMHOLE_COLOR);
                     this.getChildren().add(wormholeIcon);
                     
-                    Tooltip wormholeToolTip = new Tooltip();
-                    FXMLLoader miniMapLoader = new FXMLLoader(getClass()
+                    Pane miniMapPane = null;
+                    FXMLLoader loader = new FXMLLoader(getClass()
                             .getResource("/spacetrader/planets/WormholeMap.fxml"));
                     try {
-                        Pane pane = miniMapLoader.load();
-                    ((WormholeMiniMapController) miniMapLoader.getController())
-                            .setWormholeMap(planets, planet);
-                        wormholeToolTip.setGraphic(pane);
+                        miniMapPane = loader.load();
                     } catch (IOException e) {
-                        Logger.getLogger(SpaceTrader.class.getName())
-                                .log(Level.SEVERE, null, e);
+                        Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
                     }
+                    ((WormholeMiniMapController) loader.getController()).setWormholeMap(planets, planet);
                     
-                    PopOver wormholePopOver = new PopOver(wormholeToolTip.getGraphic());
+                    PopOver wormholePopOver = new PopOver(miniMapPane);
                     planetIcon.addEventHandler(MouseEvent.MOUSE_ENTERED, (event) -> {
                         wormholePopOver.show(wormholeIcon);
                     });
@@ -388,13 +391,8 @@ public class SpaceMapScreenController extends SceneController implements Initial
                         wormholePopOver.hide(new Duration(150));
                     });
                     
-                    wormholeIcon.addEventHandler(MouseEvent.MOUSE_ENTERED, (event) -> {
-                        this.setCursor(Cursor.HAND);
-                    });
-
-                    wormholeIcon.addEventHandler(MouseEvent.MOUSE_EXITED, (event) -> {
-                        this.setCursor(Cursor.OPEN_HAND);
-                    });
+                    wormholeIcon.setOnMouseEntered((e) -> this.setCursor(Cursor.HAND));
+                    wormholeIcon.setOnMouseExited((e) -> this.setCursor(Cursor.OPEN_HAND));
                 }
 
                 //Create text for the name of each planet.
@@ -411,7 +409,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     double maxTravelDistance = (MAP_WIDTH * (fuelAmount / (double) Universe.WIDTH));
                     planetIcon.setFill(CURR_PLNT_COLOR);
                     Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
-                    flightRadius.setOpacity(.6);
+                    flightRadius.setOpacity(0.6);
                     flightRadius.setStroke(Color.LAWNGREEN);
                     flightRadiusPopUp = InformationPresenter.createTextPopOver("This is your current max range of travel.");
                     flightRadius.setOnMouseEntered((e) -> {
@@ -421,12 +419,11 @@ public class SpaceMapScreenController extends SceneController implements Initial
                         }
                     });
                     //add right above the background, so that the circle is beneath all the planets, but is still visible
-                    this.getChildren().add(numberOfBackgroundNodes, flightRadius);
+                    this.getChildren().add(firstPlanetIndex, flightRadius);
                 }
             }
         }
         
-
         /**
          * Determines the color of a planet that is not selected.
          *
@@ -458,7 +455,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
         }
 
         /**
-         * TODO
+         * A class for holding the values used for dragging.
          */
         private final class MapDragContext {
 
@@ -468,14 +465,13 @@ public class SpaceMapScreenController extends SceneController implements Initial
             public double y;
         }
     }
-    public static final Color UNVISITED_PLNT_COLOR = Color.GREEN;
-    public static final Color VISITED_PLNT_COLOR = Color.DARKCYAN;
-    public static final Color CURR_PLNT_COLOR = Color.BLUE;
     
     
+    /**
+     * A GridPane that displays the Map Key.
+     */
     private class PlanetColorKey extends GridPane {
-        
-        public PlanetColorKey() {
+        private PlanetColorKey() {
             this.setPrefWidth(400);
             this.setPadding(new Insets(15, 15, 15, 15));
             this.setHgap(15);

@@ -26,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -213,8 +214,9 @@ public class InformationPresenter {
      */
     public static PopOver showTextOnHover(Node node, String message) {
         PopOver popup = createTextPopOver(message);
-        node.setOnMouseEntered((e) -> popup.show(node));
-        node.setOnMouseExited((e) -> popup.hide(new Duration(200)));
+        //uses addEventHandler, so as not to overwrite pre-existing event handlers
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> popup.show(node));
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> popup.hide(new Duration(200)));
         return popup;
     }
     
@@ -227,9 +229,9 @@ public class InformationPresenter {
      * @return the newly created PopOver
      */
     public static PopOver showNodeOnHover(Node node, Node content) {
-        PopOver popup = new PopOver(node);
-        node.setOnMouseEntered((e) -> popup.show(node));
-        node.setOnMouseExited((e) -> popup.hide(new Duration(200)));
+        PopOver popup = new PopOver(content);
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> popup.show(node));
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> popup.hide(new Duration(200)));
         return popup;
     }
 }

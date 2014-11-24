@@ -75,7 +75,7 @@ public class Universe implements Serializable {
             //pick random name
             String name;
             do {
-                name = "#" + i + " " + generateRandomName();
+                name = generateRandomName();
             } while (planetNames.contains(name));
             planetNames.add(name);
 
