@@ -56,7 +56,7 @@ public class FinanceScreenController extends SceneController
     @FXML
     public void setUpFinanceScreen(Player player) {
         this.player = player;
-        currentBalance.setText("Current balance: ₪"
+        currentBalance.setText("Current Balance: ₪"
                 + player.getCredits());
         debt.setText("₪" + player.getDebt());
         shipVal.setText("₪" + player.getShip()
@@ -90,20 +90,20 @@ public class FinanceScreenController extends SceneController
             int loan = Integer.parseInt(loanStr);
             if (loan > 1000) {
                 loanAmt.clear();
-                mainControl.displayAlertMessage("Incorrect entry!",
-                        "Please enter a number 1 - 1000 only!");
+                mainControl.displayErrorMessage(null, "Incorrect entry!",
+                        "Please enter an amount between 1 - 1000 only.");
                 return;
             }
             player.addDebt(loan);
             player.addCredits(loan);
-            currentBalance.setText("Current balance: ₪" 
+            currentBalance.setText("Current Balance: ₪" 
                     + player.getCredits());
             debt.setText("₪" + player.getDebt());
             loanAmt.clear();
         } catch (NumberFormatException e) {
             loanAmt.clear();
-            mainControl.displayAlertMessage("Incorrect entry!",
-                    "Please enter a number 1 - 1000 only!");
+            mainControl.displayErrorMessage(null, "Incorrect entry!",
+                    "Please enter a number between 1 - 1000 only.");
         }
         if (player.getDebt() > 0) {
             payLoan.setDisable(false);
@@ -121,8 +121,8 @@ public class FinanceScreenController extends SceneController
             int amt = Integer.parseInt(amtStr);
             if (amt > player.getCredits()) {
                 loanAmt.clear();
-                mainControl.displayAlertMessage("Incorrect entry!",
-                    "You do not have enough money to pay that much!");
+                mainControl.displayWarningMessage(null, "Insufficient Funds!",
+                    "You do not have enough money to pay that much.");
                 return;
             }
             player.removeCredits(amt);
@@ -133,8 +133,8 @@ public class FinanceScreenController extends SceneController
             payBackAmt.clear();
         } catch (NumberFormatException e) {
             payBackAmt.clear();
-            mainControl.displayAlertMessage("Incorrect entry!",
-                    "Please enter a valid numerical value!");
+            mainControl.displayErrorMessage(null, "Incorrect entry!",
+                    "Please enter a valid numerical value.");
         }
         if (player.getDebt() == 0) {
             payLoan.setDisable(true);

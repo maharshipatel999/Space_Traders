@@ -13,6 +13,7 @@ import spacetrader.commerce.Market;
 import spacetrader.commerce.TradeGood;
 import spacetrader.ships.ShipType;
 import spacetrader.ships.SpaceShip;
+import spacetrader.system.MainController;
 
 /**
  * Represents an encounter with a trader.
@@ -98,6 +99,11 @@ public class TraderEncounter extends Encounter {
     @Override
     public boolean isIllegalShipType(ShipType type) {
         return type.trader() < 0 || traderStrength < type.trader();
+    }
+    
+    @Override
+    protected void handleSurrender(MainController mainControl) {
+        throw new UnsupportedOperationException("You cannot surrender to a Trader");
     }
 
     /**

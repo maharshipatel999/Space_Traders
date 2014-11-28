@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader.system;
 
 import java.beans.IntrospectionException;
@@ -20,9 +19,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -42,63 +43,138 @@ import org.controlsfx.property.BeanProperty;
  * @author Caleb
  */
 public class InformationPresenter {
+
     private Stage stage;
-    
+
     public InformationPresenter(Stage stage) {
         this.stage = stage;
     }
-    
+
     /**
-     * Display alert message based on passed in string.
+     * Display information message based on passed in string.
      *
+     * @param msgTitle the value of msgTitle
      * @param header title of state
      * @param message alert message
+     * @param args Arguments referenced by the format specifiers in the message
+     * string. If there are more arguments than format specifiers, the extra 
+     * arguments are ignored. The number of arguments is variable and may be zero.
      */
-    public void displayAlertMessage(String header, String message) {
-        /*Alert dialog = new Alert(AlertType.INFORMATION, message, ButtonType.OK);
-        dialog.setTitle("Information");
-        dialog.setResizable(true);
-        dialog.setHeaderText(header);
-        dialog.initStyle(StageStyle.UTILITY);*/
+    public void displayInfoMessage(String msgTitle, String header,
+            String message, Object ... args) {
+        displayMessage(AlertType.INFORMATION,
+                msgTitle != null ? msgTitle : "Information", header, message);
+    }
 
-        Dialogs.create()
-                .owner(stage)
-                .title(header)
-                //.masthead(null)
-                .message(message)
-                .showInformation();
+    /**
+     * Display warning message based on passed in string.
+     *
+     * @param msgTitle the value of msgTitle
+     * @param header title of state
+     * @param message alert message
+     * @param args Arguments referenced by the format specifiers in the message
+     * string. If there are more arguments than format specifiers, the extra 
+     * arguments are ignored. The number of arguments is variable and may be zero.
+     */
+    public void displayWarningMessage(String msgTitle, String header,
+            String message, Object ... args) {
+        displayMessage(AlertType.WARNING,
+                msgTitle != null ? msgTitle : "Warning", header, message);
+    }
+
+    /**
+     * Display error message based on passed in string.
+     *
+     * @param msgTitle the value of msgTitle
+     * @param header title of state
+     * @param message alert message
+     * @param args Arguments referenced by the format specifiers in the message
+     * string. If there are more arguments than format specifiers, the extra 
+     * arguments are ignored. The number of arguments is variable and may be zero.
+     */
+    public void displayErrorMessage(String msgTitle, String header,
+            String message, Object ... args) {
+        displayMessage(AlertType.ERROR,
+                msgTitle != null ? msgTitle : "Error", header, message);
     }
     
+    private void displayMessage(AlertType alertType, String msgTitle,
+            String header, String message, Object ... args) {
+        Alert dialog = createAlert(alertType, String.format(message, args));
+        dialog.setTitle(msgTitle);
+        if (header != null) {
+            dialog.setHeaderText(header);
+        }
+        dialog.showAndWait();
+    }
+
     /**
-     * Display yes-no confirmation.
+     * Display a dialog with options.
      *
      * @param optionsTitle title of state
      * @param mastHead
      * @param message message to display
+     * @param buttonNames the buttons that the player can choose from
      * @return true if the player confirmed yes, otherwise false
      */
-    public boolean displayYesNoConfirmation(String optionsTitle,
-            String mastHead, String message) {
-        
-        Alert dialog = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.NO, ButtonType.YES);
-        dialog.initStyle(StageStyle.UTILITY);
+    public Optional<ButtonType> displayOptionsDialog(String optionsTitle,
+            String mastHead, String message, String... buttonNames) {
+        ButtonType[] buttons = new ButtonType[buttonNames.length];
+        int size = 0;
+        for (String name : buttonNames) {
+            buttons[size++] = new ButtonType(name);
+        }
+
+        return displayOptionsDialog(optionsTitle, mastHead, message, buttons);
+    }
+
+    /**
+     * Display a dialog with options.
+     *
+     * @param optionsTitle title of state
+     * @param mastHead
+     * @param message message to display
+     * @param buttons the buttons that the player can choose from
+     * @return true if the player confirmed yes, otherwise false
+     */
+    public Optional<ButtonType> displayOptionsDialog(String optionsTitle,
+            String mastHead, String message, ButtonType... buttons) {
+        Alert dialog = createAlert(Alert.AlertType.CONFIRMATION, message, buttons);
         dialog.setTitle(optionsTitle);
         if (mastHead != null) {
             dialog.setHeaderText(mastHead);
         }
-        Optional<ButtonType> result = dialog.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.YES;
 
-        /*Action response = Dialogs.create()
-                .owner(stage)
-                .title(optionsTitle)
-                .masthead(mastHead)
-                .message(message)
-                .actions(Dialog.Actions.YES, Dialog.Actions.NO)
-                .showConfirm();
-        return response;*/
+        Optional<ButtonType> result = dialog.showAndWait();
+        return result;
     }
-    
+
+    /**
+     * Creates a new Alert.
+     *
+     * @param alertType the type of alert
+     * @param contentText the message
+     * @param buttons the buttons the user can choose from
+     * @return the new Alert
+     */
+    public static Alert createAlert(AlertType alertType, String contentText,
+            ButtonType... buttons) {
+        Label content = new Label(contentText);
+        content.setMaxWidth(Double.MAX_VALUE);
+        content.setMaxHeight(Double.MAX_VALUE);
+        content.getStyleClass().add("content");
+        content.setWrapText(true);
+        content.setPrefWidth(360);
+        content.setPadding(new Insets(10, 0, 0, 10));
+
+        Alert dialog = new Alert(alertType, contentText, buttons);
+        Group labelGroup = new Group(content);
+        dialog.getDialogPane().setContent(labelGroup);
+        dialog.initStyle(StageStyle.UTILITY);
+
+        return dialog;
+    }
+
     /**
      * Display progress bar.
      *
@@ -123,7 +199,7 @@ public class InformationPresenter {
      * @param finishMessage the message displayed when finished
      * @param doneEvent the action to do on completion of progress bar
      */
-    public void displaySaveProgress(String progressTitle, String updateMessage, 
+    public void displaySaveProgress(String progressTitle, String updateMessage,
             String finishMessage, EventHandler<WorkerStateEvent> doneEvent) {
         Service<Void> saveService = new Service<Void>() {
             @Override
@@ -146,18 +222,21 @@ public class InformationPresenter {
         saveService.setOnSucceeded(doneEvent);
         displayProgess(progressTitle, saveService);
     }
-    
+
     /**
      * Shows options to set different values of the game.
-     * 
+     *
      * @param cheats the AdminCheats object which will be used
      * @param cheatStage the stage that the pop-up will be presented in
      * @param doneAction the action to do when the done button is pressed
      */
-    public void displayAdminCheats(AdminCheats cheats, Stage cheatStage, EventHandler<ActionEvent> doneAction) {
+    public void displayAdminCheats(AdminCheats cheats, Stage cheatStage,
+            EventHandler<ActionEvent> doneAction) {
         ObservableList<PropertySheet.Item> list = FXCollections.observableArrayList();
         try {
-            for (String var : new String[]{"initialCredits", "techLevel", "politicalSystem", "resource", "startingShip", "policeRecord", "reputation", "debugMode"}) {
+            for (String var : new String[] {"initialCredits", "techLevel",
+                "politicalSystem", "resource", "startingShip", "policeRecord",
+                "reputation", "debugMode"}) {
                 list.add(new BeanProperty(cheats, new PropertyDescriptor(var, cheats.getClass())));
             }
         } catch (IntrospectionException ex) {
@@ -166,21 +245,21 @@ public class InformationPresenter {
         //Create Stage
         cheatStage.initOwner(stage);
         cheatStage.initModality(Modality.WINDOW_MODAL);
-        
+
         //Create Pane
         VBox pane = new VBox();
         pane.setAlignment(Pos.BOTTOM_RIGHT);
-        
+
         //Create Property Sheet
         PropertySheet propertySheet = new PropertySheet(list);
         propertySheet.setModeSwitcherVisible(false);
         propertySheet.setSearchBoxVisible(false);
-        
+
         //Create Done Button
         Button doneButton = new Button("Done");
         doneButton.setOnAction(doneAction);
         doneButton.setDefaultButton(true);
-        
+
         //add nodes to pane, and set the pane to the stage's scene.
         pane.getChildren().addAll(propertySheet, doneButton);
         Scene scene = new Scene(pane);
@@ -190,7 +269,7 @@ public class InformationPresenter {
 
     /**
      * Creates a PopOver with the given text.
-     * 
+     *
      * @param message the text to be displayed
      * @return a new PopOver with the provided message
      */
@@ -202,12 +281,12 @@ public class InformationPresenter {
         popup.getContentNode().setUserData(Boolean.FALSE);
         return popup;
     }
-    
+
     /**
-     * Creates a new popover that displays the provided message. Sets the popover
-     * to display whenever the mouse hovers over the provided node. Returns the
-     * new popover 
-     * 
+     * Creates a new popover that displays the provided message. Sets the
+     * popover to display whenever the mouse hovers over the provided node.
+     * Returns the new popover
+     *
      * @param node the node which displays the text when the mouse enters it
      * @param message the text to display on the popover
      * @return the newly created PopOver
@@ -219,11 +298,11 @@ public class InformationPresenter {
         node.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> popup.hide(new Duration(200)));
         return popup;
     }
-    
+
     /**
-     * Creates a new popover that displays the provided content node. Sets the popover
-     * to display whenever the mouse hovers over the provided node.
-     * 
+     * Creates a new popover that displays the provided content node. Sets the
+     * popover to display whenever the mouse hovers over the provided node.
+     *
      * @param node the node which displays the text when the mouse enters it
      * @param content the content for the PopOver that is displayed
      * @return the newly created PopOver
@@ -234,4 +313,5 @@ public class InformationPresenter {
         node.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> popup.hide(new Duration(200)));
         return popup;
     }
+
 }

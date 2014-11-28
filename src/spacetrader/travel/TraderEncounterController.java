@@ -147,15 +147,15 @@ public class TraderEncounterController extends EncounterScreenController impleme
                 if (!response) {
                     return;
                 }
-                mainControl.displayAlertMessage("Offer Rejected!", "You rudely reject the trader's offer and zoom off towards your destination.");
+                mainControl.displayInfoMessage(null, "Offer Rejected!", "You rudely reject the trader's offer and zoom off towards your destination.");
             } else if (quantity > maxQuantity) {
-                mainControl.displayAlertMessage("Illegal Amount", "The amount you have chosen is too large. Please choose an amount between 0 and " + maxQuantity + ".");
+                mainControl.displayInfoMessage(null, "Illegal Amount", "The amount you have chosen is too large. Please choose an amount between 0 and " + maxQuantity + ".");
                 return;
             } else if (encounter.getState() == State.BUY) {
                 encounter.getPlayer().getCargo().removeItem(tradingGood, quantity);
                 encounter.getOpponent().getCargo().addItem(tradingGood, quantity, tradingPrice);
                 encounter.getPlayer().addCredits(quantity * tradingPrice);
-                mainControl.displayAlertMessage("Offer Accepted!", 
+                mainControl.displayInfoMessage(null, "Offer Accepted!", 
                     String.format("You succesfully sold %d unit(s) of %s for ₪%d! "
                             + "The trader thanks you for doing business with him.",
                             quantity, tradingGood.toString(), tradingPrice * quantity));
@@ -163,17 +163,17 @@ public class TraderEncounterController extends EncounterScreenController impleme
                 encounter.getPlayer().getCargo().addItem(tradingGood, quantity, tradingPrice);
                 encounter.getOpponent().getCargo().removeItem(tradingGood, quantity);
                 encounter.getPlayer().removeCredits(quantity * tradingPrice);
-                mainControl.displayAlertMessage("Offer Accepted!", 
+                mainControl.displayInfoMessage(null, "Offer Accepted!", 
                     String.format("You successfully purchased %d unit(s) of %s for ₪%d! "
                             + "The trader thanks you for doing business with him.", 
                             quantity, tradingGood.toString(), tradingPrice * quantity));
             }
             mainControl.goBackToWarpScreen();
         } catch (NumberFormatException e) {
-            mainControl.displayAlertMessage("Incorrect entry!", "Please enter an integer!");
+            mainControl.displayErrorMessage(null, "Incorrect entry!", "Please enter an integer!");
         } catch (CargoIsFullException e) {
             int remainingSlots =  encounter.getPlayer().getCargo().getRemainingCapacity();
-            mainControl.displayAlertMessage("Full Cargo!", "You only have room to buy " + remainingSlots + ".");
+            mainControl.displayWarningMessage(null, "Full Cargo!", "You only have room to buy " + remainingSlots + ".");
         }
     }
 

@@ -16,10 +16,11 @@ import spacetrader.system.SceneController;
  */
 public class EncounterScreenController extends SceneController {
 
-    private static final String NO_WEAPONS_MSG = 
+    private static final String NO_WEAPONS_HRLP_MSG = 
         "You either are flying a ship without any weapon slots, so your only "
         + "option is to flee from fights, or you haven't bought any weapons yet."
         + " Sorry, no weapons, no attacking.";
+    
     
     protected Encounter encounter;
 
@@ -40,11 +41,10 @@ public class EncounterScreenController extends SceneController {
     @FXML
     protected void attackPressed(ActionEvent e) {
         if (encounter.getPlayer().getShip().getTotalWeaponStrength() <= 0) {
-            mainControl.displayAlertMessage("No Weapons", NO_WEAPONS_MSG);
+            mainControl.displayErrorMessage(null, "No Weapons", "You can't attack without weapons!");
+            mainControl.goBackToWarpScreen();
         } else {
-            mainControl.displayAlertMessage("Attacking!", "You attack the enemy ship!"
-                    + " (attacking is currently in development");
+            mainControl.goToBattleScreen(encounter);
         }
-        mainControl.goBackToWarpScreen();
     }
 }

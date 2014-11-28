@@ -6,6 +6,7 @@
 package spacetrader.system;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.concurrent.Service;
@@ -13,6 +14,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import spacetrader.Mercenary;
@@ -31,6 +33,9 @@ import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
 import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
+import spacetrader.ships.Weapon;
+import spacetrader.ships.WeaponType;
+import spacetrader.travel.BattleController;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
 import spacetrader.travel.RandomEvent;
@@ -99,6 +104,7 @@ public class MainController {
         Player cheatPlayer = new Player("LubMaster", 3, 3, 3, 3, 3);
         cheatPlayer.setCredits(cheats.getInitialCredits());
         cheatPlayer.setShip(new PlayerShip(cheats.getStartingShip()));
+        cheatPlayer.getShip().getWeapons().addItem(new Weapon(WeaponType.PULSE));
         cheatPlayer.setReputationScore(cheats.getReputation().minRep());
         cheatPlayer.setPoliceRecordScore(cheats.getPoliceRecord().minScore());
         game.setPlayer(cheatPlayer);
@@ -150,7 +156,7 @@ public class MainController {
 
         changePlayerLocation(destination);
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayAlertMessage("Notice!", destination.getName()
+            displayInfoMessage(null, "Notice!", destination.getName()
                     + " is currently "
                     + destination.getPriceIncEvent().desc().toLowerCase());
         }
@@ -162,7 +168,7 @@ public class MainController {
         if (eventGenerator.eventOccurs()) {
             RandomEvent event = eventGenerator.getRandomEvent();
             event.doEvent();
-            displayAlertMessage("Special Event!", event.getMessage());
+            displayInfoMessage(null, "Special Event!", event.getMessage());
         }
     }
 
@@ -208,11 +214,11 @@ public class MainController {
                     break;
             }
 
-            displayAlertMessage(msgTitle, message);
+            displayInfoMessage(null, msgTitle, message);
             goToHomeScreen(player, player.getLocation());
         }
         if (game.getPlayer().getDebt() > 75000) {
-            displayAlertMessage("Debt Warning!", "You get this warning because "
+            displayWarningMessage(null, "Debt Warning!", "You get this warning because "
                     + "your debt has exceeded 75000 credits. If you don't pay "
                     + "back quickly, you may find yourself stuck in a system with"
                     + " no way to leave. You have been warned.");
@@ -267,29 +273,29 @@ public class MainController {
 	int fine = ((1 + (((player.getCurrentWorth() * Math.min(80, negPoliceScore)) / 100) / 500)) * 500);
 	int daysImprisoned = Math.max( 30, negPoliceScore );
 
-	displayAlertMessage("You've been arrested!", "At least you survived." );
-        displayAlertMessage("Conviction", "Your fine and number of days in prison are based on"
+	displayInfoMessage(null, "You've been arrested!", "At least you survived." );
+        displayInfoMessage(null, "Conviction", "Your fine and number of days in prison are based on"
                 + " the kind of criminal you were found to be.");
 
 	String conviction = String.format("You are convicted to %d days in prison and a fine of ₪%d.", daysImprisoned, fine);
-        displayAlertMessage("Conviction Determined", conviction);
+        displayInfoMessage(null, "Conviction Determined", conviction);
 
         //Remove Illegal Goods
 	if (player.getShip().isCarryingIllegalGoods()) {
-            displayAlertMessage("Illegal Goods Impounded", "What would you expect?" );
+            displayInfoMessage(null, "Illegal Goods Impounded", "What would you expect?" );
             player.getCargo().clearItem(TradeGood.NARCOTICS);
             player.getCargo().clearItem(TradeGood.FIREARMS);
 	}
         //Remove Insurance
 	if (player.getInsuranceCost() <= 0) {
-            displayAlertMessage("", "InsuranceLostAlert" );
+            displayInfoMessage(null, "", "InsuranceLostAlert" );
             player.setInsuranceCost(0);
             //NoClaim = 0; reset no-claim to zero
 	}
         //Remove Crew
         Mercenary[] crew = player.getShip().getCrew();
 	if (crew.length > 0) {
-            displayAlertMessage("Mercenaries Leave", "You can't pay your mercenaries "
+            displayInfoMessage(null, "Mercenaries Leave", "You can't pay your mercenaries "
                     + "while you are imprisoned, and so they have sought new employment." );
             for (int i = 0; i < crew.length; i++) {
                 player.getShip().fireMercenary(crew[i]);
@@ -316,10 +322,10 @@ public class MainController {
             } else {
                 player.setCredits(0);
             }
-            displayAlertMessage("Ship Sold", "The Space Corps needs cash to make"
+            displayInfoMessage(null, "Ship Sold", "The Space Corps needs cash to make"
                     + " you pay for the damages you did. Your ship is the only "
                     + "valuable possession you have.");
-            displayAlertMessage("Flea Received", "It's standard practice for the"
+            displayInfoMessage(null, "Flea Received", "It's standard practice for the"
                     + " police to leave a condemned criminal with at least the "
                     + "means to leave the solar system." );
 
@@ -581,15 +587,59 @@ public class MainController {
         stage.setTitle("Welcome to Bank of " + planet.getName() + "!");
         stage.setScene(control.getScene());
     }
+    
+    /**
+     * Transitions the game screen to the Finance Screen.
+     *
+     * @param encounter the encounter that initiated the battle
+     */
+    public void goToBattleScreen(Encounter encounter) {
+        BattleController control;
+        control = (BattleController) extractControllerFromFXML("/spacetrader/travel/BattleScreen.fxml", stage);
+        control.setUpBattle(encounter);
+        stage.setTitle(encounter.getName() + " Encounter!");
+        stage.setScene(control.getScene());
+    }
 
     /**
      * Display alert message based on passed in string.
      *
+     * @param msgTitle the value of msgTitle
      * @param header title of state
      * @param message alert message
+     * @param args Arguments referenced by the format specifiers in the message
+     * string. If there are more arguments than format specifiers, the extra 
+     * arguments are ignored. The number of arguments is variable and may be zero.
      */
-    public void displayAlertMessage(String header, String message) {
-        popUpControl.displayAlertMessage(header, message);
+    public void displayInfoMessage(String msgTitle, String header, String message, Object ... args) {
+        popUpControl.displayInfoMessage(msgTitle, header, message, args);
+    }
+    
+     /**
+     * Display alert message based on passed in string.
+     *
+     * @param msgTitle the value of msgTitle
+     * @param header title of state
+     * @param message alert message
+     * @param args Arguments referenced by the format specifiers in the message
+     * string. If there are more arguments than format specifiers, the extra 
+     * arguments are ignored. The number of arguments is variable and may be zero.
+     */
+    public void displayWarningMessage(String msgTitle, String header, String message, Object ... args) {
+        popUpControl.displayWarningMessage(msgTitle, header, message, args);
+    }
+     /**
+     * Display alert message based on passed in string.
+     *
+     * @param msgTitle the value of msgTitle
+     * @param header title of state
+     * @param message alert message
+     * @param args Arguments referenced by the format specifiers in the message
+     * string. If there are more arguments than format specifiers, the extra 
+     * arguments are ignored. The number of arguments is variable and may be zero.
+     */
+    public void displayErrorMessage(String msgTitle, String header, String message, Object ... args) {
+        popUpControl.displayErrorMessage(msgTitle, header, message, args);
     }
 
     /**
@@ -598,10 +648,40 @@ public class MainController {
      * @param optionsTitle title of state
      * @param mastHead the header
      * @param message message to display
+     * @param args Arguments referenced by the format specifiers in the message
+     * string. If there are more arguments than format specifiers, the extra 
+     * arguments are ignored. The number of arguments is variable and may be zero.
      * @return true if the player confirmed yes, otherwise false
      */
-    public boolean displayYesNoConfirmation(String optionsTitle, String mastHead, String message) {
-        return popUpControl.displayYesNoConfirmation(optionsTitle, mastHead, message);
+    public boolean displayYesNoConfirmation(String optionsTitle, String mastHead, String message, Object ... args) {
+        message = String.format(message, args);
+        Optional<ButtonType> result = popUpControl.displayOptionsDialog(
+                optionsTitle, mastHead, message, ButtonType.NO, ButtonType.YES);
+        return result.isPresent() && result.get() == ButtonType.YES;
+    }
+    
+    /**
+     * Display custom confirmation.
+     *
+     * @param optionsTitle title of state
+     * @param mastHead the header
+     * @param message message to display
+     * @param buttonNames the names of the buttons the player can choose from
+     * @return true if the player confirmed yes, otherwise false
+     */
+    public String displayCustomConfirmation(String optionsTitle, String mastHead, String message, String ... buttonNames) {
+        Optional<ButtonType> result = popUpControl.displayOptionsDialog(
+                optionsTitle, mastHead, message, buttonNames);
+        if (!result.isPresent()) {
+            return "";
+        }
+        for (String name : buttonNames) {
+            if (name.equals(result.get().getText())) {
+                return name;
+            }
+        }
+        return "";
+        
     }
 
     /**

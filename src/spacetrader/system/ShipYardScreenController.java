@@ -248,7 +248,7 @@ public class ShipYardScreenController
             updateFuelBar();
             setFuelButtons();
         } catch (InsufficientFundsException e) {
-            mainControl.displayAlertMessage("Insufficient Funds",
+            mainControl.displayWarningMessage(null, "Insufficient Funds",
                     "You do not have enough money to buy more fuel!");
         }
     }
@@ -291,7 +291,7 @@ public class ShipYardScreenController
             updateHullBar();
             setHullButtons();
         } catch (InsufficientFundsException e) {
-            mainControl.displayAlertMessage("Insufficient Funds", "You do not have enough money to buy more fuel!");
+            mainControl.displayWarningMessage(null, "Insufficient Funds", "You do not have enough money to buy more fuel!");
         }
     }
 
@@ -318,7 +318,7 @@ public class ShipYardScreenController
                 "Ship Purchase Confirmation", null, escapePodMessage);
         if (response) {
             player.getShip().setEscapePod();
-            mainControl.displayAlertMessage("Transaction Successful",
+            mainControl.displayInfoMessage(null, "Transaction Successful",
                     "You successfully bought a new escape pod!");
             updateEscapePodText();
         }

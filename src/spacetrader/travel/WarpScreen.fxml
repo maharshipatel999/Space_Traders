@@ -18,7 +18,7 @@
          </image>
       </ImageView>
       
-      <ImageView fx:id="shipSprite" fitHeight="70.0" fitWidth="70.0" layoutX="-192.0" layoutY="-59.0" pickOnBounds="true" preserveRatio="true" rotate="78.7" x="230.0" y="380">
+      <ImageView fx:id="shipSprite" fitHeight="70.0" fitWidth="70.0" layoutX="-189.0" layoutY="-163.0" pickOnBounds="true" preserveRatio="true" rotate="88.7" x="230.0" y="380">
          <image>
             <Image url="@../../resources/images/redFighter.png" />
          </image>

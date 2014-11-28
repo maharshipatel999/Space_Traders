@@ -351,7 +351,7 @@ public class MarketScreenController extends SceneController implements Initializ
      * @param message the message to be displayed
      */
     private void displayAlert(String message) {
-        mainControl.displayAlertMessage("Market Warning!", message);
+        mainControl.displayWarningMessage(null, "Market Warning!", message);
     }
 
     /**

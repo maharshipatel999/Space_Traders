@@ -253,7 +253,7 @@ public class GadgetScreenController
             msgText = String.format("You do not have enough money to purchase a %s.%n%nIt costs ₪%d, but you only have ₪%d.",
                     nameText.getText(), cost, initialCredits);
         } finally {
-            mainControl.displayAlertMessage(msgTitle, msgText);
+            mainControl.displayInfoMessage(null, msgTitle, msgText);
         }
 
         updateInventorySlots();
@@ -284,10 +284,9 @@ public class GadgetScreenController
 
         int revenue = sellingPrice(selectedIcon.item);
         player.addCredits(revenue);
-
-        String msgTitle = "Transaction Successful";
-        String msgText = String.format("You successfully sold your %s for ₪%d!", nameText.getText(), revenue);
-        mainControl.displayAlertMessage(msgTitle, msgText);
+        
+        mainControl.displayInfoMessage(null, "Transaction Successful",
+            "You successfully sold your %s for ₪%d!", nameText.getText(), revenue);
 
         sellButton.setDisable(true);
 

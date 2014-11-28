@@ -13,6 +13,7 @@ import spacetrader.ships.GadgetType;
 import spacetrader.ships.OpponentShip;
 import spacetrader.ships.ShipType;
 import spacetrader.ships.SpaceShip;
+import spacetrader.system.MainController;
 
 /**
  * Represents an abstract Encounter.
@@ -137,6 +138,12 @@ public abstract class Encounter {
     protected abstract boolean isIllegalShipType(ShipType type);
     
     /**
+     * Handle what happens when the player surrenders.
+     * @param mainControl the main controller
+     */
+    protected abstract void handleSurrender(MainController mainControl);
+    
+    /**
      * Updates the players Police Record from plundering an opponent ship.
      */
     public void updateRecordAfterPlunder() {
@@ -165,7 +172,7 @@ public abstract class Encounter {
     }
 
     /**
-     * Creates the space ship for the opponent
+     * Creates the space ship for the opponent.
      *
      * @param tries number tries to pick up a ship for opponent
      * @param lowestShipType weakest ship type

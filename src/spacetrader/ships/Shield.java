@@ -56,12 +56,19 @@ public class Shield extends Equipment {
     }
 
     /**
-     * Sets the power remaining of this shield.
+     * Sets the power remaining of this shield. The health can't be set higher
+     * than the shield's power.
      *
      * @param health the power remaining
+     * @return the amount the new health is over the max health
      */
-    public void setHealth(int health) {
-        this.health = health;
+    public int setHealth(int health) {
+        if (this.health > type.power()) {
+            this.health = type.power();
+        } else {
+            this.health = health;
+        }
+        return health - type.power();
     }
 
     /**

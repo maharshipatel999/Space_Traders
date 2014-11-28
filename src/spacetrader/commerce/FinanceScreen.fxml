@@ -10,77 +10,79 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.FinanceScreenController">
+<AnchorPane id="AnchorPane" prefHeight="390.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.FinanceScreenController">
    <children>
-      <VBox prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="359.0" prefWidth="600.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            <VBox prefHeight="241.0" prefWidth="600.0" spacing="10.0">
                <children>
-                  <Label fx:id="currentBalance" text="Wallet">
-                     <font>
-                        <Font name="Copperplate Gothic Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
+                  <HBox alignment="CENTER_LEFT" spacing="80.0">
+                     <children>
+                        <Label fx:id="currentBalance" text="Wallet">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                        <HBox>
+                           <children>
+                              <Label fx:id="debt1" text="Current Debt: ">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="debt" text="debt">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
                   <Separator prefWidth="200.0" />
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="22.0" prefWidth="560.0">
                      <children>
                         <Label text="Loans">
                            <font>
+                              <Font name="Copperplate Gothic Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="560.0" spacing="15.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="250.0">
+                           <children>
+                              <Label prefHeight="46.0" prefWidth="208.0" text="How much debt would you like to pay off?" wrapText="true">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="payBackAmt" maxWidth="80.0" prefHeight="31.0" prefWidth="80.0" />
+                           </children>
+                        </HBox>
+                        <Button fx:id="payLoan" mnemonicParsing="false" onAction="#payLoan" text="Pay Back Debt">
+                           <font>
                               <Font name="Copperplate Gothic Bold" size="15.0" />
                            </font>
-                        </Label>
+                        </Button>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="560.0" spacing="15.0">
                      <children>
-                        <Label fx:id="debt1" text="Current debt: ">
-                           <font>
-                              <Font name="Copperplate Gothic Light" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="debt" text="debt">
-                           <font>
-                              <Font name="Copperplate Gothic Light" size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="Enter desired amount to pay back: ">
-                           <font>
-                              <Font name="Copperplate Gothic Light" size="12.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="5.0" />
-                           </HBox.margin>
-                        </Label>
-                        <TextField fx:id="payBackAmt" maxWidth="50.0" prefHeight="20.0" prefWidth="390.0" />
-                     </children>
-                  </HBox>
-                  <Button fx:id="payLoan" mnemonicParsing="false" onAction="#payLoan" text="Pay Back Existing Loan">
-                     <font>
-                        <Font name="Copperplate Gothic Bold" size="15.0" />
-                     </font>
-                  </Button>
-                  <HBox prefHeight="7.0" prefWidth="560.0">
-                     <children>
-                        <Label fx:id="maxLoan" text="Enter desired loan amount (1 - 1000): ">
-                           <font>
-                              <Font name="Copperplate Gothic Light" size="12.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="5.0" />
-                           </HBox.margin>
-                        </Label>
-                        <TextField fx:id="loanAmt" maxWidth="50.0" prefHeight="20.0" prefWidth="390.0" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="326.0">
+                           <children>
+                              <Label fx:id="maxLoan" prefHeight="55.0" prefWidth="252.0" text="You can get a loan of up to ₪1000. How much would you like?" wrapText="true">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="loanAmt" maxWidth="80.0" prefHeight="31.0" prefWidth="71.0" />
+                           </children>
+                        </HBox>
                         <Button fx:id="getLoan" mnemonicParsing="false" onAction="#buyLoan" text="Get Loan">
                            <font>
                               <Font name="Copperplate Gothic Bold" size="15.0" />
@@ -97,26 +99,26 @@
                   <Insets />
                </VBox.margin>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            <VBox alignment="CENTER" prefHeight="85.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <Label text="Insurance">
                      <font>
-                        <Font name="Copperplate Gothic Bold" size="15.0" />
+                        <Font name="Copperplate Gothic Bold" size="21.0" />
                      </font>
                   </Label>
                   <HBox prefHeight="2.0" prefWidth="560.0">
                      <children>
                         <Label text="Current value of ship: ">
                            <font>
-                              <Font name="Copperplate Gothic Light" size="12.0" />
+                              <Font name="Copperplate Gothic Light" size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="shipVal" text="shipVal">
                            <font>
-                              <Font name="Copperplate Gothic Light" size="12.0" />
+                              <Font name="Copperplate Gothic Light" size="18.0" />
                            </font>
                         </Label>
                      </children>
@@ -125,32 +127,32 @@
                      <children>
                         <Label text="Daily cost of insurance: ">
                            <font>
-                              <Font name="Copperplate Gothic Light" size="12.0" />
+                              <Font name="Copperplate Gothic Light" size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="dailyCost" text="dailyCosts">
                            <font>
-                              <Font name="Copperplate Gothic Light" size="12.0" />
+                              <Font name="Copperplate Gothic Light" size="18.0" />
                            </font>
                         </Label>
                      </children>
                   </HBox>
-                  <Button fx:id="buyInsurance" mnemonicParsing="false" onAction="#buyInsurance" text="Buy Insurance">
-                     <font>
-                        <Font name="Copperplate Gothic Bold" size="15.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBackToHomeScreen" text="Back">
+                  <Button fx:id="buyInsurance" alignment="CENTER" mnemonicParsing="false" onAction="#buyInsurance" text="Buy Insurance">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="15.0" />
                      </font>
                   </Button>
                </children>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" />
+                  <Insets left="20.0" right="20.0" />
                </padding>
             </VBox>
          </children>
       </VBox>
+      <Button fx:id="backButton" layoutX="32.0" layoutY="449.0" mnemonicParsing="false" onAction="#goBackToHomeScreen" text="Back" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
+         <font>
+            <Font name="Copperplate Gothic Bold" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

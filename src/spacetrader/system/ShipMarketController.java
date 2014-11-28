@@ -190,7 +190,7 @@ public class ShipMarketController
     @FXML
     protected void processBuyShip(ActionEvent event) {
         if (shipTypes[selectedShip] == player.getShip().getType()) {
-            mainControl.displayAlertMessage("Ship Already In Possession", "You already "
+            mainControl.displayErrorMessage(null, "Ship Already In Possession", "You already "
                     + "own this type of ship! There is no benefit in buying it again");
             return;
         }
@@ -227,12 +227,12 @@ public class ShipMarketController
                 player.getShip().setEscapePod();
             }
 
-            mainControl.displayAlertMessage(null,
+            mainControl.displayInfoMessage(null, "Purchase Successful!",
                     "Congratulations on your new ship! ");
 
             goBackToShipYardScreen();
         } else {
-            mainControl.displayAlertMessage("Acquire More Cash!",
+            mainControl.displayWarningMessage(null, "Acquire More Cash!",
                     "You do not have enough credits to purchase this ship!");
         }
     }

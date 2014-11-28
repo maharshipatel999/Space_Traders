@@ -69,9 +69,9 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             String fineMsg = String.format("The police discovers illegal goods "
                     + "in your cargo holds. These goods are impounded and you are "
                     + "fined ₪%d", ((PoliceEncounter) encounter).determineFine());
-            mainControl.displayAlertMessage("Inspection Failed!", fineMsg);
+            mainControl.displayInfoMessage(null, "Inspection Failed!", fineMsg);
         } else {
-            mainControl.displayAlertMessage("Inspection Passed!", "The Police find nothing illegal in your cargo holds and appologize for the inconvience.");
+            mainControl.displayInfoMessage(null, "Inspection Passed!", "The Police find nothing illegal in your cargo holds and appologize for the inconvience.");
         }
         mainControl.goBackToWarpScreen();
     }
@@ -116,7 +116,7 @@ public class PoliceEncounterController extends EncounterScreenController impleme
             }
         }
         if (encounter.getPlayer().getLocation().getPoliticalSystem().bribeLevel() <= 0) {
-            mainControl.displayAlertMessage("Bribery Failed!", "These officers cannot be bribed.");
+            mainControl.displayInfoMessage(null, "Bribery Failed!", "These officers cannot be bribed.");
         } else {
             Planet destination = new Planet("Earth", new Point2D(5, 10)); //FIX THIS
             int bribeAmount = ((PoliceEncounter) encounter).calculcateBribe(destination);
@@ -127,10 +127,10 @@ public class PoliceEncounterController extends EncounterScreenController impleme
                 try {
                     encounter.getPlayer().removeCredits(bribeAmount);
                 } catch (InsufficientFundsException e) {
-                    mainControl.displayAlertMessage("Cannot Afford Bribe", "You don't have enough cash for a bribe.");
+                    mainControl.displayInfoMessage(null, "Cannot Afford Bribe", "You don't have enough cash for a bribe.");
                     return;
                 }
-                mainControl.displayAlertMessage("Bribe Successful", "The officers accept your bribe and send you off on your way.");
+            mainControl.displayInfoMessage(null, "Bribe Successful", "The officers accept your bribe and send you off on your way.");
             } else {
                 return;
             }

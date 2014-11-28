@@ -12,6 +12,7 @@ import static spacetrader.Tools.rand;
 import spacetrader.commerce.TradeGood;
 import spacetrader.planets.Planet;
 import spacetrader.ships.ShipType;
+import spacetrader.system.MainController;
 
 /**
  * Represents an encounter with the police.
@@ -39,6 +40,16 @@ public class PoliceEncounter extends Encounter {
     public static final String ATTACK_CONFIM_MSG = 
        "If you attack the police, they know you are a die-hard criminal and will"
         + " immediately label you as such.";
+    
+    private static final String NO_SURRENDER_MSG = "If you are too big a "
+            + "criminal, surrender is NOT an option anymore.";
+    
+    private static final String SURRENDER_MSG = "Your fine and time in prison "
+            + "will depend on how big a criminal you are. Your fine will be taken "
+            + "from your cash. If you don't have enough cash, the police will sell "
+            + "your ship to get it. If you have debts, the police will pay them from "
+            + "your credits (if you have enough) before you go to prison, because "
+            + "otherwise the interest would be staggering.";
 
     private final int policeStrength;
 
@@ -122,6 +133,18 @@ public class PoliceEncounter extends Encounter {
     @Override
     public boolean isIllegalShipType(ShipType type) {
         return type.police() < 0 || policeStrength < type.police();
+    }
+    
+    @Override
+    protected void handleSurrender(MainController mainControl) {
+        if (getPlayer().getPoliceRecord().compareTo(PoliceRecord.PSYCHO) <= 0) {
+            mainControl.displayInfoMessage(null, "You May Not Surrender!", NO_SURRENDER_MSG);
+        } else {
+            boolean response = mainControl.displayYesNoConfirmation("Surrender?", "Do you really want to surrender?", SURRENDER_MSG);
+            if (response) {
+                mainControl.playerGetsArrested();
+            }
+        }
     }
 
     /**

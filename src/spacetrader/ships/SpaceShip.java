@@ -116,15 +116,19 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
     }
 
     /**
-     * Sets the hull strength of this ship
+     * Sets the hull strength of this ship. The hull strength can't be set
+     * higher than the ship's max hull strength.
      *
      * @param newHull the new hull strength
+     * @return the amount the new hull strength is over the max hull strength
      */
-    public void setHullStrength(int newHull) {
-        this.hullStrength = newHull;
-        if (this.hullStrength > maxHullStrength) {
-            this.hullStrength = maxHullStrength;
+    public int setHullStrength(int newHull) {
+        if (hullStrength > maxHullStrength) {
+            hullStrength = maxHullStrength;
+        } else {
+            hullStrength = newHull;
         }
+        return newHull - maxHullStrength;
     }
 
     /**
