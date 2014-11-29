@@ -112,14 +112,16 @@ public class WarpScreenController extends SceneController implements Initializab
         checkForEncounter();
     }
 
-    
-
     public Planet getSource() {
         return source;
     }
 
     public Planet getDestination() {
         return destination;
+    }
+    
+    public void setRaided() {
+        encounters.setRaided();
     }
     
 

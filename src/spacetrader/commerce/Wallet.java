@@ -17,10 +17,18 @@ public class Wallet implements Serializable, Consumer {
 
     public static final int INITIAL_CREDITS = 1000;
     public static final int MAX_DEBT = 100000;
+    public static final int DEBT_WARNING = 75000;
+    
+    public static final String MAX_DEBT_MSG = "Your ship has been chained to the"
+            + " station's dock. Your debt has increased to a point where you are"
+            + " no longer a trusted trader. You may not leave until you can "
+            + "reduce it to an acceptable level. You have been warned and should"
+            + " have listened...";
 
     private int credits;
     private int debt;
     private int insuranceCost;
+    private int noClaimDays;
 
     /**
      * Creates a new wallet with 1000 credits and 0 debt.
@@ -29,6 +37,7 @@ public class Wallet implements Serializable, Consumer {
         this.credits = INITIAL_CREDITS;
         this.debt = 0;
         this.insuranceCost = 0;
+        this.noClaimDays = 0;
     }
 
     /**
@@ -176,7 +185,7 @@ public class Wallet implements Serializable, Consumer {
     }
 
     @Override
-    public void payInterest() {
+    public void payInterest() throws InsufficientFundsException {
         if (debt > MAX_DEBT) {
             throw new InsufficientFundsException("debt");
         } else if (debt > 0) {

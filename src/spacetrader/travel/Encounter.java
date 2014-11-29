@@ -8,6 +8,7 @@ package spacetrader.travel;
 import spacetrader.Player;
 import spacetrader.SkillList.Skill;
 import spacetrader.Tools;
+import spacetrader.planets.Planet;
 import spacetrader.ships.Gadget;
 import spacetrader.ships.GadgetType;
 import spacetrader.ships.OpponentShip;
@@ -33,6 +34,8 @@ public abstract class Encounter {
     private SpaceShip opponent;
     protected State state;
     protected int clicksFromDest;
+    private final Planet source;
+    private final Planet destination;
     
     protected int plunderScore;
 
@@ -43,13 +46,18 @@ public abstract class Encounter {
      * @param fxmlScene the scene which should be displayed with this encounter.
      * @param clicksFromDest distance from destination
      * @param encounterName the name of the opponent you're encountering
+     * @param source the origin planet
+     * @param destination the destination planet
      */
-    public Encounter(Player player, String fxmlScene, int clicksFromDest, String encounterName) {
+    public Encounter(Player player, String fxmlScene, int clicksFromDest, String encounterName, Planet source, Planet destination) {
         this.player = player;
         this.encounterScene = fxmlScene;
         this.clicksFromDest = clicksFromDest;
         this.encounterName = encounterName;
-        this.state = State.IGNORE; //defaults to ignore
+        this.source = source;
+        this.destination = destination;
+        
+        this.state = State.IGNORE; //defaults to ignore, important
     }
 
     /**
@@ -115,7 +123,25 @@ public abstract class Encounter {
     public int getClicksFromDest() {
         return clicksFromDest;
     }
-
+    
+    /**
+     * Gets the planet the player is departing from.
+     * 
+     * @return the source planet
+     */
+    public Planet getSource() {
+        return this.source;
+    }
+    
+    /**
+     * Gets the planet the player is traveling towards.
+     * 
+     * @return the destination planet
+     */
+    public Planet getDestination() {
+        return this.destination;
+    }
+    
     /**
      * Gets the message that should be displayed when this the opponent ignores
      * the player.

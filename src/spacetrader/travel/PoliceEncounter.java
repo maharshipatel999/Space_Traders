@@ -57,12 +57,13 @@ public class PoliceEncounter extends Encounter {
      * Creates a new police encounter.
      *
      * @param player the player of the game
-     * @param clicks
-     * @param policeStrength
+     * @param clicks the distance from the destination the encounter occurred
+     * @param source the origin planet
+     * @param destination the destination planet
      */
-    public PoliceEncounter(Player player, int clicks, int policeStrength) {
-        super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml", clicks, "Police");
-        this.policeStrength = policeStrength;
+    public PoliceEncounter(Player player, int clicks, Planet source, Planet destination) {
+        super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml", clicks, "Police", source, destination);
+        this.policeStrength = destination.getPoliticalSystem().strengthPolice();
 
         int tries = 1;
         if (player.getPoliceRecord().compareTo(PoliceRecord.CRIMINAL) < 0) {

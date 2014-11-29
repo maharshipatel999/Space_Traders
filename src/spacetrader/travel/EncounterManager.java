@@ -6,8 +6,7 @@
 package spacetrader.travel;
 
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.ListIterator;
 import spacetrader.Player;
 import spacetrader.Tools;
 import spacetrader.planets.Planet;
@@ -25,12 +24,11 @@ import spacetrader.travel.Encounter.State;
  */
 public class EncounterManager {
 
-    private static final Random rand = new Random();
-
-    private final Queue<Encounter> encounters;
+    private final LinkedList<Encounter> encounters;
     private final int numTotalEncounters;
 
     private final Player player;
+    private final Planet source;
     private final Planet destination;
 
     private boolean raided = false;
@@ -46,6 +44,7 @@ public class EncounterManager {
      */
     public EncounterManager(Planet source, Planet destination, PlayerShip ship, Player player) {
         this.player = player;
+        this.source = source;
         this.destination = destination;
 
         int probabilityDenominator = 40; //the larger this number, the more unlikely encounters are
@@ -86,26 +85,35 @@ public class EncounterManager {
                 }
             } else {
                 if (index == 0) {
-                    encounter = createPoliceEncounter(TOTAL_CLICKS - i);
-                } else if (index == 1) {
                     encounter = createPirateEncounter(TOTAL_CLICKS - i);
+                } else if (index == 1) {
+                    encounter = createPoliceEncounter(TOTAL_CLICKS - i);
                 } else if (index == 2) {
                     encounter = createTraderEncounter(TOTAL_CLICKS - i);
                 }
             }
 
-            if (encounter != null) {
-                boolean ignoredAndInvisible
-                        = encounter.getState() == State.IGNORE && encounter.opponentIsCloaked();
-                if (!ignoredAndInvisible) {
-                    encounters.add(encounter);
-                }
-                if (encounter.getState() == State.INSPECTION) {
-                    inspected = true;
-                }
+            if (checkIfAddEncounter(encounter)) {
+                encounters.add(encounter);
             }
         }
         numTotalEncounters = encounters.size();
+    }
+    
+    private boolean checkIfAddEncounter(Encounter encounter) {
+        boolean addEncounter = false;
+        
+        if (encounter != null) {
+            final boolean ignoredAndInvisible
+                    = encounter.getState() == State.IGNORE && encounter.opponentIsCloaked();
+            if (!ignoredAndInvisible) {
+                addEncounter = true;
+            }
+            if (encounter.getState() == State.INSPECTION) {
+                this.inspected = true;
+            }
+        }
+        return addEncounter;
     }
 
     /**
@@ -116,8 +124,7 @@ public class EncounterManager {
      * @return a new Police Encounter or null
      */
     private Encounter createPoliceEncounter(int clicks) {
-        int police = destination.getPoliticalSystem().strengthPolice();
-        PoliceEncounter encounter = new PoliceEncounter(player, clicks, police);
+        PoliceEncounter encounter = new PoliceEncounter(player, clicks, source, destination);
 
         if (encounter.getState() == State.INSPECTION && inspected) {
             return null;
@@ -132,8 +139,7 @@ public class EncounterManager {
      * @return Specific Pirate Encounter
      */
     private Encounter createPirateEncounter(int clicks) {
-        int pirates = destination.getPoliticalSystem().strengthPirates();
-        return new PirateEncounter(player, clicks, pirates);
+        return new PirateEncounter(player, clicks, source, destination);
     }
 
     /**
@@ -142,15 +148,14 @@ public class EncounterManager {
      * @return Specific Trader Encounter
      */
     private Encounter createTraderEncounter(int clicks) {
-        int traders = destination.getPoliticalSystem().strengthTraders();
-        return new TraderEncounter(player, clicks, traders, destination.getMarket());
+        return new TraderEncounter(player, clicks, source, destination);
     }
 
     /**
      * Gets the next encounter and pops it off the ArrayList holding all
      * encounters.
      *
-     * @return the next encounter for the player
+     * @return the next encounter for the player, null if encounter should not be shown
      */
     public Encounter getNextEncounter() {
         return encounters.poll();
@@ -172,5 +177,24 @@ public class EncounterManager {
      */
     public int getEncountersRemaining() {
         return encounters.size();
+    }
+    
+    public void setRaided() {
+        if (!raided) {
+            raided = true;
+
+            //Replace all the PirateEncounters with PoliceEncounters.
+            ListIterator<Encounter> iterator = encounters.listIterator();
+            while(iterator.hasNext()) {
+                Encounter encounter = iterator.next();
+                if (encounter instanceof PirateEncounter) {
+                    iterator.remove();
+                    Encounter police = createPoliceEncounter(encounter.clicksFromDest);
+                    if (checkIfAddEncounter(police)) {
+                        iterator.add(police);
+                    }
+                }
+            }
+        }
     }
 }

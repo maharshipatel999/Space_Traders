@@ -67,5 +67,29 @@ public final class Tools {
         }
         return chosenIndex;
     }
+    
+    
+    /**
+     * Applies provided bounds to a specified value. If value is less than minValue,
+     * this will return minValue. If value is greater than maxValue, this will
+     * return maxValue. Otherwise it will return the original value.
+     * 
+     * @param <T> a value that is comparable
+     * @param value the value which needs to be bounded.
+     * @param minValue the minimum value the value can be
+     * @param maxValue the maximum value the value can be
+     * @return a value guaranteed to be between minValue and maxValue, inclusively
+     */
+    public static <T extends Comparable> T applyBounds(T value, T minValue, T maxValue) {
+        if (value.compareTo(minValue) < 0) {
+            return minValue;
+        } else if (value.compareTo(maxValue) > 0) {
+            return maxValue;
+        } else {
+            return value;
+        }
+    }
+    
+    
 
 }

@@ -11,6 +11,7 @@ import spacetrader.Reputation;
 import static spacetrader.Tools.rand;
 import spacetrader.commerce.Market;
 import spacetrader.commerce.TradeGood;
+import spacetrader.planets.Planet;
 import spacetrader.ships.ShipType;
 import spacetrader.ships.SpaceShip;
 import spacetrader.system.MainController;
@@ -37,14 +38,14 @@ public class TraderEncounter extends Encounter {
      * Creates a new TraderEncounter
      *
      * @param player the player of the game
-     * @param clicks
-     * @param traderStrength
-     * @param destinationMarket
+     * @param clicks the distance from the destination the encounter occurred
+     * @param source the origin planet
+     * @param destination the destination planet
      */
-    public TraderEncounter(Player player, int clicks, int traderStrength, Market destinationMarket) {
-        super(player, "/spacetrader/travel/TraderEncounterScreen.fxml", clicks, "Trader");
-        this.traderStrength = traderStrength;
-        this.destinationMarket = destinationMarket;
+    public TraderEncounter(Player player, int clicks, Planet source, Planet destination) {
+        super(player, "/spacetrader/travel/TraderEncounterScreen.fxml", clicks, "Trader", source, destination);
+        this.traderStrength = destination.getPoliticalSystem().strengthTraders();
+        this.destinationMarket = destination.getMarket();
         this.plunderScore = PLUNDER_TRADER_SCORE;
 
         int tries = 1;

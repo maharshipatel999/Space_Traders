@@ -7,9 +7,11 @@ package spacetrader.travel;
 
 import spacetrader.Player;
 import spacetrader.Reputation;
+import spacetrader.Tools;
 import static spacetrader.Tools.rand;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.TradeGood;
+import spacetrader.planets.Planet;
 import spacetrader.ships.ShipType;
 import spacetrader.system.MainController;
 
@@ -29,18 +31,22 @@ public class PirateEncounter extends Encounter {
     public static final int KILL_PIRATE_SCORE = 1;
     public static final int PLUNDER_PIRATE_SCORE = -1;
     
+    private static final int MIN_BLACKMAIL = 500;
+    private static final int MAX_BLACKMAIL = 25000;
+    
     private final int pirateStrength;
 
     /**
      * Creates a new pirate encounter.
      *
      * @param player the player of the game
-     * @param clicks
-     * @param pirateStrength
+     * @param clicks the distance from the destination the encounter occurred
+     * @param source the origin planet
+     * @param destination the destination planet
      */
-    public PirateEncounter(Player player, int clicks, int pirateStrength) {
-        super(player, "/spacetrader/travel/PirateEncounterScreen.fxml", clicks, "Pirate");
-        this.pirateStrength = pirateStrength;
+    public PirateEncounter(Player player, int clicks, Planet source, Planet destination) {
+        super(player, "/spacetrader/travel/PirateEncounterScreen.fxml", clicks, "Pirate", source, destination);
+        this.pirateStrength = destination.getPoliticalSystem().strengthPirates();
         this.plunderScore = PLUNDER_PIRATE_SCORE;
 
         //pirates are strong if the player is worth more
@@ -92,8 +98,9 @@ public class PirateEncounter extends Encounter {
     protected void handleSurrender(MainController mainControl) {
         Player player = getPlayer();
         int totalCargo = player.getCargo().getCount();
+        //Determine how much cargo the player has
         if (totalCargo <= 0) {
-            int blackmail = Math.min(25000, Math.max( 500, player.getCurrentWorth() / 20 ));
+            int blackmail = Tools.applyBounds(player.getCurrentWorth() / 20, MIN_BLACKMAIL, MAX_BLACKMAIL);
             mainControl.displayInfoMessage(null, "Pirates found no cargo!", PIRATE_BLACKMAIL_MSG);
             player.removeCreditsForced(blackmail);
         } else {
@@ -112,6 +119,7 @@ public class PirateEncounter extends Encounter {
                 }
             }
         }
+        mainControl.setPlayerWasRaided();
     }
 
     @Override

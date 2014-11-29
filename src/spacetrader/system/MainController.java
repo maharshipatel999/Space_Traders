@@ -27,6 +27,7 @@ import static spacetrader.Universe.HEIGHT;
 import static spacetrader.Universe.WIDTH;
 import spacetrader.commerce.PriceIncreaseEvent;
 import spacetrader.commerce.TradeGood;
+import spacetrader.commerce.Wallet;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
@@ -202,22 +203,18 @@ public class MainController {
                     break;
                 case "debt":
                     msgTitle = "Too Much Debt";
-                    message = "Your ship has been chained to the station's dock."
-                            + " Your debt has increased to a point where you are"
-                            + " no longer a trusted trader. You may not leave "
-                            + "until you can reduce it to an acceptable level. "
-                            + "You have been warned and should have listened...";
+                    message = Wallet.MAX_DEBT_MSG;
                     break;
                 default: //should never happen
                     msgTitle = "Unknown Fee Error";
                     message = "You have a mysterious fee which can not be paid. Sorry.";
                     break;
             }
-
+            //Go back to the Planet Home Screen
             displayInfoMessage(null, msgTitle, message);
             goToHomeScreen(player, player.getLocation());
         }
-        if (game.getPlayer().getDebt() > 75000) {
+        if (game.getPlayer().getDebt() > Wallet.DEBT_WARNING) {
             displayWarningMessage(null, "Debt Warning!", "You get this warning because "
                     + "your debt has exceeded 75000 credits. If you don't pay "
                     + "back quickly, you may find yourself stuck in a system with"
@@ -349,12 +346,23 @@ public class MainController {
 	}
 	
         //Pay Interest on all the days imprisoned.
-	for (int i = 0; i < daysImprisoned; ++i) {
-            player.payInterest();
+        try {
+            for (int i = 0; i < daysImprisoned; ++i) {
+                player.payInterest();
+            }
+        } catch (InsufficientFundsException e) {
+            displayInfoMessage(null, "Too Much Debt", Wallet.MAX_DEBT_MSG);
         }
 
         //go to the new planet
         changePlayerLocation(warpScreenControl.getDestination());
+    }
+    
+    /**
+     * An encounter calls this when pirates raided the player's ship.
+     */
+    public void setPlayerWasRaided() {
+        warpScreenControl.setRaided();
     }
 
     /**
@@ -378,16 +386,6 @@ public class MainController {
                     .log(Level.SEVERE, null, e);
         }
         return null;
-    }
-
-    /**
-     * Gives the mainController access to this MainController. Sets the Stage's
-     * scene to this Controller's scene. Shows the scene.
-     *
-     * @param control a SceneController
-     */
-    public void setUpControllerAndStage(SceneController control) {
-
     }
 
     /**
