@@ -142,10 +142,10 @@ public class ShipYardScreenController
      * Updates the hull strength progress bar.
      */
     private void updateHullBar() {
-        double currStrength = player.getShip().getHullStrength();
-        double maxStrength = player.getShip().getMaxHullStrength();
-        hullProgress.setProgress(currStrength / maxStrength);
-        hullAmountLabel.setText((100.0 * currStrength / maxStrength) + "%");
+        int currStrength = player.getShip().getHullStrength();
+        int maxStrength = player.getShip().getMaxHullStrength();
+        hullProgress.setProgress((double) currStrength / maxStrength);
+        hullAmountLabel.setText((100 * currStrength / maxStrength) + "%");
     }
 
     /**

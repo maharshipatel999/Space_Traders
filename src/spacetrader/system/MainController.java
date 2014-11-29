@@ -148,10 +148,9 @@ public class MainController {
         }
 
         //The player autofixes their startingShip depending on their engineer skill
-        int engineerRepairs = rand.nextInt(Math.max(1,
-                game.getPlayer().getEffectiveSkill(Skill.ENGINEER)));
-        int currentHull = game.getPlayer().getShip()
-                .getHullStrength();
+        int engineerRepairs = rand.nextInt(
+                Math.max(1, game.getPlayer().getEffectiveSkill(Skill.ENGINEER)));
+        int currentHull = game.getPlayer().getShip().getHullStrength();
         game.getPlayer().getShip().setHullStrength(currentHull
                 + engineerRepairs);
 

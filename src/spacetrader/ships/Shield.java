@@ -63,7 +63,7 @@ public class Shield extends Equipment {
      * @return the amount the new health is over the max health
      */
     public int setHealth(int health) {
-        if (this.health > type.power()) {
+        if (health > type.power()) {
             this.health = type.power();
         } else {
             this.health = health;

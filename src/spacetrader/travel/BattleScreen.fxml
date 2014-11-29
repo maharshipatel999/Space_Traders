@@ -9,22 +9,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="spacetrader.travel.BattleController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.BattleController">
    <children>
-      <HBox alignment="CENTER" prefHeight="55.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="0.0">
+      <HBox fx:id="buttonBar" alignment="CENTER" prefHeight="55.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#attackPressed" prefWidth="100.0" text="Attack">
+            <Button fx:id="attackButton" mnemonicParsing="false" onAction="#attackPressed" prefWidth="100.0" text="Attack">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#surrenderPressed" prefWidth="100.0" text="Surrender">
+            <Button fx:id="surrenderButton" mnemonicParsing="false" onAction="#surrenderPressed" prefWidth="100.0" text="Surrender">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#fleePressed" prefWidth="100.0" text="Flee">
+            <Button fx:id="fleeButton" mnemonicParsing="false" onAction="#fleePressed" prefWidth="100.0" text="Flee">
                <font>
                   <Font size="17.0" />
                </font>
@@ -36,24 +35,43 @@
             <Font size="32.0" />
          </font>
       </Text>
-      <HBox alignment="CENTER" layoutX="-14.0" layoutY="84.0" prefHeight="107.0" prefWidth="601.0" spacing="200.0">
+      <VBox layoutY="84.0" prefHeight="261.0" prefWidth="600.0" spacing="5.0">
          <children>
-            <ImageView fx:id="playerShipSprite" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-               <image>
-                  <Image url="@../../resources/images/ship_sprites/gnat.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="opponentShipSprite" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
-               <image>
-                  <Image url="@../../resources/images/ship_sprites/hornet.png" />
-               </image>
-            </ImageView>
+            <HBox alignment="CENTER" layoutX="-14.0" layoutY="84.0" prefHeight="107.0" prefWidth="601.0" spacing="200.0">
+               <children>
+                  <ImageView fx:id="playerShipSprite" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                     <image>
+                        <Image url="@../../resources/images/ship_sprites/gnat.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="opponentShipSprite" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@../../resources/images/ship_sprites/hornet.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ProgressBar fx:id="playerHullBar" prefHeight="30.0" prefWidth="140.0" progress="0.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ProgressBar fx:id="opponentHullBar" prefHeight="30.0" prefWidth="140.0" progress="0.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label fx:id="opponentHullLabel" text="10%" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label fx:id="playerHullLabel" text="50%" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+            <TextFlow fx:id="battleText" prefHeight="90.0" prefWidth="600.0" textAlignment="CENTER">
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </TextFlow>
          </children>
-      </HBox>
-      <TextFlow fx:id="battleText" layoutX="-1.0" layoutY="227.0" prefHeight="82.0" prefWidth="601.0" textAlignment="CENTER">
-         <padding>
-            <Insets left="20.0" right="20.0" />
-         </padding>
-      </TextFlow>
+      </VBox>
    </children>
 </AnchorPane>

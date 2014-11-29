@@ -136,9 +136,9 @@ public class StartScreenController extends SceneController implements Initializa
 
         shipType.setText(ship.getType().toString());
         shipFuel.setText(ship.getFuelAmount() + "/" + ship.getMaxFuel());
-        fuelBar.setProgress((ship.getFuelAmount() / ship.getMaxFuel() * 100));
+        fuelBar.setProgress((100 * ship.getFuelAmount() / ship.getMaxFuel()));
         shipHull.setText((100 * ship.getHullStrength() / ship.getMaxHullStrength()) + "%");
-        hullBar.setProgress((ship.getHullStrength() / ship.getMaxHullStrength() * 100));
+        hullBar.setProgress((double) ship.getHullStrength() / ship.getMaxHullStrength());
         shipWeaponSlots.setText(ship.getWeapons().getNumFilledSlots() + "/" + ship.getType().weaponSlots());
         shipShieldSlots.setText(ship.getShields().getNumFilledSlots() + "/" + ship.getType().shieldSlots());
         shipGadgetSlots.setText(ship.getGadgets().getNumFilledSlots() + "/" + ship.getType().gadgetSlots());

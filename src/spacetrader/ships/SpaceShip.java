@@ -123,7 +123,7 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
      * @return the amount the new hull strength is over the max hull strength
      */
     public int setHullStrength(int newHull) {
-        if (hullStrength > maxHullStrength) {
+        if (newHull > maxHullStrength) {
             hullStrength = maxHullStrength;
         } else {
             hullStrength = newHull;
@@ -171,6 +171,25 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
             totalHealth += shield.getHealth();
         }
         return totalHealth;
+    }
+    
+    public void takeDamage(int damage) {
+        for (Shield shield : shields) {
+            if (damage > 0 && shield.getHealth() > 0) {
+                int originalHealth = shield.getHealth();
+                int newHealth = originalHealth - damage;
+                if (newHealth <= 0) {
+                    shield.setHealth(0);
+                    damage -= originalHealth;
+                } else {
+                    shield.setHealth(newHealth);
+                    damage = 0;
+                }
+            }
+        }
+        if (damage > 0) {
+            setHullStrength(getHullStrength() - damage);
+        }
     }
 
     /**
