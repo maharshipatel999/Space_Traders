@@ -8,6 +8,7 @@ package spacetrader.planets;
 import java.io.Serializable;
 import java.util.Random;
 import javafx.geometry.Point2D;
+import spacetrader.Mercenary;
 import spacetrader.PoliceRecord;
 import spacetrader.commerce.Market;
 import spacetrader.commerce.PriceIncreaseEvent;
@@ -42,6 +43,7 @@ public class Planet implements Serializable {
     private int priceIncDuration;
     private Market market;
     private Wormhole wormhole;
+    private Mercenary merc;
 
     private boolean visited;
 
@@ -220,6 +222,20 @@ public class Planet implements Serializable {
      */
     public void setWormhole(Wormhole wormhole) {
         this.wormhole = wormhole;
+    }
+    /*
+    *get mercenary for planet
+    *@return merc - the mercenary at this planet
+    */
+    public Mercenary getMercenary() {
+        return merc;
+    }
+    /*
+    *set Mercenary for a planet
+    *@param merc - the mercenary of the planet
+    */
+    public void setMercenary(Mercenary merc) {
+        this.merc = merc;
     }
 
     /**

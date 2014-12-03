@@ -6,12 +6,15 @@
 package spacetrader.ships;
 
 import java.util.ArrayList;
+import javafx.geometry.Point2D;
 import spacetrader.Mercenary;
 import spacetrader.SkillList.Skill;
 import spacetrader.Tools;
 import static spacetrader.Tools.rand;
+import spacetrader.Universe;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.TradeGood;
+import spacetrader.planets.Planet;
 
 /**
  * Represents an opponent ship that the player would fight in an encounter. Has
@@ -291,13 +294,13 @@ public class OpponentShip extends SpaceShip {
         int trader = 1 + rand.nextInt(MAX_SKILL);
         int engineer = 1 + rand.nextInt(MAX_SKILL);
         int investor = 1 + rand.nextInt(MAX_SKILL);
-
-        Mercenary commander = new Mercenary("Seth Davis", pilot, fighter, trader, engineer, investor);
+        Planet planet = new Planet("sethville", new Point2D(1,1));
+        Mercenary commander = new Mercenary("Seth Davis", pilot, fighter, trader, engineer, investor, planet);
 
         int numCrew = 1 + rand.nextInt(getType().crew());
         for (int i = 1; i < numCrew; i++) {
             //crew.add(getRandomMercenary()); This is the correct line but it hasn't be implemented yet.
-            crew.add(new Mercenary("John", 1, 1, 1, 1, 1)); //TEMPORARY
+            crew.add(new Mercenary("John", 1, 1, 1, 1, 1, planet)); //TEMPORARY
         }
 
         return crew;
