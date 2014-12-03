@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="471.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.HighScoreScreenController">
+   <children>
+      <ImageView fitHeight="553.0" fitWidth="746.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/images/space%20image.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="250.0" layoutY="69.0" prefHeight="475.0" prefWidth="746.0" spacing="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="slot1" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="slot2" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="slot3" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="Copperplate Gothic Light" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Label layoutX="267.0" layoutY="14.0" text="Highscores!" textFill="WHITE">
+         <font>
+            <Font name="Segoe Script" size="36.0" />
+         </font>
+      </Label>
+      <Button fx:id="backButton" layoutX="35.0" layoutY="488.0" mnemonicParsing="false" onAction="#goBack" text="Back" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
