@@ -53,6 +53,7 @@ public class MainController {
     private WarpScreenController warpScreenControl;
 
     public enum Debug {
+
         OFF, TRADER_ENCOUNTER, POLICE_ENCOUNTER, PIRATE_ENCOUNTER, METEORS
     }
 
@@ -69,7 +70,7 @@ public class MainController {
         this.game = game;
         this.stage = stage;
         popUpControl = new InformationPresenter(stage);
-        
+
         //stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
         //    if (game.getUniverse() != null) {
         //        if (event.getCode() == KeyCode.ESCAPE) {
@@ -90,6 +91,7 @@ public class MainController {
 
     /**
      * Starts the game using user-defined values
+     *
      * @param cheats the holder of the user-defined values
      */
     private void setUpGameWithCheats(AdminCheats cheats) {
@@ -125,29 +127,29 @@ public class MainController {
      * Takes care of everything that happens when a player arrives at a planet.
      * Moves a player to a selected planet. Adjust Price Increase Events on all
      * planets. All the planets who's tradeGood stock has been decremented
-     * should have their stock increased. The player fixes his startingShip's hull
-     * strength. Random events can occur at this point.
+     * should have their stock increased. The player fixes his startingShip's
+     * hull strength. Random events can occur at this point.
      *
      * @param source the planet the player left
      * @param destination the planet the player is arriving at
      */
     public void arriveAtPlanet(Planet source, Planet destination) {
         game.increaseDays();
-        
+
         game.getPlayer().getShip().autoRepairHull(
                 game.getPlayer().getEffectiveSkill(Skill.ENGINEER));//auto repair ship
-        
+
         game.getUniverse().updatePriceIncreaseEvents(); //update planet statuses
 
         changePlayerLocation(destination); //update player's location
-        
+
         //display price increase event of current planet, if there is one
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
             displayInfoMessage(null, "Notice!", "%s is currently %s",
                     destination.getName(),
                     destination.getPriceIncEvent().desc().toLowerCase());
         }
-        
+
         //make sure eventGenerator is instantiated
         if (eventGenerator == null) {
             eventGenerator = new RandomEventGenerator(game.getPlayer(),
@@ -161,18 +163,19 @@ public class MainController {
             displayInfoMessage(null, "Special Event!", event.getMessage());
         }
     }
-    
+
     /**
-     * This method is called if the player is arriving at a planet in an unusual way.
-     * All the necessities of arriving at the planet will occur.
-     * Specifically, price increase events will be updated and possibly displayed, 
-     * and the player's location will be swapped.
+     * This method is called if the player is arriving at a planet in an unusual
+     * way. All the necessities of arriving at the planet will occur.
+     * Specifically, price increase events will be updated and possibly
+     * displayed, and the player's location will be swapped.
+     *
      * @param destination the planet the player is arriving at
      */
     public void specialArrivalAtPlanet(Planet destination) {
         game.getUniverse().updatePriceIncreaseEvents(); //update planet statuses
         changePlayerLocation(destination); //update player's location
-        
+
         //display price increase event of current planet, if there is one
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
             displayInfoMessage(null, "Notice!", "%s is currently %s",
@@ -185,8 +188,8 @@ public class MainController {
      * The destination planet's prices should be recalculated. Determine if the
      * player can pay their mercenary, interest, and insurance costs. If not,
      * kick them back to the home screen. Adjust the player's police record and
-     * reputation. Deduct fuel from the player's startingShip. Finally, go to the warp
-     * screen.
+     * reputation. Deduct fuel from the player's startingShip. Finally, go to
+     * the warp screen.
      *
      * @param destination which planet the player is traveling to
      * @param source which planet the player is leaving
@@ -225,18 +228,18 @@ public class MainController {
         //TODO
         //player.updateNoClaim();
         //if (player.getInsuranceCost() > 0) {
-            //increase number of no claims
+        //increase number of no claims
         //}
-        
+
         player.getShip().fullyRepairShields();
-        
+
         if (game.getPlayer().getDebt() > Wallet.DEBT_WARNING) {
             displayWarningMessage(null, "Debt Warning!", "You get this warning because "
                     + "your debt has exceeded 75000 credits. If you don't pay "
                     + "back quickly, you may find yourself stuck in a system with"
                     + " no way to leave. You have been warned.");
         }
-        
+
         //Recalculate prices on destination planet
         destination.getMarket().setAllPrices(game.getPlayer());
 
@@ -274,49 +277,51 @@ public class MainController {
         destination.getMarket().setAllPrices(game.getPlayer());
         goToHomeScreen(game.getPlayer(), destination);
     }
-    
+
     public void playerShipDestroyed() {
         boolean playerKilled = true;
         int daysLived = game.getDays();
         int playerWorth = game.getPlayer().getCurrentWorth();
         int difficulty = 2; //normal
-        
+
         int score = getFinalScore(playerKilled, daysLived, playerWorth, difficulty);
-        
+
         displayInfoMessage("Game Over", "Your ship was destroyed!", "You have died a most bloody death.\n\n"
                 + "You final score is %d! You played for %d turns. The overall "
                 + "worth of your trader was ₪%d. Congrats!", score, daysLived, playerWorth);
         goToWelcomeScreen();
     }
-    
+
     /**
      * Increases the amount of days.
      */
     public void increaseDays() {
         game.increaseDays();
     }
-    
+
     /**
      * An encounter calls this when pirates raided the player's ship.
      */
     public void setPlayerWasRaided() {
         warpScreenControl.setRaided();
     }
-    
-    public int getFinalScore(boolean playerKilled, int days, int worth, int difficulty ) {
-        worth = (worth < 1000000 ? worth : 1000000 + ((worth - 1000000) / 10) );
 
-	if (playerKilled) {
+    public int getFinalScore(boolean playerKilled, int days, int worth,
+            int difficulty) {
+        worth = (worth < 1000000 ? worth : 1000000 + ((worth - 1000000) / 10));
+
+        if (playerKilled) {
             return (difficulty + 1) * (int) ((worth * 90) / 50000);
         } else if (!playerKilled) {
             return (difficulty + 1) * (int) ((worth * 95) / 50000);
         } else {
             int d = ((difficulty + 1) * 100) - days;
-            if (d < 0)
-                    d = 0;
-            return (difficulty + 1) * (int)((worth + (d * 1000)) / 500);
-	}
-} 
+            if (d < 0) {
+                d = 0;
+            }
+            return (difficulty + 1) * (int) ((worth + (d * 1000)) / 500);
+        }
+    }
 
     /**
      * Creates a Scene from an fxml file, and then returns the Scene's
@@ -326,7 +331,8 @@ public class MainController {
      * @param myStage the value of myStage
      * @return the corresponding Controller of the fxml file
      */
-    private SceneController extractControllerFromFXML(String fxmlScene, Stage myStage) {
+    private SceneController extractControllerFromFXML(String fxmlScene,
+            Stage myStage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlScene));
         try {
             Scene theScene = new Scene(loader.load());
@@ -466,7 +472,7 @@ public class MainController {
             goToWarpScreen(game.getUniverse().getPlanet("Pallet"),
                     game.getUniverse().getPlanets().get(10));
         }
-        
+
         stage.setScene(this.warpScreenControl.getScene());
         this.warpScreenControl.continueTraveling();
     }
@@ -482,7 +488,7 @@ public class MainController {
         Stage encounterStage = new Stage();
         encounterStage.initOwner(stage);
         encounterStage.initModality(Modality.WINDOW_MODAL);
-        
+
         control = (EncounterScreenController) extractControllerFromFXML(encounter.getFXMLScene(), encounterStage);
         control.setEncounter(encounter);
         //stage.setTitle("Space Encounter!");
@@ -544,7 +550,7 @@ public class MainController {
         stage.setTitle("Welcome to Bank of " + planet.getName() + "!");
         stage.setScene(control.getScene());
     }
-    
+
     /**
      * Transitions the game screen to the Finance Screen.
      *
@@ -565,37 +571,44 @@ public class MainController {
      * @param header title of state
      * @param message alert message
      * @param args Arguments referenced by the format specifiers in the message
-     * string. If there are more arguments than format specifiers, the extra 
-     * arguments are ignored. The number of arguments is variable and may be zero.
+     * string. If there are more arguments than format specifiers, the extra
+     * arguments are ignored. The number of arguments is variable and may be
+     * zero.
      */
-    public void displayInfoMessage(String msgTitle, String header, String message, Object ... args) {
+    public void displayInfoMessage(String msgTitle, String header,
+            String message, Object... args) {
         popUpControl.displayInfoMessage(msgTitle, header, message, args);
     }
-    
-     /**
+
+    /**
      * Display alert message based on passed in string.
      *
      * @param msgTitle the value of msgTitle
      * @param header title of state
      * @param message alert message
      * @param args Arguments referenced by the format specifiers in the message
-     * string. If there are more arguments than format specifiers, the extra 
-     * arguments are ignored. The number of arguments is variable and may be zero.
+     * string. If there are more arguments than format specifiers, the extra
+     * arguments are ignored. The number of arguments is variable and may be
+     * zero.
      */
-    public void displayWarningMessage(String msgTitle, String header, String message, Object ... args) {
+    public void displayWarningMessage(String msgTitle, String header,
+            String message, Object... args) {
         popUpControl.displayWarningMessage(msgTitle, header, message, args);
     }
-     /**
+
+    /**
      * Display alert message based on passed in string.
      *
      * @param msgTitle the value of msgTitle
      * @param header title of state
      * @param message alert message
      * @param args Arguments referenced by the format specifiers in the message
-     * string. If there are more arguments than format specifiers, the extra 
-     * arguments are ignored. The number of arguments is variable and may be zero.
+     * string. If there are more arguments than format specifiers, the extra
+     * arguments are ignored. The number of arguments is variable and may be
+     * zero.
      */
-    public void displayErrorMessage(String msgTitle, String header, String message, Object ... args) {
+    public void displayErrorMessage(String msgTitle, String header,
+            String message, Object... args) {
         popUpControl.displayErrorMessage(msgTitle, header, message, args);
     }
 
@@ -606,17 +619,19 @@ public class MainController {
      * @param mastHead the header
      * @param message message to display
      * @param args Arguments referenced by the format specifiers in the message
-     * string. If there are more arguments than format specifiers, the extra 
-     * arguments are ignored. The number of arguments is variable and may be zero.
+     * string. If there are more arguments than format specifiers, the extra
+     * arguments are ignored. The number of arguments is variable and may be
+     * zero.
      * @return true if the player confirmed yes, otherwise false
      */
-    public boolean displayYesNoConfirmation(String optionsTitle, String mastHead, String message, Object ... args) {
+    public boolean displayYesNoConfirmation(String optionsTitle, String mastHead,
+            String message, Object... args) {
         message = String.format(message, args);
         Optional<ButtonType> result = popUpControl.displayOptionsDialog(
                 optionsTitle, mastHead, message, ButtonType.NO, ButtonType.YES);
         return result.isPresent() && result.get() == ButtonType.YES;
     }
-    
+
     /**
      * Display custom confirmation.
      *
@@ -626,7 +641,8 @@ public class MainController {
      * @param buttonNames the names of the buttons the player can choose from
      * @return true if the player confirmed yes, otherwise false
      */
-    public String displayCustomConfirmation(String optionsTitle, String mastHead, String message, String ... buttonNames) {
+    public String displayCustomConfirmation(String optionsTitle, String mastHead,
+            String message, String... buttonNames) {
         Optional<ButtonType> result = popUpControl.displayOptionsDialog(
                 optionsTitle, mastHead, message, buttonNames);
         if (!result.isPresent()) {
@@ -638,7 +654,7 @@ public class MainController {
             }
         }
         return "";
-        
+
     }
 
     /**
@@ -660,11 +676,11 @@ public class MainController {
      */
     public void displaySaveProgress(String progressTitle,
             String updateMessage, String finishMessage) {
-        
+
         popUpControl.displaySaveProgress(progressTitle, updateMessage, finishMessage,
-            (WorkerStateEvent e) -> {
-                goToHomeScreen(game.getPlayer(),
-                game.getPlayer().getLocation());
-            });
+                (WorkerStateEvent e) -> {
+                    goToHomeScreen(game.getPlayer(),
+                            game.getPlayer().getLocation());
+                });
     }
 }
