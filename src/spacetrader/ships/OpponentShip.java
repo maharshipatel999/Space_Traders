@@ -7,6 +7,7 @@ package spacetrader.ships;
 
 import java.util.ArrayList;
 import spacetrader.Mercenary;
+import spacetrader.SkillList.Skill;
 import spacetrader.Tools;
 import static spacetrader.Tools.rand;
 import spacetrader.commerce.Cargo;
@@ -66,7 +67,8 @@ public class OpponentShip extends SpaceShip {
      * @param itemDistribution the relative likelihood of each equipment
      * @return a list of indices of the equipment that were chosen
      */
-    private ArrayList<Integer> getRandomEquipment(int slotsToFill, int tries, int[] itemDistribution) {
+    private ArrayList<Integer> getRandomEquipment(int slotsToFill, int tries,
+            int[] itemDistribution) {
         //Pick the indices of each equipment the ship will have
         ArrayList<Integer> equipmentIndices = new ArrayList<>();
         for (int i = 0; i < slotsToFill; i++) {
@@ -301,4 +303,43 @@ public class OpponentShip extends SpaceShip {
         return crew;
     }
 
+    /**
+     * Used in 
+     * @param traderSkill this value is ignored
+     * @return 
+     */
+    @Override
+    public int currentShipPrice(int traderSkill) {
+        final int PILOT_BONUS = 2; //the amount to multiply each skill score by
+        final int ENGINEER_BONUS = 1;
+        final int FIGHTER_BONUS = 3;
+        final int PRICE_REDUCTION = 60; //amount to divide price by
+
+        int currentPrice = getType().price();
+
+        //Add price of equipment
+        for (Weapon weapon : getWeapons()) {
+            currentPrice += weapon.getBasePrice();
+        }
+        for (Shield shield : getShields()) {
+            currentPrice += shield.getBasePrice();
+        }
+	// Gadgets aren't counted in the price, because they are already taken 
+        // into account in the skill adjustment of the price.
+
+        //calculate weighted value of crew skill points
+        int weightedSkills = PILOT_BONUS * getCrewSkill(Skill.PILOT)
+                + ENGINEER_BONUS * getCrewSkill(Skill.ENGINEER)
+                + FIGHTER_BONUS * getCrewSkill(Skill.FIGHTER);
+
+        currentPrice *= weightedSkills;
+        currentPrice /= PRICE_REDUCTION;
+
+        return currentPrice;
+    }
+
+    @Override
+    public int getEffectiveSkill(Skill type) {
+        return this.getCrewSkill(type);
+    }
 }

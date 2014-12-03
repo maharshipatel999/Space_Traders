@@ -7,14 +7,11 @@ package spacetrader.travel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.text.Text;
 import spacetrader.PoliceRecord;
 import spacetrader.exceptions.InsufficientFundsException;
-import spacetrader.planets.Planet;
 
 /**
  * FXML Controller class
@@ -25,6 +22,8 @@ public class PoliceEncounterController extends EncounterScreenController impleme
 
     @FXML
     private Text infoText;
+    
+    private boolean playerAlreadyAttacked = false;
 
     /**
      * Initializes the controller class.
@@ -34,121 +33,139 @@ public class PoliceEncounterController extends EncounterScreenController impleme
         // TODO
     }
 
+    @FXML @Override
+    protected void attackPressed() {
+        //if player is being inspected, ask them to confirm if they're carrying illegal goods.
+        if (!encounter.getPlayer().getShip().isCarryingIllegalGoods() || playerConfirmsToAvoidInspection()) {
+            if (playerAlreadyAttacked || playerConfirmsToAttack()) {
+                playerAlreadyAttacked = true;
+
+                //This happens every time the player attacks the police.
+                ((PoliceEncounter) encounter).updateRecordFromAttacking();
+                super.attackPressed();
+            }
+        }
+        
+    }
+    
     @Override
-    protected void attackPressed(ActionEvent e) {
-        boolean attackConfirmed;
-        if (!encounter.getPlayer().getShip().isCarryingIllegalGoods()) {
-            attackConfirmed = getPlayerConfirmation();
-        } else {
-            attackConfirmed = mainControl.displayYesNoConfirmation(
-                    "Engaging In Criminal Activity!",
-                    "Are you sure you want to do this?",
-                    PoliceEncounter.ATTACK_CONFIM_MSG);
+    protected void fleePressed() {
+        if (!encounter.getPlayer().getShip().isCarryingIllegalGoods() || playerConfirmsToAvoidInspection()) {
+            super.fleePressed();
         }
-        if (!attackConfirmed) {
-            return;
+    }
+    
+    @Override
+    protected void surrenderPressed() {
+        if (encounter.getPlayer().getPoliceRecord().compareTo(PoliceRecord.PSYCHO) <= 0) {
+            displayNoSurrenderMessage();
+        } else if (playerConfirmsToSurrender()) {
+            playerGetsArrested();
         }
-
-        //the player's police record should be no greater than the crook score.
-        int updatedRecord = Math.min(encounter.getPlayer().getPoliceRecordScore(), PoliceRecord.CROOK.minScore());
-        encounter.getPlayer().setPoliceRecordScore(updatedRecord + PoliceEncounter.ATTACK_POLICE_SCORE);
-
-        super.attackPressed(e);
+        //mainControl.goBackToWarpScreen();
     }
 
     /**
      * Handles the event where the submit button is pressed.
-     *
-     * @param e the event which is being processed
      */
     @FXML
-    protected void submitPressed(ActionEvent e) {
+    protected void submitPressed() {
         boolean inspectionFailed = ((PoliceEncounter) encounter).inspectPlayer();
 
         if (inspectionFailed) {
-            String fineMsg = String.format("The police discovers illegal goods "
-                    + "in your cargo holds. These goods are impounded and you are "
-                    + "fined ₪%d", ((PoliceEncounter) encounter).determineFine());
-            mainControl.displayInfoMessage(null, "Inspection Failed!", fineMsg);
+            mainControl.displayInfoMessage(null, "Inspection Failed!",
+                    "The police discovers illegal goods in your cargo holds."
+                    + " These goods are impounded and you are fined ₪%d",
+                    ((PoliceEncounter) encounter).determineFine());
         } else {
-            mainControl.displayInfoMessage(null, "Inspection Passed!", "The Police find nothing illegal in your cargo holds and appologize for the inconvience.");
+            mainControl.displayInfoMessage(null, "Inspection Passed!", 
+                    "The Police find nothing illegal in your cargo holds and"
+                    + " appologize for the inconvience.");
         }
-        mainControl.goBackToWarpScreen();
+        finishEncounter();
     }
 
     /**
-     * Handles event where Player flees when Flee Button is pressed.
-     *
-     * @param e Event that is being processed
+     * Initiates Bribe sequence for player when they press the bribe button.
      */
-    @FXML
-    protected void fleePressed(ActionEvent e) {
-        if (!encounter.getPlayer().getShip().isCarryingIllegalGoods()) {
-            if (!getPlayerConfirmation()) {
-                return;
-            }
-        }
-
-        int updatedRecord;
-        if (encounter.getPlayer().getPoliceRecord().compareTo(PoliceRecord.DUBIOUS) >= 0) {
-            updatedRecord = PoliceRecord.DUBIOUS.minScore() - 1;
-        } else {
-            int currentRecord = encounter.getPlayer().getPoliceRecordScore();
-            updatedRecord = currentRecord + PoliceEncounter.FLEE_FROM_INSPECTION;
-        }
-        encounter.getPlayer().setPoliceRecordScore(updatedRecord);
-
-        //go the the attack screen.
-        infoText.setText("You try to flee!");
-        mainControl.goBackToWarpScreen();
-    }
-
-    /**
-     * Initiates Bribe Sequence for Player when ActionEvent Occurs
-     *
-     * @param event specific ActionEvent that occurred
-     */
-    @FXML
-    protected void bribePressed(ActionEvent event) {
-        if (!encounter.getPlayer().getShip().isCarryingIllegalGoods()) {
-            if (!getPlayerConfirmation()) {
-                return;
-            }
+    protected void bribePressed() {
+        if (!encounter.getPlayer().getShip().isCarryingIllegalGoods() && !playerConfirmsToAvoidInspection()) {
+            return;
         }
         if (encounter.getPlayer().getLocation().getPoliticalSystem().bribeLevel() <= 0) {
             mainControl.displayInfoMessage(null, "Bribery Failed!", "These officers cannot be bribed.");
         } else {
-            Planet destination = new Planet("Earth", new Point2D(5, 10)); //FIX THIS
-            int bribeAmount = ((PoliceEncounter) encounter).calculcateBribe(destination);
+            int bribeAmount = ((PoliceEncounter) encounter).calculcateBribe(encounter.getDestination());
             String masthead = String.format("These police officers are willing to forego inspection for the amount of ₪%d.", bribeAmount);
             String message = "Do you accept their offer?";
-            boolean response = mainControl.displayYesNoConfirmation("Bribery Offer", masthead, message);
-            if (response) {
+            boolean acceptsBribe = mainControl.displayYesNoConfirmation("Bribery Offer", masthead, message);
+            if (acceptsBribe) {
                 try {
                     encounter.getPlayer().removeCredits(bribeAmount);
+                    mainControl.displayInfoMessage(null, "Bribe Successful", 
+                            "The officers accept your bribe and send you off on your way.");
+                    finishEncounter();
                 } catch (InsufficientFundsException e) {
                     mainControl.displayInfoMessage(null, "Cannot Afford Bribe", "You don't have enough cash for a bribe.");
-                    return;
                 }
-            mainControl.displayInfoMessage(null, "Bribe Successful", "The officers accept your bribe and send you off on your way.");
-            } else {
-                return;
             }
         }
 
-        mainControl.goBackToWarpScreen();
+        
     }
 
     /**
-     * Asks the player to confirm if they want to be stupid with the police.
+     * Asks the player to confirm if they want to resist submitting to a police
+     * inspection even though they are not carrying illegal goods.
      *
      * @return true if they confirmed, false otherwise
      */
-    private boolean getPlayerConfirmation() {
-        boolean response = mainControl.displayYesNoConfirmation("Not Carrying Illegal Goods",
-                "Are you sure you want to do this?",
-                "You are not carrying illegal goods so you have nothing to fear!");
-
-        return (response);
+    private boolean playerConfirmsToAvoidInspection() {
+        //Only ask them to confirm if they're being inspected.
+        if (encounter.getState() instanceof InspectionState) {
+            return mainControl.displayYesNoConfirmation("Not Carrying Illegal Goods",
+                    "Are you sure you want to do this?",
+                    "You are not carrying illegal goods so you have nothing to fear!");
+        } else {
+            return true;
+        }
+    }
+    
+    /**
+     * Confirms if the player wants to attack the police, a crime which will
+     * turn them into a criminal.
+     * 
+     * @return true if the player confirmed, false otherwise
+     */
+    private boolean playerConfirmsToAttack() {
+        return mainControl.displayYesNoConfirmation(
+                "Engaging In Criminal Activity!",
+                "Are you sure you wish to attack the police?",
+                "This will turn you into a criminal!");
+    }
+    
+    /**
+     * Asks the player to confirm if they want to surrender.
+     * 
+     * @return true if they confirmed, false otherwise
+     */
+    private boolean playerConfirmsToSurrender() {
+        return mainControl.displayYesNoConfirmation("Surrender?",
+                "Do you really want to surrender?",
+                "Your fine and time in prison will depend on how big a criminal"
+                + " you are. Your fine will be taken from your cash. If you"
+                + " don't have enough cash, the police will sell your ship to"
+                + " get it. If you have debts, the police will pay them from"
+                + " your credits (if you have enough) before you go to prison,"
+                + " because otherwise the interest would be staggering.");
+    }
+    
+    /**
+     * Informs the player that they cannot surrender.
+     */
+    private void displayNoSurrenderMessage() {
+        mainControl.displayInfoMessage(null, "You May Not Surrender!",
+                "You are too big of a criminal, so surrendering is NOT an "
+                + "option anymore.");
     }
 }

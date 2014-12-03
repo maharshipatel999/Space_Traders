@@ -12,9 +12,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.PirateEncounterController">
+<AnchorPane id="AnchorPane" prefHeight="460.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.PirateEncounterController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="350.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="460.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <fill>
             <LinearGradient endX="0.44660194174757284" endY="1.0" startX="0.4466019417475728" startY="0.009708737864077666">
                <stops>
@@ -31,9 +31,9 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <BorderPane layoutX="109.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="borderPane" layoutX="109.0" layoutY="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Encounter!" wrappingWidth="168.9140625" BorderPane.alignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pirate Encounter" textAlignment="CENTER" wrappingWidth="393.9140625" BorderPane.alignment="CENTER">
                <font>
                   <Font size="34.0" />
                </font>
@@ -43,9 +43,9 @@
             </Text>
          </top>
          <bottom>
-            <AnchorPane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <HBox fx:id="buttonBar" alignment="CENTER" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="69.0" layoutY="-5.0" mnemonicParsing="false" onAction="#surrenderPressed" prefHeight="43.0" prefWidth="116.0" text="Surrender" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="69.0">
+                  <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="116.0" text="Surrender">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -53,7 +53,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="439.0" layoutY="-5.0" mnemonicParsing="false" onAction="#fleePressed" prefHeight="31.0" prefWidth="100.0" text="Flee" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="61.0">
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Flee">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -61,7 +61,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="250.0" layoutY="-5.0" mnemonicParsing="false" onAction="#attackPressed" prefHeight="31.0" prefWidth="100.0" text="Attack" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0">
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Attack">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -70,36 +70,11 @@
                      </cursor>
                   </Button>
                </children>
-            </AnchorPane>
-         </bottom>
-         <center>
-            <VBox prefHeight="268.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Text fill="#61010b" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrr Matey! You have encountered a pirate! " textAlignment="CENTER" wrappingWidth="588.6708984375">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Text>
-                  <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" text="What do you do?" textAlignment="CENTER" wrappingWidth="571.505859375">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-               </children>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
                <padding>
-                  <Insets top="80.0" />
+                  <Insets bottom="10.0" />
                </padding>
-            </VBox>
-         </center>
+            </HBox>
+         </bottom>
       </BorderPane>
       <ImageView fitHeight="96.0" fitWidth="103.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="10.0">
          <image>

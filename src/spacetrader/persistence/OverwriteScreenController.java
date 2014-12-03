@@ -120,11 +120,11 @@ public class OverwriteScreenController extends SceneController implements Initia
     public void serialize() {
         try {
             SerializableUtil.serialize(slots, "saveFile.ser");
+            mainControl.displaySaveProgress("Overwrite Save File", "Saving...", "Game Successfully Saved!");
         } catch (IOException e) {
+            mainControl.displayErrorMessage("Saving Failed", "Game Could Not Be Saved", "The game unfortunately was unable to be saved.");
             Logger.getLogger(OverwriteScreenController.class.getName()).log(Level.SEVERE, null, e);
-        }
-
-        mainControl.displaySaveProgress("Overwrite Save File", "Saving...", "Game Successfully Saved!");
+        } 
     }
 
     /**
@@ -133,7 +133,7 @@ public class OverwriteScreenController extends SceneController implements Initia
      * @param event
      */
     @FXML
-    protected void goBack(ActionEvent event) {
+    protected void goBack() {
         mainControl.goToHomeScreen(game.getPlayer(), game.getPlayer().getLocation());
     }
 

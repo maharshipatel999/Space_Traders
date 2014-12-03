@@ -15,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import spacetrader.Player;
-import static spacetrader.Tools.rand;
 import spacetrader.ships.SpaceShip;
 import spacetrader.system.SceneController;
 
@@ -37,10 +36,17 @@ public class BattleController extends SceneController {
     private HBox buttonBar;
     @FXML
     private Button fleeButton, attackButton, surrenderButton;
+    @FXML
+    private Text mainText;
+    @FXML
+    private Label opponentActionText;
 
     private Encounter encounter;
     private Player player;
     private SpaceShip opponent;
+    
+    private boolean opponentGotHit;
+    private boolean playerGotHit;
 
     public void setUpBattle(Encounter encounter) {
         this.encounter = encounter;
@@ -48,71 +54,60 @@ public class BattleController extends SceneController {
         this.opponent = encounter.getOpponent();
         this.playerShipSprite.setImage(new Image(encounter.getPlayer().getShip().getType().spriteFile()));
         this.opponentShipSprite.setImage(new Image(encounter.getOpponent().getType().spriteFile()));
-        battleText.getChildren().add(new Text(
-                String.format("You've engaged fire with a %s %s.", encounter.getName(), encounter.getOpponent().getType().toString())));
-
-        updateHullLabels();
         
-        if (encounter instanceof TraderEncounter) {
-            buttonBar.getChildren().remove(surrenderButton);
-        }
+        mainText.setText(encounter.getEncounterMessage());
+        /*battleText.getChildren().add(new Text(
+                String.format("You've engaged fire with a %s %s.", encounter.getName(), encounter.getOpponent().getType().toString())));*/
+
+        updatePlayerHull();
+        updateOpponentHull();
+        updateEnemyAction();
     }
 
-    private void updateHullLabels() {
-        int playerHealth = player.getShip().getHullStrength() + player.getShip().getShieldHealth();
-        int playerMaxHealth = player.getShip().getMaxHullStrength() + player.getShip().getMaxShieldHealth();
-        
+    public void updateOpponentHull() {
         int opponentHealth = opponent.getHullStrength() + opponent.getShieldHealth();
         int opponentMaxHealth = opponent.getMaxHullStrength() + opponent.getMaxShieldHealth();
         
-        double playerHull = (double) playerHealth / playerMaxHealth;
         double opponentHull = (double) opponentHealth / opponentMaxHealth;
-        playerHullBar.setProgress(playerHull);
         opponentHullBar.setProgress(opponentHull);
-        playerHullLabel.setText((int) (100 * playerHull) + "%");
         opponentHullLabel.setText((int) (100 * opponentHull) + "%");
     }
-
-    public void attemptToSurrender() {
-        encounter.handleSurrender(mainControl);
-    }
-
-    public void plunder() {
-        encounter.updateRecordAfterPlunder();
-        //TODO do plundering form
-    }
-
-    @FXML
-    protected void attackPressed() {
-        //TODO
-        if (rand.nextBoolean()) {
-            opponent.takeDamage(8);
-        } else {
-            player.getShip().takeDamage(8);
-        }
+    
+    public void updatePlayerHull() {
+        int playerHealth = player.getShip().getHullStrength() + player.getShip().getShieldHealth();
+        int playerMaxHealth = player.getShip().getMaxHullStrength() + player.getShip().getMaxShieldHealth();
         
-        if (player.getShip().getHullStrength() <= 0) {
-            mainControl.displayInfoMessage(null, "Game Over", "You died!");
-            mainControl.goBackToWarpScreen();
-        } else if (opponent.getHullStrength() <= 0) {
-            mainControl.displayInfoMessage(null, "Enemy Destroyed", "You have "
-                    + "defeated your opponent. Good job!");
-            mainControl.goBackToWarpScreen();
-        }
-        
-        updateHullLabels();
+        double playerHull = (double) playerHealth / playerMaxHealth;
+        playerHullBar.setProgress(playerHull);
+        playerHullLabel.setText((int) (100 * playerHull) + "%");
+    }
+    
+    public void updateEnemyAction() {
+        String nextActionText = encounter.state.getNextActionText();
+        opponentActionText.setText(nextActionText);
+    }
+    
+    public void resetBattleText() {
+        battleText.getChildren().clear();
     }
 
-    @FXML
-    protected void surrenderPressed() {
-        //TODO
-        mainControl.goBackToWarpScreen();
-
+    public void setOpponentGotHit(boolean opponentGotHit) {
+        this.opponentGotHit = opponentGotHit;
     }
 
-    @FXML
-    protected void fleePressed() {
-        //TODO
-        mainControl.goBackToWarpScreen();
+    public void setPlayerGotHit(boolean playerGotHit) {
+        this.playerGotHit = playerGotHit;
+    }
+
+    public boolean isOpponentGotHit() {
+        return opponentGotHit;
+    }
+
+    public boolean isPlayerGotHit() {
+        return playerGotHit;
+    }
+    
+    public void displayActionText(String text) {
+        battleText.getChildren().add(new Text(String.format(text, encounter.getName())));
     }
 }

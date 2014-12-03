@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import spacetrader.Player;
+import spacetrader.SkillList.Skill;
 import spacetrader.planets.Planet;
 import spacetrader.system.SceneController;
 
@@ -74,18 +75,18 @@ public class WarpScreenController extends SceneController implements Initializab
             //pauseScreen();
             Encounter encounter = encounters.getNextEncounter();
 
-            if (encounter.getState() == Encounter.State.IGNORE) {
+            /*if (encounter.getState() == Encounter.State.IGNORE) {
                 String alertTitle = "Uneventful " + encounter.getName() + " Encounter!";
-                String message = encounter.getIgnoreMessage(destination.getName());
+                String message = encounter.getIgnoreMessage();
                 String result = mainControl.displayCustomConfirmation(alertTitle, null, message, "Ignore", "Attack");
                 if (result.equals("Attack")) {
                     mainControl.goToBattleScreen(encounter);
                 } else if (result.equals("Ignore")) {
                     continueTraveling();
                 }
-            } else {
+            } else {*/
                 mainControl.goToEncounterScreen(encounter);
-            }
+            //}
         } else {
             pauseScreen();
             mainControl.arriveAtPlanet(source, destination);
@@ -108,7 +109,7 @@ public class WarpScreenController extends SceneController implements Initializab
      */
     public void continueTraveling() {
         animateShip();
-        player.getShip().autoRepair(player);
+        player.getShip().autoRepairHullAndShields(player.getEffectiveSkill(Skill.ENGINEER));
         checkForEncounter();
     }
 

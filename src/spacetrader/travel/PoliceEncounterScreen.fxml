@@ -11,9 +11,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.PoliceEncounterController">
+<AnchorPane id="AnchorPane" prefHeight="460.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.PoliceEncounterController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="350.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="460.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <fill>
             <LinearGradient endX="0.44660194174757284" endY="1.0" startX="0.4466019417475728" startY="0.009708737864077666">
                <stops>
@@ -28,9 +28,14 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <BorderPane layoutX="109.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="137.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <image>
+            <Image url="@../../resources/images/police%20badge.png" />
+         </image>
+      </ImageView>
+      <BorderPane fx:id="borderPane" layoutX="109.0" layoutY="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Encounter!" wrappingWidth="168.9140625" BorderPane.alignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Police Encounter!" wrappingWidth="308.9140625" BorderPane.alignment="CENTER">
                <font>
                   <Font size="34.0" />
                </font>
@@ -39,44 +44,6 @@
                </BorderPane.margin>
             </Text>
          </top>
-         <bottom>
-            <AnchorPane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button layoutX="44.0" layoutY="127.0" mnemonicParsing="false" onAction="#submitPressed" prefHeight="31.0" prefWidth="100.0" text="Submit" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button layoutX="128.0" layoutY="143.0" mnemonicParsing="false" onAction="#fleePressed" prefHeight="31.0" prefWidth="100.0" text="Flee" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="170.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button layoutX="95.0" layoutY="45.0" mnemonicParsing="false" onAction="#attackPressed" prefHeight="31.0" prefWidth="100.0" text="Attack" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="170.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button layoutX="195.0" layoutY="112.0" mnemonicParsing="false" onAction="#bribePressed" prefHeight="31.0" prefWidth="100.0" text="Bribe" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </AnchorPane>
-         </bottom>
          <center>
             <VBox prefHeight="268.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
@@ -105,11 +72,50 @@
                </padding>
             </VBox>
          </center>
+         <bottom>
+            <HBox fx:id="buttonBar" alignment="CENTER" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Flee">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Submit">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Attack">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Bribe">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
+         </bottom>
       </BorderPane>
-      <ImageView fitHeight="137.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <image>
-            <Image url="@../../resources/images/police%20badge.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

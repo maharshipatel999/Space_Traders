@@ -185,9 +185,19 @@ public class Universe implements Serializable {
         }
         return isNearAnotherPlanet || planets.size() < INITIAL_PLANET_NUM;
     }
-
-    public void updatePriceEvent(Planet p) {
-        p.setRandomPriceIncEvent();
+    
+    /**
+     * Processes time aspect of price increase events.
+     * Some planets may start a price increase event. others may end one.
+     */
+    public void updatePriceIncreaseEvents() {
+        for (Planet planet : getPlanets()) {
+            if (planet.getPriceIncDuration() > 0) {
+                planet.setPriceIncDuration(planet.getPriceIncDuration() - 1);
+            } else {
+                planet.setRandomPriceIncEvent();
+            }
+        }
     }
 
     /**

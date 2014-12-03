@@ -14,7 +14,6 @@ import spacetrader.ships.GadgetType;
 import spacetrader.ships.OpponentShip;
 import spacetrader.ships.ShipType;
 import spacetrader.ships.SpaceShip;
-import spacetrader.system.MainController;
 
 /**
  * Represents an abstract Encounter.
@@ -25,18 +24,18 @@ public abstract class Encounter {
 
     public static enum State {
 
-        IGNORE, FLEE, ATTACK, INSPECTION, BUY, SELL;
+        IGNORE, FLEE, ATTACK, INSPECTION, BUY, SELL, SURRENDER;
     }
 
     private final Player player;
     private final String encounterScene;
     private final String encounterName;
     private SpaceShip opponent;
-    protected State state;
+    protected EncounterState state;
     protected int clicksFromDest;
     private final Planet source;
     private final Planet destination;
-    
+
     protected int plunderScore;
 
     /**
@@ -49,15 +48,16 @@ public abstract class Encounter {
      * @param source the origin planet
      * @param destination the destination planet
      */
-    public Encounter(Player player, String fxmlScene, int clicksFromDest, String encounterName, Planet source, Planet destination) {
+    public Encounter(Player player, String fxmlScene, int clicksFromDest,
+            String encounterName, Planet source, Planet destination) {
         this.player = player;
         this.encounterScene = fxmlScene;
         this.clicksFromDest = clicksFromDest;
         this.encounterName = encounterName;
         this.source = source;
         this.destination = destination;
-        
-        this.state = State.IGNORE; //defaults to ignore, important
+
+        state = new IgnoreState(this); //defaults to ignore, important
     }
 
     /**
@@ -98,11 +98,20 @@ public abstract class Encounter {
     }
 
     /**
-     * Gets the state of this encounter.
+     * Sets the state of this encounter.
      *
-     * @return this encounter's state
+     * @param state the state for this encounter
      */
-    public State getState() {
+    public void setState(EncounterState state) {
+        this.state = state;
+    }
+
+    /**
+     * Sets the state of this encounter.
+     *
+     * @return the state of this encounter
+     */
+    public EncounterState getState() {
         return state;
     }
 
@@ -123,35 +132,44 @@ public abstract class Encounter {
     public int getClicksFromDest() {
         return clicksFromDest;
     }
-    
+
     /**
      * Gets the planet the player is departing from.
-     * 
+     *
      * @return the source planet
      */
     public Planet getSource() {
         return this.source;
     }
-    
+
     /**
      * Gets the planet the player is traveling towards.
-     * 
+     *
      * @return the destination planet
      */
     public Planet getDestination() {
         return this.destination;
     }
-    
+
+    /**
+     * Gets the message that should be displayed when there is an encounter.
+     *
+     * @return the encounter message
+     */
+    public String getEncounterMessage() {
+        return String.format("A %s %s is spotted %d clicks from your destination, %s!",
+                encounterName.toLowerCase(), opponent.getType().toString(),
+                clicksFromDest, getDestination().getName());
+    }
+
     /**
      * Gets the message that should be displayed when this the opponent ignores
      * the player.
      *
-     * @param destination the planet the player is traveling to
      * @return the ignore message
      */
-    public String getIgnoreMessage(String destination) {
-        return String.format("A %s %s is spotted %d clicks from your destination, %s!\n\nIt ignores you.",
-                encounterName.toLowerCase(), opponent.getType().toString(), clicksFromDest, destination);
+    public String getIgnoreMessage() {
+        return getEncounterMessage() + "\n\nIt ignores you.";
     }
 
     /**
@@ -162,13 +180,58 @@ public abstract class Encounter {
      * @return true if its legal
      */
     protected abstract boolean isIllegalShipType(ShipType type);
-    
+
     /**
-     * Handle what happens when the player surrenders.
-     * @param mainControl the main controller
+     *
      */
-    protected abstract void handleSurrender(MainController mainControl);
-    
+    public abstract void increaseShipsKilled();
+
+    /**
+     * Gets the opponent ship's bounty, the amount the player gets for
+     * destroying it. Or zero if they player doesn't get a bounty for destroying
+     * it.
+     *
+     * @return the opponent ship's bounty or 0 if it has none
+     */
+    public int getOpponentBounty() {
+        return 0; //by default, encounters do not haves bounties.
+    }
+
+    /**
+     * Determines if this kind of encounter allows the player to scoop from the
+     * opponent ship upon its defeat.
+     *
+     * @return true if the player can scoop in this encounter
+     */
+    protected abstract boolean canBeScoopedFrom();
+
+    /**
+     * Determines if the player is able to surrender in this kind of encounter.
+     *
+     * @return true if the player can surrender
+     */
+    protected abstract boolean playerCanSurrender();
+
+    /**
+     * Determines if the player is too intimidated by the player and must flee.
+     *
+     * @return true if the player flees
+     */
+    protected boolean opponentIntimidated() {
+        return false;
+    }
+
+    /**
+     * Determines if the encounter state needs to change after the player's last
+     * action. If so, it will be changed.
+     *
+     * @param originalPlayerHull the player's hull before damage this round
+     * @param originalOpponentHull the opponent's hull before damage this round
+     * @return the state to change to, or null if current state shouldn't change
+     */
+    protected abstract EncounterState determineStateChange(
+            int originalPlayerHull, int originalOpponentHull);
+
     /**
      * Updates the players Police Record from plundering an opponent ship.
      */
@@ -205,7 +268,8 @@ public abstract class Encounter {
      * @param cargoModifier
      * @return SpaceShip to use for opponent
      */
-    protected SpaceShip createShip(int tries, ShipType lowestShipType, double cargoModifier) {
+    protected SpaceShip createShip(int tries, ShipType lowestShipType,
+            double cargoModifier) {
         ShipType[] shipTypes = ShipType.values();
 
         int[] shipDistribution = new int[shipTypes.length];

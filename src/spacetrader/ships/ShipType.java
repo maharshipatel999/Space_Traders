@@ -209,7 +209,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the hull strength of this ship.
+     * Gets the max hull strength of this ship.
      *
      * @return hull strength of this ship
      */
@@ -236,7 +236,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the price of this ship type.
+     * Gets the base price of this ship type.
      *
      * @return price of this ship type
      */
@@ -245,7 +245,7 @@ public enum ShipType {
     }
 
     /**
-     * Gets the cost to repair this ship.
+     * Gets the cost to repair 1 unit of hull on this ship.
      *
      * @return cost of repair
      */

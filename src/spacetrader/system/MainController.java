@@ -17,23 +17,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import spacetrader.Mercenary;
 import spacetrader.Player;
 import spacetrader.PoliceRecord;
 import spacetrader.SkillList.Skill;
-import static spacetrader.Tools.rand;
 import spacetrader.Universe;
 import static spacetrader.Universe.HEIGHT;
 import static spacetrader.Universe.WIDTH;
 import spacetrader.commerce.PriceIncreaseEvent;
-import spacetrader.commerce.TradeGood;
 import spacetrader.commerce.Wallet;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
 import spacetrader.ships.PlayerShip;
-import spacetrader.ships.ShipType;
 import spacetrader.ships.Weapon;
 import spacetrader.ships.WeaponType;
 import spacetrader.travel.BattleController;
@@ -104,7 +100,7 @@ public class MainController {
 
         Player cheatPlayer = new Player("LubMaster", 3, 3, 3, 3, 3);
         cheatPlayer.setCredits(cheats.getInitialCredits());
-        cheatPlayer.setShip(new PlayerShip(cheats.getStartingShip()));
+        cheatPlayer.setShip(new PlayerShip(cheats.getStartingShip(), cheatPlayer));
         cheatPlayer.getShip().getWeapons().addItem(new Weapon(WeaponType.PULSE));
         cheatPlayer.setReputationScore(cheats.getReputation().minRep());
         cheatPlayer.setPoliceRecordScore(cheats.getPoliceRecord().minScore());
@@ -128,56 +124,69 @@ public class MainController {
     /**
      * Takes care of everything that happens when a player arrives at a planet.
      * Moves a player to a selected planet. Adjust Price Increase Events on all
- planets. All the planets who's tradeGood stock has been decremented
- should have their stock increased. The player fixes his startingShip's hull
- strength. Random events can occur at this point.
+     * planets. All the planets who's tradeGood stock has been decremented
+     * should have their stock increased. The player fixes his startingShip's hull
+     * strength. Random events can occur at this point.
      *
      * @param source the planet the player left
      * @param destination the planet the player is arriving at
      */
     public void arriveAtPlanet(Planet source, Planet destination) {
         game.increaseDays();
+        
+        game.getPlayer().getShip().autoRepairHull(
+                game.getPlayer().getEffectiveSkill(Skill.ENGINEER));//auto repair ship
+        
+        game.getUniverse().updatePriceIncreaseEvents(); //update planet statuses
 
-        //processes time aspect of price increase events
-        for (Planet planet : game.getUniverse().getPlanets()) {
-            if (planet.getPriceIncDuration() > 0) {
-                planet.setPriceIncDuration(planet.getPriceIncDuration() - 1);
-            } else {
-                planet.setRandomPriceIncEvent();
-            }
-        }
-
-        //The player autofixes their startingShip depending on their engineer skill
-        int engineerRepairs = rand.nextInt(
-                Math.max(1, game.getPlayer().getEffectiveSkill(Skill.ENGINEER)));
-        int currentHull = game.getPlayer().getShip().getHullStrength();
-        game.getPlayer().getShip().setHullStrength(currentHull
-                + engineerRepairs);
-
-        changePlayerLocation(destination);
+        changePlayerLocation(destination); //update player's location
+        
+        //display price increase event of current planet, if there is one
         if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayInfoMessage(null, "Notice!", destination.getName()
-                    + " is currently "
-                    + destination.getPriceIncEvent().desc().toLowerCase());
+            displayInfoMessage(null, "Notice!", "%s is currently %s",
+                    destination.getName(),
+                    destination.getPriceIncEvent().desc().toLowerCase());
         }
+        
+        //make sure eventGenerator is instantiated
         if (eventGenerator == null) {
             eventGenerator = new RandomEventGenerator(game.getPlayer(),
                     game.getUniverse(), this);
         }
 
+        //display and execute random event if there is one
         if (eventGenerator.eventOccurs()) {
             RandomEvent event = eventGenerator.getRandomEvent();
             event.doEvent();
             displayInfoMessage(null, "Special Event!", event.getMessage());
         }
     }
+    
+    /**
+     * This method is called if the player is arriving at a planet in an unusual way.
+     * All the necessities of arriving at the planet will occur.
+     * Specifically, price increase events will be updated and possibly displayed, 
+     * and the player's location will be swapped.
+     * @param destination the planet the player is arriving at
+     */
+    public void specialArrivalAtPlanet(Planet destination) {
+        game.getUniverse().updatePriceIncreaseEvents(); //update planet statuses
+        changePlayerLocation(destination); //update player's location
+        
+        //display price increase event of current planet, if there is one
+        if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
+            displayInfoMessage(null, "Notice!", "%s is currently %s",
+                    destination.getName(),
+                    destination.getPriceIncEvent().desc().toLowerCase());
+        }
+    }
 
     /**
      * The destination planet's prices should be recalculated. Determine if the
- player can pay their mercenary, interest, and insurance costs. If not,
- kick them back to the home screen. Adjust the player's police record and
- reputation. Deduct fuel from the player's startingShip. Finally, go to the warp
- screen.
+     * player can pay their mercenary, interest, and insurance costs. If not,
+     * kick them back to the home screen. Adjust the player's police record and
+     * reputation. Deduct fuel from the player's startingShip. Finally, go to the warp
+     * screen.
      *
      * @param destination which planet the player is traveling to
      * @param source which planet the player is leaving
@@ -213,6 +222,14 @@ public class MainController {
             displayInfoMessage(null, msgTitle, message);
             goToHomeScreen(player, player.getLocation());
         }
+        //TODO
+        //player.updateNoClaim();
+        //if (player.getInsuranceCost() > 0) {
+            //increase number of no claims
+        //}
+        
+        player.getShip().fullyRepairShields();
+        
         if (game.getPlayer().getDebt() > Wallet.DEBT_WARNING) {
             displayWarningMessage(null, "Debt Warning!", "You get this warning because "
                     + "your debt has exceeded 75000 credits. If you don't pay "
@@ -220,7 +237,7 @@ public class MainController {
                     + " no way to leave. You have been warned.");
         }
         
-        
+        //Recalculate prices on destination planet
         destination.getMarket().setAllPrices(game.getPlayer());
 
         //Decrease police record score if very high
@@ -238,8 +255,7 @@ public class MainController {
         }
 
         //Deduct fuel
-        int distance = (int) Universe
-                .distanceBetweenPlanets(source, destination);
+        int distance = (int) Universe.distanceBetweenPlanets(source, destination);
         player.getShip().removeFuel(distance);
 
         //Start doing encounters!
@@ -259,102 +275,25 @@ public class MainController {
         goToHomeScreen(game.getPlayer(), destination);
     }
     
+    public void playerShipDestroyed() {
+        boolean playerKilled = true;
+        int daysLived = game.getDays();
+        int playerWorth = game.getPlayer().getCurrentWorth();
+        int difficulty = 2; //normal
+        
+        int score = getFinalScore(playerKilled, daysLived, playerWorth, difficulty);
+        
+        displayInfoMessage("Game Over", "Your ship was destroyed!", "You have died a most bloody death.\n\n"
+                + "You final score is %d! You played for %d turns. The overall "
+                + "worth of your trader was ₪%d. Congrats!", score, daysLived, playerWorth);
+        goToWelcomeScreen();
+    }
+    
     /**
-     * Happens when the player gets arrested by the police. Fines and imprisons the player.
+     * Increases the amount of days.
      */
-    public void playerGetsArrested() {
-        Player player = game.getPlayer();
-	int negPoliceScore = -player.getPoliceRecordScore();
-        
-	int fine = ((1 + (((player.getCurrentWorth() * Math.min(80, negPoliceScore)) / 100) / 500)) * 500);
-	int daysImprisoned = Math.max( 30, negPoliceScore );
-
-	displayInfoMessage(null, "You've been arrested!", "At least you survived." );
-        displayInfoMessage(null, "Conviction", "Your fine and number of days in prison are based on"
-                + " the kind of criminal you were found to be.");
-
-	String conviction = String.format("You are convicted to %d days in prison and a fine of ₪%d.", daysImprisoned, fine);
-        displayInfoMessage(null, "Conviction Determined", conviction);
-
-        //Remove Illegal Goods
-	if (player.getShip().isCarryingIllegalGoods()) {
-            displayInfoMessage(null, "Illegal Goods Impounded", "What would you expect?" );
-            player.getCargo().clearItem(TradeGood.NARCOTICS);
-            player.getCargo().clearItem(TradeGood.FIREARMS);
-	}
-        //Remove Insurance
-	if (player.getInsuranceCost() <= 0) {
-            displayInfoMessage(null, "", "InsuranceLostAlert" );
-            player.setInsuranceCost(0);
-            //NoClaim = 0; reset no-claim to zero
-	}
-        //Remove Crew
-        Mercenary[] crew = player.getShip().getCrew();
-	if (crew.length > 0) {
-            displayInfoMessage(null, "Mercenaries Leave", "You can't pay your mercenaries "
-                    + "while you are imprisoned, and so they have sought new employment." );
-            for (int i = 0; i < crew.length; i++) {
-                player.getShip().fireMercenary(crew[i]);
-            }
-	}
-
-	//Arrival();
-        //TODO Handle arriving at planet. set prices, change quantities, shuffle status
-        
-        //Increment Days
-        for (int i = 0; i < daysImprisoned; i++) {
-            game.increaseDays();
-        }
-
-        //Pay the fine
-	if (player.getCredits() >= fine)
-		player.removeCredits(fine);
-        else {
-            //Sell the player's ship
-            player.addCredits(player.getShip().currentShipPrice());
-
-            if (player.getCredits() >= fine) {
-                player.removeCredits(fine);
-            } else {
-                player.setCredits(0);
-            }
-            displayInfoMessage(null, "Ship Sold", "The Space Corps needs cash to make"
-                    + " you pay for the damages you did. Your ship is the only "
-                    + "valuable possession you have.");
-            displayInfoMessage(null, "Flea Received", "It's standard practice for the"
-                    + " police to leave a condemned criminal with at least the "
-                    + "means to leave the solar system." );
-
-            //CreateFlea();
-            player.setShip(new PlayerShip(ShipType.FLEA));
-	}
-	
-        //Update their Police Record
-	player.setPoliceRecordScore(PoliceRecord.DUBIOUS.minScore());
-
-        //Pay off as much as the player's debt as possible.
-        int debt = player.getDebt();
-	if (player.getDebt() > 0) {
-            if (player.getCredits() >= debt) {
-                player.removeCredits(debt);
-                player.removeDebt(debt);
-            } else {
-                player.removeDebt(player.getCredits());
-                player.setCredits(0);
-            }
-	}
-	
-        //Pay Interest on all the days imprisoned.
-        try {
-            for (int i = 0; i < daysImprisoned; ++i) {
-                player.payInterest();
-            }
-        } catch (InsufficientFundsException e) {
-            displayInfoMessage(null, "Too Much Debt", Wallet.MAX_DEBT_MSG);
-        }
-
-        //go to the new planet
-        changePlayerLocation(warpScreenControl.getDestination());
+    public void increaseDays() {
+        game.increaseDays();
     }
     
     /**
@@ -363,6 +302,21 @@ public class MainController {
     public void setPlayerWasRaided() {
         warpScreenControl.setRaided();
     }
+    
+    public int getFinalScore(boolean playerKilled, int days, int worth, int difficulty ) {
+        worth = (worth < 1000000 ? worth : 1000000 + ((worth - 1000000) / 10) );
+
+	if (playerKilled) {
+            return (difficulty + 1) * (int) ((worth * 90) / 50000);
+        } else if (!playerKilled) {
+            return (difficulty + 1) * (int) ((worth * 95) / 50000);
+        } else {
+            int d = ((difficulty + 1) * 100) - days;
+            if (d < 0)
+                    d = 0;
+            return (difficulty + 1) * (int)((worth + (d * 1000)) / 500);
+	}
+} 
 
     /**
      * Creates a Scene from an fxml file, and then returns the Scene's
@@ -512,6 +466,7 @@ public class MainController {
             goToWarpScreen(game.getUniverse().getPlanet("Pallet"),
                     game.getUniverse().getPlanets().get(10));
         }
+        
         stage.setScene(this.warpScreenControl.getScene());
         this.warpScreenControl.continueTraveling();
     }
@@ -524,10 +479,15 @@ public class MainController {
      */
     public void goToEncounterScreen(Encounter encounter) {
         EncounterScreenController control;
-        control = (EncounterScreenController) extractControllerFromFXML(encounter.getFXMLScene(), stage);
+        Stage encounterStage = new Stage();
+        encounterStage.initOwner(stage);
+        encounterStage.initModality(Modality.WINDOW_MODAL);
+        
+        control = (EncounterScreenController) extractControllerFromFXML(encounter.getFXMLScene(), encounterStage);
         control.setEncounter(encounter);
         //stage.setTitle("Space Encounter!");
-        stage.setScene(control.getScene());
+        encounterStage.setScene(control.getScene());
+        encounterStage.show();
     }
 
     /**

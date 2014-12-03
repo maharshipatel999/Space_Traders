@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import spacetrader.Player;
+import spacetrader.SkillList;
 import spacetrader.planets.Planet;
 
 /**
@@ -56,13 +57,12 @@ public class FinanceScreenController extends SceneController
     @FXML
     public void setUpFinanceScreen(Player player) {
         this.player = player;
-        currentBalance.setText("Current Balance: ₪"
-                + player.getCredits());
+        int value = player.getShip().currentShipPriceWithoutCargo(player.getEffectiveSkill(SkillList.Skill.TRADER));
+        int cost = value / 1000;
+        
+        currentBalance.setText("Current Balance: ₪" + player.getCredits());
         debt.setText("₪" + player.getDebt());
-        shipVal.setText("₪" + player.getShip()
-                .currentShipPriceWithoutCargo());
-        int val = player.getShip().currentShipPriceWithoutCargo();
-        int cost = val / 1000;
+        shipVal.setText("₪" + value);
         dailyCost.setText("₪" + cost);
         if (!player.getShip().hasEscapePod()) {
             buyInsurance.setDisable(true);
@@ -147,8 +147,9 @@ public class FinanceScreenController extends SceneController
      */
     @FXML
     private void buyInsurance() {
-        int val = player.getShip().currentShipPriceWithoutCargo();
-        int cost = val / 1000;
+        int value = player.getShip().currentShipPriceWithoutCargo(
+                player.getEffectiveSkill(SkillList.Skill.TRADER));
+        int cost = value / 1000;
         player.setInsuranceCost(cost);
     }
 

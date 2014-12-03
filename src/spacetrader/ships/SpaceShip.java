@@ -12,6 +12,8 @@ import java.util.List;
 import spacetrader.Mercenary;
 import spacetrader.SkillList;
 import spacetrader.SkillList.Skill;
+import spacetrader.Tools;
+import static spacetrader.Tools.rand;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.TradeGood;
 
@@ -19,7 +21,7 @@ import spacetrader.commerce.TradeGood;
  *
  * @author Caleb Stokols
  */
-public class SpaceShip implements Iterable<Equipment>, Serializable {
+public abstract class SpaceShip implements Iterable<Equipment>, Serializable {
 
     private final ShipType type;
     private final Cargo cargo;
@@ -132,6 +134,15 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
     }
 
     /**
+     * Gets the size of this ship.
+     *
+     * @return an integer representing the size of this ship
+     */
+    public int getSize() {
+        return type.size();
+    }
+
+    /**
      * Calculates the total weapon strength of this ship which is the sum of the
      * power of each weapon on this ship
      *
@@ -172,8 +183,58 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
         }
         return totalHealth;
     }
-    
+
+    /**
+     * This ship attempts to fire at the other ship. If this ship hits the
+     * opponent, the opponent will be damaged. Otherwise, nothing will happen.
+     *
+     * @param defender the opponent ship to fire at
+     * @param defenderIsFleeing specifies if the opponent is currently
+     * attempting to flee
+     * @return true if this ship hit the opponent, false if it missed
+     */
+    public boolean fireAtShip(SpaceShip defender, boolean defenderIsFleeing) {
+        final int MIN_DEX = 5; //minimum dexterity of the defender
+        final int FLEEING_BONUS = 2; //multiplier for defender fleeing
+        final int STRENGTH = getTotalWeaponStrength();
+        
+        // A ship without weapons cannot attack.
+        if (STRENGTH <= 0) {
+            return false;
+        }
+
+        //Calculate the attacker's accuracy
+        int attackerAccuracy = this.getEffectiveSkill(Skill.FIGHTER) + defender.getSize();
+        attackerAccuracy = Math.max(1, attackerAccuracy); //must be at least 1
+
+        //Calculate the defender's dexterity
+        int defenderDexterity = MIN_DEX + (defender.getEffectiveSkill(Skill.PILOT) / 2);
+        defenderDexterity *= defenderIsFleeing ? FLEEING_BONUS : 1; //fleeing ships are harder to it
+
+        // If the attacker is faster than the defender, the hit is successful
+        boolean hit = rand.nextInt(attackerAccuracy) >= rand.nextInt(defenderDexterity);
+        
+        int damage;  
+        if (hit) {
+            final double STR_MODIFIER = 1 + (2 * this.getEffectiveSkill(Skill.ENGINEER) / 100.0);
+            damage = rand.nextInt((int) (STRENGTH * STR_MODIFIER));
+            defender.takeDamage(damage);
+        } else {
+            damage = 0;
+        }
+
+        return damage > 0;
+    }
+
+    /**
+     * This ship takes a certain amount of damage as a result of enemy fire. The
+     * amount of damage done to the hull is dependent upon the hull strength of
+     * the ship.
+     *
+     * @param damage the amount of damage inflicted to this ship
+     */
     public void takeDamage(int damage) {
+        // First deal damage to the shields
         for (Shield shield : shields) {
             if (damage > 0 && shield.getHealth() > 0) {
                 int originalHealth = shield.getHealth();
@@ -187,8 +248,12 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
                 }
             }
         }
+        // If both shields are destroyed, deal damage to the hull
         if (damage > 0) {
-            setHullStrength(getHullStrength() - damage);
+            damage -= rand.nextInt(Math.max(1, getEffectiveSkill(Skill.ENGINEER)));
+            damage = Tools.applyBounds(damage, 1, getMaxHullStrength() / 2);
+
+            this.setHullStrength(getHullStrength() - damage);
         }
     }
 
@@ -196,7 +261,7 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
      * Determines if this ship is carrying firearms or narcotics.
      *
      * @return true if this ship is carrying firearms or narcotics, false
-     * otherwise
+     *         otherwise
      */
     public boolean isCarryingIllegalGoods() {
         int firearms = cargo.getQuantity(TradeGood.FIREARMS);
@@ -207,9 +272,10 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
     /**
      * Used in calculating the worth of this ship
      *
+     * @param traderSkill the player's trader skill
      * @return the selling price of this ship
      */
-    public int currentShipPriceWithoutCargo() {
+    public int currentShipPriceWithoutCargo(int traderSkill) {
         //trade-in value is 3/4 original price
         int currentPrice = (type.price() * 3) / 4;
 
@@ -217,17 +283,11 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
         currentPrice -= (maxHullStrength - hullStrength) * type.repairCost();
 
         //subtract cost to fill tank with fuel
-        currentPrice -= (getMaxFuel() - getFuelAmount());
+        currentPrice -= (getMaxFuel() - getFuelAmount()) * type.fuelCost();
 
         //add reduced cost of equipment
-        for (int i = 0; i < weapons.getNumFilledSlots(); i++) {
-            currentPrice += weapons.getItem(i).getSellPrice(0);
-        }
-        for (int i = 0; i < shields.getNumFilledSlots(); i++) {
-            currentPrice += weapons.getItem(i).getSellPrice(0);
-        }
-        for (int i = 0; i < gadgets.getNumFilledSlots(); i++) {
-            currentPrice += gadgets.getItem(i).getSellPrice(0);
+        for (Equipment item : this) {
+            currentPrice += item.getSellPrice(traderSkill);
         }
 
         return currentPrice;
@@ -236,10 +296,11 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
     /**
      * Calculated the worth of this ship
      *
+     * @param traderSkill the player's trader skill
      * @return this ship's current worth
      */
-    public int currentShipPrice() {
-        return currentShipPriceWithoutCargo() + cargo.getCostOfAllGoods();
+    public int currentShipPrice(int traderSkill) {
+        return currentShipPriceWithoutCargo(traderSkill) + cargo.getCostOfAllGoods();
     }
 
     /**
@@ -273,9 +334,11 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
         }
         return fired;
     }
-    
+
     /**
      * Returns the max number of crew this ship can carry.
+     *
+     * @return the max capacity for mercenaries on this ship
      */
     public int getMaxNumCrew() {
         return type.crew();
@@ -293,7 +356,7 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
     /**
      * Gets the skill of this ship's crew
      *
-     * @param type the type of skill we want to look at
+     * @param type the type of skill to look at
      * @return the specific skill of this crew
      */
     public int getCrewSkill(Skill type) {
@@ -311,10 +374,19 @@ public class SpaceShip implements Iterable<Equipment>, Serializable {
             }
         }
     }
-    
+
     /**
-     * Returns an iterator that will iterate through all this ship's 
-     * equipment in the order of weapons, shields, gadgets.
+     * Returns the highest skill score for a specific type of skill out of
+     * everyone on this ship.
+     *
+     * @param type the type of skill to look up
+     * @return the highest skill out of everyone on this ship
+     */
+    public abstract int getEffectiveSkill(Skill type);
+
+    /**
+     * Returns an iterator that will iterate through all this ship's equipment
+     * in the order of weapons, shields, gadgets.
      */
     @Override
     public Iterator<Equipment> iterator() {

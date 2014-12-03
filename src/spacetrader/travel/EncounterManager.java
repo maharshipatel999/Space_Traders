@@ -14,7 +14,6 @@ import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
 import spacetrader.system.MainController;
 import spacetrader.system.MainController.Debug;
-import spacetrader.travel.Encounter.State;
 
 /**
  * This class will handle all the probability of creating and handling
@@ -104,13 +103,16 @@ public class EncounterManager {
         boolean addEncounter = false;
         
         if (encounter != null) {
-            final boolean ignoredAndInvisible
-                    = encounter.getState() == State.IGNORE && encounter.opponentIsCloaked();
+            final boolean ignoredAndInvisible = encounter.opponentIsCloaked() && 
+                    (encounter.getState() instanceof IgnoreState ||
+                    encounter.getState() instanceof FleeState ||
+                    encounter.getState() instanceof TradeState);
             if (!ignoredAndInvisible) {
-                addEncounter = true;
-            }
-            if (encounter.getState() == State.INSPECTION) {
-                this.inspected = true;
+                addEncounter = true; 
+                
+                if (encounter.getState() instanceof InspectionState) {
+                    this.inspected = true;
+                }
             }
         }
         return addEncounter;
@@ -126,7 +128,7 @@ public class EncounterManager {
     private Encounter createPoliceEncounter(int clicks) {
         PoliceEncounter encounter = new PoliceEncounter(player, clicks, source, destination);
 
-        if (encounter.getState() == State.INSPECTION && inspected) {
+        if (encounter.getState() instanceof InspectionState && inspected) {
             return null;
         } else {
             return encounter;

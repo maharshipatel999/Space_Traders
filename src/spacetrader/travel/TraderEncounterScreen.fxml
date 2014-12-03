@@ -10,9 +10,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.TraderEncounterController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.TraderEncounterController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="350.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.topAnchor="0.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="460.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.topAnchor="0.0">
          <fill>
             <LinearGradient endX="0.44660194174757284" endY="1.0" startX="0.4466019417475728">
                <stops>
@@ -27,54 +27,73 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="47.0" prefWidth="600.0" text="You've encountered a trader!" AnchorPane.topAnchor="0.0">
-         <font>
-            <Font name="Copperplate Gothic Bold" size="24.0" />
-         </font>
-      </Label>
-      <VBox alignment="CENTER" layoutX="167.0" layoutY="53.0" prefHeight="242.0" prefWidth="600.0" spacing="20.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
-         <children>
-            <Label fx:id="traderOffer" alignment="CENTER" contentDisplay="CENTER" text="Offer" wrapText="true">
-               <font>
-                  <Font size="23.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="currAmountText" alignment="CENTER" contentDisplay="CENTER" text="Current amount" wrapText="true">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets left="25.0" right="25.0" />
-         </padding>
-      </VBox>
-      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="590.0" spacing="150.0" AnchorPane.bottomAnchor="0.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#rejectOffer" text="Reject">
-               <font>
-                  <Font name="Copperplate Gothic Bold" size="17.0" />
-               </font>
-            </Button>
-            <HBox alignment="CENTER" prefHeight="30.0" spacing="20.0">
+      <BorderPane fx:id="borderPane" prefHeight="460.0" prefWidth="600.0">
+         <bottom>
+            <HBox fx:id="buttonBar" alignment="CENTER" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Amount:">
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Ignore">
                      <font>
-                        <Font name="Copperplate Gothic Bold" size="17.0" />
+                        <Font size="20.0" />
                      </font>
-                  </Label>
-                  <TextField fx:id="quantityField" prefHeight="31.0" prefWidth="70.0" promptText="Enter An Amount" text="0" />
-                  <Button mnemonicParsing="false" onAction="#acceptOffer" text="Trade">
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Attack">
                      <font>
-                        <Font name="Copperplate Gothic Bold" size="17.0" />
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Trade">
+                     <font>
+                        <Font size="20.0" />
                      </font>
                   </Button>
                </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" />
+               </BorderPane.margin>
             </HBox>
-         </children>
-      </HBox>
+         </bottom>
+         <center>
+            <VBox alignment="CENTER" prefHeight="311.0" prefWidth="590.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="traderOffer" alignment="CENTER" contentDisplay="CENTER" text="Offer" wrapText="true">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="currAmountText" alignment="CENTER" contentDisplay="CENTER" text="Current amount" wrapText="true">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Label>
+                  <HBox fx:id="tradeButtonItems" alignment="CENTER" prefHeight="30.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="amountLabel" text="Amount:">
+                           <font>
+                              <Font name="Copperplate Gothic Bold" size="17.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="quantityField" prefHeight="31.0" prefWidth="70.0" promptText="Enter An Amount" text="0" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="25.0" right="25.0" />
+               </padding>
+            </VBox>
+         </center>
+         <top>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pirate Encounter" textAlignment="CENTER" wrappingWidth="393.9140625" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets top="15.0" />
+               </BorderPane.margin>
+            </Text>
+         </top>
+      </BorderPane>
    </children>
 </AnchorPane>

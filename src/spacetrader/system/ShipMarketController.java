@@ -90,7 +90,7 @@ public class ShipMarketController
             hornetPrice, grasshopperPrice, termitePrice, waspPrice};
 
         this.playerShipSellingPrice = player.getShip()
-                .currentShipPriceWithoutCargo();
+                .currentShipPriceWithoutCargo(player.getEffectiveSkill(Skill.TRADER));
 
         for (Node node : shipGrid.getChildren()) {
             Integer column = GridPane.getColumnIndex(node);
@@ -129,14 +129,14 @@ public class ShipMarketController
                 }
             } else if (column == 1) {
                 if (shipPurchasingPrice(shipTypes[row]) > player.getCredits()
-                        + player.getShip().currentShipPriceWithoutCargo()) {
+                        + player.getShip().currentShipPriceWithoutCargo(player.getEffectiveSkill(Skill.TRADER))) {
                     shipsButtons[row].setDisable(true);
                 }
             }
         }
 
         this.playerShipSellingPrice = player.getShip()
-                .currentShipPriceWithoutCargo();
+                .currentShipPriceWithoutCargo(player.getEffectiveSkill(Skill.TRADER));
 
         playerFunds.setText("₪" + player.getCredits());
         shipPrice.setText("₪" + (shipPurchasingPrice(shipTypes[0])
@@ -219,7 +219,7 @@ public class ShipMarketController
             //It is already included in the calculation of "costOfPurchase".
 
             PlayerShip oldShip = player.getShip();
-            player.setShip(new PlayerShip(shipTypes[selectedShip]));
+            player.setShip(new PlayerShip(shipTypes[selectedShip], player));
             player.getCargo().addCargoContents(oldShip.getCargo());
 
             //the escape pod on your old ship transfers to the new ship

@@ -9,16 +9,20 @@ package spacetrader.travel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import spacetrader.PoliceRecord;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.TradeGood;
 import spacetrader.exceptions.CargoIsFullException;
-import spacetrader.travel.Encounter.State;
 
 /**
  * FXML Controller class
@@ -27,60 +31,117 @@ import spacetrader.travel.Encounter.State;
  */
 public class TraderEncounterController extends EncounterScreenController implements Initializable {
 
-    @FXML
-    private Label traderOffer, currAmountText;
-    @FXML
     private TextField quantityField;
+    private Label traderOffer, currAmountText;
+    private VBox tradePane;
     
     private int maxQuantity;
     private TradeGood tradingGood;
     private int tradingPrice;
     
+    private boolean acceptedOfferToTrade; //specifies if the player has accepted the trader's offer to trader
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        final int VBOX_LABEL_SPACING = 20;
+        final int HBOX_LABEL_SPACING = 20;
+        final int SIDE_PADDING = 25;
+        
+        //initialize traderOffer label
+        traderOffer = new Label("Offer");
+        traderOffer.setFont(new Font(23));
+        traderOffer.setWrapText(true);
+        traderOffer.setAlignment(Pos.CENTER);
+        traderOffer.setContentDisplay(ContentDisplay.CENTER);
+
+        //intialize currAmountText label
+        currAmountText = new Label("Current amount");
+        currAmountText.setFont(new Font(23));
+        currAmountText.setWrapText(true);
+        currAmountText.setAlignment(Pos.CENTER);
+        currAmountText.setContentDisplay(ContentDisplay.CENTER);
+        
+        //initialize amountLabel label
+        Label amountLabel = new Label("Amount:");
+        amountLabel.setFont(new Font(17));
+        
+        //initialize quantityfield textfield
+        quantityField = new TextField("0");
+        quantityField.setPrefSize(70, 31);
+        quantityField.setPromptText("Enter An Amount");
+        
+        //initialize hbox
+        HBox hbox = new HBox(HBOX_LABEL_SPACING, amountLabel, quantityField);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setPrefHeight(31);
+        
+        //initialize trade pane
+        tradePane = new VBox(VBOX_LABEL_SPACING, traderOffer, currAmountText, hbox);
+        tradePane.prefHeight(139);
+        tradePane.setAlignment(Pos.CENTER);
+        tradePane.setPadding(new Insets(0, SIDE_PADDING, 0, SIDE_PADDING));
     }
     
-    @Override
-    protected void attackPressed(ActionEvent e) {
-        int currentRecord = encounter.getPlayer().getPoliceRecordScore();
-        int updatedRecord;
-        if (currentRecord > PoliceRecord.CLEAN.minScore()) {
-            updatedRecord = PoliceRecord.DUBIOUS.minScore();
-        } else {
-            updatedRecord = currentRecord + PoliceEncounter.ATTACK_POLICE_SCORE;
+    @FXML @Override
+    protected void attackPressed() {
+        if (encounter.state instanceof TradeState || encounter.state instanceof IgnoreState) {
+            int currentRecord = encounter.getPlayer().getPoliceRecordScore();
+            int updatedRecord;
+            if (currentRecord > PoliceRecord.CLEAN.minScore()) {
+                updatedRecord = PoliceRecord.DUBIOUS.minScore();
+            } else {
+                updatedRecord = currentRecord + TraderEncounter.ATTACK_TRADER_SCORE;
+            }
+
+            encounter.getPlayer().setPoliceRecordScore(updatedRecord);
         }
-        
-        encounter.getPlayer().setPoliceRecordScore(updatedRecord);
-        
-        boolean opponentHasNoWeapons = (encounter.getOpponent().getTotalWeaponStrength() <= 0);
-        if (opponentHasNoWeapons || ((TraderEncounter) encounter).playerReputationTooHigh()) {
-            //trader flees
-        } else {
-            super.attackPressed(e);
-        }
+        super.attackPressed();
+    }
+    
+    @FXML @Override
+    protected void surrenderPressed() {
+        throw new UnsupportedOperationException("You cannot surrender to a Trader");
     }
     
     @Override
     public void setEncounter(Encounter encounter) {
         super.setEncounter(encounter);
+    }
+
+    private boolean validateQuantityText(String text) {
+        boolean valid = true;
+        
+        try {
+            int value = Integer.parseInt(text);
+            if (value < 0) {
+                valid = false;
+            }
+        } catch (NumberFormatException e) {
+            valid = false;
+        }
+        
+        return valid || text.isEmpty();
+    }
+    
+    /**
+     * Handles the event where the trade button is pressed. Changes to show the
+     * offer the trader will make.
+     */
+    protected void acceptOfferPressed() {
+        borderPane.setCenter(tradePane);
         TraderEncounter traderEncounter = (TraderEncounter) encounter;
+        boolean traderBuying = ((TradeState) encounter.getState()).isTraderBuying();
+        
         
         traderOffer.setText("You are hailed with an offer to trade goods.");
-        
-        if (encounter.getState() != State.BUY && encounter.getState() != State.SELL) {
-            //do something
-            mainControl.goBackToWarpScreen();
-        }
         
         this.tradingGood = traderEncounter.getRandomTradeableItem();
         this.tradingPrice = traderEncounter.getRandomPrice(this.tradingGood);
 
         String traderMessage, currentQuantityDesc;
-        if (encounter.getState() == State.BUY) {
+        if (traderBuying) {
             traderMessage = String.format("The trader wants to buy %s, and offers ₪%d each.", tradingGood.toString(), tradingPrice);
             
             Cargo playerCargo = encounter.getPlayer().getCargo();
@@ -112,28 +173,12 @@ public class TraderEncounterController extends EncounterScreenController impleme
         });
     }
 
-    private boolean validateQuantityText(String text) {
-        boolean valid = true;
-        
-        try {
-            int value = Integer.parseInt(text);
-            if (value < 0) {
-                valid = false;
-            }
-        } catch (NumberFormatException e) {
-            valid = false;
-        }
-        
-        return valid || text.isEmpty();
-    }
-
     /**
-     * Handles the event where the trade button is pressed
-     * 
-     * @param event the action event
+     * Handles the event where the trade button is pressed after the trader
+     * has made an offer
      */
     @FXML
-    protected void acceptOffer(ActionEvent event) {
+    protected void tradePressed() {
         String quantityText = quantityField.getText();
         if (quantityText.isEmpty()) {
             quantityField.requestFocus();
@@ -151,7 +196,7 @@ public class TraderEncounterController extends EncounterScreenController impleme
             } else if (quantity > maxQuantity) {
                 mainControl.displayInfoMessage(null, "Illegal Amount", "The amount you have chosen is too large. Please choose an amount between 0 and " + maxQuantity + ".");
                 return;
-            } else if (encounter.getState() == State.BUY) {
+            } else if (((TradeState) encounter.getState()).isTraderBuying()) {
                 encounter.getPlayer().getCargo().removeItem(tradingGood, quantity);
                 encounter.getOpponent().getCargo().addItem(tradingGood, quantity, tradingPrice);
                 encounter.getPlayer().addCredits(quantity * tradingPrice);
@@ -168,17 +213,12 @@ public class TraderEncounterController extends EncounterScreenController impleme
                             + "The trader thanks you for doing business with him.", 
                             quantity, tradingGood.toString(), tradingPrice * quantity));
             }
-            mainControl.goBackToWarpScreen();
+            finishEncounter();
         } catch (NumberFormatException e) {
             mainControl.displayErrorMessage(null, "Incorrect entry!", "Please enter an integer!");
         } catch (CargoIsFullException e) {
             int remainingSlots =  encounter.getPlayer().getCargo().getRemainingCapacity();
             mainControl.displayWarningMessage(null, "Full Cargo!", "You only have room to buy " + remainingSlots + ".");
         }
-    }
-
-    @FXML
-    protected void rejectOffer(ActionEvent event) {
-        mainControl.goBackToWarpScreen();
     }
 }

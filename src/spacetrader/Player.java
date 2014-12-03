@@ -47,7 +47,7 @@ public class Player extends Trader implements Consumer, Serializable {
             int investor) {
         super(name, pilot, fighter, trader, engineer, investor);
         wallet = new Wallet();
-        ship = new PlayerShip(ShipType.GNAT);
+        ship = new PlayerShip(ShipType.GNAT, this);
         ship.getWeapons().addItem(new Weapon(WeaponType.PULSE));
     }
 
@@ -216,7 +216,7 @@ public class Player extends Trader implements Consumer, Serializable {
      * @return the player's current worth
      */
     public int getCurrentWorth() {
-        return wallet.getCredits() - wallet.getDebt() + ship.currentShipPrice();
+        return wallet.getCredits() - wallet.getDebt() + ship.currentShipPrice(getEffectiveSkill(Skill.TRADER));
     }
 
     /**

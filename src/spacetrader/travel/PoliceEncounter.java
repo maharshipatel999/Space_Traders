@@ -8,11 +8,11 @@ package spacetrader.travel;
 import spacetrader.Player;
 import spacetrader.PoliceRecord;
 import spacetrader.Reputation;
+import spacetrader.Tools;
 import static spacetrader.Tools.rand;
 import spacetrader.commerce.TradeGood;
 import spacetrader.planets.Planet;
 import spacetrader.ships.ShipType;
-import spacetrader.system.MainController;
 
 /**
  * Represents an encounter with the police.
@@ -23,9 +23,8 @@ public class PoliceEncounter extends Encounter {
 
     public static final int ATTACK_POLICE_SCORE = -3;
     public static final int KILL_POLICE_SCORE = -6;
-    
-    
-    public static final int TRAFFICKING = -1;
+
+    public static final int TRAFFICKING_PENALTY = -1;
     public static final int FLEE_FROM_INSPECTION = -2;
 
     private static final int MINIMUM_FINE_AMOUNT = 100;
@@ -36,22 +35,6 @@ public class PoliceEncounter extends Encounter {
     private static final double BAD_RECORD_CHANCE_OF_INSPECT = 1;
     private static final double CLEAN_RECORD_CHANCE_OF_INSPECT = .10;
     private static final double LAWFUL_RECORD_CHANCE_OF_INSPECT = .025;
-    
-    public static final String ATTACK_CONFIM_MSG = 
-       "If you attack the police, they know you are a die-hard criminal and will"
-        + " immediately label you as such.";
-    
-    private static final String NO_SURRENDER_MSG = "If you are too big a "
-            + "criminal, surrender is NOT an option anymore.";
-    
-    private static final String SURRENDER_MSG = "Your fine and time in prison "
-            + "will depend on how big a criminal you are. Your fine will be taken "
-            + "from your cash. If you don't have enough cash, the police will sell "
-            + "your ship to get it. If you have debts, the police will pay them from "
-            + "your credits (if you have enough) before you go to prison, because "
-            + "otherwise the interest would be staggering.";
-
-    private final int policeStrength;
 
     /**
      * Creates a new police encounter.
@@ -61,9 +44,9 @@ public class PoliceEncounter extends Encounter {
      * @param source the origin planet
      * @param destination the destination planet
      */
-    public PoliceEncounter(Player player, int clicks, Planet source, Planet destination) {
+    public PoliceEncounter(Player player, int clicks, Planet source,
+            Planet destination) {
         super(player, "/spacetrader/travel/PoliceEncounterScreen.fxml", clicks, "Police", source, destination);
-        this.policeStrength = destination.getPoliticalSystem().strengthPolice();
 
         int tries = 1;
         if (player.getPoliceRecord().compareTo(PoliceRecord.CRIMINAL) < 0) {
@@ -99,17 +82,17 @@ public class PoliceEncounter extends Encounter {
         if (playerRecord.ordinal() < PoliceRecord.DUBIOUS.ordinal()) {
             //If you're a criminal, the police will tend to attack
             if (!opponentIsCloaked() && getOpponent().getTotalWeaponStrength() <= 0) {
-                state = State.FLEE;
+                state = new FleeState(this);
             }
             if (hasAverageRep || randomScore > attackingProbability) {
-                state = State.ATTACK;
+                state = new AttackState(this);
             } else if (!opponentIsCloaked()) {
-                state = State.FLEE;
+                state = new FleeState(this);
             }
 
             // if you're suddenly stuck in a lousy ship, Police won't flee even if you have a fearsome reputation.
-            if (state == State.FLEE && playerShipIsWorse) {
-                state = State.ATTACK;
+            if (state instanceof FleeState && playerShipIsWorse) {
+                state = new AttackState(this);
             }
         } else if (playerRecord.ordinal() < PoliceRecord.CLEAN.ordinal()) {
             chanceOfInspection = BAD_RECORD_CHANCE_OF_INSPECT;
@@ -120,7 +103,7 @@ public class PoliceEncounter extends Encounter {
         }
 
         if (rand.nextDouble() < chanceOfInspection) {
-            state = State.INSPECTION;
+            state = new InspectionState(this);
         }
     }
 
@@ -133,19 +116,24 @@ public class PoliceEncounter extends Encounter {
      */
     @Override
     public boolean isIllegalShipType(ShipType type) {
-        return type.police() < 0 || policeStrength < type.police();
+        final int POLICE_STRENGTH = getDestination().getPoliticalSystem().strengthPolice();
+        return type.police() < 0 || POLICE_STRENGTH < type.police();
     }
-    
+
     @Override
-    protected void handleSurrender(MainController mainControl) {
-        if (getPlayer().getPoliceRecord().compareTo(PoliceRecord.PSYCHO) <= 0) {
-            mainControl.displayInfoMessage(null, "You May Not Surrender!", NO_SURRENDER_MSG);
-        } else {
-            boolean response = mainControl.displayYesNoConfirmation("Surrender?", "Do you really want to surrender?", SURRENDER_MSG);
-            if (response) {
-                mainControl.playerGetsArrested();
-            }
-        }
+    public void increaseShipsKilled() {
+        getPlayer().increasePoliceKills();
+        getPlayer().setPoliceRecordScore(getPlayer().getPoliceRecordScore() + KILL_POLICE_SCORE);
+    }
+
+    @Override
+    protected boolean canBeScoopedFrom() {
+        return false;
+    }
+
+    @Override
+    protected boolean playerCanSurrender() {
+        return true;
     }
 
     /**
@@ -154,34 +142,39 @@ public class PoliceEncounter extends Encounter {
      * the player's police record accordingly.
      *
      * @return true if the player was caught carrying illegal goods, false
-     * otherwise
+     *         otherwise
      */
     public boolean inspectPlayer() {
         //determine if player is carrying illegal goods
-        if (getPlayer().getShip().isCarryingIllegalGoods()) {
-            
-            //calculate the player's fine
-            int fine = determineFine();
-            getPlayer().removeCreditsForced(fine);
+        boolean carryingIllegals = getPlayer().getShip().isCarryingIllegalGoods();
+        int newRecord = getPlayer().getPoliceRecordScore();
+
+        if (carryingIllegals) {
+            newRecord += TRAFFICKING_PENALTY;
+
+            //fine the player
+            getPlayer().removeCreditsForced(determineFine());
 
             //remove the illegal goods
             getPlayer().getCargo().clearItem(TradeGood.FIREARMS);
             getPlayer().getCargo().clearItem(TradeGood.NARCOTICS);
-
-            //update police record
-            int newRecord = getPlayer().getPoliceRecordScore() + TRAFFICKING;
-            getPlayer().setPoliceRecordScore(newRecord);
-            return true;
         } else {
-            int newRecord = getPlayer().getPoliceRecordScore() - TRAFFICKING;
-            getPlayer().setPoliceRecordScore(newRecord);
-            return false;
+            newRecord -= TRAFFICKING_PENALTY;
         }
+        //update police record
+        getPlayer().setPoliceRecordScore(newRecord);
+
+        return carryingIllegals;
     }
 
     /**
      * Determined the amount to fine the player for carrying illegal goods.
-     * 
+     *
+     * @return the amount of the fine
+     */
+    /**
+     * Determined the amount to fine the player for carrying illegal goods.
+     *
      * @return the amount of the fine
      */
     public int determineFine() {
@@ -190,9 +183,7 @@ public class PoliceEncounter extends Encounter {
         if ((fine % FINE_ROUND) != 0) {
             fine += FINE_ROUND - (fine % FINE_ROUND);
         }
-        fine = Math.min(fine, MAXIMUM_FINE_AMOUNT);
-        fine = Math.max(fine, MINIMUM_FINE_AMOUNT);
-        return fine;
+        return Tools.applyBounds(fine, MINIMUM_FINE_AMOUNT, MAXIMUM_FINE_AMOUNT);
     }
 
     /**
@@ -206,19 +197,71 @@ public class PoliceEncounter extends Encounter {
         final int MIN_BRIBE = 100;
         final int MAX_BRIBE = 10000;
         final int ROUND_BRIBE = 100;  //what place to round the bribe to
-        
+
         int bribe = getPlayer().getCurrentWorth();
         bribe /= 10 + (10 * destination.getPoliticalSystem().bribeLevel());
-        
+
         //round up to nearest hundred place
         if (bribe % ROUND_BRIBE != 0) {
             bribe += (ROUND_BRIBE - (bribe % ROUND_BRIBE));
         }
         //enforce upper and lower bounds
-        bribe = Math.min(bribe, MAX_BRIBE);
-        bribe = Math.max(bribe, MIN_BRIBE);
-        
-        return bribe;
+        return Tools.applyBounds(bribe, MIN_BRIBE, MAX_BRIBE);
+    }
+    
+    /**
+     * This is called whenever the player attacks the police. Lowers the player's
+     * police record.
+     */
+    protected void updateRecordFromAttacking() {
+        //the player's police record should be no greater than the crook score.
+        int updatedRecord = Math.min(getPlayer().getPoliceRecordScore(), PoliceRecord.CROOK.minScore());
+        getPlayer().setPoliceRecordScore(updatedRecord + PoliceEncounter.ATTACK_POLICE_SCORE);
+    }
+
+    /**
+     * Updates the player's police record after they flee from an inspection.
+     */
+    protected void updateRecordFleeFromInspection() {
+        int updatedRecord;
+        if (getPlayer().getPoliceRecord().compareTo(PoliceRecord.DUBIOUS) >= 0) {
+            updatedRecord = PoliceRecord.DUBIOUS.minScore() - 1;
+        } else {
+            int currentRecord = getPlayer().getPoliceRecordScore();
+            updatedRecord = currentRecord + PoliceEncounter.FLEE_FROM_INSPECTION;
+        }
+        getPlayer().setPoliceRecordScore(updatedRecord);
+    }
+
+    /**
+     * Generally the police will only consider fleeing if they're really
+     * damaged. If the trader is also really damaged, they will sometimes flee,
+     * otherwise they will always flee.
+     *
+     * @return the next state, or null
+     */
+    @Override
+    protected EncounterState determineStateChange(int originalPlayerHull,
+            int originalOpponentHull) {
+        EncounterState nextState = null;
+        int playerHull = getPlayer().getShip().getHullStrength();
+        int opponentHull = getOpponent().getHullStrength();
+
+        int chanceOfFleeing; //percent probability that opponent flees
+
+        if (opponentHull < (originalOpponentHull / 2)) {
+            if (playerHull < (originalPlayerHull / 2)) {
+                chanceOfFleeing = 40;
+            } else {
+                chanceOfFleeing = 100;
+            }
+        } else {
+            chanceOfFleeing = 0;
+        }
+        if (rand.nextInt(100) < chanceOfFleeing) {
+            nextState = new FleeState(this);
+        }
+        return nextState;
     }
 
     @Override

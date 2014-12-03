@@ -63,7 +63,7 @@ public class InformationPresenter {
     public void displayInfoMessage(String msgTitle, String header,
             String message, Object ... args) {
         displayMessage(AlertType.INFORMATION,
-                msgTitle != null ? msgTitle : "Information", header, message);
+            (msgTitle != null ? msgTitle : "Information"), header, message, args);
     }
 
     /**
@@ -249,7 +249,7 @@ public class InformationPresenter {
         //Create Pane
         VBox pane = new VBox();
         pane.setAlignment(Pos.BOTTOM_RIGHT);
-
+        
         //Create Property Sheet
         PropertySheet propertySheet = new PropertySheet(list);
         propertySheet.setModeSwitcherVisible(false);
@@ -263,6 +263,7 @@ public class InformationPresenter {
         //add nodes to pane, and set the pane to the stage's scene.
         pane.getChildren().addAll(propertySheet, doneButton);
         Scene scene = new Scene(pane);
+        
         cheatStage.setScene(scene);
         cheatStage.show();
     }
