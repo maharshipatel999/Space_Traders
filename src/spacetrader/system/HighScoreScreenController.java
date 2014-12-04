@@ -42,16 +42,14 @@ public class HighScoreScreenController extends SceneController implements Initia
         HighScoreSlot s1 = null;
         HighScoreSlot s2 = null;
         HighScoreSlot s3 = null;
-        if (list == null) {
-            slot1.setText("No high score");
-            slot2.setText("No high score");
-            slot3.setText("No high score");
-        } else {
+        slot1.setText("No high score");
+        slot2.setText("No high score");
+        slot3.setText("No high score");
+        if (list != null) {
             s1 = list.getSlot1();
             s2 = list.getSlot2();
             s3 = list.getSlot3();
             if (s1 != null) {
-                System.out.println("s1 is not null");
                 slot1.setText(s1.getName() + "\n"
                             + "Survived " + s1.getDaysLived() + " days\n"
                             + "Worth " + s1.getWorth() + " credits\n"
