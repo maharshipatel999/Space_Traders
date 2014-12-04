@@ -131,7 +131,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
      * Goes to the warp screen traveling to the selected planet.
      */
     public void travelToPlanet() {
-        mainControl.departFromPlanet(this.currentPlanet, planetMap.selectedPlanet);
+        player.departFromPlanet(this.currentPlanet, planetMap.selectedPlanet, mainControl);
     }
 
     /**
@@ -171,7 +171,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
 
     @FXML
     protected void backToPlanet(ActionEvent event) {
-        mainControl.goToHomeScreen(player, currentPlanet);
+        mainControl.goToHomeScreen(currentPlanet);
     }
     
     @FXML
@@ -411,7 +411,8 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     Circle flightRadius = new Circle(planetIcon.getCenterX(), planetIcon.getCenterY(), maxTravelDistance, Color.TRANSPARENT);
                     flightRadius.setOpacity(0.6);
                     flightRadius.setStroke(Color.LAWNGREEN);
-                    flightRadiusPopUp = InformationPresenter.createTextPopOver("This is your current max range of travel.");
+                    flightRadiusPopUp = InformationPresenter.getInstance()
+                            .createTextPopOver("This is your current max range of travel.");
                     flightRadius.setOnMouseEntered((e) -> {
                         if ((Boolean) flightRadiusPopUp.getContentNode().getUserData() == false) {
                             flightRadiusPopUp.show(flightRadius);

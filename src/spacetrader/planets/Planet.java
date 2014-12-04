@@ -9,9 +9,12 @@ import java.io.Serializable;
 import java.util.Random;
 import javafx.geometry.Point2D;
 import spacetrader.Mercenary;
+import spacetrader.Player;
 import spacetrader.PoliceRecord;
 import spacetrader.commerce.Market;
 import spacetrader.commerce.PriceIncreaseEvent;
+import spacetrader.system.InformationPresenter;
+import spacetrader.system.MainController;
 
 /**
  * Represents a Solar System the player can visit.
@@ -80,6 +83,33 @@ public class Planet implements Serializable {
         this.market = new Market(this);
         this.wormhole = null;
         this.visited = false;
+    }
+    
+    /**
+     * Takes care of the actual act of going to a planet. Things that happens
+     * every time you go to a planet from a different planet should be put here.
+     *
+     * @param player the player arriving on this planet.
+     * @param mainControl the game's main controller
+     */
+    public void movePlayerLocation(Player player, MainController mainControl) {
+        player.setLocation(this);
+        this.visited = true;
+        this.market.setAllPrices(player);
+        mainControl.goToHomeScreen(this);
+        displayPriceIncreaseEvent();
+    }
+    
+    /**
+     * Display price increase event of this planet, if there is one.
+     */
+    public void displayPriceIncreaseEvent() {
+        if (this.priceIncEvent != PriceIncreaseEvent.NONE) {
+            InformationPresenter.getInstance()
+                    .displayInfoMessage(null, "Notice!", "%s is currently %s",
+                    this.name,
+                    this.priceIncEvent.desc().toLowerCase());
+        }
     }
 
     /**

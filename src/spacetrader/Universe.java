@@ -43,6 +43,7 @@ public class Universe implements Serializable {
     private final Set<String> planetNames = new HashSet<>();
     private final Set<Point2D> planetLocations = new HashSet<>(100);
     private final ArrayList<Planet> wormholePlanets;
+    private final Planet homePlanet;
 
     //The region of the universe where planets currently exist
     /**
@@ -61,6 +62,7 @@ public class Universe implements Serializable {
      * @param homePlanet the planet which the player should start on.
      */
     public Universe(Planet homePlanet) {
+        this.homePlanet = homePlanet;
         int planetAmount = rand.nextInt(PLANET_MAX_AMOUNT - PLANET_MIN_AMOUNT) + PLANET_MIN_AMOUNT;
         planets = new ArrayList<>(planetAmount);
 
@@ -168,6 +170,16 @@ public class Universe implements Serializable {
             }
         }
         return null;
+    }
+    
+    /**
+     * Gets the player's starting planet, the planet in the center of the
+     * universe.
+     * 
+     * @return the Home Planet
+     */
+    public Planet getHomePlanet() {
+        return homePlanet;
     }
 
     private boolean isOptimalDistance(Point2D point, Map<Planet, Integer> numAdjPlanets) {

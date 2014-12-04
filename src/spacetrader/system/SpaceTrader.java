@@ -6,9 +6,14 @@
 package spacetrader.system;
 
 import javafx.application.Application;
+import javafx.geometry.Point2D;
 import javafx.stage.Stage;
 import spacetrader.Player;
 import spacetrader.Universe;
+import spacetrader.planets.Planet;
+import spacetrader.ships.PlayerShip;
+import spacetrader.ships.Weapon;
+import spacetrader.ships.WeaponType;
 
 /**
  * This class keeps references to the game's Universe and Player, as well as the
@@ -17,16 +22,67 @@ import spacetrader.Universe;
  * @author nkaru_000, Caleb Stokols
  */
 public class SpaceTrader extends Application {
+    public static Debug debugStatus = Debug.OFF;
 
     private Universe universe;
     private Player player;
     private MainController mainControl;
     private int days;
+    private Difficulty difficulty;
+    
+    public enum Difficulty {
+        BEGINNER, EASY, NORMAL, HARD, IMPOSSIBLE;
+    }
+    
+    public enum Debug {
+        OFF, TRADER_ENCOUNTER, POLICE_ENCOUNTER, PIRATE_ENCOUNTER, METEORS
+    }
 
     @Override
     public void start(Stage primaryStage) {
+        InformationPresenter.getInstance().setStage(primaryStage);
         mainControl = new MainController(this, primaryStage);
+        difficulty = Difficulty.NORMAL;
+        days = 0;
         mainControl.goToWelcomeScreen();
+    }
+    
+    /**
+     * Sets the game's universe to a new universe and the game's player to a
+     * specified Player.
+     *
+     * @param universe the universe of the game
+     * @param player the player of the game
+     */
+    public void setUpGame(Universe universe, Player player) {
+        this.universe = universe;
+        this.player = player;
+        this.days = 0;
+        this.universe.getHomePlanet().movePlayerLocation(player, mainControl);
+        this.mainControl.goToHomeScreen(universe.getHomePlanet());
+    }
+    
+    /**
+     * Starts the game using user-defined values
+     *
+     * @param cheats the holder of the user-defined values
+     */
+    public void setUpGameWithCheats(AdminCheats cheats) {
+        debugStatus = cheats.getDebugMode();
+        Planet homePlanet = new Planet("Pallet", new Point2D(Universe.WIDTH / 2, Universe.HEIGHT / 2),
+                cheats.getTechLevel(), cheats.getResource(), cheats.getPoliticalSystem());
+        
+        Player cheatPlayer = new Player("LubMaster", 3, 3, 3, 3, 3);
+        cheatPlayer.setCredits(cheats.getInitialCredits());
+        cheatPlayer.setReputationScore(cheats.getReputation().minRep());
+        cheatPlayer.setPoliceRecordScore(cheats.getPoliceRecord().minScore());
+        
+        cheatPlayer.setShip(new PlayerShip(cheats.getStartingShip(), cheatPlayer));
+        if (cheatPlayer.getShip().getType().weaponSlots() > 0) {
+            cheatPlayer.getShip().getWeapons().addItem(new Weapon(WeaponType.PULSE));
+        }
+
+        setUpGame(new Universe(homePlanet), cheatPlayer);
     }
 
     /**
@@ -80,6 +136,18 @@ public class SpaceTrader extends Application {
         this.player = player;
     }
 
+    /**
+     * Resets the number of days that have passed to zero.
+     */
+    public void resetDays() {
+        days = 0;
+    }
+
+    /**
+     * Gets the current number of days that have passed.
+     *
+     * @return the number of days that have passed.
+     */
     public int getDays() {
         return days;
     }
@@ -89,6 +157,24 @@ public class SpaceTrader extends Application {
      */
     public void increaseDays() {
         days++;
+    }
+
+    /**
+     * Gets the game's difficulty level.
+     * 
+     * @return the game's difficulty level
+     */
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    /**
+     * Sets the game difficulty level.
+     * 
+     * @param difficulty the new difficulty level for this game.
+     */
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
     /**

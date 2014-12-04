@@ -7,6 +7,7 @@ package spacetrader.ships;
 
 import spacetrader.Player;
 import spacetrader.SkillList;
+import spacetrader.SkillList.Skill;
 import static spacetrader.Tools.rand;
 
 /**
@@ -74,10 +75,9 @@ public class PlayerShip extends SpaceShip {
     /**
      * Automatically repair a certain amount of the ship's hull by choosing a
      * random value based on the player's skill.
-     *
-     * @param engineerSkill the player's engineer skill value
      */
-    public void autoRepairHull(int engineerSkill) {
+    public void autoRepairHull() {
+        int engineerSkill = getEffectiveSkill(Skill.ENGINEER);
         //make sure engineer skill is at least 1
         int engineerRepairs = rand.nextInt(Math.max(1, engineerSkill));
         this.setHullStrength(this.getHullStrength() + engineerRepairs);

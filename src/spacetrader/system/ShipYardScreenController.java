@@ -302,7 +302,7 @@ public class ShipYardScreenController
 
     @FXML
     protected void goBackToHomeScreen() {
-        mainControl.goToHomeScreen(player, player.getLocation());
+        mainControl.goToHomeScreen(player.getLocation());
     }
 
     @FXML

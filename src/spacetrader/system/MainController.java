@@ -6,32 +6,20 @@
 package spacetrader.system;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.concurrent.Service;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import spacetrader.Player;
-import spacetrader.PoliceRecord;
-import spacetrader.SkillList.Skill;
 import spacetrader.Universe;
-import static spacetrader.Universe.HEIGHT;
-import static spacetrader.Universe.WIDTH;
-import spacetrader.commerce.PriceIncreaseEvent;
-import spacetrader.commerce.Wallet;
-import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.persistence.OverwriteScreenController;
 import spacetrader.persistence.ReloadGameScreenController;
 import spacetrader.planets.Planet;
-import spacetrader.ships.PlayerShip;
-import spacetrader.ships.Weapon;
-import spacetrader.ships.WeaponType;
+import spacetrader.system.SpaceTrader.Difficulty;
 import spacetrader.travel.BattleController;
 import spacetrader.travel.Encounter;
 import spacetrader.travel.EncounterScreenController;
@@ -48,16 +36,8 @@ public class MainController {
     private final SpaceTrader game;
     private final Stage stage;
     private RandomEventGenerator eventGenerator;
-    private InformationPresenter popUpControl;
 
     private WarpScreenController warpScreenControl;
-
-    public enum Debug {
-
-        OFF, TRADER_ENCOUNTER, POLICE_ENCOUNTER, PIRATE_ENCOUNTER, METEORS
-    }
-
-    public static Debug debugStatus = Debug.OFF;
 
     /**
      * Creates the MainController. MainController has a reference to the main
@@ -69,21 +49,24 @@ public class MainController {
     public MainController(SpaceTrader game, Stage stage) {
         this.game = game;
         this.stage = stage;
-        popUpControl = new InformationPresenter(stage);
-
-        //stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-        //    if (game.getUniverse() != null) {
-        //        if (event.getCode() == KeyCode.ESCAPE) {
-        //            goToStartScreen();
-        //        }
-        //    }
-        //});
+    }
+    
+    /**
+     * Gets the game's current difficulty.
+     * 
+     * @return the game's difficulty
+     */
+    public Difficulty getDifficulty() {
+        return game.getDifficulty();
     }
 
+    /**
+     * Display the popup for selecting admin cheats.
+     */
     public void displayAdminCheats() {
         AdminCheats cheats = new AdminCheats();
         Stage cheatStage = new Stage();
-        popUpControl.displayAdminCheats(cheats, cheatStage, (e) -> {
+        InformationPresenter.getInstance().displayAdminCheats(cheats, cheatStage, (e) -> {
             cheatStage.close();
             setUpGameWithCheats(cheats);
         });
@@ -95,20 +78,9 @@ public class MainController {
      * @param cheats the holder of the user-defined values
      */
     private void setUpGameWithCheats(AdminCheats cheats) {
-        debugStatus = cheats.getDebugMode();
-        Planet homePlanet = new Planet("Pallet", new Point2D(WIDTH / 2, HEIGHT / 2),
-                cheats.getTechLevel(), cheats.getResource(), cheats.getPoliticalSystem());
-        game.setUniverse(new Universe(homePlanet));
-
-        Player cheatPlayer = new Player("LubMaster", 3, 3, 3, 3, 3);
-        cheatPlayer.setCredits(cheats.getInitialCredits());
-        cheatPlayer.setShip(new PlayerShip(cheats.getStartingShip(), cheatPlayer));
-        cheatPlayer.getShip().getWeapons().addItem(new Weapon(WeaponType.PULSE));
-        cheatPlayer.setReputationScore(cheats.getReputation().minRep());
-        cheatPlayer.setPoliceRecordScore(cheats.getPoliceRecord().minScore());
-        game.setPlayer(cheatPlayer);
-
-        changePlayerLocation(homePlanet);
+        this.game.setUpGameWithCheats(cheats);
+        this.eventGenerator = new RandomEventGenerator(game.getPlayer(),
+                    game.getUniverse(), this);
     }
 
     /**
@@ -118,9 +90,9 @@ public class MainController {
      * @param player the player of the game
      */
     public void setUpGame(Player player) {
-        game.setUniverse(new Universe());
-        game.setPlayer(player);
-        changePlayerLocation(game.getUniverse().getPlanet("Pallet"));
+        this.game.setUpGame(new Universe(), player);
+        this.eventGenerator = new RandomEventGenerator(game.getPlayer(),
+                    game.getUniverse(), this);
     }
 
     /**
@@ -130,37 +102,23 @@ public class MainController {
      * should have their stock increased. The player fixes his startingShip's
      * hull strength. Random events can occur at this point.
      *
-     * @param source the planet the player left
      * @param destination the planet the player is arriving at
      */
-    public void arriveAtPlanet(Planet source, Planet destination) {
+    public void arriveAtPlanet(Planet destination) {
         game.increaseDays();
-
-        game.getPlayer().getShip().autoRepairHull(
-                game.getPlayer().getEffectiveSkill(Skill.ENGINEER));//auto repair ship
-
         game.getUniverse().updatePriceIncreaseEvents(); //update planet statuses
-
-        changePlayerLocation(destination); //update player's location
-
-        //display price increase event of current planet, if there is one
-        if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayInfoMessage(null, "Notice!", "%s is currently %s",
-                    destination.getName(),
-                    destination.getPriceIncEvent().desc().toLowerCase());
-        }
-
-        //make sure eventGenerator is instantiated
-        if (eventGenerator == null) {
-            eventGenerator = new RandomEventGenerator(game.getPlayer(),
-                    game.getUniverse(), this);
-        }
+        
+        game.getPlayer().getShip().autoRepairHull();//auto repair ship
+        destination.movePlayerLocation(game.getPlayer(), this); //update player's location
 
         //display and execute random event if there is one
         if (eventGenerator.eventOccurs()) {
             RandomEvent event = eventGenerator.getRandomEvent();
             event.doEvent();
             displayInfoMessage(null, "Special Event!", event.getMessage());
+            if (game.getPlayer().getShip().getHullStrength() <= 0) {
+                game.getPlayer().getShip().setHullStrength(1);
+            }
         }
     }
 
@@ -174,112 +132,10 @@ public class MainController {
      */
     public void specialArrivalAtPlanet(Planet destination) {
         game.getUniverse().updatePriceIncreaseEvents(); //update planet statuses
-        changePlayerLocation(destination); //update player's location
-
-        //display price increase event of current planet, if there is one
-        if (destination.getPriceIncEvent() != PriceIncreaseEvent.NONE) {
-            displayInfoMessage(null, "Notice!", "%s is currently %s",
-                    destination.getName(),
-                    destination.getPriceIncEvent().desc().toLowerCase());
-        }
+        destination.movePlayerLocation(game.getPlayer(), this); //update player's location
     }
 
-    /**
-     * The destination planet's prices should be recalculated. Determine if the
-     * player can pay their mercenary, interest, and insurance costs. If not,
-     * kick them back to the home screen. Adjust the player's police record and
-     * reputation. Deduct fuel from the player's startingShip. Finally, go to
-     * the warp screen.
-     *
-     * @param destination which planet the player is traveling to
-     * @param source which planet the player is leaving
-     */
-    public void departFromPlanet(Planet source, Planet destination) {
-        Player player = game.getPlayer();
-
-        try {
-            player.payDailyFees();
-        } catch (InsufficientFundsException e) {
-            String msgTitle, message;
-            switch (e.getMessage()) {
-                case "insurance":
-                    msgTitle = "Unable to Pay Insurance";
-                    message = "You do not have enough money to pay for your insurance!"
-                            + "\n\nUntil you stop your insurance at the bank, or aquire more money,"
-                            + " you will not be allowed to depart.";
-                    break;
-                case "mercenaries":
-                    msgTitle = "Unable to Pay Crew Salaries";
-                    message = "";
-                    break;
-                case "debt":
-                    msgTitle = "Too Much Debt";
-                    message = Wallet.MAX_DEBT_MSG;
-                    break;
-                default: //should never happen
-                    msgTitle = "Unknown Fee Error";
-                    message = "You have a mysterious fee which can not be paid. Sorry.";
-                    break;
-            }
-            //Go back to the Planet Home Screen
-            displayInfoMessage(null, msgTitle, message);
-            goToHomeScreen(player, player.getLocation());
-        }
-        //TODO
-        //player.updateNoClaim();
-        //if (player.getInsuranceCost() > 0) {
-        //increase number of no claims
-        //}
-
-        player.getShip().fullyRepairShields();
-
-        if (game.getPlayer().getDebt() > Wallet.DEBT_WARNING) {
-            displayWarningMessage(null, "Debt Warning!", "You get this warning because "
-                    + "your debt has exceeded 75000 credits. If you don't pay "
-                    + "back quickly, you may find yourself stuck in a system with"
-                    + " no way to leave. You have been warned.");
-        }
-
-        //Recalculate prices on destination planet
-        destination.getMarket().setAllPrices(game.getPlayer());
-
-        //Decrease police record score if very high
-        if (game.getDays() % 3 == 0 && player.getPoliceRecord()
-                .compareTo(PoliceRecord.CLEAN) > 0) {
-            int newRecord = player.getPoliceRecordScore() - 1;
-            player.setPoliceRecordScore(newRecord);
-        }
-
-        //Increase police record score if very low
-        if (game.getPlayer().getPoliceRecord()
-                .compareTo(PoliceRecord.DUBIOUS) < 0) {
-            int newRecord = player.getPoliceRecordScore() + 1;
-            player.setPoliceRecordScore(newRecord);
-        }
-
-        //Deduct fuel
-        int distance = (int) Universe.distanceBetweenPlanets(source, destination);
-        player.getShip().removeFuel(distance);
-
-        //Start doing encounters!
-        goToWarpScreen(source, destination);
-    }
-
-    /**
-     * Takes care of the actual act of going to a planet. Things that happens
-     * every time you go to a planet from a different planet should be put here.
-     *
-     * @param destination
-     */
-    public void changePlayerLocation(Planet destination) {
-        game.getPlayer().setLocation(destination);
-        destination.setVisited();
-        destination.getMarket().setAllPrices(game.getPlayer());
-        goToHomeScreen(game.getPlayer(), destination);
-    }
-
-    public void playerShipDestroyed() {
-        boolean playerKilled = true;
+    public void endGame(boolean playerKilled) {
         int daysLived = game.getDays();
         int playerWorth = game.getPlayer().getCurrentWorth();
         int difficulty = 2; //normal
@@ -297,6 +153,15 @@ public class MainController {
      */
     public void increaseDays() {
         game.increaseDays();
+    }
+    
+    /**
+     * Gets the number of turns that the player has completed.
+     * 
+     * @return the number of days that have passed
+     */
+    public int getDays() {
+        return game.getDays();
     }
 
     /**
@@ -375,11 +240,11 @@ public class MainController {
      *
      * @param planet the planet who's home screen we should view
      */
-    public void goToHomeScreen(Player player, Planet planet) {
+    public void goToHomeScreen(Planet planet) {
         HomeScreenController control;
         control = (HomeScreenController) extractControllerFromFXML(
                 "/spacetrader/planets/HomeScreen.fxml", stage);
-        control.setUpHomeScreen(player, planet);
+        control.setUpHomeScreen(game.getPlayer(), planet);
         stage.setTitle("Planet Home");
         stage.setScene(control.getScene());
     }
@@ -577,7 +442,7 @@ public class MainController {
      */
     public void displayInfoMessage(String msgTitle, String header,
             String message, Object... args) {
-        popUpControl.displayInfoMessage(msgTitle, header, message, args);
+        InformationPresenter.getInstance().displayInfoMessage(msgTitle, header, message, args);
     }
 
     /**
@@ -593,7 +458,7 @@ public class MainController {
      */
     public void displayWarningMessage(String msgTitle, String header,
             String message, Object... args) {
-        popUpControl.displayWarningMessage(msgTitle, header, message, args);
+        InformationPresenter.getInstance().displayWarningMessage(msgTitle, header, message, args);
     }
 
     /**
@@ -609,7 +474,7 @@ public class MainController {
      */
     public void displayErrorMessage(String msgTitle, String header,
             String message, Object... args) {
-        popUpControl.displayErrorMessage(msgTitle, header, message, args);
+        InformationPresenter.getInstance().displayErrorMessage(msgTitle, header, message, args);
     }
 
     /**
@@ -626,10 +491,8 @@ public class MainController {
      */
     public boolean displayYesNoConfirmation(String optionsTitle, String mastHead,
             String message, Object... args) {
-        message = String.format(message, args);
-        Optional<ButtonType> result = popUpControl.displayOptionsDialog(
-                optionsTitle, mastHead, message, ButtonType.NO, ButtonType.YES);
-        return result.isPresent() && result.get() == ButtonType.YES;
+        return InformationPresenter.getInstance()
+                .displayYesNoConfirmation(optionsTitle, mastHead, message, args);
     }
 
     /**
@@ -643,18 +506,8 @@ public class MainController {
      */
     public String displayCustomConfirmation(String optionsTitle, String mastHead,
             String message, String... buttonNames) {
-        Optional<ButtonType> result = popUpControl.displayOptionsDialog(
-                optionsTitle, mastHead, message, buttonNames);
-        if (!result.isPresent()) {
-            return "";
-        }
-        for (String name : buttonNames) {
-            if (name.equals(result.get().getText())) {
-                return name;
-            }
-        }
-        return "";
-
+        return InformationPresenter.getInstance()
+                .displayCustomConfirmation(optionsTitle, mastHead, message, buttonNames);
     }
 
     /**
@@ -664,7 +517,7 @@ public class MainController {
      * @param service
      */
     public void displayProgess(String progressTitle, Service service) {
-        popUpControl.displayProgess(progressTitle, service);
+        InformationPresenter.getInstance().displayProgess(progressTitle, service);
     }
 
     /**
@@ -677,10 +530,9 @@ public class MainController {
     public void displaySaveProgress(String progressTitle,
             String updateMessage, String finishMessage) {
 
-        popUpControl.displaySaveProgress(progressTitle, updateMessage, finishMessage,
+        InformationPresenter.getInstance().displaySaveProgress(progressTitle, updateMessage, finishMessage,
                 (WorkerStateEvent e) -> {
-                    goToHomeScreen(game.getPlayer(),
-                            game.getPlayer().getLocation());
+                    goToHomeScreen(game.getPlayer().getLocation());
                 });
     }
 }
