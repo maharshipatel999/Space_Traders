@@ -323,6 +323,11 @@ public class ShipYardScreenController
             updateEscapePodText();
         }
     }
+    
+    @FXML
+    protected void goToCrewInfoScreen() {
+        
+    }
 
     /**
      * Initializes the controller class.
