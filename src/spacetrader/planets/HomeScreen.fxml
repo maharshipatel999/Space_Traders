@@ -142,7 +142,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#openStartScreen" text="View Player Information" textAlignment="CENTER" wrapText="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#openStartScreen" text="Player Info" textAlignment="CENTER" wrapText="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Copperplate Gothic Bold" size="15.0" />
                </font>
@@ -163,6 +163,14 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+            </Button>
+            <Button fx:id="quit" mnemonicParsing="false" onAction="#quit" prefHeight="27.0" prefWidth="95.0" text="Quit" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="45.0" right="50.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="15.0" />
+               </font>
             </Button>
          </children>
          <padding>

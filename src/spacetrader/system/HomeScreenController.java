@@ -29,6 +29,8 @@ public class HomeScreenController extends SceneController implements Initializab
     private Label planetName, planetInfo;
     @FXML
     private Button saveGame;
+    @FXML
+    private Button quit;
 
     private Planet planet;
     private Player player;
@@ -106,5 +108,17 @@ public class HomeScreenController extends SceneController implements Initializab
     @FXML
     public void goToFinanceScreen() {
         mainControl.goToFinanceScreen(planet);
+    }
+    
+    @FXML
+    public void quit() {
+        String quitConfirm = "Are you sure you would like to quit the game? "
+                + "If you have not saved, any progress "
+                + "made until now will be lost!";
+        boolean response = mainControl.displayYesNoConfirmation(
+                "Quit Confirmation", null, quitConfirm);
+        if (response) {
+            mainControl.goToWelcomeScreen();
+        }
     }
 }
