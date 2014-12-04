@@ -65,7 +65,7 @@
                 </Line>
                 <HBox alignment="BOTTOM_CENTER" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <children>
-                        <Button fx:id="incFuelButton" mnemonicParsing="false" onAction="#increaseFuel" prefHeight="25.0" text="Increase Full" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <Button fx:id="incFuelButton" mnemonicParsing="false" onAction="#increaseFuel" prefHeight="25.0" text="Increase Fuel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>

@@ -135,6 +135,13 @@ public class SpaceMapScreenController extends SceneController implements Initial
     }
 
     /**
+     * Wormhole travels to the selected planet.
+     */
+    public void wormholeToPlanet(Planet destination) {
+        player.specialDepartFromPlanet(this.currentPlanet, destination, mainControl);
+    }
+    
+    /**
      * !!! When the pane is revealed the right part of the map is unviewable!!!
      * need to fix Reveals the detail pane with the specified planet's
      * information.
@@ -393,6 +400,20 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     
                     wormholeIcon.setOnMouseEntered((e) -> this.setCursor(Cursor.HAND));
                     wormholeIcon.setOnMouseExited((e) -> this.setCursor(Cursor.OPEN_HAND));
+                    
+                    wormholeIcon.setOnMousePressed((event) -> {
+                        if (planet == currentPlanet) {
+                            StringBuilder msg = new StringBuilder();
+                            msg.append("Are you sure you want to use this wormhole to travel to ");
+                            msg.append(planet.getWormhole().getDestination().getName());
+                            if (mainControl.displayYesNoConfirmation("Wormhole Message",
+                                    "Confirm Wormhole Travel", msg.toString())) {
+                                wormholeToPlanet(planet.getWormhole().getDestination());
+                            }
+                        }
+                        event.consume();
+                    });
+                    
                 }
 
                 //Create text for the name of each planet.

@@ -132,6 +132,20 @@ public class Player extends Trader implements Consumer, Serializable {
     }
     
     /**
+     * This is like the "departFromPlanet" method, but is only used when
+     * traveling via wormhole. Since this is the case, we will only be recalculating
+     * the destination planet's prices. All other events do not occur.
+     *
+     * @param destination which planet the player is traveling to
+     * @param source which planet the player is leaving
+     * @param mainControl the game's main controller
+     */
+    public void specialDepartFromPlanet(Planet source, Planet destination, MainController mainControl) {
+        destination.getMarket().setAllPrices(this);
+        mainControl.specialArrivalAtPlanet(destination);
+    }
+    
+    /**
      * return Skill Player is using
      *
      * @param type Specific skill type of Player
