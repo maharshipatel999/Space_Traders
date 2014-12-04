@@ -17,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import spacetrader.HighScoreList;
+import spacetrader.HighScoreSlot;
 import spacetrader.Player;
 import spacetrader.PoliceRecord;
 import spacetrader.SkillList.Skill;
@@ -49,6 +51,7 @@ public class MainController {
     private final Stage stage;
     private RandomEventGenerator eventGenerator;
     private InformationPresenter popUpControl;
+    private HighScoreList list;
 
     private WarpScreenController warpScreenControl;
 
@@ -287,9 +290,16 @@ public class MainController {
         int score = getFinalScore(playerKilled, daysLived, playerWorth, difficulty);
 
         displayInfoMessage("Game Over", "Your ship was destroyed!", "You have died a most bloody death.\n\n"
-                + "You final score is %d! You played for %d turns. The overall "
+                + "Your final score is %d! You played for %d turns. The overall "
                 + "worth of your trader was ₪%d. Congrats!", score, daysLived, playerWorth);
-        goToWelcomeScreen();
+        
+        this.list = new HighScoreList();
+        if (list.updateSlots(game, score)) {
+            System.out.println("updateSlots returned true");
+            goToHighScoreScreen();
+        } else {
+            goToWelcomeScreen();
+        }
     }
 
     /**
@@ -357,6 +367,14 @@ public class MainController {
         stage.setScene(control.getScene());
         stage.setTitle("Space Traders!");
         stage.show();
+    }
+    
+    public void goToHighScoreScreen() {
+        HighScoreScreenController control;
+        control = (HighScoreScreenController) extractControllerFromFXML(
+                "/spacetrader/HighScoreScreen.fxml", stage);
+        stage.setScene(control.getScene());
+        control.setUpHighScoreScreen(list);
     }
 
     /**

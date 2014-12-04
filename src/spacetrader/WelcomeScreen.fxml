@@ -25,7 +25,7 @@
       </Text>
       <StackPane prefHeight="147.0" prefWidth="735.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="70.0" stroke="#9de1c7" strokeType="INSIDE" strokeWidth="0.0" width="568.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="70.0" stroke="#9de1c7" strokeType="INSIDE" strokeWidth="0.0" width="618.0">
                <fill>
                   <RadialGradient centerX="0.35" centerY="0.5857142857142857" focusDistance="0.20930232558139528" radius="1.0">
                      <stops>
@@ -37,7 +37,7 @@
             </Rectangle>
             <HBox alignment="CENTER" prefHeight="127.0" prefWidth="735.0" spacing="20.0">
                <children>
-                  <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#startNewGame" text="Start a New Game!">
+                  <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#startNewGame" prefHeight="38.0" prefWidth="197.0" text="New Game">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>
@@ -45,7 +45,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadGame" text="Reload a Saved Game!">
+                  <Button fx:id="highScores" mnemonicParsing="false" onAction="#goToHighScoreScreen" text="High Scores">
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadGame" prefHeight="38.0" prefWidth="184.0" text="Reload Game">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>

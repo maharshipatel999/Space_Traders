@@ -23,6 +23,8 @@ public class WelcomeScreenController extends SceneController implements Initiali
     private Button easterEgg;
     @FXML
     private Button reloadButton;
+    @FXML
+    private Button highScores;
 
     @FXML
     protected void startNewGame(ActionEvent event) {
@@ -45,4 +47,11 @@ public class WelcomeScreenController extends SceneController implements Initiali
     protected void layEggs(ActionEvent event) {
         mainControl.displayAdminCheats();
     }
+    
+    @FXML
+    public void goToHighScoreScreen() {
+        mainControl.goToHighScoreScreen();
+    }
+    
+    
 }

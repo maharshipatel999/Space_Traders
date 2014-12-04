@@ -7,6 +7,7 @@
 package spacetrader;
 
 import java.io.Serializable;
+import spacetrader.system.SpaceTrader;
 
 /**
  *
@@ -19,9 +20,26 @@ public class HighScoreSlot implements Serializable {
     private int daysLived;
     private int overallWorth;
     
-    public HighScoreSlot(Player player) {
-        this.playerName = player.getName();
-        this.overallWorth = player.getCurrentWorth();
+    public HighScoreSlot(SpaceTrader game, int score) {
+        this.playerName = game.getPlayer().getName();
+        this.overallWorth = game.getPlayer().getCurrentWorth();
+        this.daysLived = game.getDays();
+        this.overallScore = score;
     }
     
+    public String getName() {
+        return this.playerName;
+    }
+    
+    public int getScore() {
+        return this.overallScore;
+    }
+    
+    public int getDaysLived() {
+        return this.daysLived;
+    }
+    
+    public int getWorth() {
+        return this.overallWorth;
+    }
 }

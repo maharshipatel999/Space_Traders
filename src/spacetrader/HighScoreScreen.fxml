@@ -16,21 +16,21 @@
             <Image url="@../resources/images/space%20image.jpg" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="250.0" layoutY="69.0" prefHeight="475.0" prefWidth="746.0" spacing="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="250.0" layoutY="69.0" prefHeight="475.0" prefWidth="746.0" spacing="80.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label fx:id="slot1" text="Label" textFill="WHITE">
+            <Label fx:id="slot1" text="Label" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Copperplate Gothic Light" size="25.0" />
+                  <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="slot2" text="Label" textFill="WHITE">
+            <Label fx:id="slot2" text="Label" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Copperplate Gothic Light" size="25.0" />
+                  <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="slot3" text="Label" textFill="WHITE">
+            <Label fx:id="slot3" text="Label" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Copperplate Gothic Light" size="25.0" />
+                  <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
             </Label>
          </children>
