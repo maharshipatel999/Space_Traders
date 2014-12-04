@@ -23,19 +23,19 @@
                               <Insets />
                            </VBox.margin>
                            <font>
-                              <Font size="21.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
                         <HBox>
                            <children>
                               <Label fx:id="debt1" text="Current Debt: ">
                                  <font>
-                                    <Font size="21.0" />
+                                    <Font size="18.0" />
                                  </font>
                               </Label>
                               <Label fx:id="debt" text="debt">
                                  <font>
-                                    <Font size="21.0" />
+                                    <Font size="18.0" />
                                  </font>
                               </Label>
                            </children>
@@ -64,7 +64,7 @@
                               <TextField fx:id="payBackAmt" maxWidth="80.0" prefHeight="31.0" prefWidth="80.0" />
                            </children>
                         </HBox>
-                        <Button fx:id="payLoan" mnemonicParsing="false" onAction="#payLoan" text="Pay Back Debt">
+                        <Button fx:id="payLoan" mnemonicParsing="false" onAction="#payLoan" prefHeight="28.0" prefWidth="143.0" text="Pay Back Debt">
                            <font>
                               <Font name="Copperplate Gothic Bold" size="15.0" />
                            </font>
@@ -83,7 +83,7 @@
                               <TextField fx:id="loanAmt" maxWidth="80.0" prefHeight="31.0" prefWidth="71.0" />
                            </children>
                         </HBox>
-                        <Button fx:id="getLoan" mnemonicParsing="false" onAction="#buyLoan" text="Get Loan">
+                        <Button fx:id="getLoan" mnemonicParsing="false" onAction="#buyLoan" prefHeight="28.0" prefWidth="98.0" text="Get Loan">
                            <font>
                               <Font name="Copperplate Gothic Bold" size="15.0" />
                            </font>
@@ -137,7 +137,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Button fx:id="buyInsurance" alignment="CENTER" mnemonicParsing="false" onAction="#buyInsurance" text="Buy Insurance">
+                  <Button fx:id="buyInsurance" alignment="CENTER" mnemonicParsing="false" onAction="#buyInsurance" prefHeight="28.0" prefWidth="143.0" text="Buy Insurance">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="15.0" />
                      </font>
@@ -149,7 +149,7 @@
             </VBox>
          </children>
       </VBox>
-      <Button fx:id="backButton" layoutX="32.0" layoutY="449.0" mnemonicParsing="false" onAction="#goBackToHomeScreen" text="Back" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
+      <Button fx:id="backButton" layoutX="32.0" layoutY="449.0" mnemonicParsing="false" onAction="#goBackToHomeScreen" prefHeight="28.0" prefWidth="64.0" text="Back" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
          <font>
             <Font name="Copperplate Gothic Bold" size="15.0" />
          </font>

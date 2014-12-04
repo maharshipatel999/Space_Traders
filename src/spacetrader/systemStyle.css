@@ -8,3 +8,20 @@ and open the template in the editor.
     Author     : nkaru_000
 */
 
+*{
+    -fx-font-family: "Copperplate Gothic Light";
+    -fx-base: #00CCFF;
+    -fx-background: #666666;
+    -fx-focus-color: #669966;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    //-fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+
+#rectangle{
+    -fx-fill: #666666;
+}
+
+

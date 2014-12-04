@@ -50,7 +50,7 @@
       </Text>
       <VBox alignment="CENTER" layoutY="61.0" prefHeight="415.0" prefWidth="655.0" spacing="30.0">
          <children>
-            <Button fx:id="player1" alignment="CENTER" mnemonicParsing="false" onAction="#overwritePlayer1" text="Game 1">
+            <Button fx:id="player1" alignment="CENTER" mnemonicParsing="false" onAction="#overwritePlayer1" prefHeight="38.0" prefWidth="104.0" text="Game 1">
                <font>
                   <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
@@ -61,7 +61,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="player2" alignment="CENTER" mnemonicParsing="false" onAction="#overwritePlayer2" text="Game 2">
+            <Button fx:id="player2" alignment="CENTER" mnemonicParsing="false" onAction="#overwritePlayer2" prefHeight="38.0" prefWidth="104.0" text="Game 2">
                <font>
                   <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
@@ -69,7 +69,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="player3" alignment="CENTER" mnemonicParsing="false" onAction="#overwritePlayer3" text="Game 3">
+            <Button fx:id="player3" alignment="CENTER" mnemonicParsing="false" onAction="#overwritePlayer3" prefHeight="38.0" prefWidth="104.0" text="Game 3">
                <font>
                   <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
@@ -82,7 +82,7 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <Button layoutX="21.0" layoutY="404.0" mnemonicParsing="false" onAction="#goBack" prefWidth="85.0" text="Back" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+      <Button layoutX="21.0" layoutY="404.0" mnemonicParsing="false" onAction="#goBack" prefHeight="44.0" prefWidth="85.0" text="Back" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
          <font>
             <Font size="20.0" />
          </font>

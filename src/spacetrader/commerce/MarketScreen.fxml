@@ -503,7 +503,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label prefHeight="17.0" prefWidth="42.0" text="Good" GridPane.columnIndex="1">
+                        <Label prefHeight="17.0" prefWidth="42.0" text="Good" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -905,7 +905,7 @@
    <bottom>
     <AnchorPane maxHeight="90.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="750.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="497.0" layoutY="6.0" mnemonicParsing="false" onAction="#completeTransaction" prefHeight="38.0" prefWidth="339.0" text="Complete Transaction" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0">
+            <Button layoutX="497.0" layoutY="6.0" mnemonicParsing="false" onAction="#completeTransaction" prefHeight="38.0" prefWidth="287.0" text="Complete Transaction" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0">
                <font>
                   <Font name="Copperplate Gothic Bold" size="20.0" />
                </font>
@@ -928,7 +928,7 @@
    <right>
       <StackPane prefHeight="526.0" prefWidth="216.0" BorderPane.alignment="CENTER">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dee1e4" height="584.0" stroke="WHITE" strokeType="INSIDE" width="212.0">
+            <Rectangle id="rectangle" arcHeight="5.0" arcWidth="5.0" fill="#dee1e4" height="584.0" stroke="WHITE" strokeType="INSIDE" width="212.0">
                <StackPane.margin>
                   <Insets />
                </StackPane.margin>
@@ -1018,7 +1018,7 @@
       </StackPane>
    </right>
    <top>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the Marketplace " BorderPane.alignment="CENTER">
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the Marketplace " BorderPane.alignment="CENTER">
          <font>
             <Font size="32.0" />
          </font>

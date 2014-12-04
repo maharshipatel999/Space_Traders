@@ -33,6 +33,7 @@ public abstract class SceneController {
      */
     public void setScene(Scene scene) {
         this.rootScene = scene;
+        rootScene.getStylesheets().add("/spacetrader/systemStyle.css");
     }
     
     /**

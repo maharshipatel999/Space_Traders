@@ -38,7 +38,10 @@
                      </image>
                      <effect>
                         <ColorAdjust contrast="1.0" />
-                     </effect></ImageView>
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
                </graphic>
                <font>
                   <Font name="Copperplate Gothic Bold" size="15.0" />
@@ -49,7 +52,10 @@
                   <ImageView fitHeight="89.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/images/stockmarket.png" />
-                     </image></ImageView>
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
                </graphic>
                <font>
                   <Font name="Copperplate Gothic Bold" size="15.0" />
@@ -142,7 +148,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#openStartScreen" text="Player Info" textAlignment="CENTER" wrapText="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#openStartScreen" prefHeight="28.0" prefWidth="120.0" text="Player Info" textAlignment="CENTER" wrapText="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Copperplate Gothic Bold" size="15.0" />
                </font>
@@ -153,7 +159,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="saveGame" mnemonicParsing="false" onAction="#goToOverwrite" text="Save game" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button fx:id="saveGame" mnemonicParsing="false" onAction="#goToOverwrite" prefHeight="28.0" prefWidth="108.0" text="Save game" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Copperplate Gothic Bold" size="15.0" />
                </font>
@@ -171,6 +177,9 @@
                <font>
                   <Font name="Copperplate Gothic Bold" size="15.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
          <padding>

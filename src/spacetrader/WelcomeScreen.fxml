@@ -13,12 +13,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="363.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.WelcomeScreenController">
    <children>
-      <ImageView fitHeight="547.0" fitWidth="735.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="button" fitHeight="547.0" fitWidth="735.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/images/space%20image.jpg" />
          </image>
       </ImageView>
-      <Text fill="#74ad72" fontSmoothingType="LCD" layoutX="29.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Space Traders" wrappingWidth="676.515625">
+      <Text fill="#74ad72" fontSmoothingType="LCD" layoutX="29.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Space Traders" textAlignment="CENTER" wrappingWidth="676.515625">
          <font>
             <Font name="Imprint MT Shadow" size="110.0" />
          </font>
@@ -37,7 +37,7 @@
             </Rectangle>
             <HBox alignment="CENTER" prefHeight="127.0" prefWidth="735.0" spacing="20.0">
                <children>
-                  <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#startNewGame" prefHeight="38.0" prefWidth="197.0" text="New Game">
+                  <Button id="button" fx:id="newGameButton" mnemonicParsing="false" onAction="#startNewGame" prefHeight="38.0" prefWidth="197.0" text="New Game" textAlignment="CENTER">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>
@@ -45,7 +45,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="highScores" mnemonicParsing="false" onAction="#goToHighScoreScreen" text="High Scores">
+                  <Button id="button" fx:id="highScores" mnemonicParsing="false" onAction="#goToHighScoreScreen" prefHeight="38.0" prefWidth="167.0" text="High Scores" HBox.hgrow="NEVER">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>
