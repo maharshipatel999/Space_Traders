@@ -155,6 +155,20 @@ public class MainController {
         game.increaseDays();
     }
     
+    public void goToMeteorScreen(Planet source, Planet destination) {        
+        MeteorScreenController control;
+        control = (MeteorScreenController) extractControllerFromFXML("/spacetrader/travel/MeteorScreen.fxml", stage);
+        control.setMeteorScreen(control.getScene());
+        stage.setTitle("Watch out for Meteors in the SolarSpace!");
+        control.setMainControl(this);
+        control.setPlayer(game.getPlayer(), source, destination);
+        control.runGame();
+
+                stage.setScene(control.getScene());
+
+
+    }
+    
     /**
      * Gets the number of turns that the player has completed.
      * 

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.MeteorScreenController">
+   <children>
+      <ImageView fitHeight="375.0" fitWidth="650.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/images/travelScreen.jpg" />
+         </image>
+      </ImageView>
+      <HBox layoutY="-9.0" prefHeight="32.0" prefWidth="600.0">
+         <children>
+            <Text layoutX="20.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player:" translateX="20.0" translateY="10.0" x="20.0" y="10.0" />
+            <Text fx:id="playerName" strokeType="OUTSIDE" strokeWidth="0.0" text="(name)" translateX="25.0" translateY="10.0" x="23.0" y="10.0" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Health:" translateX="100.0" translateY="10.0" x="40.0" y="10.0" />
+            <Text fx:id="playerHealth" strokeType="OUTSIDE" strokeWidth="0.0" text="(amtHlth)" translateX="102.0" translateY="10.0" x="20.0" y="10.0" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/" translateX="105.0" translateY="10.0" x="20.0" y="10.0" />
+            <Text fx:id="playerTotalHealth" strokeType="OUTSIDE" strokeWidth="0.0" text="(totalHealth)" translateX="110.0" translateY="10.0" x="20.0" y="10.0" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ShipType:" translateX="220.0" translateY="10.0" x="20.0" y="10.0" />
+            <Text fx:id="playerShipType" strokeType="OUTSIDE" strokeWidth="0.0" text="(shipType)" translateX="225.0" translateY="10.0" x="20.0" y="10.0" />
+         </children>
+      </HBox>
+      <ImageView fitHeight="375.0" fitWidth="50.0" layoutX="550.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/images/finishLine.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="playership" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+         <image>
+            <Image url="@../../resources/images/ship_sprites/bumblebee.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderOne" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderTwo" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderThree" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderFour" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderFive" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderSix" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderSeven" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderEight" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderNine" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderTen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderEleven" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderTwelve" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderThirteen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+
+      <ImageView fx:id="boulderFourteen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+
+      <ImageView fx:id="boulderFifteen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderSixteen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderSeventeen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>      <ImageView fx:id="boulderEighteen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>      <ImageView fx:id="boulderNineteen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>      <ImageView fx:id="boulderTwenty" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>      <ImageView fx:id="boulderTwentyOne" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" y="0">
+         <image>
+            <Image url="@../../resources/images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="death" fitHeight="375.0" fitWidth="273.0" layoutX="155.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/images/sendscene.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="winner" fitHeight="375.0" fitWidth="513.0" layoutX="69.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/images/winscene.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="blastOne" fitHeight="25.0" fitWidth="37.0" layoutX="212.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/images/explosion.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="blastTwo" fitHeight="25.0" fitWidth="37.0" layoutX="240.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/images/explosion.gif" />
+         </image>
+      </ImageView>
+
+   </children>
+</AnchorPane>

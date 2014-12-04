@@ -89,7 +89,7 @@ public class WarpScreenController extends SceneController implements Initializab
             //}
         } else {
             pauseScreen();
-            mainControl.arriveAtPlanet(destination);
+            mainControl.goToMeteorScreen(source, destination);
         }
     }
 
