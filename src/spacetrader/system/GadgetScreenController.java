@@ -238,10 +238,6 @@ public class GadgetScreenController
             }
             shipEquipmentSlots[type].addItem(selectedIcon.item.clone()); //gives the player a copy of that item.
 
-            if (selectedIcon.item.equals(new Gadget(GadgetType.EXTRA_CARGO))) {
-                player.getCargo().increaseCapacity();
-            }
-
             msgTitle = "Transaction Successful";
             msgText = String.format("You successfully bought a %s for ₪%d!", nameText.getText(), cost);
         } catch (SlotsAreFullException e) {
@@ -276,11 +272,17 @@ public class GadgetScreenController
                 break;
             }
         }
-        shipEquipmentSlots[type].removeAtIndex(slot);
-
-        if (selectedIcon.item.equals(new Gadget(GadgetType.EXTRA_CARGO))) {
-            player.getCargo().decreaseCapacity();
+        if (shipEquipmentSlots[type].getItem(slot).equals(new Gadget(GadgetType.EXTRA_CARGO))) {
+            if (player.getCargo().getRemainingCapacity() < Gadget.EXTRA_CARGO_AMT) {
+                mainControl.displayErrorMessage("Unable To Sell Item", "Cargo Slots In Use!", "You cannot sell"
+                    + " your " + GadgetType.EXTRA_CARGO.toString() + " since your extra cargo slots"
+                    + " are currently in use. Please try again after"
+                    + " opening up more slots.");
+                    return;
+            }
         }
+         
+        shipEquipmentSlots[type].removeAtIndex(slot);
 
         int revenue = sellingPrice(selectedIcon.item);
         player.addCredits(revenue);

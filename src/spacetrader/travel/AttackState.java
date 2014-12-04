@@ -52,7 +52,7 @@ public class AttackState extends EncounterState {
     
     @Override
     public String getNextActionText() {
-        if (firstDisplay && (encounter instanceof PirateEncounter) && encounter.getPlayer().getPoliceRecord().compareTo(PoliceRecord.CRIMINAL) > 0) {
+        if (firstDisplay && (encounter instanceof PoliceEncounter) && encounter.getPlayer().getPoliceRecord().compareTo(PoliceRecord.CRIMINAL) > 0) {
             return "The police hail they want you to surrender.";
         } else {
             return "Your opponent attacks.";

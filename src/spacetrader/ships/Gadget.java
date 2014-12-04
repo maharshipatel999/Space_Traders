@@ -13,6 +13,8 @@ import spacetrader.planets.TechLevel;
  */
 public class Gadget extends Equipment {
 
+    public static final int EXTRA_CARGO_AMT = 5;
+    
     private GadgetType type;
 
     /**

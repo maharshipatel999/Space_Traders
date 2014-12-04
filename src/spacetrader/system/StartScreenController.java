@@ -39,34 +39,12 @@ import spacetrader.ships.ShipType;
 public class StartScreenController extends SceneController implements Initializable {
 
     @FXML
-    private Label playerName;
-    @FXML
-    private Label playerMoney;
-    @FXML
-    private Label playerDebt;
-    @FXML
-    private Label playerPoliceRecord;
-    @FXML
-    private Label playerRep;
-    @FXML
-    private Label playerTotalKills;
-    @FXML
-    private Label playerPilot;
-    @FXML
-    private Label playerTrader;
-    @FXML
-    private Label playerFighter;
-    @FXML
-    private Label playerEngineer;
-    @FXML
-    private Label playerInvestor;
+    private Label playerName, playerMoney, playerDebt, playerPoliceRecord,
+            playerRep, playerTotalKills, playerPilot, playerTrader,
+            playerFighter, playerEngineer, playerInvestor;
 
     @FXML
-    private Label insuranceMessage;
-    @FXML
-    private Label insuranceDailyCost;
-    @FXML
-    private Label insuranceNoClaim;
+    private Label insuranceMessage, insuranceDailyCost, insuranceNoClaim;
     @FXML
     private HBox insuranceInfoBox;
 
@@ -76,21 +54,10 @@ public class StartScreenController extends SceneController implements Initializa
     private GridPane inventory;
 
     @FXML
-    private Label shipType;
+    private Label shipType, shipFuel, shipHull,
+            shipWeaponSlots, shipShieldSlots, shipGadgetSlots;
     @FXML
-    private Label shipFuel;
-    @FXML
-    private Label shipHull;
-    @FXML
-    private Label shipWeaponSlots;
-    @FXML
-    private Label shipShieldSlots;
-    @FXML
-    private Label shipGadgetSlots;
-    @FXML
-    private ProgressBar fuelBar;
-    @FXML
-    private ProgressBar hullBar;
+    private ProgressBar fuelBar, hullBar;
 
     private Player player;
     private Stage startStage;
@@ -120,16 +87,16 @@ public class StartScreenController extends SceneController implements Initializa
         playerRep.setText(player.getReputation().toString());
         playerPoliceRecord.setText(player.getPoliceRecord().toString());
         playerTotalKills.setText(String.valueOf(player.getTraderKills() + player.getPoliceKills() + player.getPirateKills()));
-        playerPilot.setText(String.valueOf(player.getSkill(Skill.PILOT)));
-        playerFighter.setText(String.valueOf(player.getSkill(Skill.FIGHTER)));
-        playerTrader.setText(String.valueOf(player.getSkill(Skill.TRADER)));
-        playerEngineer.setText(String.valueOf(player.getSkill(Skill.ENGINEER)));
-        playerInvestor.setText(String.valueOf(player.getSkill(Skill.INVESTOR)));
+        playerPilot.setText(String.format("%d [%d]", player.getSkill(Skill.PILOT), player.getEffectiveSkill(Skill.PILOT)));
+        playerFighter.setText(String.format("%d [%d]", player.getSkill(Skill.FIGHTER), player.getEffectiveSkill(Skill.FIGHTER)));
+        playerTrader.setText(String.format("%d [%d]", player.getSkill(Skill.TRADER), player.getEffectiveSkill(Skill.TRADER)));
+        playerEngineer.setText(String.format("%d [%d]", player.getSkill(Skill.ENGINEER), player.getEffectiveSkill(Skill.ENGINEER)));
+        playerInvestor.setText(String.format("%d [%d]", player.getSkill(Skill.INVESTOR), player.getEffectiveSkill(Skill.INVESTOR)));
 
         if (player.getInsuranceCost() > 0) {
             insuranceMessage.setText("You have insurance.");
             insuranceDailyCost.setText(String.valueOf(player.getInsuranceCost()));
-            insuranceNoClaim.setText("0");
+            insuranceNoClaim.setText("0"); //TODO
         } else {
             insuranceInfoBox.setVisible(false);
         }

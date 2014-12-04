@@ -15,6 +15,7 @@ import spacetrader.SkillList.Skill;
 import spacetrader.Tools;
 import static spacetrader.Tools.rand;
 import spacetrader.commerce.Cargo;
+import spacetrader.commerce.ShipCargo;
 import spacetrader.commerce.TradeGood;
 
 /**
@@ -42,7 +43,7 @@ public abstract class SpaceShip implements Iterable<Equipment>, Serializable {
      */
     public SpaceShip(ShipType type) {
         this.type = type;
-        this.cargo = new Cargo(type.cargoBay());
+        this.cargo = new ShipCargo(type.cargoBay(), this);
         this.tank = new FuelTank(type.fuel());
         this.weapons = new EquipmentSlots<>(type.weaponSlots());
         this.shields = new EquipmentSlots<>(type.shieldSlots());

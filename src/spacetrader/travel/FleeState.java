@@ -33,8 +33,8 @@ public class FleeState extends EncounterState {
             //Add ignore button
             Button ignoreButton = addButton("Ignore", box);
             ignoreButton.setOnAction(event -> {
-                sceneControl.ignorePressed();
                 this.uninvoked = false;
+                sceneControl.ignorePressed();
             });
         } else {
             //Add flee button

@@ -12,12 +12,15 @@ import spacetrader.commerce.Consumer;
 import spacetrader.commerce.Wallet;
 import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.planets.Planet;
+import spacetrader.ships.Gadget;
+import spacetrader.ships.GadgetType;
 import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
 import spacetrader.ships.Weapon;
 import spacetrader.ships.WeaponType;
 import spacetrader.system.InformationPresenter;
 import spacetrader.system.MainController;
+import spacetrader.system.SpaceTrader.Difficulty;
 
 /**
  *
@@ -34,6 +37,7 @@ public class Player extends Trader implements Consumer, Serializable {
     private final Wallet wallet;
     private PlayerShip ship;
     private Planet location;
+    private Difficulty difficulty;
 
     /**
      * Instantiates a new Player in the Game
@@ -51,6 +55,7 @@ public class Player extends Trader implements Consumer, Serializable {
         wallet = new Wallet();
         ship = new PlayerShip(ShipType.GNAT, this);
         ship.getWeapons().addItem(new Weapon(WeaponType.PULSE));
+        this.difficulty = Difficulty.NORMAL;
     }
 
     /**
@@ -64,9 +69,10 @@ public class Player extends Trader implements Consumer, Serializable {
      * @param source which planet the player is leaving
      * @param mainControl the game's main controller
      */
-    public void departFromPlanet(Planet source, Planet destination, MainController mainControl) {
+    public void departFromPlanet(Planet source, Planet destination,
+            MainController mainControl) {
         InformationPresenter dialogs = InformationPresenter.getInstance();
-        
+
         try {
             payDailyFees();
         } catch (InsufficientFundsException e) {
@@ -123,14 +129,14 @@ public class Player extends Trader implements Consumer, Serializable {
         //Deduct fuel
         int distance = (int) Universe.distanceBetweenPlanets(source, destination);
         ship.removeFuel(distance);
-        
+
         //Recalculate prices on destination planet so trader encounters work
         destination.getMarket().setAllPrices(this);
 
         //Start doing encounters!
         mainControl.goToWarpScreen(source, destination);
     }
-    
+
     /**
      * This is like the "departFromPlanet" method, but is only used when
      * traveling via wormhole. Since this is the case, we will only be recalculating
@@ -152,7 +158,44 @@ public class Player extends Trader implements Consumer, Serializable {
      * @return amount of skill
      */
     public int getEffectiveSkill(Skill type) {
-        return Math.max(getSkill(type), ship.getCrewSkill(type));
+        final int SKILL_BONUS = 3;
+        final int CLOAK_BONUS = 2;
+
+        int level = Math.max(getSkill(type), ship.getCrewSkill(type));
+
+        if (type == Skill.FIGHTER && ship.getGadgets().contains(new Gadget(GadgetType.TARGETING))) {
+            level += SKILL_BONUS;
+        }
+        if (type == Skill.PILOT) {
+            if (ship.getGadgets().contains(new Gadget(GadgetType.NAVIGATION))) {
+                level += SKILL_BONUS;
+            }
+            if (ship.getGadgets().contains(new Gadget(GadgetType.CLOAK))) {
+                level += CLOAK_BONUS;
+            }
+        }
+        if (type == Skill.ENGINEER && ship.getGadgets().contains(new Gadget(GadgetType.AUTO_REPAIR))) {
+            level += SKILL_BONUS;
+        }
+
+        //adapt skill for game difficulty
+        if (difficulty == Difficulty.BEGINNER || difficulty == Difficulty.EASY) {
+            level++;
+        } else if (difficulty == Difficulty.IMPOSSIBLE) {
+            level--;
+            level = Math.max(0, level);
+        }
+
+        return level;
+    }
+
+    /**
+     * Sets the game's difficulty.
+     *
+     * @param difficulty the game's difficulty
+     */
+    public void setGameDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
     /**
@@ -193,7 +236,7 @@ public class Player extends Trader implements Consumer, Serializable {
 
     /**
      * Gets the cargo of this player's ship's cargo.
-     * 
+     *
      * @return this player's cargo
      */
     public Cargo getCargo() {
@@ -391,7 +434,7 @@ public class Player extends Trader implements Consumer, Serializable {
     public void removeDebt(int removal) {
         wallet.removeDebt(removal);
     }
-    
+
     @Override
     public void setInsuranceCost(int cost) {
         wallet.setInsuranceCost(cost);
@@ -401,16 +444,15 @@ public class Player extends Trader implements Consumer, Serializable {
     public int getInsuranceCost() {
         return wallet.getInsuranceCost();
     }
-    
+
     @Override
     public void payInsuranceCost() {
         wallet.payInsuranceCost();
     }
-    
+
     @Override
     public void payInterest() {
         wallet.payInterest();
     }
 
-    
 }

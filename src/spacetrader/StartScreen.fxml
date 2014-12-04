@@ -69,8 +69,8 @@
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
                                     <GridPane alignment="CENTER" prefHeight="173.0" prefWidth="108.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.rowSpan="6">
                                       <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="112.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="20.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="101.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="68.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -111,27 +111,27 @@
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="playerPilot" text="3" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Label fx:id="playerPilot" text="3 [3]" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="playerFighter" text="3" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                          <Label fx:id="playerFighter" text="3 [3]" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="playerTrader" text="3" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                          <Label fx:id="playerTrader" text="3 [3]" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="playerEngineer" text="3" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                          <Label fx:id="playerEngineer" text="3 [3]" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="playerInvestor" text="3" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                          <Label fx:id="playerInvestor" text="3 [3]" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>

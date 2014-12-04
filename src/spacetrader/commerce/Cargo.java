@@ -38,7 +38,6 @@ public class Cargo implements Serializable {
         this.maxCapacity = maxCapacity;
         this.tradeGoods = new HashMap<>();
         
-        
         this.costOfGoods = new HashMap<>();
         for (TradeGood good : TradeGood.values()) {
             tradeGoods.put(good, 0);
@@ -55,7 +54,7 @@ public class Cargo implements Serializable {
      * @param cost
      */
     public void addItem(TradeGood tradeGood, int quantity, int cost) {
-        if (count + quantity > maxCapacity) {
+        if (count + quantity > getMaxCapacity()) {
             throw new CargoIsFullException();
         }
         int currQuantity = this.tradeGoods.get(tradeGood);
@@ -74,7 +73,7 @@ public class Cargo implements Serializable {
      * @param otherCargo the cargo who's contents shall be added
      */
     public void addCargoContents(Cargo otherCargo) {
-        if (this.count + otherCargo.count > maxCapacity) {
+        if (this.count + otherCargo.count > getMaxCapacity()) {
             throw new CargoIsFullException();
         }
         for (TradeGood good : TradeGood.values()) {
@@ -166,20 +165,6 @@ public class Cargo implements Serializable {
         this.count = 0;
     }
 
-    /**
-     * Increases the number of available slots.
-     */
-    public void increaseCapacity() {
-        maxCapacity += 5;
-    }
-
-    /**
-     * Decreases the number of available slots.
-     */
-    public void decreaseCapacity() {
-        maxCapacity -= 5;
-    }
-
     //REMOVE THIS
     /**
      * Checks if there are any empty cargo slots left based on ship's capacity
@@ -187,7 +172,7 @@ public class Cargo implements Serializable {
      * @return true if cargo is full
      */
     public boolean isFull() {
-        return (count == maxCapacity);
+        return (count == getMaxCapacity());
     }
 
     /**
@@ -196,7 +181,7 @@ public class Cargo implements Serializable {
      * @return the remaining unfilled slots
      */
     public int getRemainingCapacity() {
-        return maxCapacity - count;
+        return getMaxCapacity() - count;
     }
 
     /**
@@ -275,7 +260,7 @@ public class Cargo implements Serializable {
      */
     @Override
     public String toString() {
-        String toString = "-Cargo Contents- (" + count + "/" + maxCapacity + ")\n";
+        String toString = "-Cargo Contents- (" + count + "/" + getMaxCapacity() + ")\n";
         int goodCount = 0;
         for (TradeGood good : TradeGood.values()) {
             toString += good + ": " + tradeGoods.get(good) + ", ";
