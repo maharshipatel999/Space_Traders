@@ -16,6 +16,8 @@ import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
 import spacetrader.ships.Weapon;
 import spacetrader.ships.WeaponType;
+import spacetrader.system.InformationPresenter;
+import spacetrader.system.MainController;
 
 /**
  *
@@ -51,6 +53,98 @@ public class Player extends Trader implements Consumer, Serializable {
         ship.getWeapons().addItem(new Weapon(WeaponType.PULSE));
     }
 
+    /**
+     * The destination planet's prices should be recalculated. Determine if the
+     * player can pay their mercenary, interest, and insurance costs. If not,
+     * kick them back to the home screen. Adjust the player's police record and
+     * reputation. Deduct fuel from the player's startingShip. Finally, go to
+     * the warp screen.
+     *
+     * @param destination which planet the player is traveling to
+     * @param source which planet the player is leaving
+     * @param mainControl the game's main controller
+     */
+    public void departFromPlanet(Planet source, Planet destination, MainController mainControl) {
+        InformationPresenter dialogs = InformationPresenter.getInstance();
+        
+        try {
+            payDailyFees();
+        } catch (InsufficientFundsException e) {
+            String msgTitle, message;
+            switch (e.getMessage()) {
+                case "insurance":
+                    msgTitle = "Unable to Pay Insurance";
+                    message = "You do not have enough money to pay for your insurance!"
+                            + "\n\nUntil you stop your insurance at the bank, or aquire more money,"
+                            + " you will not be allowed to depart.";
+                    break;
+                case "mercenaries":
+                    msgTitle = "Unable to Pay Crew Salaries";
+                    message = "";
+                    break;
+                case "debt":
+                    msgTitle = "Too Much Debt";
+                    message = Wallet.MAX_DEBT_MSG;
+                    break;
+                default: //should never happen
+                    msgTitle = "Unknown Fee Error";
+                    message = "You have a mysterious fee which can not be paid. Sorry.";
+                    break;
+            }
+            //Go back to the Planet Home Screen
+            dialogs.displayInfoMessage(null, msgTitle, message);
+            mainControl.goToHomeScreen(getLocation());
+        }
+        //TODO
+        //updateNoClaim();
+        //if (getInsuranceCost() > 0) {
+        //increase number of no claims
+        //}
+
+        getShip().fullyRepairShields();
+
+        if (wallet.getDebt() > Wallet.DEBT_WARNING) {
+            dialogs.displayWarningMessage(null, "Debt Warning!", "You get this warning because "
+                    + "your debt has exceeded 75000 credits. If you don't pay "
+                    + "back quickly, you may find yourself stuck in a system with"
+                    + " no way to leave. You have been warned.");
+        }
+
+        //Decrease police record score if very high
+        if (mainControl.getDays() % 3 == 0 && getPoliceRecord().compareTo(PoliceRecord.CLEAN) > 0) {
+            this.policeRecordScore--;
+        }
+
+        //Increase police record score if very low
+        if (getPoliceRecord().compareTo(PoliceRecord.DUBIOUS) < 0) {
+            this.policeRecordScore++;
+        }
+
+        //Deduct fuel
+        int distance = (int) Universe.distanceBetweenPlanets(source, destination);
+        ship.removeFuel(distance);
+        
+        //Recalculate prices on destination planet so trader encounters work
+        destination.getMarket().setAllPrices(this);
+
+        //Start doing encounters!
+        mainControl.goToWarpScreen(source, destination);
+    }
+    
+    /**
+     * This is like the "departFromPlanet" method, but is only used when
+     * traveling via wormhole. Since this is the case, we will only be recalculating
+     * the destination planet's prices. All other events do not occur.
+     *
+     * @param destination which planet the player is traveling to
+     * @param source which planet the player is leaving
+     * @param mainControl the game's main controller
+     */
+    public void specialDepartFromPlanet(Planet source, Planet destination, MainController mainControl) {
+        destination.getMarket().setAllPrices(this);
+        mainControl.specialArrivalAtPlanet(destination);
+    }
+    
     /**
      * return Skill Player is using
      *

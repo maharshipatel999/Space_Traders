@@ -39,15 +39,40 @@ import org.controlsfx.dialog.Dialogs;
 import org.controlsfx.property.BeanProperty;
 
 /**
- *
+ * A Singleton class that displays dialogs.
+ * 
  * @author Caleb
  */
 public class InformationPresenter {
 
+    private static InformationPresenter instance;
     private Stage stage;
-
-    public InformationPresenter(Stage stage) {
+    
+    public static InformationPresenter getInstance() {
+        if (instance == null) {
+            instance = new InformationPresenter();
+        }
+        return instance;
+    }
+    
+    /**
+     * Sets the stage the InformationPresenter will use.
+     * 
+     * @param stage a stage that will own created windows.
+     */
+    public void setStage(Stage stage) {
         this.stage = stage;
+    }
+    
+    /**
+     * Gets his InformationPresenter's stage
+     */ 
+    private Stage getStage() {
+        if (stage == null) {
+            throw new IllegalStateException("Stage has not been set yet.");
+        } else {
+            return stage;
+        }
     }
 
     /**
@@ -148,6 +173,51 @@ public class InformationPresenter {
         Optional<ButtonType> result = dialog.showAndWait();
         return result;
     }
+    
+    /**
+     * Display yes-no confirmation.
+     *
+     * @param optionsTitle title of state
+     * @param mastHead the header
+     * @param message message to display
+     * @param args Arguments referenced by the format specifiers in the message
+     * string. If there are more arguments than format specifiers, the extra
+     * arguments are ignored. The number of arguments is variable and may be
+     * zero.
+     * @return true if the player confirmed yes, otherwise false
+     */
+    public boolean displayYesNoConfirmation(String optionsTitle, String mastHead,
+            String message, Object... args) {
+        message = String.format(message, args);
+        Optional<ButtonType> result = InformationPresenter.getInstance().displayOptionsDialog(
+                optionsTitle, mastHead, message, ButtonType.NO, ButtonType.YES);
+        return result.isPresent() && result.get() == ButtonType.YES;
+    }
+
+    /**
+     * Display custom confirmation.
+     *
+     * @param optionsTitle title of state
+     * @param mastHead the header
+     * @param message message to display
+     * @param buttonNames the names of the buttons the player can choose from
+     * @return true if the player confirmed yes, otherwise false
+     */
+    public String displayCustomConfirmation(String optionsTitle, String mastHead,
+            String message, String... buttonNames) {
+        Optional<ButtonType> result = InformationPresenter.getInstance().displayOptionsDialog(
+                optionsTitle, mastHead, message, buttonNames);
+        if (!result.isPresent()) {
+            return "";
+        }
+        for (String name : buttonNames) {
+            if (name.equals(result.get().getText())) {
+                return name;
+            }
+        }
+        return "";
+
+    }
 
     /**
      * Creates a new Alert.
@@ -157,7 +227,7 @@ public class InformationPresenter {
      * @param buttons the buttons the user can choose from
      * @return the new Alert
      */
-    public static Alert createAlert(AlertType alertType, String contentText,
+    public Alert createAlert(AlertType alertType, String contentText,
             ButtonType... buttons) {
         Label content = new Label(contentText);
         content.setMaxWidth(Double.MAX_VALUE);
@@ -184,7 +254,7 @@ public class InformationPresenter {
     public void displayProgess(String progressTitle,
             Service service) {
         Dialogs.create()
-                .owner(stage)
+                .owner(getStage())
                 .title(progressTitle)
                 .showWorkerProgress(service);
 
@@ -243,7 +313,7 @@ public class InformationPresenter {
             Logger.getLogger(WelcomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Create Stage
-        cheatStage.initOwner(stage);
+        cheatStage.initOwner(getStage());
         cheatStage.initModality(Modality.WINDOW_MODAL);
 
         //Create Pane
@@ -274,9 +344,9 @@ public class InformationPresenter {
      * @param message the text to be displayed
      * @return a new PopOver with the provided message
      */
-    public static PopOver createTextPopOver(String message) {
+    public PopOver createTextPopOver(String message) {
         Label text = new Label(message);
-        text.setPadding(new Insets(15, 15, 15, 15));
+        text.setPadding(new Insets(10, 15, 10, 15));
 
         PopOver popup = new PopOver(text);
         popup.getContentNode().setUserData(Boolean.FALSE);
@@ -292,7 +362,7 @@ public class InformationPresenter {
      * @param message the text to display on the popover
      * @return the newly created PopOver
      */
-    public static PopOver showTextOnHover(Node node, String message) {
+    public PopOver showTextOnHover(Node node, String message) {
         PopOver popup = createTextPopOver(message);
         //uses addEventHandler, so as not to overwrite pre-existing event handlers
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> popup.show(node));
@@ -308,7 +378,7 @@ public class InformationPresenter {
      * @param content the content for the PopOver that is displayed
      * @return the newly created PopOver
      */
-    public static PopOver showNodeOnHover(Node node, Node content) {
+    public PopOver showNodeOnHover(Node node, Node content) {
         PopOver popup = new PopOver(content);
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> popup.show(node));
         node.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> popup.hide(new Duration(200)));

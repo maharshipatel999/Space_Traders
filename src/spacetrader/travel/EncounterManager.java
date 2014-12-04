@@ -12,8 +12,8 @@ import spacetrader.Tools;
 import spacetrader.planets.Planet;
 import spacetrader.ships.PlayerShip;
 import spacetrader.ships.ShipType;
-import spacetrader.system.MainController;
-import spacetrader.system.MainController.Debug;
+import spacetrader.system.SpaceTrader.Debug;
+import spacetrader.system.SpaceTrader;
 
 /**
  * This class will handle all the probability of creating and handling
@@ -68,8 +68,8 @@ public class EncounterManager {
 
             Encounter encounter = null;
             
-            if (MainController.debugStatus != Debug.OFF) {
-                switch (MainController.debugStatus) {
+            if (SpaceTrader.debugStatus != Debug.OFF) {
+                switch (SpaceTrader.debugStatus) {
                     case POLICE_ENCOUNTER:
                         encounter = createPoliceEncounter(TOTAL_CLICKS - i);
                         break;

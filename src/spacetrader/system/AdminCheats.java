@@ -12,6 +12,7 @@ import spacetrader.planets.PoliticalSystem;
 import spacetrader.planets.Resource;
 import spacetrader.planets.TechLevel;
 import spacetrader.ships.ShipType;
+import spacetrader.system.SpaceTrader.Debug;
 
 /**
  * Holds the values for all the testing options.
@@ -27,7 +28,7 @@ public class AdminCheats {
     private ShipType startingShip;
     private PoliceRecord policeRecord;
     private Reputation reputation;
-    private MainController.Debug debugMode;
+    private Debug debugMode;
 
     public AdminCheats() {
         techLevel = TechLevel.INDUSTRIAL;
@@ -37,7 +38,7 @@ public class AdminCheats {
         startingShip = ShipType.GNAT;
         reputation = Reputation.HARMLESS;
         policeRecord = PoliceRecord.CLEAN;
-        debugMode = MainController.Debug.OFF;
+        debugMode = Debug.OFF;
 
     }
 
@@ -97,11 +98,11 @@ public class AdminCheats {
         this.reputation = reputation;
     }
 
-    public MainController.Debug getDebugMode() {
+    public Debug getDebugMode() {
         return debugMode;
     }
 
-    public void setDebugMode(MainController.Debug debugMode) {
+    public void setDebugMode(Debug debugMode) {
         this.debugMode = debugMode;
     }
 }

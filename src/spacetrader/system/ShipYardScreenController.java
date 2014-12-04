@@ -302,7 +302,7 @@ public class ShipYardScreenController
 
     @FXML
     protected void goBackToHomeScreen() {
-        mainControl.goToHomeScreen(player, player.getLocation());
+        mainControl.goToHomeScreen(player.getLocation());
     }
 
     @FXML
@@ -322,6 +322,11 @@ public class ShipYardScreenController
                     "You successfully bought a new escape pod!");
             updateEscapePodText();
         }
+    }
+    
+    @FXML
+    protected void goToCrewInfoScreen() {
+        
     }
 
     /**

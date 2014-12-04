@@ -32,7 +32,8 @@ public class WormholeMiniMapController implements Initializable {
     private static final double MINIMAP_HEIGHT = 220;
     private static final double MARGIN = 5;
     private static final Color PLANETCOLOR = new Color(.549, .203, .686, 1);
-    private static final Color WORMHOLECOLOR = new Color(.968, .403, .266, 1);
+    private static final Color SRCCOLOR = new Color(.015, .470, 1, 1);
+    private static final Color DESTCOLOR = new Color(.968, .403, .266, 1);
     private static final Color LINECOLOR = new Color(.639, .615, .662, 1);
     
     /**
@@ -60,11 +61,12 @@ public class WormholeMiniMapController implements Initializable {
             Circle planetCircle;
             if (planet == wormholePlanet || planet == wormholePlanet.getWormhole().getDestination()) {
                 planetCircle = new Circle(planetX, planetY, 5);
-                planetCircle.setFill(WORMHOLECOLOR);
                 if (planet == wormholePlanet) {
+                    planetCircle.setFill(SRCCOLOR);
                     startX = planetX;
                     startY = planetY;
                 } else {
+                    planetCircle.setFill(DESTCOLOR);
                     endX = planetX;
                     endY = planetY;
                 }
@@ -76,6 +78,7 @@ public class WormholeMiniMapController implements Initializable {
         }
         Line wormholeLine = new Line(startX, startY, endX, endY);
         wormholeLine.setStroke(LINECOLOR);
+        wormholeLine.getStrokeDashArray().addAll(5d, 5d);
         miniMapPane.getChildren().add(wormholeLine);
     }
     

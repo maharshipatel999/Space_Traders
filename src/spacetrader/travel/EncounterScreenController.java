@@ -193,12 +193,12 @@ public abstract class EncounterScreenController extends SceneController {
             } else if (opponentDestroyed) {
                 //TODO
                 mainControl.displayInfoMessage(null, "Both Destroyed", "You and your opponent have managed to destroy each other.");
-                mainControl.playerShipDestroyed();
+                mainControl.endGame(true);
                 this.getScene().getWindow().hide();
             } else {
                 //TODO
                 mainControl.displayInfoMessage(null, "You Lose", "Your ship has been destroyed by your opponent.");
-                mainControl.playerShipDestroyed();
+                mainControl.endGame(true);
                 this.getScene().getWindow().hide();
             }
         } else if (opponentDestroyed) {

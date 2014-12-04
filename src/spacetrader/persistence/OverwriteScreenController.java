@@ -134,7 +134,7 @@ public class OverwriteScreenController extends SceneController implements Initia
      */
     @FXML
     protected void goBack() {
-        mainControl.goToHomeScreen(game.getPlayer(), game.getPlayer().getLocation());
+        mainControl.goToHomeScreen(game.getPlayer().getLocation());
     }
 
     /**

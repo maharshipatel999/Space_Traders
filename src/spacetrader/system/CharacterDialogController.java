@@ -73,17 +73,22 @@ public class CharacterDialogController
     public void setMainControl(MainController mainControl) {
         super.setMainControl(mainControl);
         
-        InformationPresenter.showTextOnHover(pilotLabel, "Determines how well you pilot your ship.\n " +
+        InformationPresenter.getInstance()
+                .showTextOnHover(pilotLabel, "Determines how well you pilot your ship.\n " +
                 "A good pilot can easily flee, dodge attacks,\n " +
                 "and stay on the tail of fleeing ships.");
-        InformationPresenter.showTextOnHover(fighterLabel, "Determines how well you handle your weapons.\n" +
+        InformationPresenter.getInstance()
+                .showTextOnHover(fighterLabel, "Determines how well you handle your weapons.\n" +
                 "A good fighter is great at hitting other ships.");
-        InformationPresenter.showTextOnHover(traderLabel, "Determines what prices you must pay for trade goods, ships and equipment.\n" +
+        InformationPresenter.getInstance()
+                .showTextOnHover(traderLabel, "Determines what prices you must pay for trade goods, ships and equipment.\n" +
                 "A good trader can reduce prices up to 10%.");
-        InformationPresenter.showTextOnHover(engineerLabel, "Determines how well you keep your ship in shape.\n" +
+        InformationPresenter.getInstance()
+                .showTextOnHover(engineerLabel, "Determines how well you keep your ship in shape.\n" +
                 "A good engineer protects the hull and shields in a fight,\n" +
                 "repairs them quicker during travel, and may even enhance his ship's weaponry.");
-        InformationPresenter.showTextOnHover(investorLabel, "Determines how well you do in investing in the galactic markets.\n" +
+        InformationPresenter.getInstance()
+                .showTextOnHover(investorLabel, "Determines how well you do in investing in the galactic markets.\n" +
                 "Since stock prices and interest rates are volatile, \n" +
                 "an investor could make a killing or lose his savings. Be wary.");
     }
