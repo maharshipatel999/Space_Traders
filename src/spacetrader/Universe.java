@@ -115,12 +115,13 @@ public class Universe implements Serializable {
             planets.add(planet);
             numAdjPlanets.put(planet, 0);
         }
+         // add mercenaries
          for (int i = 0; i < MAX_NUM_MERCENARY; i++) {
             int randomPlanet;
             do {
                randomPlanet = rand.nextInt(planetAmount + 1);
             } while(planets.get(randomPlanet).getMercenary() != null);
-              planets.get(randomPlanet).setMercenary(Mercenary.createRandomMercenary("LUBLUB", planets.get(randomPlanet)));
+              planets.get(randomPlanet).setMercenary(Mercenary.createRandomMercenary(Mercenary.mercNames[i% Mercenary.mercNames.length], planets.get(randomPlanet)));
         }
 
         //assign wormholes
@@ -153,7 +154,6 @@ public class Universe implements Serializable {
             wormholePlanets.get(i).setWormhole(curHole);
         }
     }
-    // add mercenaries
 
     /**
      * Finds the planet with the specified name.

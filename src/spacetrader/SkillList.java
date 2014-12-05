@@ -22,7 +22,21 @@ public class SkillList implements Serializable {
      */
     public enum Skill {
 
-        PILOT, FIGHTER, TRADER, ENGINEER, INVESTOR;
+        PILOT("Pilot"),
+        FIGHTER("Fighter"),
+        TRADER("Trader"),
+        ENGINEER("Engineer"),
+        INVESTOR("Investor");
+        
+        private String type;
+        
+        Skill(String type) {
+            this.type = type;
+        }
+        
+        public String type() {
+            return this.type;
+        }
     }
 
     public static final int MAX_SKILL = 10;

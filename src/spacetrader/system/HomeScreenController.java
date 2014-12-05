@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import spacetrader.Player;
 import spacetrader.commerce.PriceIncreaseEvent;
 import spacetrader.planets.Planet;
+import spacetrader.system.SpaceTrader.Debug;
 
 /**
  * FXML Controller class
@@ -56,7 +57,7 @@ public class HomeScreenController extends SceneController implements Initializab
                     + "suffering from an abnormality:\n"
                     + planet.getPriceIncEvent().desc();
         }
-
+        
         planetName.setText(planet.getName());
         planetInfo.setText(description);
     }
