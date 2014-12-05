@@ -260,15 +260,16 @@ public class Cargo implements Serializable {
      */
     @Override
     public String toString() {
-        String toString = "-Cargo Contents- (" + count + "/" + getMaxCapacity() + ")\n";
+        StringBuilder cargoString = new StringBuilder();
+        cargoString.append("-Cargo Contents- (").append(count).append("/").append(getMaxCapacity()).append(")\n");
         int goodCount = 0;
         for (TradeGood good : TradeGood.values()) {
-            toString += good + ": " + tradeGoods.get(good) + ", ";
+            cargoString.append(good).append(": ").append(tradeGoods.get(good)).append(", ");
             goodCount++;
             if (goodCount == 4 || goodCount == 7) {
-                toString += "\n";
+                cargoString.append("\n");
             }
         }
-        return toString;
+        return cargoString.toString();
     }
 }

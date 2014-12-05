@@ -51,10 +51,10 @@ public class Planet implements Serializable {
     private boolean visited;
 
     /**
-     * Constructor for Planet
+     * Constructor for Planet.
      *
-     * @param name - name of planet
-     * @param location - location of planet
+     * @param name name of planet
+     * @param location location of planet
      */
     public Planet(String name, Point2D location) {
         this(name, location, TechLevel.getRandomTechLevel(),
@@ -63,12 +63,13 @@ public class Planet implements Serializable {
     }
 
     /**
-     *
-     * @param name - name of planet
-     * @param location - locations of planet
-     * @param level - tech level of planet
-     * @param resource - main resource of planet
-     * @param politSys - political system of planet
+     * Creates a new planet.
+     * 
+     * @param name name of planet
+     * @param location locations of planet
+     * @param level tech level of planet
+     * @param resource main resource of planet
+     * @param politSys political system of planet
      */
     public Planet(String name, Point2D location, TechLevel level,
             Resource resource, PoliticalSystem politSys) {
@@ -101,9 +102,15 @@ public class Planet implements Serializable {
         displayMercenaryForHire();
     }
     
+    /**
+     * Displays the mercenaries that are for hire.
+     */
     public void displayMercenaryForHire() {
         if(this.getMercenary() != null) {
-            InformationPresenter.getInstance().displayInfoMessage(null, "Mercenary For Hire","There is a mercenary available for hire on this planet. Check it out in the ship yard", null);
+            InformationPresenter.getInstance().displayInfoMessage(null,
+                    "Mercenary For Hire",
+                    "There is a mercenary available for hire on this planet. "
+                    + "Check it out in the ship yard");
         }
     }
     /**
@@ -227,16 +234,16 @@ public class Planet implements Serializable {
     }
 
     /**
-     * check if planet has been visited
+     * Check if planet has been visited.
      *
-     * @return if a planet has been visited
+     * @return true if a planet has been visited
      */
     public boolean isVisited() {
         return visited;
     }
 
     /**
-     * Sets the visited flag to indicate that the player has visited this planet
+     * Sets the visited flag to indicate that the player has visited this planet.
      */
     public void setVisited() {
         visited = true;
@@ -252,18 +259,18 @@ public class Planet implements Serializable {
     }
 
     /**
-     * Set wormhole for planet
+     * Set this planet's wormhole, or null if it does not have one.
      *
-     * @param wormhole - the wormhole for this planet
+     * @param wormhole the wormhole for this planet, or null
      */
     public void setWormhole(Wormhole wormhole) {
         this.wormhole = wormhole;
     }
     /**
      * Get the mercenary available for hire on this planet, or null if there
-     * is none
+     * is none.
      *
-     * @return merc - the mercenary at this planet
+     * @return the mercenary at this planet, or null
      */
     public Mercenary getMercenary() {
         return merc;
@@ -271,7 +278,7 @@ public class Planet implements Serializable {
     /**
      * Set the mercenary for hire on this planet.
      * 
-     * @param merc - the mercenary of the planet
+     * @param merc the mercenary of the planet
      */
     public void setMercenary(Mercenary merc) {
         this.merc = merc;
@@ -280,7 +287,7 @@ public class Planet implements Serializable {
     /**
      * Calculate strength of police.
      *
-     * @param record - player's police record
+     * @param record player's police record
      * @return the strength of the police
      */
     public int calculateStrengthOfPolice(PoliceRecord record) {
@@ -324,12 +331,12 @@ public class Planet implements Serializable {
     @Override
     public String toString() {
         StringBuilder finStr = new StringBuilder();
-        finStr.append(name + "\n");
-        finStr.append("Location: (" + location.getX() + ", " + location.getY() + ")\n");
-        finStr.append("Tech Level: " + level + "\n");
-        finStr.append("Resource: " + resource + "\n");
-        finStr.append("Political System: " + politSys + "\n");
-        finStr.append("Price Increase Event: " + priceIncEvent + "\n");
+        finStr.append(name).append("\n");
+        finStr.append("Location: (").append(location.getX()).append(", ").append(location.getY()).append(")\n");
+        finStr.append("Tech Level: ").append(level).append("\n");
+        finStr.append("Resource: ").append(resource).append("\n");
+        finStr.append("Political System: ").append(politSys).append("\n");
+        finStr.append("Price Increase Event: ").append(priceIncEvent).append("\n");
         return finStr.toString();
     }
 

@@ -194,6 +194,7 @@ public class ShipMarketController
                     + "own this type of ship! There is no benefit in buying it again");
             return;
         }
+        
         int costOfPurchase = shipPurchasingPrice(shipTypes[selectedShip])
                 - playerShipSellingPrice;
         if (player.getCredits() >= costOfPurchase) {

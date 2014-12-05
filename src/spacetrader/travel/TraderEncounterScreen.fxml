@@ -85,7 +85,7 @@
             </VBox>
          </center>
          <top>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pirate Encounter" textAlignment="CENTER" wrappingWidth="393.9140625" BorderPane.alignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Trader Encounter" textAlignment="CENTER" wrappingWidth="393.9140625" BorderPane.alignment="CENTER">
                <font>
                   <Font size="34.0" />
                </font>

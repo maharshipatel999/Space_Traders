@@ -134,7 +134,6 @@ public class TraderEncounterController extends EncounterScreenController impleme
         TraderEncounter traderEncounter = (TraderEncounter) encounter;
         boolean traderBuying = ((TradeState) encounter.getState()).isTraderBuying();
         
-        
         traderOffer.setText("You are hailed with an offer to trade goods.");
         
         this.tradingGood = traderEncounter.getRandomTradeableItem();

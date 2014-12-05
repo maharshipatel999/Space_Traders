@@ -19,7 +19,7 @@ public interface Consumer {
      * @return this wallet's total credits
      */
     int getCredits();
-    
+
     /**
      * Adds a specified amount of money to this Consumer.
      *
@@ -27,7 +27,7 @@ public interface Consumer {
      * @param deposit the amount of money to addCredits
      */
     void addCredits(int deposit);
-    
+
     /**
      * Removes a specified amount of money from this Consumer.
      *
@@ -45,7 +45,7 @@ public interface Consumer {
      * @param withdrawal the amount of money to removeCredits
      */
     void removeCreditsForced(final int withdrawal);
-    
+
     /**
      * Sets the amount of credits this Consumer has.
      *
@@ -59,7 +59,7 @@ public interface Consumer {
      * @return this wallet's debt
      */
     int getDebt();
-    
+
     /**
      * Increases the amount of debt this Consumer has by a specified amount.
      *
@@ -67,7 +67,7 @@ public interface Consumer {
      * @param addition amount of additional debt
      */
     void addDebt(final int addition);
-    
+
     /**
      * Decreases the amount of debt of this Consumer by a specified amount.
      *
@@ -84,8 +84,8 @@ public interface Consumer {
     int getInsuranceCost();
 
     /**
-     * Sets this Consumer's cost of insurance.
-     * If this value is zero, the Consumer does not have insurance.
+     * Sets this Consumer's cost of insurance. If this value is zero, the
+     * Consumer does not have insurance.
      *
      * @param cost cost of insurance
      */
@@ -95,7 +95,14 @@ public interface Consumer {
      * Pays daily cost of insurance. Can throw exception if player does not have
      * enough money.
      */
-    void payInsuranceCost();
+    void payInsurance();
+
+    /**
+     * Gets the number of days the consumer has had insurance with out a claim.
+     *
+     * @return the number of days of no-claim
+     */
+    int getNoClaimDays();
 
     /**
      * Pays interest on the player's debt.

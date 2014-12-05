@@ -8,7 +8,7 @@ package spacetrader.planets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import static spacetrader.Tools.rand;
 
 /**
  *
@@ -33,7 +33,6 @@ public enum Resource {
     private static final List<Resource> VALUES
             = Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
-    private static final Random RANDOM = new Random();
     private String type;
 
     Resource(String type) {
@@ -52,9 +51,8 @@ public enum Resource {
      * @return Resource - the resource being assigned
      */
     public static Resource getRandomResource() {
-        int probOfNone = RANDOM.nextInt(3);
-        if (probOfNone % 2 == 1) {
-            return VALUES.get(RANDOM.nextInt(12) + 1);
+        if (rand.nextInt(3) == 0) {
+            return VALUES.get(rand.nextInt(12) + 1);
         } else {
             return Resource.NONE;
         }

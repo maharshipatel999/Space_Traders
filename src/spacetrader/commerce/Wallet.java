@@ -178,9 +178,10 @@ public class Wallet implements Serializable, Consumer {
     }
 
     @Override
-    public void payInsuranceCost() {
+    public void payInsurance() {
         if ((insuranceCost > 0)) {
-            this.removeCredits(insuranceCost);
+            int insuranceFee = insuranceCost * (100 - Math.min(noClaimDays, 90 )) / 100;
+            this.removeCredits(insuranceFee);
         }
     }
 
@@ -192,5 +193,24 @@ public class Wallet implements Serializable, Consumer {
             int interest = Math.max(1, debt / 10);
             this.removeCreditsForced(interest);
         }
+    }
+
+    @Override
+    public int getNoClaimDays() {
+        return noClaimDays;
+    }
+    
+    /**
+     * Increments the number of no claim days.
+     */
+    public void incNoClaimDays() {
+        noClaimDays++;
+    }
+    
+    /**
+     * Sets the number of no claim days to zero.
+     */
+    public void resetNoClaimDays() {
+        noClaimDays = 0;
     }
 }
