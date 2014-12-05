@@ -264,7 +264,7 @@ public class CharacterDialogController
             confirmMessage.setText("Please enter your name!");
             confirmMessage.setFill(Color.RED);
         } else if (skillPointsRemaining()) {
-            confirmMessage.setText("Please allocate all skill points!");
+            confirmMessage.setText("Allocate all skill points!");
             confirmMessage.setFill(Color.RED);
         } else {
             final Player player = new Player(name, pilotSkill, fighterSkill,

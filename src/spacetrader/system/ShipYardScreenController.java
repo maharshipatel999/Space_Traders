@@ -168,7 +168,7 @@ public class ShipYardScreenController
                     + ((maxFuel - currFuel) * fuelCost));
             int refillAmt = (maxFuel - currFuel == 1) ? 1 : 2;
             incFuelButton.setText("Buy " + refillAmt
-                    + " Unit" + (refillAmt > 1 ? "s" : "") + " of Fuel: ₪" + refillAmt * fuelCost);
+                    + " Unit" + (refillAmt > 1 ? "s" : "") + ": ₪" + refillAmt * fuelCost);
         }
     }
 

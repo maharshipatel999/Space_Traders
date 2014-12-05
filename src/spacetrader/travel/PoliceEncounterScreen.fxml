@@ -11,9 +11,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="460.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.PoliceEncounterController">
+<AnchorPane id="AnchorPane" prefHeight="545.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.travel.PoliceEncounterController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="460.0" stroke="#1b1515" strokeType="INSIDE" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="545.0" stroke="#1b1515" strokeType="INSIDE" width="663.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <fill>
             <LinearGradient endX="0.44660194174757284" endY="1.0" startX="0.4466019417475728" startY="0.009708737864077666">
                <stops>
@@ -33,7 +33,7 @@
             <Image url="@../../resources/images/police%20badge.png" />
          </image>
       </ImageView>
-      <BorderPane fx:id="borderPane" layoutX="109.0" layoutY="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="borderPane" layoutX="109.0" layoutY="77.0" prefHeight="460.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Police Encounter!" wrappingWidth="308.9140625" BorderPane.alignment="CENTER">
                <font>

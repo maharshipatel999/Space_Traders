@@ -40,7 +40,7 @@ public abstract class EncounterState {
     protected static Button addButton(String text, Pane buttonBar) {
         Button button = new Button(text);
         button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        button.setFont(new Font(20));
+        button.setFont(new Font(15));
         button.setCursor(Cursor.HAND);
 
         buttonBar.getChildren().add(button);
