@@ -17,11 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import org.controlsfx.control.PopOver;
 import spacetrader.Mercenary;
-import static spacetrader.Mercenary.createRandomMercenary;
 import spacetrader.Player;
-import spacetrader.SkillList;
 import spacetrader.SkillList.Skill;
 
 /**
@@ -193,7 +190,9 @@ implements Initializable {
                 displayCrewInfo();
             }
         } else {
-            mainControl.displayErrorMessage("Error", "You don't have enough credits to hire this mercenary","You don't have enough credits to hire this mercenary" , null);
+            mainControl.displayErrorMessage("Error",
+                    "Insufficient Funds",
+                    "You don't have enough credits to hire this mercenary");
         }
     }
     @FXML

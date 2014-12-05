@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
@@ -58,6 +59,9 @@ public class StartScreenController extends SceneController implements Initializa
             shipWeaponSlots, shipShieldSlots, shipGadgetSlots;
     @FXML
     private ProgressBar fuelBar, hullBar;
+    
+    @FXML
+    private Button retireButton;
 
     private Player player;
     private Stage startStage;
@@ -95,8 +99,8 @@ public class StartScreenController extends SceneController implements Initializa
 
         if (player.getInsuranceCost() > 0) {
             insuranceMessage.setText("You have insurance.");
-            insuranceDailyCost.setText(String.valueOf(player.getInsuranceCost()));
-            insuranceNoClaim.setText("0"); //TODO
+            insuranceDailyCost.setText("âª" + player.getInsuranceCost());
+            insuranceNoClaim.setText(String.valueOf(player.getNoClaimDays()));
         } else {
             insuranceInfoBox.setVisible(false);
         }
@@ -120,8 +124,29 @@ public class StartScreenController extends SceneController implements Initializa
                 inventory.addRow(3 + i, new Label(tradeGoodList.get(i).toString()), new Label(String.valueOf(quantity)));
             }
         }
+        
+        InformationPresenter.getInstance().showTextOnHover(retireButton,
+                "If you retire, the game ends. You sell your ship and "
+                + "everything on it, and remain in the current system for the "
+                + "rest of your days. If applicable, your total worth will be "
+                + "entered in the high score table.");
     }
 
+    @FXML
+    protected void retirePressed() {
+        boolean confirm = mainControl.displayYesNoConfirmation("Retirement", 
+                "Are you sure you want to retire?", 
+                String.format("If you retire, you will sell"
+                + " your ship and everything on it and then live out the rest "
+                + "of your days on the current system %d and possible earn "
+                + "yourself a place on the highscore chart. This action CANNOT"
+                + "be undone.", player.getLocation()));
+        if (confirm) {
+            
+        }
+            
+    }
+    
     @FXML
     protected void closeWindow(ActionEvent event) {
         startStage.close();
@@ -178,5 +203,4 @@ public class StartScreenController extends SceneController implements Initializa
             }
         }
     }
-
 }

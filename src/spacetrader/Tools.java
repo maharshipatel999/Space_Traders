@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public final class Tools {
 
-    public static Random rand = new Random();
+    public static final Random rand = new Random();
 
     /**
      * Returns pickIndexFromWeightedList(probs, sumOfProbs) where sumOfProbs is

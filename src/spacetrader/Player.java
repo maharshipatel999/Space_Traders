@@ -86,7 +86,7 @@ public class Player extends Trader implements Consumer, Serializable {
                     break;
                 case "mercenaries":
                     msgTitle = "Unable to Pay Crew Salaries";
-                    message = "";
+                    message = "You do not have enough money to ";
                     break;
                 case "debt":
                     msgTitle = "Too Much Debt";
@@ -101,15 +101,14 @@ public class Player extends Trader implements Consumer, Serializable {
             dialogs.displayInfoMessage(null, msgTitle, message);
             mainControl.goToHomeScreen(getLocation());
         }
-        //TODO
-        //updateNoClaim();
-        //if (getInsuranceCost() > 0) {
-        //increase number of no claims
-        //}
+
+        if (getInsuranceCost() > 0) {
+            wallet.incNoClaimDays();
+        }
 
         getShip().fullyRepairShields();
 
-        if (wallet.getDebt() > Wallet.DEBT_WARNING) {
+        if (getDebt() > Wallet.DEBT_WARNING) {
             dialogs.displayWarningMessage(null, "Debt Warning!", "You get this warning because "
                     + "your debt has exceeded 75000 credits. If you don't pay "
                     + "back quickly, you may find yourself stuck in a system with"
@@ -139,18 +138,20 @@ public class Player extends Trader implements Consumer, Serializable {
 
     /**
      * This is like the "departFromPlanet" method, but is only used when
-     * traveling via wormhole. Since this is the case, we will only be recalculating
-     * the destination planet's prices. All other events do not occur.
+     * traveling via wormhole. Since this is the case, we will only be
+     * recalculating the destination planet's prices. All other events do not
+     * occur.
      *
      * @param destination which planet the player is traveling to
      * @param source which planet the player is leaving
      * @param mainControl the game's main controller
      */
-    public void specialDepartFromPlanet(Planet source, Planet destination, MainController mainControl) {
+    public void specialDepartFromPlanet(Planet source, Planet destination,
+            MainController mainControl) {
         destination.getMarket().setAllPrices(this);
         mainControl.specialArrivalAtPlanet(destination);
     }
-    
+
     /**
      * return Skill Player is using
      *
@@ -374,7 +375,7 @@ public class Player extends Trader implements Consumer, Serializable {
         int originalPlayerMoney = wallet.getCredits();
 
         try {
-            payInsuranceCost();
+            payInsurance();
         } catch (InsufficientFundsException e) {
             wallet.setCredits(originalPlayerMoney);
             throw new InsufficientFundsException("insurance");
@@ -446,8 +447,20 @@ public class Player extends Trader implements Consumer, Serializable {
     }
 
     @Override
-    public void payInsuranceCost() {
-        wallet.payInsuranceCost();
+    public int getNoClaimDays() {
+        return wallet.getNoClaimDays();
+    }
+    
+    /**
+     * Sets the number of no claim days to zero.
+     */
+    public void resetNoClaimDays() {
+        wallet.resetNoClaimDays();
+    }
+
+    @Override
+    public void payInsurance() {
+        wallet.payInsurance();
     }
 
     @Override

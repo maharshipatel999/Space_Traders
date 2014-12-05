@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="390.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.FinanceScreenController">
+<AnchorPane id="AnchorPane" prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.FinanceScreenController">
    <children>
       <VBox prefHeight="359.0" prefWidth="600.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -54,14 +54,14 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="560.0" spacing="15.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="250.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="271.0" spacing="5.0">
                            <children>
-                              <Label prefHeight="46.0" prefWidth="208.0" text="How much debt would you like to pay off?" wrapText="true">
+                              <Label fx:id="debtText" prefHeight="46.0" prefWidth="208.0" text="How much debt would you like to pay off?" wrapText="true">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="payBackAmt" maxWidth="80.0" prefHeight="31.0" prefWidth="80.0" />
+                              <TextField fx:id="payBackAmt" maxWidth="80.0" prefHeight="31.0" prefWidth="71.0" />
                            </children>
                         </HBox>
                         <Button fx:id="payLoan" mnemonicParsing="false" onAction="#payLoan" prefHeight="28.0" prefWidth="201.0" text="Pay Back Debt">
@@ -75,7 +75,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="326.0">
                            <children>
-                              <Label fx:id="maxLoan" prefHeight="55.0" prefWidth="252.0" text="You can get a loan of up to ₪1000. How much would you like?" wrapText="true">
+                              <Label fx:id="loanLabel" prefHeight="55.0" prefWidth="252.0" text="You can borrrow up to â‚ª1000. How much would you like?" wrapText="true">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -102,37 +102,37 @@
                   <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="85.0" prefWidth="600.0" spacing="10.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="85.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <Label text="Insurance">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="21.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="2.0" prefWidth="560.0">
+                  <HBox fx:id="ShipValueBox" prefHeight="70.0" prefWidth="560.0">
                      <children>
-                        <Label text="Current value of ship: ">
+                        <Label fx:id="shipValueLabel" text="Current Value of Your Ship: " wrapText="true">
                            <font>
                               <Font name="Copperplate Gothic Light" size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="shipVal" text="shipVal">
                            <font>
-                              <Font name="Copperplate Gothic Light" size="18.0" />
+                              <Font size="19.0" />
                            </font>
                         </Label>
                      </children>
                   </HBox>
-                  <HBox prefHeight="12.0" prefWidth="560.0">
+                  <HBox fx:id="insuranceCostBox" prefHeight="12.0" prefWidth="560.0">
                      <children>
-                        <Label text="Daily cost of insurance: ">
+                        <Label text="Daily Insurance Cost: " wrapText="true">
                            <font>
-                              <Font name="Copperplate Gothic Light" size="18.0" />
+                              <Font size="19.0" />
                            </font>
                         </Label>
-                        <Label fx:id="dailyCost" text="dailyCosts">
+                        <Label fx:id="dailyCost" text="dailyCosts" wrapText="true">
                            <font>
-                              <Font name="Copperplate Gothic Light" size="18.0" />
+                              <Font size="19.0" />
                            </font>
                         </Label>
                      </children>
