@@ -5,8 +5,8 @@
  */
 package spacetrader.system;
 
+import java.awt.Point;
 import javafx.application.Application;
-import javafx.geometry.Point2D;
 import javafx.stage.Stage;
 import spacetrader.Mercenary;
 import spacetrader.Player;
@@ -69,7 +69,7 @@ public class SpaceTrader extends Application {
      */
     public void setUpGameWithCheats(AdminCheats cheats) {
         debugStatus = cheats.getDebugMode();
-        Planet homePlanet = new Planet("Pallet", new Point2D(Universe.WIDTH / 2, Universe.HEIGHT / 2),
+        Planet homePlanet = new Planet("Pallet", new Point(Universe.WIDTH / 2, Universe.HEIGHT / 2),
                 cheats.getTechLevel(), cheats.getResource(), cheats.getPoliticalSystem());
         
         Player cheatPlayer = new Player("LubMaster", 3, 3, 3, 3, 3);

@@ -5,13 +5,12 @@
  */
 package spacetrader.ships;
 
+import java.awt.Point;
 import java.util.ArrayList;
-import javafx.geometry.Point2D;
 import spacetrader.Mercenary;
 import spacetrader.SkillList.Skill;
 import spacetrader.Tools;
 import static spacetrader.Tools.rand;
-import spacetrader.Universe;
 import spacetrader.commerce.Cargo;
 import spacetrader.commerce.TradeGood;
 import spacetrader.planets.Planet;
@@ -288,19 +287,10 @@ public class OpponentShip extends SpaceShip {
         // the commander's ship, but who cares, it's just for the skills anyway.
         ArrayList<Mercenary> crew = new ArrayList<>();
 
-        final int MAX_SKILL = 10;
-        int pilot = 1 + rand.nextInt(MAX_SKILL);
-        int fighter = 1 + rand.nextInt(MAX_SKILL);
-        int trader = 1 + rand.nextInt(MAX_SKILL);
-        int engineer = 1 + rand.nextInt(MAX_SKILL);
-        int investor = 1 + rand.nextInt(MAX_SKILL);
-        Planet planet = new Planet("sethville", new Point2D(1,1));
-        Mercenary commander = new Mercenary("Seth Davis", pilot, fighter, trader, engineer, investor, planet);
-
+        Planet planet = new Planet("Place", new Point(4,5));
         int numCrew = 1 + rand.nextInt(getType().crew());
         for (int i = 1; i < numCrew; i++) {
-            //crew.add(getRandomMercenary()); This is the correct line but it hasn't be implemented yet.
-            crew.add(new Mercenary("John", 1, 1, 1, 1, 1, planet)); //TEMPORARY
+            crew.add(Mercenary.createRandomMercenary("John" + i, planet));
         }
 
         return crew;

@@ -5,6 +5,7 @@
  */
 package spacetrader;
 
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +13,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import javafx.geometry.Point2D;
 import spacetrader.planets.Planet;
 import spacetrader.planets.PoliticalSystem;
 import spacetrader.planets.Resource;
@@ -41,7 +41,7 @@ public class Universe implements Serializable {
 
     private final ArrayList<Planet> planets;
     private final Set<String> planetNames = new HashSet<>();
-    private final Set<Point2D> planetLocations = new HashSet<>(100);
+    private final Set<Point> planetLocations = new HashSet<>(100);
     private final ArrayList<Planet> wormholePlanets;
     private final Planet homePlanet;
 
@@ -51,7 +51,7 @@ public class Universe implements Serializable {
      * planet has a randomly chosen name and randomly chosen location.
      */
     public Universe() {
-        this(new Planet("Pallet", new Point2D(WIDTH / 2, HEIGHT / 2),
+        this(new Planet("Pallet", new Point(WIDTH / 2, HEIGHT / 2),
                 TechLevel.AGRICULTURE, Resource.NONE, PoliticalSystem.DEMOCRACY));
     }
 
@@ -83,7 +83,7 @@ public class Universe implements Serializable {
             planetNames.add(name);
 
             //pick random location
-            Point2D location;
+            Point location;
             Planet randomPlanet; //the next planet will be spawned next to this one
             int timesTried = 0; //this prevents the game from timing out
             do {
@@ -182,12 +182,12 @@ public class Universe implements Serializable {
         return homePlanet;
     }
 
-    private boolean isOptimalDistance(Point2D point, Map<Planet, Integer> numAdjPlanets) {
+    private boolean isOptimalDistance(Point point, Map<Planet, Integer> numAdjPlanets) {
         boolean isNearAnotherPlanet = false;
         Set<Planet> closePlanets = new HashSet<>();
         
         for (Planet planet : planets) {
-            Point2D p = planet.getLocation();
+            Point p = planet.getLocation();
             if (point.distance(p.getX(), p.getY()) < MIN_DISTANCE) {
                 return false;
             }
@@ -233,7 +233,7 @@ public class Universe implements Serializable {
         return p1.getLocation().distance(p2.getLocation());
     }
 
-    private void addNewPlanetLocation(Point2D point) {
+    private void addNewPlanetLocation(Point point) {
         planetLocations.add(point);
     }
 
@@ -244,7 +244,7 @@ public class Universe implements Serializable {
      * @param adjPlanet the planet which the new planet should be in range of
      * @return a new random point.
      */
-    private Point2D generateRandomLocation(Planet adjPlanet) {
+    private Point generateRandomLocation(Planet adjPlanet) {
         if (planets.size() < INITIAL_PLANET_NUM) {
             //planets.size() - 1 is used below because the home planet is added 
             //before this is ever called
@@ -252,9 +252,9 @@ public class Universe implements Serializable {
                     + (WIDTH * (1 + ((planets.size() - 1) % 4)) / 5);
             int y = MIN_DISTANCE / 2 - rand.nextInt(MIN_DISTANCE)
                     + ((HEIGHT * (1 + (planets.size() - 1) / 4)) / 5);
-            return new Point2D(x, y);
+            return new Point(x, y);
         } else {
-            Point2D randPlanetLoc = adjPlanet.getLocation();
+            Point randPlanetLoc = adjPlanet.getLocation();
             //pick random legal distance
             int dx = rand.nextInt(MAX_DISTANCE - MIN_DISTANCE) + MIN_DISTANCE;
             int dy = rand.nextInt(MAX_DISTANCE - MIN_DISTANCE) + MIN_DISTANCE;
@@ -262,11 +262,15 @@ public class Universe implements Serializable {
             dx *= rand.nextBoolean() ? 1 : -1;
             dy *= rand.nextBoolean() ? 1 : -1;
             
-            Point2D loc = randPlanetLoc.add(dx, dy);
+            //create the location x and y
+            int locX = (int) randPlanetLoc.getX() + dx;
+            int locY = (int) randPlanetLoc.getY() + dy;
+
             //apply bounds
-            loc = new Point2D(Math.min(loc.getX(), WIDTH), Math.min(loc.getY(), HEIGHT));
-            loc = new Point2D(Math.max(loc.getX(), 0), Math.max(loc.getY(), 0));
-            return loc;
+            locX = Tools.applyBounds(locX, 0, WIDTH);
+            locY = Tools.applyBounds(locY, 0, HEIGHT);
+            
+            return new Point(locX, locY);
         }
     }
 
