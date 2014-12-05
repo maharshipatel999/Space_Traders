@@ -344,6 +344,15 @@ public class MainController {
         stage.setScene(control.getScene());
 
     }
+    public void goToCrewInfoScreen() {
+        CrewInfoScreenController control;
+        control = (CrewInfoScreenController) extractControllerFromFXML(
+                "/spacetrader/ships/CrewInfoScreen.fxml", stage);
+        control.setUpCrewInfoScreen(game.getPlayer());
+        stage.setTitle("View Mercenaries For Hire");
+        stage.setScene(control.getScene());
+
+    }
 
     /**
      * Transitions the game screen to the Space Map Screen.

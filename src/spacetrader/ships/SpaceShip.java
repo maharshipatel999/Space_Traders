@@ -316,6 +316,7 @@ public abstract class SpaceShip implements Iterable<Equipment>, Serializable {
             crew.add(trader);
             hired = true;
             calculateHighestCrewSkills();
+            trader.getHomePlanet().setMercenary(null);
         }
         return hired;
     }
@@ -332,6 +333,7 @@ public abstract class SpaceShip implements Iterable<Equipment>, Serializable {
             crew.remove(trader);
             fired = true;
             calculateHighestCrewSkills();
+            trader.getHomePlanet().setMercenary(trader);
         }
         return fired;
     }
