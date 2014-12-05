@@ -45,25 +45,25 @@
          <bottom>
             <HBox fx:id="buttonBar" alignment="CENTER" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="116.0" text="Surrender">
+                  <Button maxHeight="44.0" maxWidth="116.0" minHeight="44.0" minWidth="116.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="116.0">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Flee">
+                  <Button maxHeight="44.0" maxWidth="100.0" minHeight="44.0" minWidth="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Attack">
+                  <Button maxHeight="44.0" maxWidth="146.0" minHeight="44.0" minWidth="146.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="146.0">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -73,6 +73,9 @@
                <padding>
                   <Insets bottom="10.0" />
                </padding>
+               <BorderPane.margin>
+                  <Insets bottom="15.0" />
+               </BorderPane.margin>
             </HBox>
          </bottom>
       </BorderPane>

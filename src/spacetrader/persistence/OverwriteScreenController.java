@@ -38,9 +38,8 @@ public class OverwriteScreenController extends SceneController implements Initia
      *
      * @param game
      */
-    public void setUpSaveScreen(SpaceTrader game) {
+    public void setUpSaveScreen(SpaceTrader game, boolean isEnd) {
         this.game = game;
-
         try {
             slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
             if (slots.getPlayer1() != null) {
@@ -60,6 +59,14 @@ public class OverwriteScreenController extends SceneController implements Initia
             }
         } catch (IOException | ClassNotFoundException e) {
             //Do nothing since its perfectly acceptable for their not to be any savefiles yet.
+        }
+        if (isEnd) {
+            String saveConfirm = "Would you like to save your game?";
+            boolean response = mainControl.displayYesNoConfirmation(
+                    "Save Confirmation", null, saveConfirm);
+            if (!response) {
+                mainControl.goToHighScoreScreen();
+            }
         }
     }
 

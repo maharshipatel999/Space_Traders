@@ -64,7 +64,7 @@
                               <TextField fx:id="payBackAmt" maxWidth="80.0" prefHeight="31.0" prefWidth="80.0" />
                            </children>
                         </HBox>
-                        <Button fx:id="payLoan" mnemonicParsing="false" onAction="#payLoan" prefHeight="28.0" prefWidth="143.0" text="Pay Back Debt">
+                        <Button fx:id="payLoan" mnemonicParsing="false" onAction="#payLoan" prefHeight="28.0" prefWidth="201.0" text="Pay Back Debt">
                            <font>
                               <Font name="Copperplate Gothic Bold" size="15.0" />
                            </font>
@@ -137,7 +137,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Button fx:id="buyInsurance" alignment="CENTER" mnemonicParsing="false" onAction="#buyInsurance" prefHeight="28.0" prefWidth="143.0" text="Buy Insurance">
+                  <Button fx:id="buyInsurance" alignment="CENTER" mnemonicParsing="false" onAction="#buyInsurance" prefHeight="28.0" prefWidth="195.0" text="Buy Insurance">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="15.0" />
                      </font>

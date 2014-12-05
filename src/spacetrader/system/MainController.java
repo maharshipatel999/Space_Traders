@@ -40,7 +40,6 @@ public class MainController {
     private RandomEventGenerator eventGenerator;
 
     private InformationPresenter popUpControl;
-    private HighScoreList list;
 
 
     private WarpScreenController warpScreenControl;
@@ -152,23 +151,43 @@ public class MainController {
                 + "Your final score is %d! You played for %d turns. The overall "
                 + "worth of your trader was ₪%d. Congrats!", score, daysLived, playerWorth);
         
-        this.list = new HighScoreList();
-        if (list.updateSlots(game, score)) {
-            autoSave();
-            goToHighScoreScreen();
-        } else {
-            goToWelcomeScreen();
-        }
+        HighScoreList list = game.getHsList();
+        list = updateSlots(score, list);
+        game.setHsList(list);
+        goToOverwriteScreen(true);
     }
     
-    public void autoSave() {
-        OverwriteScreenController control;
-        control = (OverwriteScreenController) extractControllerFromFXML(
-                "/spacetrader/persistence/OverwriteScreen.fxml", stage);
-        control.setUpSaveScreen(game);
-        control.serialize();
-        stage.setTitle("Save Game!");
-        stage.setScene(control.getScene());
+    public HighScoreList updateSlots(int score, HighScoreList oldList) {
+        HighScoreSlot slot1 = oldList.getSlot1();
+        HighScoreSlot slot2 = oldList.getSlot2();
+        HighScoreSlot slot3 = oldList.getSlot3();
+        if (slot1 == null) {
+            slot1 = new HighScoreSlot(game, score);
+        } else if (slot2 == null) {
+            slot2 = new HighScoreSlot(game, score);
+            //return true;
+        } else if (slot3 == null) {
+            slot3 = new HighScoreSlot(game, score);
+            //return true;
+        }
+        if (score >= slot1.getScore()) {
+            slot3 = slot2;
+            slot2 = slot1;
+            slot1 = new HighScoreSlot(game, score);
+            //return true;
+        } else if (score >= slot2.getScore()) {
+            slot3 = slot2;
+            slot2 = new HighScoreSlot(game, score);
+            //return true;
+        } else if (score >= slot3.getScore()) {
+            slot3 = new HighScoreSlot(game, score);
+            //return true;
+        }
+        HighScoreList newList = new HighScoreList();
+        newList.setSlot1(slot1);
+        newList.setSlot2(slot2);
+        newList.setSlot3(slot3);
+        return newList;
     }
 
     /**
@@ -266,7 +285,7 @@ public class MainController {
         control = (HighScoreScreenController) extractControllerFromFXML(
                 "/spacetrader/HighScoreScreen.fxml", stage);
         stage.setScene(control.getScene());
-        control.setUpHighScoreScreen(list);
+        control.setUpHighScoreScreen(game.getHsList());
     }
 
     /**
@@ -436,11 +455,11 @@ public class MainController {
     /**
      * Transitions the game screen to the Overwrite Screen.
      */
-    public void goToOverwriteScreen() {
+    public void goToOverwriteScreen(boolean isEnd) {
         OverwriteScreenController control;
         control = (OverwriteScreenController) extractControllerFromFXML(
                 "/spacetrader/persistence/OverwriteScreen.fxml", stage);
-        control.setUpSaveScreen(game);
+        control.setUpSaveScreen(game, isEnd);
         stage.setTitle("Save Game!");
         stage.setScene(control.getScene());
     }

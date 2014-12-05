@@ -555,7 +555,7 @@
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin></Label>
-                        <Label prefHeight="17.0" prefWidth="33.0" text="Price" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="44.0" text="Price" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -964,7 +964,7 @@
                   <Separator prefWidth="200.0" />
                   <Label fx:id="moneyRemaining" text="= 0 sprints">
                      <font>
-                        <Font size="29.0" />
+                        <Font size="25.0" />
                      </font>
                   </Label>
                   <Separator prefWidth="200.0">
@@ -976,12 +976,12 @@
                      <children>
                         <Label prefHeight="30.0" prefWidth="112.0" text="Cargo Slots:">
                            <font>
-                              <Font size="20.0" />
+                              <Font size="17.0" />
                            </font>
                         </Label>
                         <Label fx:id="cargoSlots" text="0/15">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="25.0" />
                            </font>
                         </Label>
                      </children>

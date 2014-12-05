@@ -31,19 +31,19 @@
          <bottom>
             <HBox fx:id="buttonBar" alignment="CENTER" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Ignore">
+                  <Button maxHeight="44.0" maxWidth="100.0" minHeight="44.0" minWidth="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" text="Ignore">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Attack">
+                  <Button maxHeight="44.0" maxWidth="100.0" minHeight="44.0" minWidth="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" text="Attack">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Trade">
+                  <Button maxHeight="44.0" maxWidth="100.0" minHeight="44.0" minWidth="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" text="Trade">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                   </Button>
                </children>

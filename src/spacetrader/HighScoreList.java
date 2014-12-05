@@ -24,11 +24,11 @@ public class HighScoreList implements Serializable {
     }
     
     public void setSlot2(HighScoreSlot slot2) {
-        this.slot1 = slot2;
+        this.slot2 = slot2;
     }
     
     public void setSlot3(HighScoreSlot slot3) {
-        this.slot1 = slot3;
+        this.slot3 = slot3;
     }
     
     public HighScoreSlot getSlot1() {
@@ -43,32 +43,5 @@ public class HighScoreList implements Serializable {
         return this.slot3;
     }
     
-    public boolean updateSlots(SpaceTrader game, int score) {
-        if (slot1 == null) {
-            slot1 = new HighScoreSlot(game, score);
-            System.out.println("setting the first score slot");
-            return true;
-        } else if (slot2 == null) {
-            slot2 = new HighScoreSlot(game, score);
-            return true;
-        } else if (slot3 == null) {
-            slot3 = new HighScoreSlot(game, score);
-            return true;
-        }
-        if (score >= slot1.getScore()) {
-            slot3 = slot2;
-            slot2 = slot1;
-            slot1 = new HighScoreSlot(game, score);
-            return true;
-        } else if (score >= slot2.getScore()) {
-            slot3 = slot2;
-            slot2 = new HighScoreSlot(game, score);
-            return true;
-        } else if (score >= slot3.getScore()) {
-            slot3 = new HighScoreSlot(game, score);
-            return true;
-        } else {
-            return false;
-        }
-    }
+    
 }

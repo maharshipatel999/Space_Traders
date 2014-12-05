@@ -96,7 +96,7 @@ public class ShipYardScreenController
         //Determine if this planet sells ships, equipment, or escape pods.
         if (player.getLocation().getLevel().compareTo(ShipType.FLEA.minTechLevel()) >= 0) {
             shipDesc.setText(
-                    "There are several ships currently avaible for purchase!");
+                    "There are several ships currently available!");
         } else {
             shipDesc.setText("There are no ships for sale.");
             saleShips.setDisable(true);
@@ -193,7 +193,7 @@ public class ShipYardScreenController
             incFuelButton.setVisible(true);
             maxFuelButton.setVisible(true);
 
-            maxHullButton.setText("Repair All Damage: ₪" + ((maxHull - currHull) * repairCost));
+            maxHullButton.setText("Repair All: ₪" + ((maxHull - currHull) * repairCost));
 
             double damageFraction = (maxHull - currHull) / (double) maxHull;
             int repairAmount = (damageFraction >= .10)

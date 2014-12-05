@@ -75,33 +75,33 @@
          <bottom>
             <HBox fx:id="buttonBar" alignment="CENTER" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Flee">
+                  <Button maxHeight="44.0" maxWidth="100.0" minHeight="44.0" minWidth="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" text="Flee">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Submit">
+                  <Button maxHeight="44.0" maxWidth="100.0" minHeight="44.0" minWidth="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" text="Submit">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Attack">
+                  <Button maxHeight="44.0" maxWidth="100.0" minHeight="44.0" minWidth="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" text="Attack">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Bribe">
+                  <Button maxHeight="44.0" maxWidth="100.0" minHeight="44.0" minWidth="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" text="Bribe">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -109,7 +109,7 @@
                   </Button>
                </children>
                <BorderPane.margin>
-                  <Insets />
+                  <Insets bottom="50.0" />
                </BorderPane.margin>
                <padding>
                   <Insets bottom="10.0" />

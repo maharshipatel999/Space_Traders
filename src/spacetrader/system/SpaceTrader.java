@@ -8,6 +8,7 @@ package spacetrader.system;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.stage.Stage;
+import spacetrader.HighScoreList;
 import spacetrader.Mercenary;
 import spacetrader.Player;
 import spacetrader.Universe;
@@ -30,6 +31,7 @@ public class SpaceTrader extends Application {
     private MainController mainControl;
     private int days;
     private Difficulty difficulty;
+    private HighScoreList hsList;
     
     public enum Difficulty {
         BEGINNER, EASY, NORMAL, HARD, IMPOSSIBLE;
@@ -193,5 +195,13 @@ public class SpaceTrader extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public HighScoreList getHsList() {
+        return this.hsList;
+    }
+    
+    public void setHsList(HighScoreList hsList) {
+        this.hsList = hsList;
     }
 }

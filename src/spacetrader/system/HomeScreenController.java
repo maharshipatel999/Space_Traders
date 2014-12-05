@@ -103,7 +103,7 @@ public class HomeScreenController extends SceneController implements Initializab
 
     @FXML
     public void goToOverwrite() {
-        mainControl.goToOverwriteScreen();
+        mainControl.goToOverwriteScreen(false);
     }
 
     @FXML
