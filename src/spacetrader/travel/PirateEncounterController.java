@@ -36,6 +36,11 @@ public class PirateEncounterController extends EncounterScreenController impleme
     
     @Override
     protected void surrenderPressed() {
+        if (!mainControl.displayYesNoConfirmation("Question", "Are you sure?",
+                "Are you sure you want to surrender to the pirates?"
+                + " They will likely plunder your ship's cargo.")) {
+            return;
+        }
         Cargo playerCargo = encounter.getPlayer().getCargo();
         int playerCargoAmount = playerCargo.getCount();
         //Determine how much cargo the player has

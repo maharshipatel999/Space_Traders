@@ -38,6 +38,7 @@ import org.controlsfx.control.MasterDetailPane;
 import org.controlsfx.control.PopOver;
 import spacetrader.Player;
 import spacetrader.Universe;
+import spacetrader.exceptions.InsufficientFundsException;
 import spacetrader.planets.Planet;
 
 /**
@@ -53,7 +54,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
     private Text fuelRemaingText;
     @FXML
     private Label helpfulPanelInfoText;
-    
+
     private static final Color SELECTED_PLNT_COLOR = Color.RED;
     private static final Color WORMHOLE_COLOR = Color.YELLOW;
     public static final Color UNVISITED_PLNT_COLOR = Color.GREEN;
@@ -87,9 +88,9 @@ public class SpaceMapScreenController extends SceneController implements Initial
         infoControl.setMapControl(this);
 
         mapScreen.setDetailNode(planetInfo);
-        
+
         helpfulPanelInfoText.setVisible(false);
-        
+
         mapSidesPane.setContent(planetMap);
         mapSidesPane.setBottom(new PlanetColorKey());
         mapSidesPane.setAnimationDelay(Duration.ZERO);
@@ -103,7 +104,8 @@ public class SpaceMapScreenController extends SceneController implements Initial
      * @param currentPlanet the planet the player currently is
      * @param planets the planets this map will display.
      */
-    public void setUpMap(Player player, Planet currentPlanet, ArrayList<Planet> planets) {
+    public void setUpMap(Player player, Planet currentPlanet,
+            ArrayList<Planet> planets) {
         this.player = player;
         this.currentPlanet = currentPlanet;
         this.fuelAmount = player.getShip().getFuelAmount();
@@ -136,11 +138,35 @@ public class SpaceMapScreenController extends SceneController implements Initial
 
     /**
      * Wormhole travels to the selected planet.
+     *
+     * @param destination
      */
     public void wormholeToPlanet(Planet destination) {
-        player.specialDepartFromPlanet(this.currentPlanet, destination, mainControl);
+        StringBuilder msg = new StringBuilder();
+        msg.append("Are you sure you want to use this wormhole to travel instantly to ");
+        msg.append(destination.getName());
+        msg.append("? You will have to pay a tax of âª");
+        msg.append(calculateWormholeTax());
+        msg.append(".");
+        if (mainControl.displayYesNoConfirmation("Wormhole Message",
+                "Confirm Wormhole Travel", msg.toString())) {
+            try {
+                player.removeCredits(fuelAmount);
+            } catch (InsufficientFundsException e) {
+                mainControl.displayErrorMessage(null, "Not Enough Money", "You do"
+                    + " not have enough money to pay the required tax. You may not use"
+                    + " this planet's wormhole until you have aquired more cash.");
+            }
+
+            player.specialDepartFromPlanet(this.currentPlanet, destination, mainControl);
+        }
     }
-    
+
+    private int calculateWormholeTax() {
+        final int FUEL_MULTIPLIER = 25;
+        return player.getShip().getType().fuelCost() * FUEL_MULTIPLIER;
+    }
+
     /**
      * !!! When the pane is revealed the right part of the map is unviewable!!!
      * need to fix Reveals the detail pane with the specified planet's
@@ -151,7 +177,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
     private void showPlanetInfo(Planet planet) {
         double localX = planetMap.planetIcons.get(planet).getCenterX();
         Point2D sceneLoc = planetMap.planetIcons.get(planet).localToScene(localX, 0);
-        
+
         //if the planet would be covered by the info pane, put it on the right
         if (sceneLoc.getX() < (planetInfo.getPrefWidth())) {
             mapSidesPane.setLeft(null);
@@ -180,7 +206,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
     protected void backToPlanet(ActionEvent event) {
         mainControl.goToHomeScreen(currentPlanet);
     }
-    
+
     @FXML
     protected void viewColorKey(ActionEvent event) {
         PlanetColorKey colorKeyPane = new PlanetColorKey();
@@ -238,7 +264,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
         public static final double MAP_HEIGHT = 1980;
         public static final double LEFT_MARGIN = 40, RIGHT_MARGIN = 90;
         public static final double TOP_MARGIN = 40, BOTTOM_MARGIN = 40;
-        
+
         public static final double PLANET_RADIUS = 10;
         public static final double WORMHOLE_RADIUS = 5;
 
@@ -261,13 +287,12 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 dragContext.mouseY = event.getSceneY();
                 dragContext.x = this.getTranslateX();
                 dragContext.y = this.getTranslateY();
-                
+
                 flightRadiusPopUp.hide(new Duration(200));
             });
             this.setOnMouseReleased((e) -> this.setCursor(Cursor.OPEN_HAND));
             this.setOnMouseExited((e) -> this.setCursor(Cursor.OPEN_HAND));
-            
-            
+
             this.setOnMouseDragged((event) -> {
                 //Get the exact translated X and doubleY coordinate
                 double tempX = dragContext.x + event.getSceneX() - dragContext.mouseX;
@@ -310,11 +335,11 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN,
                     Color.BLACK);
             this.getChildren().add(background);
-            
+
             // *** Add Stars ***
             final int STAR_IMAGE_WIDTH = (int) (new ImageView("/resources/images/starfield.png")).getImage().getWidth();
             final int EXCESS_SPACE = ((int) (MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN)) % STAR_IMAGE_WIDTH;
-            
+
             FlowPane starsPane = new FlowPane();
             starsPane.setPrefWidth(MAP_WIDTH + LEFT_MARGIN + RIGHT_MARGIN + EXCESS_SPACE);
             starsPane.setPrefHeight(MAP_HEIGHT + TOP_MARGIN + BOTTOM_MARGIN);
@@ -322,7 +347,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 starsPane.getChildren().add(new ImageView("/resources/images/starfield.png"));
             }
             this.getChildren().add(starsPane);
-            
+
             //This is used for adding the flight radius in the correct position
             //It needs to be above the background and underneath all the planets
             int firstPlanetIndex = this.getChildren().size();
@@ -338,7 +363,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 Circle planetIcon = new Circle(planetX, planetY,
                         PLANET_RADIUS, getUnselectedPlanetColor(planet));
                 this.planetIcons.put(planet, planetIcon);
-                
+
                 planetIcon.setOnMousePressed((event) -> {
                     flightRadiusPopUp.hide(new Duration(200));
                     this.setCursor(Cursor.HAND);
@@ -357,8 +382,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     }
                     event.consume();
                 });
-                
-                
+
                 //This prevents the map from dragging when you move the mouse
                 //after pressing on a planet
                 planetIcon.setOnMouseDragged((event) -> event.consume());
@@ -378,7 +402,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                             WORMHOLE_RADIUS, getUnselectedPlanetColor(planet));
                     wormholeIcon.setFill(WORMHOLE_COLOR);
                     this.getChildren().add(wormholeIcon);
-                    
+
                     Pane miniMapPane = null;
                     FXMLLoader loader = new FXMLLoader(getClass()
                             .getResource("/spacetrader/planets/WormholeMap.fxml"));
@@ -388,7 +412,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                         Logger.getLogger(SpaceTrader.class.getName()).log(Level.SEVERE, null, e);
                     }
                     ((WormholeMiniMapController) loader.getController()).setWormholeMap(planets, planet);
-                    
+
                     PopOver wormholePopOver = new PopOver(miniMapPane);
                     planetIcon.addEventHandler(MouseEvent.MOUSE_ENTERED, (event) -> {
                         wormholePopOver.show(wormholeIcon);
@@ -397,23 +421,17 @@ public class SpaceMapScreenController extends SceneController implements Initial
                     planetIcon.addEventHandler(MouseEvent.MOUSE_EXITED, (event) -> {
                         wormholePopOver.hide(new Duration(150));
                     });
-                    
+
                     wormholeIcon.setOnMouseEntered((e) -> this.setCursor(Cursor.HAND));
                     wormholeIcon.setOnMouseExited((e) -> this.setCursor(Cursor.OPEN_HAND));
-                    
+
                     wormholeIcon.setOnMousePressed((event) -> {
                         if (planet == currentPlanet) {
-                            StringBuilder msg = new StringBuilder();
-                            msg.append("Are you sure you want to use this wormhole to travel to ");
-                            msg.append(planet.getWormhole().getDestination().getName());
-                            if (mainControl.displayYesNoConfirmation("Wormhole Message",
-                                    "Confirm Wormhole Travel", msg.toString())) {
-                                wormholeToPlanet(planet.getWormhole().getDestination());
-                            }
+                            wormholeToPlanet(planet.getWormhole().getDestination());
                         }
                         event.consume();
                     });
-                    
+
                 }
 
                 //Create text for the name of each planet.
@@ -445,7 +463,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 }
             }
         }
-        
+
         /**
          * Determines the color of a planet that is not selected.
          *
@@ -463,7 +481,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
         @Override
         public String toString() {
             String toString = String.format("Size:(%f, %f), RectSize:(%f, %f)",
-                    getWidth(), getHeight(), 
+                    getWidth(), getHeight(),
                     background.getWidth(),
                     background.getHeight());
             toString += String.format(" TranslateX,Y:(%f, %f), LayoutX,Y:(%f, %f)",
@@ -487,18 +505,18 @@ public class SpaceMapScreenController extends SceneController implements Initial
             public double y;
         }
     }
-    
-    
+
     /**
      * A GridPane that displays the Map Key.
      */
     private class PlanetColorKey extends GridPane {
+
         private PlanetColorKey() {
             this.setPrefWidth(400);
             this.setPadding(new Insets(15, 15, 15, 15));
             this.setHgap(15);
             this.setVgap(10);
-            Circle[] icons = new Circle[]{
+            Circle[] icons = new Circle[] {
                 new Circle(MapPane.PLANET_RADIUS, CURR_PLNT_COLOR),
                 new Circle(MapPane.PLANET_RADIUS, SELECTED_PLNT_COLOR),
                 new Circle(MapPane.PLANET_RADIUS, UNVISITED_PLNT_COLOR),
@@ -507,11 +525,11 @@ public class SpaceMapScreenController extends SceneController implements Initial
                 new Circle(MapPane.PLANET_RADIUS, VISITED_PLNT_COLOR.darker()),
                 new Circle(MapPane.WORMHOLE_RADIUS, WORMHOLE_COLOR)
             };
-            String[] descriptions = new String[]{
+            String[] descriptions = new String[] {
                 "Your current location",
                 "The selected planet",
                 "Unvisited & In Range",
-                "Unvisited & Out of Range", 
+                "Unvisited & Out of Range",
                 "Visited & In Range",
                 "Visited & Out of Range",
                 "A wormhole (If you're on its local planet, you can use it to travel to another wormhole)"

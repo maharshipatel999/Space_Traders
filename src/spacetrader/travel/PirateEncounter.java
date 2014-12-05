@@ -23,7 +23,7 @@ public class PirateEncounter extends Encounter {
     public static final String BLACKMAIL_MSG = "The pirates are very "
             + "angry that they find no cargo on your ship. To stop them from "
             + "destroying you, you have no choice but to pay them an amount equal "
-            + "to 5% of your current worth.";
+            + "to 5%% of your current worth.";
 
     public static final int ATTACK_PIRATE_SCORE = 0;
     public static final int KILL_PIRATE_SCORE = 1;
