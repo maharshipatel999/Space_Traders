@@ -50,9 +50,6 @@ public class ShipYardScreenController
     @FXML
     private Button saleShips, saleEquipment, buyEscapePodButton;
 
-    @FXML
-    private Button backButton;
-
     private Player player;
     private Planet planet;
 

@@ -217,8 +217,8 @@ public abstract class SpaceShip implements Iterable<Equipment>, Serializable {
         
         int damage;  
         if (hit) {
-            final double STR_MODIFIER = 1 + (2 * this.getEffectiveSkill(Skill.ENGINEER) / 100.0);
-            damage = rand.nextInt((int) (STRENGTH * STR_MODIFIER));
+            final double STRENGTH_MODIFIER = 1 + (2 * this.getEffectiveSkill(Skill.ENGINEER) / 100.0);
+            damage = rand.nextInt((int) (STRENGTH * STRENGTH_MODIFIER));
             defender.takeDamage(damage);
         } else {
             damage = 0;

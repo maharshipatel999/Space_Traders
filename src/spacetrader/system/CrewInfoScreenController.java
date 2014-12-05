@@ -36,7 +36,7 @@ implements Initializable {
     private HBox crewBox1, crewBox2, crewBox3;
     
     @FXML
-    private HBox mercenaryForHire;
+    private HBox mercenaryForHireBox;
     
     @FXML
     private Label merc1, merc2,  merc3;
@@ -124,11 +124,12 @@ implements Initializable {
      */
     public void displayCrewInfo() {
         
-        crew = player.getShip().getCrew();
+        this.crew = player.getShip().getCrew();
         int crewSize = crew.length;
         if (player.getLocation().getMercenary() == null) {
-            mercenaryForHire.setVisible(false);
+            mercenaryForHireBox.setVisible(false);
         } else {
+            mercenaryForHireBox.setVisible(true);
             mercForHire.setText(player.getLocation().getMercenary().getName());
             noMercForHire.setVisible(false);
         }
@@ -144,25 +145,46 @@ implements Initializable {
     }
     @FXML
     protected void fireMerc1() {
-        player.getShip().fireMercenary(crew[0]);
-        displayCrewInfo();
+        boolean response = false;
+        String fireMercMessage = 
+        "Are you sure you want to fire this mercenary? If so, he or she will return to their home planet";
+        response = mainControl.displayYesNoConfirmation(
+        "Mercenary Fire Confirmation", null, fireMercMessage);
+        if (response) {
+            player.getShip().fireMercenary(crew[0]);
+            displayCrewInfo();
+        }
     }
      @FXML
     protected void fireMerc2() {
-         player.getShip().fireMercenary(crew[1]);
-        displayCrewInfo();
+         boolean response = false;
+        String fireMercMessage = 
+        "Are you sure you want to fire this mercenary? If so, he or she will return to their home planet";
+        response = mainControl.displayYesNoConfirmation(
+        "Mercenary Fire Confirmation", null, fireMercMessage);
+        if (response) {
+            player.getShip().fireMercenary(crew[0]);
+            displayCrewInfo();
+        }
     }
      @FXML
     protected void fireMerc3() {
-        player.getShip().fireMercenary(crew[2]);
-        displayCrewInfo();
+       boolean response = false;
+        String fireMercMessage = 
+        "Are you sure you want to fire this mercenary? If so, he or she will return to their home planet";
+        response = mainControl.displayYesNoConfirmation(
+        "Mercenary Fire Confirmation", null, fireMercMessage);
+        if (response) {
+            player.getShip().fireMercenary(crew[0]);
+            displayCrewInfo();
+        }
     }
      @FXML
     protected void hireMerc() {
         boolean response = false;
         String hireMercMessage
         = "Are you sure you want to hire this mercenary for a daily wage of"
-        + " âª"+ player.getLocation().getMercenary().calculateDailyWage(player.getLocation().getMercenary());
+        + " ₪"+ player.getLocation().getMercenary().calculateDailyWage(player.getLocation().getMercenary());
         if (player.getCredits() > player.getLocation().getMercenary().calculateDailyWage(player.getLocation().getMercenary())) {
             response = mainControl.displayYesNoConfirmation(
             "Mercenary Hire Confirmation", null, hireMercMessage);
