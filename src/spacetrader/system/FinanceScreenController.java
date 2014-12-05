@@ -133,9 +133,7 @@ public class FinanceScreenController extends SceneController
         
         if (!player.getShip().hasEscapePod()) {
             buyInsurance.setDisable(true);
-            shipValueLabel.setText("Insurance pays out when you must escape "
-                    + "from your ship with an escape pod. Since you don't have "
-                    + "a pod, you can't get insurance.");
+            shipValueLabel.setText("You need escape pod to pay out insurance!");
             shipVal.setFont(new Font(14));
             shipVal.setText("");
             insuranceCostBox.setVisible(false);
@@ -144,12 +142,12 @@ public class FinanceScreenController extends SceneController
             insuranceCostBox.setVisible(true);
             shipVal.setFont(new Font(19));
             if (player.getInsuranceCost() > 0) {
-                buyInsurance.setText("Buy Inurance");
+                buyInsurance.setText("Sell Insurance");
                 InformationPresenter.getInstance().showTextOnHover(buyInsurance,
                         "When your ship is destroyed, if you have insurance on your"
                         + " ship, the bank will fully refund your ship's costs.");
             } else {
-                buyInsurance.setText("Stop Insurance");
+                buyInsurance.setText("Buy Insurance");
                 InformationPresenter.getInstance().showTextOnHover(buyInsurance,
                         "If you stop your insurance, your no-claim will return to"
                         + " 0%, even if you buy new insurance immediately.");

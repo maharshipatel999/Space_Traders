@@ -13,9 +13,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import spacetrader.HighScoreList;
 import spacetrader.Player;
-import spacetrader.ships.PlayerShip;
 import spacetrader.Universe;
+import spacetrader.ships.PlayerShip;
 import spacetrader.system.SceneController;
 import spacetrader.system.SpaceTrader;
 
@@ -129,6 +130,7 @@ public class ReloadGameScreenController extends SceneController implements Initi
         game.setUniverse((Universe) objects.get(0));
         game.setPlayer((Player) objects.get(1));
         game.getPlayer().setShip((PlayerShip) objects.get(2));
+        game.setHsList((HighScoreList) objects.get(3));
     }
 
     /**

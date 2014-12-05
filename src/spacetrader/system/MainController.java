@@ -605,7 +605,7 @@ public class MainController {
 
         InformationPresenter.getInstance().displaySaveProgress(progressTitle, updateMessage, finishMessage,
                 (WorkerStateEvent e) -> {
-                    goToHomeScreen(game.getPlayer().getLocation());
+                    //goToHomeScreen(game.getPlayer().getLocation());
                 });
     }
 }

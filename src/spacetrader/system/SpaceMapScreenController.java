@@ -536,6 +536,7 @@ public class SpaceMapScreenController extends SceneController implements Initial
             };
             for (int i = 0; i < icons.length; i++) {
                 Label desc = new Label(descriptions[i]);
+                desc.setTextFill(Color.BLACK);
                 desc.setWrapText(true);
                 this.addRow(i, icons[i], desc);
             }

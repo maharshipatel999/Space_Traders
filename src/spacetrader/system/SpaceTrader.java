@@ -62,6 +62,7 @@ public class SpaceTrader extends Application {
         this.player = player;
         this.days = 0;
         this.universe.getHomePlanet().movePlayerLocation(player, mainControl);
+        this.hsList = new HighScoreList();
     }
     
     /**

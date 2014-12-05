@@ -29,6 +29,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -347,7 +348,7 @@ public class InformationPresenter {
     public PopOver createTextPopOver(String message) {
         Label text = new Label(message);
         text.setPadding(new Insets(10, 15, 10, 15));
-
+        text.setTextFill(Color.BLACK);
         PopOver popup = new PopOver(text);
         popup.getContentNode().setUserData(Boolean.FALSE);
         return popup;

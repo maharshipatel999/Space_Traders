@@ -32,6 +32,7 @@ public class OverwriteScreenController extends SceneController implements Initia
 
     private PlayerSlots slots;
     private SpaceTrader game;
+    private boolean isEnd;
 
     /**
      * Gives this controller access to the entire game.
@@ -40,6 +41,7 @@ public class OverwriteScreenController extends SceneController implements Initia
      */
     public void setUpSaveScreen(SpaceTrader game, boolean isEnd) {
         this.game = game;
+        this.isEnd = isEnd;
         try {
             slots = (PlayerSlots) SerializableUtil.deserialize("saveFile.ser");
             if (slots.getPlayer1() != null) {
@@ -80,6 +82,7 @@ public class OverwriteScreenController extends SceneController implements Initia
         objList.add(game.getUniverse());
         objList.add(game.getPlayer());
         objList.add(game.getPlayer().getShip());
+        objList.add(game.getHsList());
         return objList;
     }
 
@@ -93,6 +96,9 @@ public class OverwriteScreenController extends SceneController implements Initia
         List<Object> objList = setUpPlayer();
         slots.setPlayer1(objList);
         serialize();
+        if (isEnd) {
+            mainControl.goToHighScoreScreen();
+        }
     }
 
     /**
@@ -105,7 +111,9 @@ public class OverwriteScreenController extends SceneController implements Initia
         List<Object> objList = setUpPlayer();
         slots.setPlayer2(objList);
         serialize();
-
+        if (isEnd) {
+            mainControl.goToHighScoreScreen();
+        }
     }
 
     /**
@@ -118,6 +126,9 @@ public class OverwriteScreenController extends SceneController implements Initia
         List<Object> objList = setUpPlayer();
         slots.setPlayer3(objList);
         serialize();
+        if (isEnd) {
+            mainControl.goToHighScoreScreen();
+        }
     }
 
     /**

@@ -137,7 +137,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Button fx:id="buyInsurance" alignment="CENTER" mnemonicParsing="false" onAction="#buyInsurance" prefHeight="28.0" prefWidth="195.0" text="Buy Insurance">
+                  <Button fx:id="buyInsurance" alignment="CENTER" maxHeight="28.0" maxWidth="195.0" minHeight="28.0" minWidth="195.0" mnemonicParsing="false" onAction="#buyInsurance" prefHeight="28.0" prefWidth="195.0" text="Buy Insurance">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="15.0" />
                      </font>
