@@ -169,8 +169,7 @@ public class MainController {
         } else if (slot3 == null) {
             slot3 = new HighScoreSlot(game, score);
             //return true;
-        }
-        if (score >= slot1.getScore()) {
+        } else if (score >= slot1.getScore()) {
             slot3 = slot2;
             slot2 = slot1;
             slot1 = new HighScoreSlot(game, score);
