@@ -227,31 +227,35 @@
                   </GridPane>
                   <HBox alignment="BOTTOM_LEFT" prefHeight="38.0" spacing="7.0">
                      <children>
-                        <ToggleButton mnemonicParsing="false" onAction="#absolutePressed" prefHeight="29.0" prefWidth="85.0" text="Absolute" textAlignment="CENTER">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="prices" />
-                           </toggleGroup>
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#relativePressed" prefHeight="29.0" prefWidth="84.0" text="Relative" textAlignment="CENTER" toggleGroup="$prices">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </ToggleButton>
+                        <HBox fx:id="priceDisplayButtons">
+                           <children>
+                              <ToggleButton mnemonicParsing="false" onAction="#absolutePressed" prefHeight="29.0" prefWidth="85.0" text="Absolute" textAlignment="CENTER">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="prices" />
+                                 </toggleGroup>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </ToggleButton>
+                              <ToggleButton mnemonicParsing="false" onAction="#relativePressed" prefHeight="29.0" prefWidth="84.0" text="Relative" textAlignment="CENTER" toggleGroup="$prices">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </ToggleButton>
+                           </children>
+                        </HBox>
                         <Button fx:id="warpButton" mnemonicParsing="false" onAction="#warpToPlanet" prefHeight="38.0" prefWidth="82.0" text="WARP">
                            <font>
                               <Font name="System Bold" size="17.0" />

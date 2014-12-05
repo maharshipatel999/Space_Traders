@@ -154,11 +154,21 @@ public class MainController {
         
         this.list = new HighScoreList();
         if (list.updateSlots(game, score)) {
-            System.out.println("updateSlots returned true");
+            autoSave();
             goToHighScoreScreen();
         } else {
             goToWelcomeScreen();
         }
+    }
+    
+    public void autoSave() {
+        OverwriteScreenController control;
+        control = (OverwriteScreenController) extractControllerFromFXML(
+                "/spacetrader/persistence/OverwriteScreen.fxml", stage);
+        control.setUpSaveScreen(game);
+        control.serialize();
+        stage.setTitle("Save Game!");
+        stage.setScene(control.getScene());
     }
 
     /**

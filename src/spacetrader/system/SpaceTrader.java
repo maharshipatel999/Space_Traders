@@ -8,6 +8,7 @@ package spacetrader.system;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.stage.Stage;
+import spacetrader.HighScoreList;
 import spacetrader.Player;
 import spacetrader.Universe;
 import spacetrader.planets.Planet;
