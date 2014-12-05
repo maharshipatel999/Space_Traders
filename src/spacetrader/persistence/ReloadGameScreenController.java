@@ -77,7 +77,8 @@ public class ReloadGameScreenController extends SceneController implements Initi
     public void reloadGame1() throws IOException, ClassNotFoundException {
         List<Object> objects = slots.getPlayer1();
         setObjects(objects);
-        goToHome();
+        Player player = (Player) slots.getPlayer1().get(1);
+        goToHome(player);
     }
 
     /**
@@ -90,7 +91,8 @@ public class ReloadGameScreenController extends SceneController implements Initi
     public void reloadGame2() throws IOException, ClassNotFoundException {
         List<Object> objects = slots.getPlayer2();
         setObjects(objects);
-        goToHome();
+        Player player = (Player) slots.getPlayer2().get(1);
+        goToHome(player);
     }
 
     /**
@@ -103,16 +105,19 @@ public class ReloadGameScreenController extends SceneController implements Initi
     public void reloadGame3() throws IOException, ClassNotFoundException {
         List<Object> objects = slots.getPlayer3();
         setObjects(objects);
-        goToHome();
+        Player player = (Player) slots.getPlayer3().get(1);
+        goToHome(player);
     }
 
     /**
      * Goes back to home screen and displays progress.
      */
-    private void goToHome() {
+    private void goToHome(Player player) {
         mainControl.displaySaveProgress("Loading Save File", "Loading...", "Game Successfully Loaded!");
+        mainControl.goToHomeScreen(player.getLocation());
     }
 
+    
     /**
      * goes back to welcome screen.
      * @param e 
