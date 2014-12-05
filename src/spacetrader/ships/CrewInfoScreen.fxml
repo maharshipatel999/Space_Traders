@@ -54,12 +54,12 @@
             </Label>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mercenary For Hire" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
-                  <Font size="25.0" />
+                  <Font size="17.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your Current Crew" GridPane.halignment="CENTER">
                <font>
-                  <Font size="25.0" />
+                  <Font size="17.0" />
                </font>
             </Text>
             <Button mnemonicParsing="false" onAction="#goBackToShipYardScreen" text="Back" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
