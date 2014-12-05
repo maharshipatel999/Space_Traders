@@ -6,6 +6,7 @@
 package spacetrader.travel;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -143,8 +144,20 @@ public abstract class EncounterScreenController extends SceneController {
 
     protected void plunderPressed() {
         encounter.updateRecordAfterPlunder();
-        //TODO do plundering form
-        mainControl.displayInfoMessage("You plundered!", "Plundering!", "You plunder the opponent.");
+        
+        Cargo playerCargo = encounter.getPlayer().getCargo();
+        Cargo opponentCargo = encounter.getOpponent().getCargo();
+        
+        int numStolenGoods = 0;
+        while (!playerCargo.isFull() & opponentCargo.getCount() > 0) {
+            List<TradeGood> opponentGoods = opponentCargo.getTradeGoods();
+            int randIndex = rand.nextInt(opponentGoods.size());
+            TradeGood good = opponentGoods.get(randIndex);
+            playerCargo.addItem(good, 1, 0);
+            opponentCargo.removeItem(good, 1);
+        }
+        mainControl.displayInfoMessage(null, "You plundered your opponent!", "You plundered %d goods from your opponent's ship.", numStolenGoods);
+        
         finishEncounter();
     }
 
@@ -290,8 +303,8 @@ public abstract class EncounterScreenController extends SceneController {
         if (good.ordinal() >= 5) {
             good = TradeGood.getRandomTradeGood();
         }
-        String message = String.format("ship, labeled %s, drifts", good.toString());
-        String response = mainControl.displayCustomConfirmation(null, "Scoop", message, "Pick It Up", "Let It Go");
+        String message = String.format("In the wreckage of the opponents ship you find a cannister filled with %s! ", good.toString());
+        String response = mainControl.displayCustomConfirmation(null, "Do you want to loot?", message, "Pick It Up", "Let It Go");
 
         if (!response.equals("Pick It Up")) {
             return;
@@ -299,7 +312,7 @@ public abstract class EncounterScreenController extends SceneController {
 
         if (playerCargo.isFull()) {
             String noScoopMessage = "You have no open cargo bays";
-            response = mainControl.displayCustomConfirmation(null, "Unable to Scoop", noScoopMessage, "Make Room", "Let It Go");
+            response = mainControl.displayCustomConfirmation(null, "Unable to Loot", noScoopMessage, "Make Room", "Let It Go");
             if (response.equals("Let It Go")) {
                 return;
             }
@@ -329,8 +342,7 @@ public abstract class EncounterScreenController extends SceneController {
         if (!playerCargo.isFull()) {
             playerCargo.addItem(good, 1, 0);
         } else {
-            //TODO
-            mainControl.displayInfoMessage(null, null, "NoDumpNoScoopAlert");
+            mainControl.displayInfoMessage(null, "Cargo is Full", "You are forced to leave behind the contents of the cannister you found.");
         }
     }
 
@@ -345,8 +357,7 @@ public abstract class EncounterScreenController extends SceneController {
         int fine = ((1 + (((player.getCurrentWorth() * Math.min(80, negPoliceScore)) / 100) / 500)) * 500);
         int daysImprisoned = Math.max(30, negPoliceScore);
 
-        mainControl.displayInfoMessage(null, "You've been arrested!", "At least you survived.");
-        mainControl.displayInfoMessage(null, "Conviction", "Your fine and number of days in prison are based on"
+        mainControl.displayInfoMessage(null, "You've been arrested!", "Your fine and number of days in prison are based on"
                 + " the kind of criminal you were found to be.");
 
         String conviction = String.format("You are convicted to %d days in prison and a fine of ₪%d.", daysImprisoned, fine);
@@ -359,16 +370,16 @@ public abstract class EncounterScreenController extends SceneController {
             player.getCargo().clearItem(TradeGood.FIREARMS);
         }
         //Remove Insurance
-        if (player.getInsuranceCost() <= 0) {
+        if (player.getInsuranceCost() > 0) {
             mainControl.displayInfoMessage(null, "Insurance Lost", "Since you cannot pay your insurance while you're in prison, it is retracted.");
             player.setInsuranceCost(0);
-            //NoClaim = 0; reset no-claim to zero
+            player.resetNoClaimDays();
         }
         //Remove Crew
         Mercenary[] crew = player.getShip().getCrew();
         if (crew.length > 0) {
-            mainControl.displayInfoMessage(null, "Mercenaries Leave", "You can't pay your mercenaries "
-                    + "while you are imprisoned, and so they have sought new employment.");
+            mainControl.displayInfoMessage(null, "Mercenaries Leave", "You can't pay your mercenaries"
+                    + " while you are imprisoned, and so they have sought new employment.");
             for (int i = 0; i < crew.length; i++) {
                 player.getShip().fireMercenary(crew[i]);
             }
@@ -398,8 +409,8 @@ public abstract class EncounterScreenController extends SceneController {
                 player.setCredits(0);
             }
             mainControl.displayInfoMessage(null, "Ship Sold", "The Space Corps needs cash to make"
-                    + " you pay for the damages you did. Your ship is the only "
-                    + "valuable possession you have.");
+                    + " you pay for the damages you did. Your ship is the only"
+                    + " valuable possession you have.");
             mainControl.displayInfoMessage(null, "Flea Received", "It's standard practice for the"
                     + " police to leave a condemned criminal with at least the "
                     + "means to leave the solar system.");
@@ -440,7 +451,7 @@ public abstract class EncounterScreenController extends SceneController {
         Player player = encounter.getPlayer();
 
         mainControl.displayInfoMessage(null, "Escape Pod Activated", "Just before the final demise of your ship, your escape pod gets activated and ejects you."
-                + "After a few days, the Space Corps picks you up and drops you off at a nearby space port.");
+                + " After a few days, the Space Corps picks you up and drops you off at a nearby space port.");
 
         //close encounter window
         this.getScene().getWindow().hide();
@@ -448,11 +459,11 @@ public abstract class EncounterScreenController extends SceneController {
         mainControl.specialArrivalAtPlanet(encounter.getDestination());
 
         if (player.getInsuranceCost() > 0) {
-            //TODO
-            mainControl.displayInfoMessage(null, "Insurance Pays", " Since your ship was insured, the bank pays you the total worth of the destroyed ship.");
+            mainControl.displayInfoMessage(null, "Insurance Pays", " Since your ship was insured, the bank pays you the total worth of the destroyed ship."
+                    + " Your no-claim days are reset to 0.");
             player.addCredits(player.getShip().currentShipPriceWithoutCargo(player.getEffectiveSkill(SkillList.Skill.TRADER)));
         }
-        mainControl.displayInfoMessage(null, "Flea Built", "In 3 days and with 500 credits, you manage to convert your pod into a Flea.\n");
+        mainControl.displayInfoMessage(null, "Flea Built", "In 3 days and with 500 credits, you manage to convert your pod into a Flea.");
 
         player.removeCreditsForced(500);
 

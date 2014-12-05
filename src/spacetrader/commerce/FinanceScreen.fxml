@@ -75,7 +75,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="326.0">
                            <children>
-                              <Label fx:id="loanLabel" prefHeight="55.0" prefWidth="252.0" text="You can borrrow up to â‚ª1000. How much would you like?" wrapText="true">
+                              <Label fx:id="loanLabel" prefHeight="55.0" prefWidth="252.0" text="You can borrrow up to ₪1000. How much would you like?" wrapText="true">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>

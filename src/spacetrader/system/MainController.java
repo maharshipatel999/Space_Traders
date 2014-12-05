@@ -64,6 +64,17 @@ public class MainController {
     public Difficulty getDifficulty() {
         return game.getDifficulty();
     }
+    
+    
+    /**
+     * Sets the game difficulty.
+     * 
+     * @param diff the game's difficulty
+     */
+    public void setDifficulty(Difficulty diff) {
+        game.setDifficulty(diff);
+        game.getPlayer().setGameDifficulty(diff);
+    }
 
     /**
      * Display the popup for selecting admin cheats.

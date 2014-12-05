@@ -91,7 +91,7 @@ public class WarpScreenController extends SceneController implements Initializab
         } else {
             pauseScreen();
             Random random = new Random();
-            if (random.nextInt() % 20 < 5)
+            if (random.nextInt(100) < 25)
                 mainControl.goToMeteorScreen(source, destination);
             else 
                 mainControl.arriveAtPlanet(destination);

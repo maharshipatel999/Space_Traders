@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import spacetrader.Player;
+import spacetrader.system.SpaceTrader.Difficulty;
 
 /**
  * FXML Controller class.
@@ -64,7 +65,7 @@ public class CharacterDialogController
     public void initialize(URL location, ResourceBundle resources) {
         difficultyChoiceBox.setItems(
                 FXCollections.observableArrayList(
-                        "Easy", "Medium", "Hard", "Ultra"));
+                        "Beginner", "Easy", "Medium", "Hard", "Impossible"));
         difficultyChoiceBox.setValue("Medium");
         confirmMessage.setFill(Color.TRANSPARENT);
     }
@@ -274,6 +275,11 @@ public class CharacterDialogController
             confirmMessage.setText("Greetings Space Trader!");
             confirmMessage.setFill(Color.GREEN);
         }
+        
+        String choice = (String) difficultyChoiceBox.getValue();
+        choice = choice.toUpperCase();
+        Difficulty difficulty = Difficulty.valueOf(choice);
+        mainControl.setDifficulty(difficulty);
     }
 
 }
