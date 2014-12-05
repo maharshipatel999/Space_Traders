@@ -65,7 +65,7 @@ public class CharacterDialogController
     public void initialize(URL location, ResourceBundle resources) {
         difficultyChoiceBox.setItems(
                 FXCollections.observableArrayList(
-                        "Beginner", "Easy", "Medium", "Hard", "Impossible"));
+                        "Beginner", "Easy", "Normal", "Hard", "Impossible"));
         difficultyChoiceBox.setValue("Medium");
         confirmMessage.setFill(Color.TRANSPARENT);
     }
