@@ -236,60 +236,45 @@
                   </Text>
                </children>
             </HBox>
-            <Label text="Pilot" GridPane.rowIndex="1">
+            <Label fx:id="pilotLabel" text="Pilot" GridPane.rowIndex="1">
                <font>
                   <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
-               <tooltip>
-                  <Tooltip text="Determines how well you pilot your ship.&#10;A good pilot can easily flee, dodge attacks,&#10;and stay on the tail of fleeing ships." />
-               </tooltip>
             </Label>
-            <Label text="Fighter" GridPane.rowIndex="2">
+            <Label fx:id="fighterLabel" text="Fighter" GridPane.rowIndex="2">
                <font>
                   <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
-               <tooltip>
-                  <Tooltip text="Determines how well you handle your weapons.&#10;A good fighter is great at hitting other ships." />
-               </tooltip>
             </Label>
-            <Label text="Trader" GridPane.rowIndex="3">
+            <Label fx:id="traderLabel" text="Trader" GridPane.rowIndex="3">
                <font>
                   <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
-               <tooltip>
-                  <Tooltip text=" Determines what prices you must pay for trade goods, ships and equipment.&#10;A good trader can reduce prices up to 10%." />
-               </tooltip>
             </Label>
-            <Label text="Engineer" GridPane.rowIndex="4">
+            <Label fx:id="engineerLabel" text="Engineer" GridPane.rowIndex="4">
                <font>
                   <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
-               <tooltip>
-                  <Tooltip text="Determines how well you keep your ship in shape.&#10;A good engineer protects the hull and shields in a fight,&#10;repairs them quicker during travel, and may even enhance his ship's weaponry." />
-               </tooltip>
             </Label>
-            <Label text="Investor" GridPane.rowIndex="5">
+            <Label fx:id="investorLabel" text="Investor" GridPane.rowIndex="5">
                <font>
                   <Font name="Copperplate Gothic Light" size="20.0" />
                </font>
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
-               <tooltip>
-                  <Tooltip text="Determines how well you do in investing in the galactic markets.&#10;Since stock prices and interest rates are volatile, &#10;an investor could make a killing or lose his savings. Be wary." />
-               </tooltip>
             </Label>
          </children>
          <padding>
@@ -307,7 +292,7 @@
                <children>
                   <Label prefHeight="54.0" prefWidth="86.0" text="Name:" wrapText="true">
                      <font>
-                        <Font name="Blackadder ITC" size="32.0" />
+                        <Font name="Copperplate Gothic Bold" size="25.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -332,7 +317,7 @@
                <children>
                   <Label prefHeight="41.0" prefWidth="100.0" text="Difficulty:" wrapText="true">
                      <font>
-                        <Font name="Blackadder ITC" size="24.0" />
+                        <Font name="Copperplate Gothic Bold" size="16.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="difficultyChoiceBox" prefHeight="25.0" prefWidth="150.0">

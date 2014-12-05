@@ -182,7 +182,7 @@ public class MainController {
         MeteorScreenController control;
         control = (MeteorScreenController) extractControllerFromFXML("/spacetrader/travel/MeteorScreen.fxml", stage);
         control.setMeteorScreen(control.getScene());
-        stage.setTitle("Watch out for Meteors in the SolarSpace!");
+        stage.setTitle("Watch out for Comets in the SolarSpace!");
         control.setMainControl(this);
         control.setPlayer(game.getPlayer(), source, destination);
         control.runGame();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import org.scenicview.view.tabs.details.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
@@ -12,19 +13,19 @@
 
 <AnchorPane id="AnchorPane" prefHeight="363.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spacetrader.system.WelcomeScreenController">
    <children>
-      <ImageView fitHeight="547.0" fitWidth="735.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="button" fitHeight="547.0" fitWidth="735.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/images/space%20image.jpg" />
          </image>
       </ImageView>
-      <Text fill="#74ad72" fontSmoothingType="LCD" layoutX="29.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Space Traders" wrappingWidth="676.515625">
+      <Text fill="#74ad72" fontSmoothingType="LCD" layoutX="29.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Space Traders" textAlignment="CENTER" wrappingWidth="676.515625">
          <font>
             <Font name="Imprint MT Shadow" size="110.0" />
          </font>
       </Text>
       <StackPane prefHeight="147.0" prefWidth="735.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="70.0" stroke="#9de1c7" strokeType="INSIDE" strokeWidth="0.0" width="568.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="70.0" stroke="#9de1c7" strokeType="INSIDE" strokeWidth="0.0" width="618.0">
                <fill>
                   <RadialGradient centerX="0.35" centerY="0.5857142857142857" focusDistance="0.20930232558139528" radius="1.0">
                      <stops>
@@ -36,7 +37,7 @@
             </Rectangle>
             <HBox alignment="CENTER" prefHeight="127.0" prefWidth="735.0" spacing="20.0">
                <children>
-                  <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#startNewGame" text="Start a New Game!">
+                  <Button id="button" fx:id="newGameButton" mnemonicParsing="false" onAction="#startNewGame" prefHeight="38.0" prefWidth="197.0" text="New Game" textAlignment="CENTER">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>
@@ -44,7 +45,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadGame" text="Reload a Saved Game!">
+                  <Button id="button" fx:id="highScores" mnemonicParsing="false" onAction="#goToHighScoreScreen" prefHeight="38.0" prefWidth="167.0" text="High Scores" HBox.hgrow="NEVER">
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadGame" prefHeight="38.0" prefWidth="184.0" text="Reload Game">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="20.0" />
                      </font>

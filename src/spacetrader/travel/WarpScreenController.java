@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import spacetrader.Player;
+import java.util.Random;
 import spacetrader.SkillList.Skill;
 import spacetrader.planets.Planet;
 import spacetrader.system.SceneController;
@@ -89,7 +90,11 @@ public class WarpScreenController extends SceneController implements Initializab
             //}
         } else {
             pauseScreen();
-            mainControl.goToMeteorScreen(source, destination);
+            Random random = new Random();
+            if (random.nextInt() % 20 < 5)
+                mainControl.goToMeteorScreen(source, destination);
+            else 
+                mainControl.arriveAtPlanet(destination);
         }
     }
 

@@ -153,7 +153,7 @@ public class MeteorScreenController extends SceneController implements Initializ
 
     
     public void runGame() {
-
+        mainControl.displayInfoMessage("Comets in the Solar Space", "SURVIVE!", "For every move you make, the comets make one step. You lose hull strength if a meteor directly lands on top of your craft. Make it to the finish and try to avoid all comets!!!!");
         currScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
