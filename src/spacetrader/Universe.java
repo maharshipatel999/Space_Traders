@@ -33,7 +33,7 @@ public class Universe implements Serializable {
     private static final int PLANET_MIN_AMOUNT = 110;
     private static final int MIN_DISTANCE = 6;
     private static final int MAX_DISTANCE = 13;
-    private static final int MAX_NUM_MERCENARY = 30;
+    private static final int MAX_NUM_MERCENARY = 110;
 
     //the # of planets spawned in special locations
     private static final int INITIAL_PLANET_NUM = 17;
@@ -115,12 +115,13 @@ public class Universe implements Serializable {
             planets.add(planet);
             numAdjPlanets.put(planet, 0);
         }
+         // add mercenaries
          for (int i = 0; i < MAX_NUM_MERCENARY; i++) {
             int randomPlanet;
             do {
                randomPlanet = rand.nextInt(planetAmount + 1);
             } while(planets.get(randomPlanet).getMercenary() != null);
-              planets.get(randomPlanet).setMercenary(Mercenary.createRandomMercenary("LUBLUB", planets.get(randomPlanet)));
+              planets.get(randomPlanet).setMercenary(Mercenary.createRandomMercenary(Mercenary.mercNames[i% Mercenary.mercNames.length], planets.get(randomPlanet)));
         }
 
         //assign wormholes
@@ -153,7 +154,6 @@ public class Universe implements Serializable {
             wormholePlanets.get(i).setWormhole(curHole);
         }
     }
-    // add mercenaries
 
     /**
      * Finds the planet with the specified name.

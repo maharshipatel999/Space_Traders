@@ -309,6 +309,11 @@ public class ShipYardScreenController
     protected void goToEquipmentScreen() {
         mainControl.goToEquipmentMarket();
     }
+    
+    @FXML
+    protected void goToCrewInfoScreen() {
+        mainControl.goToCrewInfoScreen();
+    }
 
     @FXML
     protected void buyEscapePod() {
@@ -322,11 +327,6 @@ public class ShipYardScreenController
                     "You successfully bought a new escape pod!");
             updateEscapePodText();
         }
-    }
-    
-    @FXML
-    protected void goToCrewInfoScreen() {
-        
     }
 
     /**

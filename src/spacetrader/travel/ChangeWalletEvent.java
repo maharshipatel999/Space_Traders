@@ -24,9 +24,9 @@ public class ChangeWalletEvent extends RandomEvent {
     public ChangeWalletEvent(Player player, String message, int quantityChange) {
         super(player, message, quantityChange);
         if (quantityChange > 0) {
-            this.message += "\n\n₪" + quantityChange + " was added to your wallet!";
+            this.message += "\n\n₪" + quantityChange + " ware added to your wallet!";
         } else {
-            this.message += "\n\n₪" + Math.abs(quantityChange) + " was removed from your wallet!";
+            this.message += "\n\n₪" + Math.abs(quantityChange) + " were removed from your wallet!";
         }
     }
 

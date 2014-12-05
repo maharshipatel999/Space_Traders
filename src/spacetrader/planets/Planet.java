@@ -98,8 +98,14 @@ public class Planet implements Serializable {
         this.market.setAllPrices(player);
         mainControl.goToHomeScreen(this);
         displayPriceIncreaseEvent();
+        displayMercenaryForHire();
     }
     
+    public void displayMercenaryForHire() {
+        if(this.getMercenary() != null) {
+            InformationPresenter.getInstance().displayInfoMessage(null, "Mercenary For Hire","There is a mercenary available for hire on this planet. Check it out in the ship yard", null);
+        }
+    }
     /**
      * Display price increase event of this planet, if there is one.
      */
@@ -113,7 +119,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * gets the name of the planet
+     * Gets the name of the planet.
      *
      * @return the name of the planet
      */
@@ -122,7 +128,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * gets locations
+     * Get this planet's location.
      *
      * @return location of the planet
      */
@@ -131,7 +137,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * get tech level of planet
+     * Get tech level of planet.
      *
      * @return the tech level of planet
      */
@@ -140,7 +146,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * get resource
+     * Get resource.
      *
      * @return resource of the planet
      */
@@ -149,7 +155,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * get political system
+     * Get political system.
      *
      * @return political system
      */
@@ -167,7 +173,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * set the price increase event
+     * Set the price increase event.
      *
      * @param priceIncEvent - price increase event for a planet
      */
@@ -177,7 +183,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * Set random price increase event
+     * Set random price increase event.
      */
     public void setRandomPriceIncEvent() {
         this.priceIncEvent = PriceIncreaseEvent.getRandomPriceEvent();
@@ -185,7 +191,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * get price increase event duration
+     * Get price increase event duration.
      *
      * @return price increase event duration
      */
@@ -194,7 +200,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * set price increase event duration
+     * Set price increase event duration.
      *
      * @param priceIncDuration - the duration of a price increase event
      */
@@ -203,7 +209,7 @@ public class Planet implements Serializable {
     }
 
     /**
-     * get price increase event
+     * Get price increase event.
      *
      * @return price increase event
      */
@@ -212,64 +218,67 @@ public class Planet implements Serializable {
     }
 
     /**
-     * get market
+     * Get this planet's market.
      *
-     * @return market
+     * @return this planet's market
      */
     public Market getMarket() {
         return market;
     }
 
     /**
-     * check if planet has been vis
+     * check if planet has been visited
      *
-     * @return if a planet has been visted
+     * @return if a planet has been visited
      */
     public boolean isVisited() {
         return visited;
     }
 
     /**
-     * set visited for planet
+     * Sets the visited flag to indicate that the player has visited this planet
      */
     public void setVisited() {
         visited = true;
     }
 
     /**
-     * get wormhole for a planet
+     * Get this planet's wormhole, or null if it has none.
      *
-     * @return wormhole for planet
+     * @return this planet's wormhole, or null
      */
     public Wormhole getWormhole() {
         return this.wormhole;
     }
 
     /**
-     * set wormhole for planet
+     * Set wormhole for planet
      *
-     * @param wormhole - the wormhole of a planet
+     * @param wormhole - the wormhole for this planet
      */
     public void setWormhole(Wormhole wormhole) {
         this.wormhole = wormhole;
     }
-    /*
-    *get mercenary for planet
-    *@return merc - the mercenary at this planet
-    */
+    /**
+     * Get the mercenary available for hire on this planet, or null if there
+     * is none
+     *
+     * @return merc - the mercenary at this planet
+     */
     public Mercenary getMercenary() {
         return merc;
     }
-    /*
-    *set Mercenary for a planet
-    *@param merc - the mercenary of the planet
-    */
+    /**
+     * Set the mercenary for hire on this planet.
+     * 
+     * @param merc - the mercenary of the planet
+     */
     public void setMercenary(Mercenary merc) {
         this.merc = merc;
     }
 
     /**
-     * Calculate strength of police
+     * Calculate strength of police.
      *
      * @param record - player's police record
      * @return the strength of the police

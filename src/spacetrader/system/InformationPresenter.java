@@ -306,7 +306,7 @@ public class InformationPresenter {
         try {
             for (String var : new String[] {"initialCredits", "techLevel",
                 "politicalSystem", "resource", "startingShip", "policeRecord",
-                "reputation", "debugMode"}) {
+                "reputation", "numMercenaries", "debugMode"}) {
                 list.add(new BeanProperty(cheats, new PropertyDescriptor(var, cheats.getClass())));
             }
         } catch (IntrospectionException ex) {

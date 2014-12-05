@@ -6,6 +6,7 @@
 
 package spacetrader.system;
 
+import spacetrader.Mercenary;
 import spacetrader.PoliceRecord;
 import spacetrader.Reputation;
 import spacetrader.planets.PoliticalSystem;
@@ -28,6 +29,7 @@ public class AdminCheats {
     private ShipType startingShip;
     private PoliceRecord policeRecord;
     private Reputation reputation;
+    private int numMercenaries;
     private Debug debugMode;
 
     public AdminCheats() {
@@ -38,6 +40,7 @@ public class AdminCheats {
         startingShip = ShipType.GNAT;
         reputation = Reputation.HARMLESS;
         policeRecord = PoliceRecord.CLEAN;
+        numMercenaries = 0;
         debugMode = Debug.OFF;
 
     }
@@ -101,6 +104,15 @@ public class AdminCheats {
     public Debug getDebugMode() {
         return debugMode;
     }
+
+    public int getNumMercenaries() {
+        return numMercenaries;
+    }
+
+    public void setNumMercenaries(int numMercenaries) {
+        this.numMercenaries = numMercenaries;
+    }
+    
 
     public void setDebugMode(Debug debugMode) {
         this.debugMode = debugMode;

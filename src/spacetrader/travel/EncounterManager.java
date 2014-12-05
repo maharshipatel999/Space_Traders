@@ -62,9 +62,6 @@ public class EncounterManager {
 
         for (int i = 0; i < TOTAL_CLICKS; i++) {
             int index = Tools.pickIndexFromWeightedList(encounterProbs, probabilityDenominator);
-            if (index == 0 && raided) {
-                index = 1;
-            }
 
             Encounter encounter = null;
             

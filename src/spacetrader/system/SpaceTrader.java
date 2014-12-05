@@ -8,6 +8,7 @@ package spacetrader.system;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.stage.Stage;
+import spacetrader.Mercenary;
 import spacetrader.Player;
 import spacetrader.Universe;
 import spacetrader.planets.Planet;
@@ -35,7 +36,7 @@ public class SpaceTrader extends Application {
     }
     
     public enum Debug {
-        OFF, TRADER_ENCOUNTER, POLICE_ENCOUNTER, PIRATE_ENCOUNTER, METEORS
+        OFF, TRADER_ENCOUNTER, POLICE_ENCOUNTER, PIRATE_ENCOUNTER, METEORS, SETH_SUCKS
     }
 
     @Override
@@ -59,7 +60,6 @@ public class SpaceTrader extends Application {
         this.player = player;
         this.days = 0;
         this.universe.getHomePlanet().movePlayerLocation(player, mainControl);
-        this.mainControl.goToHomeScreen(universe.getHomePlanet());
     }
     
     /**
@@ -77,12 +77,24 @@ public class SpaceTrader extends Application {
         cheatPlayer.setReputationScore(cheats.getReputation().minRep());
         cheatPlayer.setPoliceRecordScore(cheats.getPoliceRecord().minScore());
         
+        Universe cheatUniverse = new Universe(homePlanet);
+        
         cheatPlayer.setShip(new PlayerShip(cheats.getStartingShip(), cheatPlayer));
         if (cheatPlayer.getShip().getType().weaponSlots() > 0) {
             cheatPlayer.getShip().getWeapons().addItem(new Weapon(WeaponType.PULSE));
         }
+        
+        for (int i = 0; i < cheatPlayer.getShip().getMaxNumCrew() && i < cheats.getNumMercenaries(); i++) {
+            for (Planet planet : cheatUniverse.getPlanets()) {
+                if (planet.getMercenary() != null) {  
+                    cheatPlayer.getShip().hireMercenary(Mercenary.createRandomMercenary("Seth Sucks", planet));
+                    break;
+                }
+            }
+        }
+        System.out.println(cheatPlayer.getShip().getCrew().length);
 
-        setUpGame(new Universe(homePlanet), cheatPlayer);
+        setUpGame(cheatUniverse, cheatPlayer);
     }
 
     /**

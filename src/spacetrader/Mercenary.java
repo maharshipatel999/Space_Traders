@@ -15,7 +15,40 @@ import spacetrader.planets.Planet;
  * @author Caleb
  */
 public class Mercenary extends Trader {
-    private Planet homePlanet;
+    private final Planet homePlanet;
+    static final String[] mercNames = {
+        "Misty",
+        "Brock",
+        "Erika",
+        "Blaine",
+        "LT.Serge",
+        "Koga",
+        "Sabrina",
+        "Geovanni",
+        "Michael", 
+        "Andrew",
+        "Jessica",
+        "Stephanie",
+        "Elizabeth",
+        "Seth",
+        "Caleb",
+        "Maharshi",
+        "Naveena",
+        "Tejas",
+        "Heather",
+        "Ryan",
+        "Brandon",
+        "Joel",
+        "Diana",
+        "Natalie",
+        "Brandi",
+        "Karen",
+        "Philip",
+        "Brett",
+        "Craig",
+        "Alyssa",
+        "Dennis",
+    };
     /**
      * Constructor for Mercenary
      *
@@ -37,6 +70,20 @@ public class Mercenary extends Trader {
         int engineer = rand.nextInt(SkillList.MAX_SKILL + 1);
         int investor = rand.nextInt(SkillList.MAX_SKILL + 1);
         return new Mercenary(name, pilot, fighter, trader, engineer, investor, homePlanet);
+    }
+    public int calculateDailyWage(Mercenary merc) {
+        int sum = 0;
+        for (Skill skill : Skill.values()) {
+            sum += merc.getSkill(skill);
+        }
+        return sum * 3;
+    }
+    /**
+     * Get the planet that a Mercenary will be sent to if fired
+     * @return home planet - the mercenaries planet of origin and return 
+     */
+    public Planet getHomePlanet() {
+        return homePlanet;
     }
     /*
     */
